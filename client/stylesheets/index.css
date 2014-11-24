@@ -16,8 +16,17 @@ body{
   float: left;
 }
 
+.main-header-title {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.settings-buttons {
+  margin-bottom: 20px;
+}
+
 .itemlist {
-  min-height: 300px;
+  min-height: 200px;
   background-color: #bbb;
   padding: 10px 10px;
 }
