@@ -5,5 +5,9 @@ Template.layout.events({
 
   'click #addShift': function(e, instance) {
     $("#submitShiftModal").modal("show");
+  },
+
+  'click #addWorker': function(e, instance) {
+    $("#submitWorkerModal").modal("show");
   }
 });

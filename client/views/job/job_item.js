@@ -1,5 +1,5 @@
-Template.jobItem.rendered = function() {
-  Deps.autorun(function() {
-    // $(".jobitem").draggable({ helper: "clone" });
-  });  
-}
+Template.jobItem.events({
+  'click .job-profile': function(e, instance) {
+    $("#jobProfile").modal("show");
+  }
+});

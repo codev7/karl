@@ -3,6 +3,10 @@ body{
   padding: 30px;
 }
 
+.jobitem > a {
+  color: #fff;
+}
+
 .left {
   /*background-color: #B2F0FF;*/
 }
