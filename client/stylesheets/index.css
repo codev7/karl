@@ -44,6 +44,10 @@ body{
   
 }
 
+.shift {
+  min-height: 100px;
+}
+
 .workeritem {
   background-color: #CC7A00;
 }
