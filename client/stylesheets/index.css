@@ -1,0 +1,40 @@
+body{
+  background: #F9FEFF;
+  padding: 30px;
+}
+
+.left {
+  /*background-color: #B2F0FF;*/
+}
+
+.center {
+  /*background-color: #bbb;*/
+}
+
+.right {
+  /*background-color: #FFCCCC;*/
+  float: left;
+}
+
+.itemlist {
+  min-height: 300px;
+  background-color: #bbb;
+  padding: 10px 10px;
+}
+
+.item {
+  color: #fff;
+  padding: 4px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.jobitem {
+  background-color: #2424B2;
+  
+}
+
+.workeritem {
+  background-color: #CC7A00;
+}
