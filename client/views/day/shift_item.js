@@ -1,7 +1,8 @@
 Template.shiftItem.rendered = function() {
   Deps.autorun(function() {
     $(".shift").sortable({
-       connectWith: ".jobsList, .shift"
+      // helper: "clone",
+      connectWith: ".jobsList, .shift"
     })
     .droppable({greedy: true });
   }); 

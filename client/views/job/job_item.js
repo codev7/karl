@@ -1,5 +1,5 @@
 Template.jobItem.rendered = function() {
   Deps.autorun(function() {
-    $(".jobitem").sortable();
+    // $(".jobitem").draggable({ helper: "clone" });
   });  
 }
