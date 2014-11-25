@@ -1,0 +1,27 @@
+Meteor.methods({
+  'createJob': function(info) {
+    if(!info.name) {
+      throw new Meteor.Error(404, "Name field not found");
+    }
+    if(!info.activeTime) {
+      throw new Meteor.Error(404, "Time field not found");
+    }
+    var doc = {
+    "name": info.name,
+    "type": info.type,
+    "createdOn": new Date().getTime(),
+    "details": info.details,
+    "image": info.image,
+    "portions": info.portions,
+    "activeTime": info.time,
+    "ingCost": info.ingCost,
+    "shelfLife": info.shelfLife,
+    "onshift": null,
+    "assignedTo": [],
+    "owner": null,
+    "assignedBy": null,
+    }
+    return Jobs.insert(doc);
+  }
+});
+

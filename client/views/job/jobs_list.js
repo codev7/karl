@@ -6,3 +6,11 @@ Template.jobsList.rendered = function() {
     });
   });  
 }
+
+Template.jobsList.helpers({
+  "jobs": function() {
+    var jobs = Jobs.find().fetch();
+    console.log(".........", jobs);
+    return jobs;
+  }
+});

@@ -5,23 +5,23 @@
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 class="modal-title" id="myModalLabel">Submit Job</h4>
         </div>
-        <div class="modal-body">
-          <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" id="newJob">
+          <div class="modal-body">
             <div class="form-group">
               <label class="col-sm-4 control-label">Name</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" placeholder="Name">
+                <input type="text" name="name" class="form-control" placeholder="Name">
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-4 control-label">Type</label>
               <div class="col-sm-6">
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="type" data-toggle="dropdown" aria-expanded="true">
                     Type
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="type">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Prep</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Service</a></li>
                   </ul>
@@ -31,18 +31,18 @@
             <div class="form-group">
               <label class="col-sm-4 control-label">Details</label>
               <div class="col-sm-6">
-                <textarea type="text" class="form-control" placeholder="Details"></textarea>
+                <textarea type="text" name="details" class="form-control" placeholder="Details"></textarea>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-4 control-label">Portions</label>
               <div class="col-sm-6">
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="noOfPortions" data-toggle="dropdown" aria-expanded="true">
                     No. of portions
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="noOfPortions">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">8</a></li>
@@ -60,8 +60,8 @@
               <label class="col-sm-4 control-label">Active Time</label>
               <div class="col-sm-6">
                 <div class="input-group">
-                  <input type="time" class="form-control">
-                  <span class="input-group-addon">h/m/s</span>
+                  <input type="number" name= "activeTime" class="form-control">
+                  <!-- <span class="input-group-addon">h/m</span> -->
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@
               <div class="col-sm-6">
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <input type="number" class="form-control">
+                  <input type="number" name="ingCost" class="form-control">
                   <span class="input-group-addon">.00</span>
                 </div>
               </div>
@@ -79,17 +79,17 @@
               <label class="col-sm-4 control-label">Shelf Life</label>
               <div class="col-sm-6">
                 <div class="input-group">
-                  <input type="number" class="form-control">
+                  <input type="number" name="shelfLife" class="form-control">
                   <span class="input-group-addon">Days</span>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" id="submitJob" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
       </div>
     </div>
 </template>

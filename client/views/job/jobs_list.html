@@ -2,11 +2,9 @@
   <div class="itemlist">
     <h5>Jobs List</h5>
     <div class="jobsList">
-      {{> jobItem}}
-      {{> jobItem}}
-      {{> jobItem}}
-      {{> jobItem}}
-      {{> jobItem}}
+      {{#each jobs}}
+        {{> jobItem}}
+      {{/each}}
     </div>
   </div>
 </template>
