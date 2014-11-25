@@ -5,17 +5,21 @@ Template.submitShift.events({
     var startTime = $(event.target).find('[name=startTime]').val();
     var endTime = $(event.target).find('[name=endTime]').val();
 
-    var info = {
-      "shiftDate": dateOfShift,
-      "startTime": startTime,
-      "endTime": endTime
-    }
-    Meteor.call("createShift", info, function(err, id) {
-      if(err) {
-        return alert(err.reason);
-      } else {
-        $("#submitShiftModal").modal("hide");
+    if(!startTime || !endTime) {
+      alert("Please add title for your job");
+    } else {
+      var info = {
+        "shiftDate": dateOfShift,
+        "startTime": startTime,
+        "endTime": endTime
       }
-    });
+      Meteor.call("createShift", info, function(err, id) {
+        if(err) {
+          return alert(err.reason);
+        } else {
+          $("#submitShiftModal").modal("hide");
+        }
+      });
+    }
   }
 });

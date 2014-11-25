@@ -2,8 +2,8 @@
   <tr>
     {{#each shifts}}
     <td>
-      <div class="shift workers">Drag workers here</div>
-      <div class="shift jobs" data-id="{{_id}}">
+      <div class="shift shiftedWorkers">Drag workers here</div>
+      <div class="shift shiftedJobs" data-id="{{_id}}">
         {{#if jobs}}
           {{#each jobs}}
             {{> jobItem}}

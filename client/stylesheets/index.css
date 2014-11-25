@@ -49,7 +49,7 @@ body{
   
 }
 
-.jobsList {
+.jobsList, .workersList {
   min-height: 50px;
 }
 

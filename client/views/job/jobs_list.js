@@ -2,7 +2,7 @@ Template.jobsList.rendered = function() {
   Deps.autorun(function() {
     $(".jobsList").sortable({
       // helper: "clone",
-      connectWith: ".jobs"
+      connectWith: ".shiftedJobs"
     })
     .droppable({
       drop: function(event, ui) {

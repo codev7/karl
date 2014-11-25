@@ -67,5 +67,20 @@ Meteor.methods({
         throw new Meteor.Error(404, "Job id field not found");
       } 
     }
+  },
+
+  'createWorker': function(info) {
+    if(!info.name) {
+      throw new Meteor.Error(404, "Worker should have a name");
+    }
+    var doc = {
+      "name": info.name,
+      "type": info.type,
+      "createdOn": Date.now(),
+      "availability": true,
+      "assignedShifts": [],
+      "assignedJobs": []
+    }
+    return Workers.insert(doc);
   }
 });
