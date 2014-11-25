@@ -32,7 +32,7 @@ body{
 
 .itemlist {
   min-height: 200px;
-  background-color: #bbb;
+  background-color: #ddd;
   padding: 10px 10px;
 }
 
@@ -45,7 +45,7 @@ body{
 }
 
 .jobitem {
-  background-color: #2424B2;
+  background-color: #4D70DB;
   
 }
 
@@ -63,7 +63,7 @@ body{
 }
 
 .workers {
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px dashed #aaa;
   min-height: 40px;
   /*background-color: #CCF5FF;*/
 }
