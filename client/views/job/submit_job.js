@@ -8,22 +8,28 @@ Template.submitJob.events({
     var activeTime = $(event.target).find('[name=activeTime]').val();
     var ingCost = $(event.target).find('[name=ingCost]').val();
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
-   
-    var info = {
-      "name": name,
-      "type": null,
-      "details": details,
-      "portions": null,
-      "activeTime": activeTime,
-      "ingCost": ingCost,
-      "shelfLife": shelfLife
-    }
-    Meteor.call("createJob", info, function(err, id) {
-      if(err) {
-        return alert(err.reason);
-      } else {
-        $("#submitJobModal").modal("hide");
+    
+    if(!name || name.trim() == "") {
+      alert("Please add title for your job");
+    } else if(!activeTime || !activeTime.trim() == "") {
+      alert("Please add active time for your job");
+    } else {
+      var info = {
+        "name": name,
+        "type": null,
+        "details": details,
+        "portions": null,
+        "activeTime": activeTime,
+        "ingCost": ingCost,
+        "shelfLife": shelfLife
       }
-    });
+      Meteor.call("createJob", info, function(err, id) {
+        if(err) {
+          return alert(err.reason);
+        } else {
+          $("#submitJobModal").modal("hide");
+        }
+      });
+    }
   }
 });

@@ -55,8 +55,19 @@ body{
 
 .shift {
   min-height: 100px;
+  color: #bbb;
 }
 
 .workeritem {
   background-color: #CC7A00;
+}
+
+.workers {
+  border-bottom: 1px solid #aaa;
+  min-height: 40px;
+  /*background-color: #CCF5FF;*/
+}
+
+.jobs {
+  /*background-color: #FFF5E6;*/
 }
