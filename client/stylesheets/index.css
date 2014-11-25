@@ -62,6 +62,10 @@ body{
   background-color: #CC7A00;
 }
 
+.workeritem:hover {
+  /*background-color: #fff;*/
+}
+
 .workers {
   border-bottom: 1px dashed #aaa;
   min-height: 40px;
@@ -70,4 +74,10 @@ body{
 
 .jobs {
   /*background-color: #FFF5E6;*/
+}
+
+.delete-worker {
+  float: right;
+  width: 17px;
+  height: 17px;
 }

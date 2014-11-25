@@ -2,7 +2,15 @@
   <tr>
     {{#each shifts}}
     <td>
-      <div class="shift shiftedWorkers">Drag workers here</div>
+      <div class="shift shiftedWorkers" data-id="{{_id}}">
+        {{#if workers}}
+          {{#each workers}}
+            {{> worker}}
+          {{/each}}
+        {{else}}
+          Drag workers here
+        {{/if}}
+      </div>
       <div class="shift shiftedJobs" data-id="{{_id}}">
         {{#if jobs}}
           {{#each jobs}}

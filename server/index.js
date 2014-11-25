@@ -44,7 +44,7 @@ Meteor.methods({
     return Shifts.insert(doc);
   },
 
-  'moveJob': function(jobId, shiftId) {
+  'assignJobToShift': function(jobId, shiftId) {
     if(jobId) {
       var job = Jobs.findOne(jobId);
       if(job) {
@@ -82,5 +82,44 @@ Meteor.methods({
       "assignedJobs": []
     }
     return Workers.insert(doc);
+  },
+
+  'assignWorkerToShift': function(workerId, shiftId) {
+    if(workerId) {
+      var worker = Workers.findOne(workerId);
+      if(worker) {
+        if(shiftId) {
+          var shift = Shifts.findOne(shiftId);
+          if(shift) {
+            // Workers.update({_id: workerId}, {$set: {'assignedShifts': []}});
+            Shifts.update({_id: shiftId}, {$addToSet: {"assignedTo": workerId}});
+            Workers.update({_id: workerId}, {$set: {"availability": false}, $addToSet: {'assignedShifts': shiftId}});
+          }
+        } else {
+          Workers.update({_id: workerId}, {$set: {"availability": true}});
+        }
+      }
+    } else {
+      throw new Meteor.Error(404, "Worker id field not found");
+    }
+  },
+
+  'deleteWorkerAssignedShift': function(workerId, shiftId) {
+    if(workerId) {
+      var worker = Workers.findOne(workerId);
+      if(worker) {
+        if(shiftId) {
+          var shift = Shifts.findOne(shiftId);
+          if(shift) {
+            Shifts.update({_id: shiftId}, {$pull: {"assignedTo": workerId}});
+            Workers.update({_id: workerId}, {$set: {"availability": true}, $pull: {"assignedShifts": shiftId}});
+          }
+        } else {
+          Workers.update({_id: workerId}, {$set: {"availability": true}});
+        }
+      }
+    } else {
+      throw new Meteor.Error(404, "Worker id field not found");
+    }
   }
 });
