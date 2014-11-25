@@ -9,7 +9,6 @@ Template.jobsList.rendered = function() {
         if(ui.draggable[0].dataset.title == "job") {
           var jobId = ui.draggable[0].dataset.id;
           var shiftId = $(this).attr("data-id");
-          console.log("-----jobsList----", jobId, shiftId);
           Meteor.call("moveJob", jobId, shiftId, function(err) {
             if(err) {
               return alert(err.reason);
@@ -23,7 +22,7 @@ Template.jobsList.rendered = function() {
 
 Template.jobsList.helpers({
   "jobs": function() {
-    var jobs = Jobs.find().fetch();
+    var jobs = Jobs.find({"onshift": null}).fetch();
     return jobs;
   }
 });

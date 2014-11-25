@@ -11,7 +11,7 @@ Template.submitJob.events({
     
     if(!name || name.trim() == "") {
       alert("Please add title for your job");
-    } else if(!activeTime || !activeTime.trim() == "") {
+    } else if(!activeTime || activeTime.trim() == "") {
       alert("Please add active time for your job");
     } else {
       var info = {

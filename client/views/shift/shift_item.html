@@ -3,7 +3,15 @@
     {{#each shifts}}
     <td>
       <div class="shift workers">Drag workers here</div>
-      <div class="shift jobs" data-id="{{_id}}">Drag Jobs here</div>
+      <div class="shift jobs" data-id="{{_id}}">
+        {{#if jobs}}
+          {{#each jobs}}
+            {{> jobItem}}
+          {{/each}}
+        {{else}}
+          Drag Jobs here
+        {{/if}}
+      </div>
     </td>
     {{/each}}
   </tr>
