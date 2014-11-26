@@ -1,16 +1,7 @@
 <template name="shiftsList">
   <div class="table-responsive">
     <table class="table table-bordered">
-      <thead>
-        <tr>
-          {{#each shifts}}
-            <th>{{startTime}} - {{endTime}} Shift</th>
-          {{/each}}
-        </tr>
-      </thead>
-      <tbody>
-        {{> shiftItem}}
-      </tbody>
+      {{> shiftItem}}
     </table>
   </div>
 </template>

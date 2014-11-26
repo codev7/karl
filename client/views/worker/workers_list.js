@@ -1,5 +1,5 @@
 Template.workersList.rendered = function() {
-  Deps.autorun(function() {
+  this.autorun(function() {
     $(".workersList").sortable({
       // helper: "clone",
       connectWith: ".shiftedWorkers"

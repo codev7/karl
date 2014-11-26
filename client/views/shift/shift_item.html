@@ -1,26 +1,35 @@
 <template name="shiftItem">
-  <tr>
-    {{#each shifts}}
-    <td>
-      <div class="shift shiftedWorkers" data-id="{{_id}}">
-        {{#if workers}}
-          {{#each workers}}
-            {{> worker}}
-          {{/each}}
-        {{else}}
-          Drag workers here
-        {{/if}}
-      </div>
-      <div class="shift shiftedJobs" data-id="{{_id}}">
-        {{#if jobs}}
-          {{#each jobs}}
-            {{> jobItem}}
-          {{/each}}
-        {{else}}
-          Drag Jobs here
-        {{/if}}
-      </div>
-    </td>
-    {{/each}}
-  </tr>
+  <thead>
+    <tr>
+      {{#each shifts}}
+        <th>{{startTime}} - {{endTime}} Shift</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {{#each shifts}}
+      <td>
+        <div class="shift shiftedWorkers" data-id="{{_id}}">
+          {{#if workers}}
+            {{#each workers}}
+              {{> worker}}
+            {{/each}}
+          {{else}}
+            Drag workers here
+          {{/if}}
+        </div>
+        <div class="shift shiftedJobs" data-id="{{_id}}">
+          {{#if jobs}}
+            {{#each jobs}}
+              {{> jobItem}}
+            {{/each}}
+          {{else}}
+            Drag Jobs here
+          {{/if}}
+        </div>
+      </td>
+      {{/each}}
+    </tr>
+  </tbody>
 </template>

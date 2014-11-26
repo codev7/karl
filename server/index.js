@@ -9,7 +9,7 @@ Meteor.methods({
     var doc = {
       "name": info.name,
       "type": info.type,
-      "createdOn": Date.now(),
+      "createdOn": new Date().toISOString().slice(0,10).replace(/-/g,""),
       "details": info.details,
       "image": info.image,
       "portions": info.portions,
@@ -33,7 +33,7 @@ Meteor.methods({
     }
     var doc = {
       "shiftDate": info.shiftDate,
-      "createdOn": Date.now(),
+      "createdOn": new Date().toISOString().slice(0,10).replace(/-/g,""),
       "startTime": info.startTime,
       "endTime": info.endTime,
       "assignedTo": [],
