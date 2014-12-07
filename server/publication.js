@@ -1,11 +1,10 @@
 Meteor.publish("dailyShift", function(date) {
   var cursors = [];
   //get Jobs
-  var jobsCursor = Jobs.find({"createdOn": date});
+  var jobsCursor = Jobs.find({"refDate": date});
   cursors.push(jobsCursor);
-  
   //get Shifts
-  var shiftsCursor = Shifts.find({"createdOn": date});
+  var shiftsCursor = Shifts.find({"shiftDate": date});
   cursors.push(shiftsCursor);
 
   //get Workers

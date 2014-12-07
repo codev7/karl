@@ -1,6 +1,6 @@
 Template.shiftItem.helpers({
   "shifts": function() {
-    var shifts = Shifts.find({"createdOn": new Date().toISOString().slice(0,10).replace(/-/g,"")}).fetch();
+    var shifts = Shifts.find({"shiftDate": new Date().toISOString().slice(0,10).replace(/-/g,"-")}).fetch();
     return shifts;
   },
 
