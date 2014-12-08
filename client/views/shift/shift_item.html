@@ -2,7 +2,16 @@
   <thead>
     <tr>
       {{#each shifts}}
-        <th>{{startTime}} - {{endTime}} Shift</th>
+        <th class="center-text">
+          {{startTime}} - {{endTime}} Shift
+          <div class="shiftedWorkers" data-id="{{_id}}">
+            {{#if workerDetail}}
+              {{> worker workerDetail}}
+            {{else}}
+              Drag a worker to assign
+            {{/if}}
+          </div>
+        </th>
       {{/each}}
     </tr>
   </thead>
@@ -10,15 +19,6 @@
     <tr>
       {{#each shifts}}
       <td>
-        <div class="shift shiftedWorkers" data-id="{{_id}}">
-          {{#if workers}}
-            {{#each workers}}
-              {{> worker}}
-            {{/each}}
-          {{else}}
-            Drag workers here
-          {{/if}}
-        </div>
         <div class="shift shiftedJobs" data-id="{{_id}}">
           {{#if jobs}}
             {{#each jobs}}

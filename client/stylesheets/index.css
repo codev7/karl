@@ -49,13 +49,19 @@ body{
   
 }
 
-.jobsList, .workersList {
+#jobsList, .workersList {
   min-height: 50px;
 }
 
 .shift {
   min-height: 100px;
   color: #bbb;
+}
+
+.shiftedWorkers {
+  color: #aaa;
+  max-height: 30px;
+  text-align: center;
 }
 
 .workeritem {
@@ -80,4 +86,8 @@ body{
   float: right;
   width: 17px;
   height: 17px;
+}
+
+.center-text {
+  text-align: center;
 }

@@ -27,6 +27,7 @@ Meteor.methods({
   },
 
   'assignJobToShift': function(jobId, shiftId, jobStartTime) {
+    console.log("--------------assgining job");
     if(!jobId) {
       throw new Meteor.Error(404, "Job id field not found");
     }
@@ -52,7 +53,9 @@ Meteor.methods({
       }
       console.log("Job set to the shift", shiftId, jobId);
       Shifts.update({_id: shiftId}, {$addToSet: {"jobs": jobDoc}});
-      Jobs.update({_id: jobId}, {$set: {"onshift": shiftId}});
+    } else {
+      
     }
+    Jobs.update({_id: jobId}, {$set: {"onshift": shiftId}});
   }
 });

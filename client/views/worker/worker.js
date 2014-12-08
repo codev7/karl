@@ -2,7 +2,7 @@ Template.worker.events({
   'click .delete-worker-item': function(e, instance) {
     var workerId = this._id;
     var shiftId = $(e.target).parent().parent().parent().attr("data-id");
-    Meteor.call("deleteWorkerAssignedShift", workerId, shiftId, function(err) {
+    Meteor.call("deleteWorkerFromAssignedShift", workerId, shiftId, function(err) {
       if(err) {
         return alert(err.reason);
       }

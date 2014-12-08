@@ -44,7 +44,7 @@ Meteor.methods({
     }
     var worker = Workers.findOne(workerId);
     if(!worker) {
-      throw new Meteor.Error(404, "Worker----- not found");
+      throw new Meteor.Error(404, "Worker not found");
     }
     if(!shiftId) {
       throw new Meteor.Error(404, "Shift id field not found");

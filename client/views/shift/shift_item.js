@@ -1,6 +1,11 @@
 Template.shiftItem.helpers({
   "shifts": function() {
     var shifts = Shifts.find({"shiftDate": new Date().toISOString().slice(0,10).replace(/-/g,"-")}).fetch();
+    // console.log(shifts);
+    shifts.forEach(function(shift) {
+      shift.workerDetail = Workers.findOne(shift.assignedTo);
+      // console.log(shift);
+    });
     return shifts;
   },
 
@@ -9,19 +14,14 @@ Template.shiftItem.helpers({
     return jobs;
   },
 
-  "workers": function() {
+  "assignedWorker": function() {
     var shifts = Shifts.findOne(this._id);
     if(shifts) {
-      var workers = [];
       if(shifts.assignedTo) {
-        shifts.assignedTo.forEach(function(workerId) {
-          var worker = Workers.findOne(workerId);
-          if(worker) {
-            workers.push(worker);
-          }
-        });
+        var worker = Workers.findOne(shifts.assignedTo);
+        // console.log(worker)
+        return worker;     
       }
-      return workers;
     }
     
   }
@@ -29,14 +29,15 @@ Template.shiftItem.helpers({
 
 Template.shiftItem.rendered = function() {
   this.autorun(function() {
-    var shifts = Shifts.find({"createdOn": new Date().toISOString().slice(0,10).replace(/-/g,"")}).fetch();
+    var shifts = Shifts.find({"shiftDate": new Date().toISOString().slice(0,10).replace(/-/g,"")}).fetch();
     if(shifts) {
       Tracker.afterFlush(function() {
         $(".shiftedJobs").sortable({
-          connectWith: ".jobsList, .shiftedJobs"
+          connectWith: "#jobsList, .shiftedJobs"
         })
         .droppable({
           drop: function(event, ui) {
+            console.log("-----------------shiftedJobs")
             if(ui.draggable[0].dataset.title == "job") {
               var jobId = ui.draggable[0].dataset.id;
               var shiftId = $(this).attr("data-id");
@@ -48,20 +49,10 @@ Template.shiftItem.rendered = function() {
             }
           }
         });   
-        $(".shiftedWorkers").sortable({
-          connectWith: ".shiftedWorkers"
-        })
+        $(".shiftedWorkers")
         .droppable({
-          activate: function(event, ui) {
-            var workerId = ui.helper[0].dataset.id;
-            var shiftId = $($(event)[0].currentTarget).attr("data-id");
-            Meteor.call("deleteWorkerAssignedShift", workerId, shiftId, function(err) {
-              if(err) {
-                return alert(err.reason);
-              }
-            });
-          },
           drop: function(event, ui) {
+            console.log("-------.shiftedWorkers");
             if(ui.draggable[0].dataset.title == "worker") {
               var workerId = ui.draggable[0].dataset.id;
               var shiftId = $(this).attr("data-id");
