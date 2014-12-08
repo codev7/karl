@@ -37,7 +37,6 @@ Template.shiftItem.rendered = function() {
         })
         .droppable({
           drop: function(event, ui) {
-            console.log("-----------------shiftedJobs")
             if(ui.draggable[0].dataset.title == "job") {
               var jobId = ui.draggable[0].dataset.id;
               var shiftId = $(this).attr("data-id");
@@ -48,11 +47,11 @@ Template.shiftItem.rendered = function() {
               });
             }
           }
-        });   
+        });  
+
         $(".shiftedWorkers")
         .droppable({
           drop: function(event, ui) {
-            console.log("-------.shiftedWorkers");
             if(ui.draggable[0].dataset.title == "worker") {
               var workerId = ui.draggable[0].dataset.id;
               var shiftId = $(this).attr("data-id");
