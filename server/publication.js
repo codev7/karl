@@ -1,11 +1,10 @@
 Meteor.publish("dailyShift", function(date) {
   var cursors = [];
   //get Jobs
-  var jobsCursor = Jobs.find({"createdOn": date});
+  var jobsCursor = Jobs.find({"refDate": date});
   cursors.push(jobsCursor);
-  
   //get Shifts
-  var shiftsCursor = Shifts.find({"createdOn": date});
+  var shiftsCursor = Shifts.find({"shiftDate": date});
   cursors.push(shiftsCursor);
 
   //get Workers
@@ -22,6 +21,13 @@ Meteor.publish("dailyShift", function(date) {
   // cursors.push(ownersCursor);
 
   // console.log(cursors);
+  return cursors;
+});
+
+Meteor.publish("jobsToBeCompleted", function() {
+  var cursors = [];
+  var jobs = Jobs.find({"status": "draft"});
+  cursors.push(jobs);
   return cursors;
 });
 
