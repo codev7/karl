@@ -24,6 +24,13 @@ Meteor.publish("dailyShift", function(date) {
   return cursors;
 });
 
+Meteor.publish("jobsToBeCompleted", function() {
+  var cursors = [];
+  var jobs = Jobs.find({"status": "draft"});
+  cursors.push(jobs);
+  return cursors;
+});
+
 Meteor.publish("availableWorkers", function() {
   var cursors = [];
   var workers = Workers.find();

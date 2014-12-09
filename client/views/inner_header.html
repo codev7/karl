@@ -1,12 +1,12 @@
 <template name="innerHeader">
   <div class="row">
     <div class="col-md-4 left">
-      <button type="button" class="btn btn-warning disabled">Prev</button>
-      <button type="button" class="btn btn-warning disabled">Next</button>
-      <button type="button" class="btn btn-warning disabled">Today</button>
+      <button type="button" class="btn btn-warning" id="prevDay">Prev</button>
+      <button type="button" class="btn btn-warning" id="today">Today</button>
+      <button type="button" class="btn btn-warning" id="nextDay">Next</button>
     </div>
     <div class="col-md-4 center">
-      <h4>[{{dateTitle}}]</h4>
+      <h4><a href="">{{dateTitle}}</a></h4>
     </div>
     <div class="col-md-4 right">
       <a href="/" class="btn btn-primary">Day</a>

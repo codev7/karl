@@ -1,6 +1,6 @@
 Template.jobsList.helpers({
   "jobs": function() {
-    var jobs = Jobs.find({"onshift": null}).fetch();
+    var jobs = Jobs.find({"onshift": null, "status": "draft"}).fetch();
     return jobs;
   }
 });

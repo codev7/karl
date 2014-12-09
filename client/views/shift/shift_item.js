@@ -1,6 +1,6 @@
 Template.shiftItem.helpers({
   "shifts": function() {
-    var shifts = Shifts.find({"shiftDate": new Date().toISOString().slice(0,10).replace(/-/g,"-")}).fetch();
+    var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
     // console.log(shifts);
     shifts.forEach(function(shift) {
       shift.workerDetail = Workers.findOne(shift.assignedTo);
@@ -29,7 +29,7 @@ Template.shiftItem.helpers({
 
 Template.shiftItem.rendered = function() {
   this.autorun(function() {
-    var shifts = Shifts.find({"shiftDate": new Date().toISOString().slice(0,10).replace(/-/g,"")}).fetch();
+    var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
     if(shifts) {
       Tracker.afterFlush(function() {
         $(".shiftedJobs").sortable({

@@ -91,3 +91,20 @@ body{
 .center-text {
   text-align: center;
 }
+
+.draft {
+  background-color: #3E5AAF;
+}
+
+.assigned {
+  background-color: #3E5AAF;
+}
+
+.active {
+  background-color: #4DB870;
+}
+
+.finished {
+  background-color: #CCD6CC;
+  color: #3D403D;
+}

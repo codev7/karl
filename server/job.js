@@ -22,12 +22,12 @@ Meteor.methods({
       "status": 'draft',
       "assignedTo": null,
       "assignedBy": null,
+      "status": "draft"
     }
     return Jobs.insert(doc);
   },
 
   'assignJobToShift': function(jobId, shiftId, jobStartTime) {
-    console.log("--------------assgining job");
     if(!jobId) {
       throw new Meteor.Error(404, "Job id field not found");
     }
@@ -38,9 +38,10 @@ Meteor.methods({
     var jobDoc = {};
     jobDoc.job = jobId;
     if(job.onshift) {
-      console.log("Job already on a shift, remove from shift", job.onshift, jobId);
-      Shifts.update({_id: job.onshift}, {$pull: {"jobs": jobDoc}});
+      console.log("Job already on a shift, remove from shift", {"shiftId": job.onshift, "jobId": jobId});
+      Shifts.update({"_id": job.onshift}, {$pull: {"jobs": jobDoc}});
     }
+    var status = null;
     //if shift Id exists job move to that shift
     //if does not remove from the shift
     if(shiftId) {
@@ -51,11 +52,28 @@ Meteor.methods({
       if(jobStartTime) {
         jobDoc.start = jobStartTime;
       }
-      console.log("Job set to the shift", shiftId, jobId);
-      Shifts.update({_id: shiftId}, {$addToSet: {"jobs": jobDoc}});
+      console.log("Job set to the shift", {"shiftId": shiftId, "jobId": jobId});
+      Shifts.update({"_id": shiftId}, {$addToSet: {"jobs": jobDoc}});
+      status = "assigned";
     } else {
-      
+      status = "draft";
     }
-    Jobs.update({_id: jobId}, {$set: {"onshift": shiftId}});
+    Jobs.update({"_id": jobId}, {$set: {"onshift": shiftId, "status": status}});
+  },
+
+  'setJobStatus': function(jobId, status) {
+    console.log("--------", arguments);
+    if(!jobId) {
+      throw new Meteor.Error(404, "Job id field not found");
+    }
+    if(!status) {
+      throw new Meteor.Error(404, "Job status field not found");
+    }
+    var job = Jobs.findOne(jobId);
+    if(!job) {
+      throw new Meteor.Error(404, "Job not found");
+    }
+    console.log("Job status set", {"jobId": jobId, "status": status});
+    Jobs.update({"_id": jobId}, {$set: {"status": status}});
   }
 });
