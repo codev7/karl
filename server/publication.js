@@ -24,6 +24,32 @@ Meteor.publish("dailyShift", function(date) {
   return cursors;
 });
 
+Meteor.publish("weeklyShifts", function(week) {
+  var cursors = [];
+  //get Jobs
+  var jobsCursor = Jobs.find();
+  cursors.push(jobsCursor);
+  //get Shifts
+  var shiftsCursor = Shifts.find();
+  cursors.push(shiftsCursor);
+
+  //get Workers
+  // var shifts = shiftsCursor.fetch();
+  // var workersList = [];
+  // shifts.forEach(function(shift) {
+  //   if(shift.assignedTo.length > 0) {
+  //     workersList.concat(shift.assignedTo);
+  //   }
+  // });
+  // console.log("------", workersList);
+
+  // var ownersCursor = Meteor.users.find({_id: {$in: owners}}, {fields: {username: 1, profile: 1}});
+  // cursors.push(ownersCursor);
+
+  // console.log(cursors);
+  return cursors;
+});
+
 Meteor.publish("jobsToBeCompleted", function() {
   var cursors = [];
   var jobs = Jobs.find({"status": "draft"});

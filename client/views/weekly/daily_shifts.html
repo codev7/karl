@@ -1,0 +1,28 @@
+<template name="dailyShifts">
+  <thead>
+    <tr>
+      {{#each weekDays}}
+      <th>{{this}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+      {{#each weekDays}}
+        <td>
+          <div>Description</div>
+        </td>
+      {{/each}}
+      </tr>
+      <tr>
+        {{#each weekDays}}
+        <td>
+          <div>
+            <div class="comb-div bg-primary">8.00</div>
+            <div class="comb-div bg-info">worker</div>
+          </div>
+        </td>
+        {{/each}}
+      </tr>
+  </tbody>
+</template>

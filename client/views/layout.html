@@ -2,18 +2,7 @@
   <div class="container-fluid">
     {{> header}}
     <div class="row">
-      <div class="col-xs-4 col-sm-2">
-        {{> jobsList}}
-      </div>
-      <div class="col-xs-8 col-sm-8">
-        {{> innerHeader}}
-        {{> yield}}
-      </div>
-      <!-- Optional: clear the XS cols if their content doesn't match in height -->
-      <div class="clearfix visible-xs-block"></div>
-      <div class="col-xs-4 col-sm-2">
-        {{> workersList}}
-      </div>
+      {{> yield}}
     </div>
   </div>
 </template>

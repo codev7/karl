@@ -108,3 +108,12 @@ body{
   background-color: #CCD6CC;
   color: #3D403D;
 }
+
+
+/*WEEKELY VIEW*/
+.comb-div {
+  float: left;
+  width: 60px;
+  padding: 10px;
+}
+/*WEEKELY VIEW*/
