@@ -1,5 +1,6 @@
 Meteor.methods({
   'createJob': function(info) {
+    console.log(info);
     if(!info.name) {
       throw new Meteor.Error(404, "Name field not found");
     }
@@ -15,7 +16,7 @@ Meteor.methods({
       "details": info.details,
       "image": info.image,
       "portions": info.portions,
-      "activeTime": info.time,
+      "activeTime": info.activeTime,
       "ingCost": info.ingCost,
       "shelfLife": info.shelfLife,
       "onshift": null,
@@ -38,8 +39,12 @@ Meteor.methods({
     var jobDoc = {};
     jobDoc.job = jobId;
     if(job.onshift) {
-      console.log("Job already on a shift, remove from shift", {"shiftId": job.onshift, "jobId": jobId});
-      Shifts.update({"_id": job.onshift}, {$pull: {"jobs": jobDoc}});
+      if(job.status == 'assigned') {
+        console.log("Job already on a shift, remove from shift", {"shiftId": job.onshift, "jobId": jobId});
+        Shifts.update({"_id": job.onshift}, {$pull: {"jobs": jobDoc}});
+      } else {
+         throw new Meteor.Error(404, "Job on this state, cannot be moved: " + job.status);
+      }
     }
     var status = null;
     //if shift Id exists job move to that shift
@@ -62,7 +67,6 @@ Meteor.methods({
   },
 
   'setJobStatus': function(jobId, status) {
-    console.log("--------", arguments);
     if(!jobId) {
       throw new Meteor.Error(404, "Job id field not found");
     }

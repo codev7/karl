@@ -7,7 +7,13 @@ Template.worker.events({
         return alert(err.reason);
       }
     });
-  } 
+  },
+
+  // 'click .workeritem': function(e, instance) {
+  //   console.log(this._id);
+  //   var workerId = this._id;
+    
+  // }
 });
 
 Template.worker.helpers({

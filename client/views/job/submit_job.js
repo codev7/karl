@@ -23,6 +23,7 @@ Template.submitJob.events({
         "ingCost": ingCost,
         "shelfLife": shelfLife
       }
+      console.log("-----------", info)
       Meteor.call("createJob", info, function(err, id) {
         if(err) {
           return alert(err.reason);
