@@ -14,11 +14,7 @@ Template.worker.helpers({
   'deletePermitted': function(event, instance) {
     var worker = Workers.findOne(this._id);
     if(worker) {
-      if(worker.availability) {
-        return false;
-      } else {
-        return true;
-      }
+      // return true;
     }
   }
 });

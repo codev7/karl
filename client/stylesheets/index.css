@@ -116,4 +116,8 @@ body{
   width: 60px;
   padding: 10px;
 }
+
+.weekly-info-tag {
+  float: left;
+}
 /*WEEKELY VIEW*/

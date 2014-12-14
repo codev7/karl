@@ -8,7 +8,8 @@ Template.workersList.rendered = function() {
 
 Template.workersList.helpers({
   "workers": function() {
-    var workers = Workers.find({"availability": true}).fetch();
+    var workers = Workers.find().fetch();
+    // var onHoliday = Holidays.findOne();
     return workers;
   }
 });
