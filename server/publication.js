@@ -36,10 +36,14 @@ Meteor.publish("weeklyShifts", function(startDate, endDate) {
   var cursors = [];
 
   //get jobs
-  var jobs = Jobs.aggregate([ { $match: {"refDate": {$gte: startDate, $lte: endDate}}}]);
-  console.log(jobs);
-  cursors.push(jobs);
+  // var jobs = Jobs.find({"refDate": {$gte: "2014-12-08", $lte: "2014-12-14"}});
+  // console.log("-----jobs", jobs);
+  // cursors.push(jobs);
 
+  //get shifts
+  var shifts = Shifts.find({"shiftDate": {$gte: "2014-12-08", $lte: "2014-12-14"}})
+  cursors.push(shifts);
+  return cursors;
   //get shifts
   // var shifts = Shifts.
 });
