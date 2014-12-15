@@ -8,7 +8,6 @@ Meteor.methods({
       "type": info.type,
       "createdOn": Date.now(),
       "createdBy": null, //add logged in users id
-      "availability": true,
       "hourlyWage": info.wage,
       "workLimit": null
     }
@@ -23,9 +22,6 @@ Meteor.methods({
     if(!worker) {
       throw new Meteor.Error(404, "Worker not found");
     }
-    if(!shiftId) {
-      Workers.update({_id: workerId}, {$set: {"availability": true}});//need an algo
-    }
     var shift = Shifts.findOne(shiftId);
     if(!shift) {
       throw new Meteor.Error(404, "Shift not found");
@@ -35,7 +31,6 @@ Meteor.methods({
     }
     console.log("Shift been assigned to a new worker", shiftId, workerId);
     Shifts.update({_id: shiftId}, {$set: {"assignedTo": workerId}});
-    Workers.update({_id: workerId}, {$set: {"availability": false}});// need algorithm
   },
 
   'deleteWorkerFromAssignedShift': function(workerId, shiftId) {
@@ -55,6 +50,5 @@ Meteor.methods({
     }
     console.log("Shift assigned worker has been removed", shiftId, workerId);
     Shifts.update({_id: shiftId}, {$set: {"assignedTo": null}});
-    Workers.update({_id: workerId}, {$set: {"availability": true}});
   }
 });

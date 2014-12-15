@@ -1,3 +1,0 @@
-Template.shiftsList.rendered = function() {
-
-}
