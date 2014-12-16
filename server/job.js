@@ -22,8 +22,7 @@ Meteor.methods({
       "onshift": null,
       "status": 'draft',
       "assignedTo": null,
-      "assignedBy": null,
-      "status": "draft"
+      "assignedBy": null
     }
     return Jobs.insert(doc);
   },
@@ -39,7 +38,7 @@ Meteor.methods({
     var jobDoc = {};
     jobDoc.job = jobId;
     if(job.onshift) {
-      if(job.status == 'assigned') {
+      if(job.status === 'assigned') {
         console.log("Job already on a shift, remove from shift", {"shiftId": job.onshift, "jobId": jobId});
         Shifts.update({"_id": job.onshift}, {$pull: {"jobs": jobDoc}});
       } else {
