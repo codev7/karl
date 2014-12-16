@@ -19,7 +19,6 @@ suite("Testing jobs", function() {
     }, info);
 
     var job = server.evalSync(getJob, jobId.id);
-
     assert.equal(jobId.err, null);
     assert.ok(jobId.id);
     done();
@@ -36,11 +35,7 @@ suite("Assign jobs to shifts or remove from shifts - assignJobToShift method", f
         assert.equal(jobBefore.onshift, null);
         assert.equal(jobBefore.status, 'draft');
 
-        var assign = client.evalSync(function(jobId, shiftId) {
-          Meteor.call("assignJobToShift", jobId, shiftId, null, function(err) {
-            emit("return", err);
-          });
-        }, jobId, shiftId);
+        var assign = client.evalSync(assignJobToShiftMethod, jobId, shiftId);
         assert.equal(assign, null)
 
         var jobAfter = server.evalSync(getJob, jobId);
@@ -64,11 +59,7 @@ suite("Assign jobs to shifts or remove from shifts - assignJobToShift method", f
         assert.equal(jobBefore.onshift, shiftBefore);
         assert.equal(jobBefore.status, 'assigned');
 
-        var assign = client.evalSync(function(jobId, shiftId) {
-          Meteor.call("assignJobToShift", jobId, shiftId, null, function(err) {
-            emit("return", err);
-          });
-        }, jobId, shiftAfter);
+        var assign = client.evalSync(assignJobToShiftMethod, jobId, shiftAfter);
         assert.equal(assign, null);
 
         var jobAfter = server.evalSync(getJob, jobId);
@@ -90,17 +81,8 @@ suite("Assign jobs to shifts or remove from shifts - assignJobToShift method", f
         assert.equal(jobBefore.onshift, shiftBefore);
         assert.equal(jobBefore.status, 'finished');
 
-        var assign = client.evalSync(function(jobId, shiftId) {
-          Meteor.call("assignJobToShift", jobId, shiftId, null, function(err) {
-            emit("return", err);
-          });
-        }, jobId, shiftAfter);
+        var assign = client.evalSync(assignJobToShiftMethod, jobId, shiftAfter);
         assert.equal(assign.error, 404);
-
-        var jobAfter = server.evalSync(getJob, jobId);
-        assert.equal(jobBefore._id, jobAfter._id);
-        assert.equal(jobBefore.onshift, jobAfter.onshift);
-        assert.equal(jobAfter.status, 'finished');
         done();
       });  
     });
@@ -118,11 +100,7 @@ suite("Assign jobs to shifts or remove from shifts - assignJobToShift method", f
       assert.equal(jobBefore.onshift, shiftId);
       assert.equal(jobBefore.status, 'assigned');
 
-      var assign = client.evalSync(function(jobId) {
-        Meteor.call("assignJobToShift", jobId, null, null, function(err) {
-          emit("return", err);
-        });
-      }, jobId);
+      var assign = client.evalSync(assignJobToShiftMethod, jobId, null);
       assert.equal(assign, null);
 
       var jobAfter = server.evalSync(getJob, jobId);
@@ -143,17 +121,81 @@ suite("Assign jobs to shifts or remove from shifts - assignJobToShift method", f
       assert.equal(jobBefore.onshift, shiftId);
       assert.equal(jobBefore.status, 'finished');
 
-      var assign = client.evalSync(function(jobId) {
-        Meteor.call("assignJobToShift", jobId, null, null, function(err) {
-          emit("return", err);
-        });
-      }, jobId);
+      var assign = client.evalSync(assignJobToShiftMethod, jobId, null);
       assert.equal(assign.error, 404);
+      done();
+    });
+  });
+});
+
+suite("Update job status - setJobStatus", function() {
+  suite("Without assigned to a shift", function() {
+    test("status 'draft'", function(done, server, client) {
+      var jobId = server.evalSync(insertJob);
+      var jobBefore = server.evalSync(getJob, jobId);
+      assert.equal(jobBefore.status, 'draft');
+
+      var setStatus = client.evalSync(setJobStatusMethod, jobId);
+      assert.equal(setStatus.error, 404);
+      done();
+    });
+  });
+
+  suite("With assigned to a shift", function() {
+    test("status 'draft'", function(done, server, client) {
+      var jobId = server.evalSync(insertJob);
+      var shiftId = server.evalSync(insertShift);
+      var jobBefore = server.evalSync(getJob, jobId);
+      server.evalSync(updateJob, jobId, 'onshift', shiftId);   
+      assert.equal(jobBefore.status, 'draft');
+
+      var setStatus = client.evalSync(setJobStatusMethod, jobId);
+      assert.equal(setStatus.error, 404);
+      done();
+    });
+
+    test("status 'assigned'", function(done, server, client) {
+      var jobId = server.evalSync(insertJob);
+      var shiftId = server.evalSync(insertShift);
+      server.evalSync(updateJob, jobId, 'onshift', shiftId);   
+      server.evalSync(updateJob, jobId, 'status', "assigned");   
+      var jobBefore = server.evalSync(getJob, jobId);
+      assert.equal(jobBefore.status, 'assigned');
+
+      var setStatus = client.evalSync(setJobStatusMethod, jobId);
+      assert.equal(setStatus, null);
 
       var jobAfter = server.evalSync(getJob, jobId);
-      assert.equal(jobAfter.onshift, shiftId);
-      assert.equal(jobAfter.status, 'finished');
+      assert.equal(jobAfter.status, 'started');
+      done();
+    });
 
+    test("status 'started'", function(done, server, client) {
+      var jobId = server.evalSync(insertJob);
+      var shiftId = server.evalSync(insertShift);
+      server.evalSync(updateJob, jobId, 'onshift', shiftId);  
+      server.evalSync(updateJob, jobId, 'status', "started");    
+      var jobBefore = server.evalSync(getJob, jobId);
+      assert.equal(jobBefore.status, 'started');
+
+      var setStatus = client.evalSync(setJobStatusMethod, jobId);
+      assert.equal(setStatus, null);
+
+      var jobAfter = server.evalSync(getJob, jobId);
+      assert.equal(jobAfter.status, 'finished');
+      done();
+    });
+
+     test("status 'finished'", function(done, server, client) {
+      var jobId = server.evalSync(insertJob);
+      var shiftId = server.evalSync(insertShift);
+      server.evalSync(updateJob, jobId, 'onshift', shiftId);  
+      server.evalSync(updateJob, jobId, 'status', "finished");    
+      var jobBefore = server.evalSync(getJob, jobId);
+      assert.equal(jobBefore.status, 'finished');
+
+      var setStatus = client.evalSync(setJobStatusMethod, jobId);
+      assert.equal(setStatus.error, 404);
       done();
     });
   });
@@ -200,4 +242,17 @@ updateJob = function(id, option, value) {
 getJob = function(jobId) {
   var a = Jobs.findOne(jobId);
   emit("return", a);
+}
+
+assignJobToShiftMethod = function(jobId, shiftId) {
+  Meteor.call("assignJobToShift", jobId, shiftId, null, function(err) {
+    emit("return", err);
+  });
+}
+
+
+setJobStatusMethod = function(jobId) {
+  Meteor.call("setJobStatus", jobId, function(err) {
+    emit("return", err);
+  });
 }

@@ -65,16 +65,26 @@ Meteor.methods({
     Jobs.update({"_id": jobId}, {$set: {"onshift": shiftId, "status": status}});
   },
 
-  'setJobStatus': function(jobId, status) {
+  'setJobStatus': function(jobId) {
     if(!jobId) {
       throw new Meteor.Error(404, "Job id field not found");
-    }
-    if(!status) {
-      throw new Meteor.Error(404, "Job status field not found");
     }
     var job = Jobs.findOne(jobId);
     if(!job) {
       throw new Meteor.Error(404, "Job not found");
+    }
+    if(!job.onshift) {
+      throw new Meteor.Error(404, "Assign job to a shift before change status");
+    }
+    var status = null;
+    if(job.status == "draft") {
+      throw new Meteor.Error(404, "You can not have a draft job on a shift");
+    } else if(job.status == "assigned") {
+      status = "started";
+    } else if(job.status == "started") {
+      status = "finished";
+    } else if(job.status == "finished") {
+      throw new Meteor.Error(404, "You can not change status of a already finished job");
     }
     console.log("Job status set", {"jobId": jobId, "status": status});
     Jobs.update({"_id": jobId}, {$set: {"status": status}});
