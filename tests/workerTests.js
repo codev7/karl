@@ -11,12 +11,12 @@ suite("Testing worker", function() {
         emit('return', {"err": err, "id": id});
       });
     }, info);
+    assert.equal(workerId.err, null);
 
     var worker = client.evalSync(function(workerId) {
       var a = Workers.findOne(workerId);
       emit("return", a);
     }, workerId.id);
-    assert.equal(worker.err, null);
     assert.ok(workerId.id);
     done();
   });
