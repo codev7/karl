@@ -36,18 +36,21 @@ Template.shiftItem.rendered = function() {
           connectWith: "#jobsList, .shiftedJobs"
         })
         .droppable({
+          tolerance: "pointer",
           drop: function(event, ui) {
             if(ui.draggable[0].dataset.title == "job") {
               var jobId = ui.draggable[0].dataset.id;
               var shiftId = $(this).attr("data-id");
               Meteor.call("assignJobToShift", jobId, shiftId, function(err) {
                 if(err) {
+                  console.log("this", event, ui);
                   return alert(err.reason);
                 }
               });
             }
           }
-        });  
+        });
+
 
         $(".shiftedWorkers")
         .droppable({
@@ -55,6 +58,7 @@ Template.shiftItem.rendered = function() {
             if(ui.draggable[0].dataset.title == "worker") {
               var workerId = ui.draggable[0].dataset.id;
               var shiftId = $(this).attr("data-id");
+              var options = null;
               Meteor.call("assignWorkerToShift", workerId, shiftId, function(err) {
                 if(err) {
                   return alert(err.reason);

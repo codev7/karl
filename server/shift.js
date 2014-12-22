@@ -16,6 +16,7 @@ Meteor.methods({
       "assignedBy": null, //update
       "jobs": []
     }
+    console.log("Shift inserted");
     return Shifts.insert(doc);
   }
 });

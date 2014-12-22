@@ -100,7 +100,7 @@ body{
   background-color: #3E5AAF;
 }
 
-.active {
+.started {
   background-color: #4DB870;
 }
 
@@ -113,11 +113,20 @@ body{
 /*WEEKELY VIEW*/
 .comb-div {
   float: left;
-  width: 60px;
+  width: 100px;
   padding: 10px;
+  font-size: 12px;
 }
 
 .weekly-info-tag {
   float: left;
+}
+
+.shift-workers {
+  margin-top: 10px;
+}
+
+.new {
+  height: 200px;
 }
 /*WEEKELY VIEW*/

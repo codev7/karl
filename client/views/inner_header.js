@@ -52,19 +52,6 @@ Template.innerHeader.events({
 
   'click #week': function(event) {
     event.preventDefault();
-    var today_s = new Date();
-    var today_day_s = today_s.getDay() - 1;
-    today_s.setDate(today_s.getDate() - today_day_s);
-    var weekStart = today_s.toISOString().slice(0,10).replace(/-/g,"-");
-    console.log("---------s-----", weekStart, today_day_s);
-
-    var today_e = new Date();
-    var today_day_e = today_e.getDay() - 1;
-    // console.log(today_day_e, typeof(today_day_e));
-    today_e.setDate(today_e.getDate() + today_day_e);
-    var weekEnd = today_e.toISOString().slice(0,10).replace(/-/g,"-");
-    console.log("--------e------", weekEnd, today_day_e);
-
-    Router.go("weekly", {"_weekStart": weekStart, "_weekEnd": weekEnd})
+    Router.go("weekly", {"_date": new Date().toISOString()});
   }
 });
