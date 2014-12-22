@@ -37,7 +37,6 @@ Meteor.publish("weeklyShifts", function(dates) {
 
   //get shifts
   var shiftsCursor = Shifts.find({"shiftDate": {$gte: firstDate, $lte: lastDate}});
-  // console.log("-------", shifts.fetch())
   cursors.push(shiftsCursor);
 
   var shifts = shiftsCursor.fetch();

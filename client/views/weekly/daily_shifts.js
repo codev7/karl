@@ -13,9 +13,7 @@ Template.dailyShifts.helpers({
     var shiftNWorker = [];
     console.log("this.toString()", this.toString());
     var shifts = Shifts.find({"shiftDate": this.toString()}).fetch();
-    console.log("------", shifts);
     shifts.forEach(function(shift) {
-      console.log("---------sh", shift);
       var doc = {};
       doc.shift = shift.startTime + " - " + shift.endTime;
       if(shift.assignedTo) {
@@ -26,7 +24,6 @@ Template.dailyShifts.helpers({
       }
       shiftNWorker.push(doc);
     });
-    console.log("this------", shiftNWorker);
     return shiftNWorker;
   }
 });
