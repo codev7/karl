@@ -30,20 +30,35 @@ Meteor.publish("dailyShift", function(date) {
   return cursors;
 });
 
-Meteor.publish("weeklyShifts", function(startDate, endDate) {
+Meteor.publish("weeklyShifts", function(dates) {
   var cursors = [];
-
-  //get jobs
-  // var jobs = Jobs.find({"refDate": {$gte: "2014-12-08", $lte: "2014-12-14"}});
-  // console.log("-----jobs", jobs);
-  // cursors.push(jobs);
+  var firstDate = dates.day1.slice(0,10).replace(/-/g,"-");
+  var lastDate = dates.day7.slice(0,10).replace(/-/g,"-");
 
   //get shifts
-  var shifts = Shifts.find({"shiftDate": {$gte: "2014-12-08", $lte: "2014-12-14"}})
-  cursors.push(shifts);
+  var shiftsCursor = Shifts.find({"shiftDate": {$gte: firstDate, $lte: lastDate}});
+  // console.log("-------", shifts.fetch())
+  cursors.push(shiftsCursor);
+
+  var shifts = shiftsCursor.fetch();
+  var workersList = [];
+  var shiftsList = [];
+  shifts.forEach(function(shift) {
+    if(shift.assignedTo) {
+      workersList.push(shift.assignedTo);
+    }
+    shiftsList.push(shift._id);
+  });
+  if(shiftsList.length > 0) {
+    var jobsCursor = Jobs.find({"onshift": {$in: shiftsList}});
+    cursors.push(jobsCursor);
+  }
+  if(workersList.length > 0) {
+    var workersOnShifts = Workers.find({_id: {$in: workersList}});
+    cursors.push(workersOnShifts);
+  }
+  console.log("Weekly shifts publication");;
   return cursors;
-  //get shifts
-  // var shifts = Shifts.
 });
 
 Meteor.publish("jobsToBeCompleted", function() {

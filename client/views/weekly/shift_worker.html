@@ -1,8 +1,14 @@
 <template name="shiftWorker">
-  <td>
-    <div>
-      <div class="comb-div bg-primary">8.00</div>
-      <div class="comb-div bg-info">worker</div>
+  <tr>
+    <div class="shift-workers">
+      <div class="comb-div bg-primary">{{shift}}</div>
+      <div class="comb-div bg-info">
+        {{#if worker}}
+          {{worker}}
+        {{else}}
+          Not assigned
+        {{/if}}
+      </div>
     </div>
-  </td>
+  </tr>
 </template>
