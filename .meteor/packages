@@ -6,7 +6,6 @@
 meteor-platform
 insecure
 iron:router
-mongodb-server-aggregation
 meteorhacks:npm
 
 
