@@ -22,8 +22,12 @@ Template.shiftItem.helpers({
         // console.log(worker)
         return worker;     
       }
-    }
-    
+    }  
+  },
+
+  "timer": function() {
+    var timer = ['08AM', '10AM', '12PM', '02PM', '04PM', "06PM"];
+    return timer;
   }
 });
 

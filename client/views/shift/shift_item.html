@@ -1,35 +1,49 @@
 <template name="shiftItem">
-  <thead>
-    <tr>
+  <div class="table-responsive">
+    <table class="table">
       {{#each shifts}}
-        <th class="center-text">
-          {{startTime}} - {{endTime}} Shift
-          <div class="shiftedWorkers" data-id="{{_id}}">
-            {{#if workerDetail}}
-              {{> worker workerDetail}}
-            {{else}}
-              Drag a worker to assign
-            {{/if}}
-          </div>
-        </th>
+        <td>
+          <table class="table table-bordered">
+            <thead>
+              <tr class="center-text">
+                <th colspan="2">{{startTime}} - {{endTime}} Shift</th>
+              </tr>
+              <tr>
+                <th colspan="2"><div class="shiftedWorkers" data-id="{{_id}}">
+                  {{#if workerDetail}}
+                    {{> worker workerDetail}}
+                  {{else}}
+                    Drag a worker to assign
+                  {{/if}}
+                </div></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td class="time-panel">
+                  {{#each timer}}
+                  <div class="time-divider">{{this}}</div>
+                  <div class="time-divider">-</div>
+                  <div class="time-divider">-</div>
+                  {{/each}}
+                </td>
+                <td class="job-panel">
+                  <div class="shift shiftedJobs" data-id="{{_id}}">
+                    {{#if jobs}}
+                      {{#each jobs}}
+                        {{> jobItem}}
+                      {{/each}}
+                    {{else}}
+                      Drag Jobs here
+                    {{/if}}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
       {{/each}}
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      {{#each shifts}}
-      <td>
-        <div class="shift shiftedJobs" data-id="{{_id}}">
-          {{#if jobs}}
-            {{#each jobs}}
-              {{> jobItem}}
-            {{/each}}
-          {{else}}
-            Drag Jobs here
-          {{/if}}
-        </div>
-      </td>
-      {{/each}}
-    </tr>
-  </tbody>
+    </table>
+  </div>
 </template>

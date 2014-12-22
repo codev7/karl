@@ -58,6 +58,23 @@ body{
   color: #bbb;
 }
 
+.time-panel {
+  width: 10px;
+  border-right: none !important;
+  /*background-color: #aaa;*/
+
+}
+
+.time-divider {
+  height: 10px;
+  color: #aaa;
+  font-size: 12px; 
+}
+
+.job-panel {
+  border-left: none !important;
+}
+
 .shiftedWorkers {
   color: #aaa;
   max-height: 30px;
