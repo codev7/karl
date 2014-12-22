@@ -4,19 +4,8 @@ Template.jobItem.events({
   },
 
   'click .jobitem': function(e, instance) {
-    var status = this.status;
     if(this) {
-      if(this.status == "draft") {
-        // status = "active";
-        return;
-      } else if(this.status == "active") {
-        status = "finished";
-      } else if(this.status == "finished") {
-        return;
-      } else if(this.status == "assigned") {
-        status = "active";
-      }
-      Meteor.call("setJobStatus", this._id, status, function(err) {
+      Meteor.call("setJobStatus", this._id, function(err) {
         if(err) {
           return alert(err.reason);
         }

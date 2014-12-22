@@ -1,6 +1,5 @@
 Meteor.methods({
   'createShift': function(info) {
-
     if(!info.startTime) {
       throw new Meteor.Error(404, "Start time field not found");
     }
@@ -17,7 +16,7 @@ Meteor.methods({
       "assignedBy": null, //update
       "jobs": []
     }
-    console.log("---------------server---------");
+    console.log("Shift inserted");
     return Shifts.insert(doc);
   }
 });

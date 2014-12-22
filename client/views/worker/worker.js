@@ -7,20 +7,14 @@ Template.worker.events({
         return alert(err.reason);
       }
     });
-  },
-
-  // 'click .workeritem': function(e, instance) {
-  //   console.log(this._id);
-  //   var workerId = this._id;
-    
-  // }
+  }
 });
 
 Template.worker.helpers({
   'deletePermitted': function(event, instance) {
     var worker = Workers.findOne(this._id);
     if(worker) {
-      // return true;
+      return true;
     }
   }
 });

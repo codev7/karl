@@ -1,6 +1,5 @@
 Meteor.methods({
   'setWorkerHoliday': function(workerId, date, onHoliday) {
-    console.log("-----------", arguments);
     if(!workerId) {
       throw new Meteor.Error(404, "WorkerId not found");
     }
@@ -13,7 +12,6 @@ Meteor.methods({
     }
     if(onHoliday) {
       var alreadyAssigned = Shifts.findOne({"shiftDate": date, "assignedTo": workerId});
-      console.log("-----------------------------", alreadyAssigned);
       if(alreadyAssigned) {
         console.log("Worker removed from shift", {"workerId": workerId, "date": date, "shift": alreadyAssigned._id});
         Shifts.update({_id: alreadyAssigned._id}, {$set: {"assignedTo": null}});
