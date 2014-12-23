@@ -17,14 +17,19 @@
               <label class="col-sm-4 control-label">Type</label>
               <div class="col-sm-6">
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="type" data-toggle="dropdown" aria-expanded="true">
+                  <select name="type">
+                    <option selected="selected">Type</option>
+                    <option value="service">Service</option>
+                    <option value="prep">Prep</option>
+                  </select>
+                  <!-- <button class="btn btn-default dropdown-toggle" type="button" name="type" data-toggle="dropdown" aria-expanded="true">
                     Type
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="type">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Prep</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Service</a></li>
-                  </ul>
+                  </ul> -->
                 </div>
               </div>
             </div>
@@ -38,7 +43,13 @@
               <label class="col-sm-4 control-label">Portions</label>
               <div class="col-sm-6">
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="noOfPortions" data-toggle="dropdown" aria-expanded="true">
+                  <select name="portions">
+                    <option selected="selected">No. of portions</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                  <!-- <button class="btn btn-default dropdown-toggle" type="button" id="noOfPortions" data-toggle="dropdown" aria-expanded="true">
                     No. of portions
                     <span class="caret"></span>
                   </button>
@@ -46,7 +57,7 @@
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">8</a></li>
-                  </ul>
+                  </ul> -->
                 </div>
               </div>
             </div>
@@ -61,7 +72,7 @@
               <div class="col-sm-6">
                 <div class="input-group">
                   <input type="number" name= "activeTime" class="form-control">
-                  <!-- <span class="input-group-addon">h/m</span> -->
+                  <span class="input-group-addon">Mins</span>
                 </div>
               </div>
             </div>

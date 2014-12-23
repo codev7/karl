@@ -2,12 +2,13 @@ Template.submitJob.events({
   'submit form': function(event, instance) {
     event.preventDefault();
     var name = $(event.target).find('[name=name]').val();
-    // var type = $(event.target).find('[name=name]').val();;
+    var type = $(event.target).find('[name=type]').val();;
     var details = $(event.target).find('[name=details]').val();
-    // var portions = $(event.target).find('[name=portions]').val();;
+    var portions = $(event.target).find('[name=portions]').val();;
     var activeTime = $(event.target).find('[name=activeTime]').val();
     var ingCost = $(event.target).find('[name=ingCost]').val();
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
+    console.log("-----------", name, type, details, portions, activeTime, ingCost, shelfLife)
     
     if(!name || name.trim() == "") {
       alert("Please add title for your job");
@@ -23,7 +24,6 @@ Template.submitJob.events({
         "ingCost": ingCost,
         "shelfLife": shelfLife
       }
-      console.log("-----------", info)
       Meteor.call("createJob", info, function(err, id) {
         if(err) {
           return alert(err.reason);

@@ -3,13 +3,15 @@ Template.jobItem.events({
     $("#jobProfile").modal("show");
   },
 
-  'click .jobitem': function(e, instance) {
+  'click .set-job-status': function(e, instance) {
     if(this) {
-      Meteor.call("setJobStatus", this._id, function(err) {
-        if(err) {
-          return alert(err.reason);
-        }
-      });
+      if(this.assignedTo) {
+        Meteor.call("setJobStatus", this._id, function(err) {
+          if(err) {
+            return alert(err.reason);
+          }
+        }); 
+      }
     }
   }
 });

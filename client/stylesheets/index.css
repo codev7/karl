@@ -147,3 +147,11 @@ body{
   height: 200px;
 }
 /*WEEKELY VIEW*/
+
+.set-job-status {
+  position: relative;
+  float: right;
+  width: 10px;
+  height: 20px;
+  background-color: #fff;
+}
