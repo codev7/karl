@@ -1,7 +1,6 @@
 Template.dailyShifts.helpers({
   'weekDays': function() {
     var daysOfWeek = getDaysOfWeek(new Date());
-    console.log(daysOfWeek);
     return daysOfWeek;
   },
 
@@ -11,7 +10,6 @@ Template.dailyShifts.helpers({
 
   'shiftsNWorkers': function() {
     var shiftNWorker = [];
-    console.log("this.toString()", this.toString());
     var shifts = Shifts.find({"shiftDate": this.toString()}).fetch();
     shifts.forEach(function(shift) {
       var doc = {};

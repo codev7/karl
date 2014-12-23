@@ -1,10 +1,8 @@
-Template.shiftItem.helpers({
+Template.shiftsList.helpers({
   "shifts": function() {
     var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
-    // console.log(shifts);
     shifts.forEach(function(shift) {
       shift.workerDetail = Workers.findOne(shift.assignedTo);
-      // console.log(shift);
     });
     return shifts;
   },
@@ -19,7 +17,6 @@ Template.shiftItem.helpers({
     if(shifts) {
       if(shifts.assignedTo) {
         var worker = Workers.findOne(shifts.assignedTo);
-        // console.log(worker)
         return worker;     
       }
     }  
@@ -31,7 +28,7 @@ Template.shiftItem.helpers({
   }
 });
 
-Template.shiftItem.rendered = function() {
+Template.shiftsList.rendered = function() {
   this.autorun(function() {
     var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
     if(shifts) {
