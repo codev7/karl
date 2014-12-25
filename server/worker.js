@@ -9,9 +9,49 @@ Meteor.methods({
       "createdOn": Date.now(),
       "createdBy": null, //add logged in users id
       "hourlyWage": info.wage,
-      "workLimit": null
+      "workLimit": info.limit
     }
+    console.log("Inserted new worker");
     return Workers.insert(doc);
+  },
+
+  'editWorker': function(info) {
+    if(!info._id) {
+      throw new Meteor.Error(404, "Worker id field not found");
+    }
+    var worker = Workers.findOne(info._id);
+    if(!worker) {
+      throw new Meteor.Error(401, "Worker does not exist");
+    }
+    if(!info.name) {
+      throw new Meteor.Error(404, "Worker should have a name");
+    }
+    var doc = {
+      "name": info.name,
+      "type": info.type,
+      "hourlyWage": info.wage,
+      "workLimit": info.limit
+    }
+    console.log("Edited worker", {"Worker Id": info._id});
+    return Workers.update({'_id': info._id}, {$set: doc});
+  },
+
+  'deleteWorker': function(id) {
+    if(!id) {
+      throw new Meteor.Error(404, "Worker id field not found");
+    }
+    var worker = Workers.findOne(id);
+    if(!worker) {
+      throw new Meteor.Error(404, "Worker not found");
+    }
+    var alreadyAssigned = Shifts.find({"assignedTo": id}).count();
+    if(alreadyAssigned > 0) {
+      Workers.update({'_id': id}, {$set: {"resigned": true}});
+      console.log("Worker resigned - updated as resigned", {"workerId": id});
+    } else {
+      Workers.remove({'_id': id});
+      console.log("Worker resigned - deleted", {"workerId": id});
+    }
   },
 
   'assignWorkerToShift': function(workerId, shiftId, options) {

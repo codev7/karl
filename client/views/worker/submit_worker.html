@@ -17,14 +17,38 @@
               <label class="col-sm-4 control-label">Type</label>
               <div class="col-sm-6">
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+                  <select name="type">
+                    <option selected="selected">Type</option>
+                    <option value="chef">Chef</option>
+                    <option value="waiter">Waiter</option>
+                  </select>
+                  <!-- <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
                     Type
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Chef</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Waiter</a></li>
-                  </ul>
+                  </ul> -->
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Hourly Wage</label>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="number" class="form-control" name="wage" placeholder="Wage">
+                  <span class="input-group-addon">.00</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Work Limit</label>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <input type="number" class="form-control" name="hours" placeholder="Working hours per day">
+                  <span class="input-group-addon">Hours</span>
                 </div>
               </div>
             </div>

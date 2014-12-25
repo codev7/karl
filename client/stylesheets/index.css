@@ -87,6 +87,7 @@ body{
 
 .workeritem {
   background-color: #CC7A00;
+  cursor: pointer;
 }
 
 .workeritem:hover {

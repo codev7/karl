@@ -30,6 +30,10 @@ Meteor.methods({
     if(!info._id) {
       throw new Meteor.Error(404, "Job id field not found");
     }
+    var job = Jobs.findOne(info._id);
+    if(!job) {
+      throw new Meteor.Error(401, "Job does not exist");
+    }
     if(!info.name) {
       throw new Meteor.Error(404, "Name field not found");
     }

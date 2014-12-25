@@ -7,6 +7,11 @@ Template.worker.events({
         return alert(err.reason);
       }
     });
+  },
+
+  'click .workeritem': function(e, instance) {
+    Session.set("thisWorker", this);
+    $("#workerProfileModal").modal();
   }
 });
 
