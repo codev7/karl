@@ -1,5 +1,5 @@
 <template name="jobItem">
-  <div class="item jobitem {{status}}" data-id="{{_id}}" data-title="job">
+  <div class="item jobitem {{status}}" data-id="{{_id}}" data-title="job" style="height: {{jobHeight}}px">
     <a href="" class="job-profile" data-toggle="modal">{{name}}</a>
     {{#if setStatusPermission}}
     <div class="set-job-status"></div>

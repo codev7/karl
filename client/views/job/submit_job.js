@@ -8,7 +8,6 @@ Template.submitJob.events({
     var activeTime = $(event.target).find('[name=activeTime]').val();
     var ingCost = $(event.target).find('[name=ingCost]').val();
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
-    console.log("-----------", name, type, details, portions, activeTime, ingCost, shelfLife)
     
     if(!name || name.trim() == "") {
       alert("Please add title for your job");
@@ -17,9 +16,9 @@ Template.submitJob.events({
     } else {
       var info = {
         "name": name,
-        "type": null,
+        "type": type,
         "details": details,
-        "portions": null,
+        "portions": portions,
         "activeTime": activeTime,
         "ingCost": ingCost,
         "shelfLife": shelfLife

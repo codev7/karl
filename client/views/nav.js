@@ -9,5 +9,9 @@ Template.layout.events({
 
   'click #addWorker': function(e, instance) {
     $("#submitWorkerModal").modal("show");
+  },
+
+  'click #adminPanel': function(e, instance) {
+    Router.go("adminSettings");
   }
 });

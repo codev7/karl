@@ -1,6 +1,5 @@
 Meteor.methods({
   'createJob': function(info) {
-    console.log(info);
     if(!info.name) {
       throw new Meteor.Error(404, "Name field not found");
     }
@@ -25,6 +24,33 @@ Meteor.methods({
       "assignedBy": null
     }
     return Jobs.insert(doc);
+  },
+
+  'editJob': function(info) {
+    if(!info._id) {
+      throw new Meteor.Error(404, "Job id field not found");
+    }
+    if(!info.name) {
+      throw new Meteor.Error(404, "Name field not found");
+    }
+    if(!info.activeTime) {
+      throw new Meteor.Error(404, "Time field not found");
+    }
+    var doc = {
+      "name": info.name,
+      "type": info.type,
+      "createdOn": Date.now(),
+      "createdBy": null, //add logged in users id
+      "refDate": new Date().toISOString().slice(0,10).replace(/-/g,"-"),
+      "details": info.details,
+      "image": info.image,
+      "portions": info.portions,
+      "activeTime": info.activeTime,
+      "ingCost": info.ingCost,
+      "shelfLife": info.shelfLife
+    }
+    console.log("Job updated", {"JobId": info._id});
+    return Jobs.update({'_id': info._id}, {$set: doc});
   },
 
   'assignJobToShift': function(jobId, shiftId, jobStartTime) {
