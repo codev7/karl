@@ -3,9 +3,12 @@ body{
   padding: 30px;
 }
 
+a, a:hover {
+  text-decoration: none;
+}
+
 .jobitem > a, .workeritem > a {
   color: #fff;
-  text-decoration: none;
 }
 
 .left {

@@ -6,7 +6,7 @@ Template.submitShift.events({
     var endTime = $(event.target).find('[name=endTime]').val();
 
     if(!startTime || !endTime) {
-      alert("Please add title for your job");
+      alert("Please add start time and end time for your shift");
     } else {
       var info = {
         "shiftDate": dateOfShift,

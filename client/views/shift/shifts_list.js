@@ -31,6 +31,13 @@ Template.shiftsList.helpers({
   }
 });
 
+Template.shiftsList.events({
+  'click .shift-profile': function(event, instance) {
+    Session.set("thisShift", this);
+    $("#shiftProfile").modal();
+  }
+});
+
 Template.shiftsList.rendered = function() {
   this.autorun(function() {
     var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();

@@ -1,32 +1,33 @@
 <template name="shiftProfile">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">{{shift}}
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Submit Shift</h4>
+        <h4 class="modal-title" id="myModalLabel">Shift Profile</h4>
       </div>
-      <form class="form-horizontal" role="form">
+      <form class="form-horizontal" role="form" data-id="{{shift._id}}">
         <div class="modal-body">
           <div class="form-group">
             <label class="col-sm-4 control-label">Date</label>
             <div class="col-sm-6">
-              <input type="date" class="form-control" name="dateOfShift" placeholder="Date">
+              <input type="date" class="form-control" value="{{shift.shiftDate}}" name="dateOfShift" placeholder="Date">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-4 control-label">Start Time</label>
             <div class="col-sm-6">
-              <input type="time" class="form-control" name="startTime" placeholder="Time">
+              <input type="time" class="form-control" name="startTime" value="{{shift.startTime}}" placeholder="Time">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-4 control-label">End Time</label>
             <div class="col-sm-6">
-              <input type="time" class="form-control" name="endTime" placeholder="Time">
+              <input type="time" class="form-control"  value="{{shift.endTime}}" name="endTime" placeholder="Time">
             </div>
           </div>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-danger deleteShift" data-id="{{shift._id}}">Delete</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
