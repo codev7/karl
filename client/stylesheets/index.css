@@ -163,3 +163,8 @@ a, a:hover {
   height: 20px;
   background-color: #fff;
 }
+
+.center-pad20 {
+  text-align: center;
+  padding: 50px;
+}

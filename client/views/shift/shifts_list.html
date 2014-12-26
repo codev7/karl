@@ -1,6 +1,7 @@
 <template name="shiftsList">
   <div class="table-responsive">
     <table class="table">
+      {{#if shifts}}
       {{#each shifts}}
         <td>
           <table class="table table-bordered">
@@ -47,6 +48,9 @@
           </table>
         </td>
       {{/each}}
+      {{else}}
+      <div class="center-pad20"><a href="#submitShiftModal" data-toggle="modal">Click here to create Shifts</a></div>
+      {{/if}}
     </table>
   </div>
 </template>
