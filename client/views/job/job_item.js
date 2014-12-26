@@ -25,6 +25,6 @@ Template.jobItem.helpers({
   },
 
   'jobHeight': function() {
-    return (this.activeTime * 3);
+    return (this.activeTime * 1);
   }
 });

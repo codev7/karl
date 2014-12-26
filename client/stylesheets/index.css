@@ -72,8 +72,28 @@ a, a:hover {
 
 }
 
-.time-divider {
-  height: 10px;
+.time-divider-2hour {
+  height: 120px;
+}
+
+.time-divider-hour {
+  top: 20px;
+  position: relative;
+}
+
+.time-divider-30min {
+  position: relative;
+  top: 11px;
+}
+
+.time-divider-90min {
+  position: relative;
+  top: 30px;
+}
+
+.time-divider-min {
+  /*1min = 2px*/
+  height: 2px;
   color: #aaa;
   font-size: 12px; 
 }

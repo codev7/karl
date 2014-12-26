@@ -25,9 +25,21 @@ Template.shiftsList.helpers({
     }  
   },
 
-  "timer": function() {
-    var timer = ['08AM', '10AM', '12PM', '02PM', '04PM', "06PM"];
+  "timer120": function() {
+    var timer = [];
+    var startTime = parseInt(this.startTime)
+    var endTime = parseInt(this.endTime) + 1;
+    for (var i = startTime; i < endTime; i) {
+      var time = moment(i, "HH");
+      timer.push(time._i);
+      i = i+2;
+    };
     return timer;
+  },
+
+  'timer60': function() {
+    var arr = [1];
+    return arr;
   }
 });
 

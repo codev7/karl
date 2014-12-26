@@ -128,16 +128,22 @@ Meteor.methods({
       throw new Meteor.Error(404, "Assign job to a shift before change status");
     }
     var status = null;
+    var options = {};
+    if(job.options){
+      options = job.options;
+    }
     if(job.status == "draft") {
       throw new Meteor.Error(404, "You can not have a draft job on a shift");
     } else if(job.status == "assigned") {
       status = "started";
+      options.startedAt = Date.now();
     } else if(job.status == "started") {
       status = "finished";
+      options.finishedAt = Date.now();
     } else if(job.status == "finished") {
       throw new Meteor.Error(404, "You can not change status of a already finished job");
     }
-    console.log("Job status set", {"jobId": jobId, "status": status});
-    Jobs.update({"_id": jobId}, {$set: {"status": status}});
+    console.log("Job status set", {"jobId": jobId, "status": status, "options": options});
+    Jobs.update({"_id": jobId}, {$set: {"status": status, "options": options}});
   }
 });

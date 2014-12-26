@@ -26,10 +26,14 @@
             <tbody>
               <tr>
                 <td class="time-panel">
-                  {{#each timer}}
-                  <div class="time-divider">{{this}}</div>
-                  <div class="time-divider">-</div>
-                  <div class="time-divider">-</div>
+                  {{#each timer120}}
+                  <div class="time-divider-2hour">{{this}}- 
+                  <div class="time-divider-30min">-</div>
+                  <div class="time-divider-hour">--</div>
+                  <div class="time-divider-90min">-</div>
+                   
+                    <!-- <div class="time-divider">-</div> -->
+                  </div>
                   {{/each}}
                 </td>
                 <td class="job-panel">
