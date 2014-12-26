@@ -1,7 +1,22 @@
 Template.jobProfile.helpers({
   'job': function() {
     var job = Session.get("thisJob");
-    return job;
+    if(job) {
+      return job;
+    }
+  },
+
+  'permitted': function() {
+    var job = Session.get("thisJob");
+    if(job) {
+      if(job.status == "draft") {
+        return true;
+      } else if(job.status == "assigned") {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 });
 
@@ -32,6 +47,21 @@ Template.jobProfile.events({
         "shelfLife": shelfLife
       }
       Meteor.call("editJob", info, function(err, id) {
+        if(err) {
+          return alert(err.reason);
+        } else {
+          $("#jobProfile").modal("hide");
+        }
+      });
+    }
+  },
+
+  'click .deleteJob': function(event, instance) {
+    var id = $(event.target).attr("data-id");
+    if(!id) {
+      return alert("Job does not have an id");
+    } else {
+      Meteor.call("deleteJob", id, function(err) {
         if(err) {
           return alert(err.reason);
         } else {

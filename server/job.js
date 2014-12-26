@@ -57,6 +57,27 @@ Meteor.methods({
     return Jobs.update({'_id': info._id}, {$set: doc});
   },
 
+  'deleteJob': function(jobId) {
+    if(!jobId) {
+      throw new Meteor.Error(404, "Job id field not found");
+    }
+    var job = Jobs.findOne(jobId);
+    if(!job) {
+      throw new Meteor.Error(404, "Job not found");
+    }
+    if(job.status == "draft") {
+      console.log("Job removed", {"jobId": jobId});
+      Jobs.remove({'_id': jobId});
+    } else {
+      if(job.status == "assigned") {
+        console.log("Job sent into draft state - not deleted", {"jobId": jobId});
+        Jobs.update({'_id': jobId}, {$set: {"status": "draft", "onshift": null}});
+      } else {
+        throw new Meteor.Error(404, "Job in '" + job.status + "' status cannot be deleted");
+      }
+    }
+  },
+
   'assignJobToShift': function(jobId, shiftId, jobStartTime) {
     if(!jobId) {
       throw new Meteor.Error(404, "Job id field not found");
