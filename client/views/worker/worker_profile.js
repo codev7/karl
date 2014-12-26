@@ -2,7 +2,7 @@ Template.workerProfile.helpers({
   'worker': function() {
     var worker = Session.get("thisWorker");
     return worker;
-  }
+  },
 });
 
 Template.workerProfile.events({
@@ -13,7 +13,6 @@ Template.workerProfile.events({
     var wage = $(event.target).find('[name=wage]').val();
     var limit = $(event.target).find('[name=hours]').val();
 
-    console.log(name, type, wage, limit);
     if(!name || name.trim() == "") {
       return alert("Please add title for your worker");
     } else {
