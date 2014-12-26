@@ -28,3 +28,9 @@ Template.jobItem.helpers({
     return (this.activeTime * 1);
   }
 });
+
+Template.jobItem.rendered = function() {
+  // $(function () {
+  //   $('[data-toggle="tooltip"]').tooltip()
+  // });
+}

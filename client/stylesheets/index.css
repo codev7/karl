@@ -179,8 +179,11 @@ a, a:hover {
 .set-job-status {
   position: relative;
   float: right;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
   background-color: #fff;
 }
 
