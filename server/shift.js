@@ -47,5 +47,21 @@ Meteor.methods({
     }
     Shifts.update({'_id': info._id}, {$set: doc});
     console.log("Shift updated", doc);
+  },
+
+  'deleteShift': function(id) {
+    if(!id) {
+      throw new Meteor.Error(404, "Shift Id field not found");
+    }
+    var shift = Shifts.findOne(id);
+    if(!shift) {
+      throw new Meteor.Error(404, "Shift not found");
+    }
+    if(shift.assignedTo || shift.jobs.length > 0) {
+      throw new Meteor.Error(404, "You can't delete this shift.");
+    } else {
+      Shifts.remove({'_id': id});
+      console.log("Shift deleted", {"shiftId": id});
+    }
   }
 });

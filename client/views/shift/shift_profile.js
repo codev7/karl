@@ -40,5 +40,21 @@ Template.shiftProfile.events({
         });
       }
     }
+  },
+
+  'click .deleteShift': function(event, instance) {
+    var shiftId = $(event.target).attr("data-id");
+    if(shiftId) {
+      var shift = Shifts.findOne(shiftId);
+      if(shift) {
+        Meteor.call("deleteShift", shiftId, function(err) {
+          if(err) {
+            return alert(err.reason);
+          } else {
+            $("#shiftProfile").modal("hide");
+          }
+        });
+      }
+    }
   }
 });
