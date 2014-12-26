@@ -3,6 +3,9 @@ Template.shiftsList.helpers({
     var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
     shifts.forEach(function(shift) {
       shift.workerDetail = Workers.findOne(shift.assignedTo);
+      if(shift.workerDetail) {
+        shift.workerDetail.onShift = shift._id;
+      }
     });
     return shifts;
   },

@@ -9,17 +9,21 @@ Template.worker.events({
     });
   },
 
-  'click .workeritem': function(e, instance) {
+  'click .worker-profile': function(e, instance) {
     Session.set("thisWorker", this);
     $("#workerProfileModal").modal();
   }
 });
 
 Template.worker.helpers({
-  'deletePermitted': function(event, instance) {
+  'deletePermitted': function() {
     var worker = Workers.findOne(this._id);
     if(worker) {
-      return true;
+      if(this.onShift) {
+        return true;
+      } else {
+        return false;
+      }      
     }
   }
 });
