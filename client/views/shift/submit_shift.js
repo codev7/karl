@@ -23,3 +23,24 @@ Template.submitShift.events({
     }
   }
 });
+
+Template.submitShift.rendered = function() {
+  new JsDatePick({
+    useMode: 2,
+    isStripped: true,
+    target: "shiftDate",
+    dateFormat: "%Y-%m-%d",
+    // selectedDate:{        //This is an example of what the full configuration offers.
+    //   day:5,            //For full documentation about these settings please see the full version of the code.
+    //   month:9,
+    //   year:2006
+    // },
+    yearsRange: [1978,2040],
+    limitToToday: false,
+    cellColorScheme: "aqua",
+    imgPath: "img/",
+    weekStartDay: 1
+  });
+
+  $('.timepicker').timepicker();
+}

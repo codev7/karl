@@ -70,7 +70,9 @@
             <label class="col-sm-4 control-label">Image</label>
             <div class="col-sm-6">
               <input type="file" >
+              {{#if image}}
               <img src="{{image}}" alt="image" class="col-sm-4 control-label text-align-left">
+              {{/if}}
             </div>
           </div>
           <div class="form-group">

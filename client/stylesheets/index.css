@@ -57,7 +57,7 @@ a, a:hover {
 }
 
 #jobsList, .workersList {
-  min-height: 50px;
+  min-height: 100px;
 }
 
 .shift {
