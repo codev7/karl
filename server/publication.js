@@ -67,13 +67,6 @@ Meteor.publish("jobsToBeCompleted", function() {
   return cursors;
 });
 
-Meteor.publish("allWorkers", function() {
-  var cursors = [];
-  var workers = Workers.find();
-  cursors.push(workers);
-  return cursors;
-});
-
 Meteor.publish("availableWorkers", function(date) {
   var cursors = [];
   var busyWorkers = [];
@@ -96,4 +89,10 @@ Meteor.publish("availableWorkers", function(date) {
   busyWorkers = onShiftWorkers.concat(onHolidayWorkers);
   var workers = Workers.find({_id: {$nin: busyWorkers}});
   return workers;
+});
+
+Meteor.publish("allWorkers", function() {
+  var cursors = [];
+  cursors.push(Workers.find());
+  return cursors;
 });

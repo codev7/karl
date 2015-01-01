@@ -20,7 +20,7 @@ Template.shiftsList.helpers({
     if(shifts) {
       if(shifts.assignedTo) {
         var worker = Workers.findOne(shifts.assignedTo);
-        return worker;     
+        return worker;  
       }
     }  
   },
@@ -40,6 +40,29 @@ Template.shiftsList.helpers({
   'timer60': function() {
     var arr = [1];
     return arr;
+  },
+
+  "workers": function() {
+    var shifts = Shifts.find({'shiftDate': Session.get("thisDate")}).fetch();
+    var busyWorkers = [];
+    var onShiftWorkers = [];
+    var onHolidayWorkers = [];
+    if(shifts.length > 0) {
+      shifts.forEach(function(shift) {
+        if(shift.assignedTo) {
+          onShiftWorkers.push(shift.assignedTo);
+        }
+      });
+    }
+    var holidays = Holidays.findOne({"date": Session.get("thisDate")});
+    if(holidays) {
+      if(holidays.users.length > 0) {
+        onHolidayWorkers = holidays.users;
+      }
+    }
+    busyWorkers = onShiftWorkers.concat(onHolidayWorkers);
+    var workers = Workers.find({_id: {$nin: busyWorkers}}).fetch();
+    return workers;
   }
 });
 
@@ -47,6 +70,26 @@ Template.shiftsList.events({
   'click .shift-profile': function(event, instance) {
     Session.set("thisShift", this);
     $("#shiftProfile").modal();
+  },
+
+  'change .shiftAssign': function(event) {
+    var workerId = $(event.target).val();
+    var shiftId = $(event.target).attr("data-id")
+    Meteor.call("assignWorkerToShift", workerId, shiftId, function(err) {
+      if(err) {
+        return alert(err.reason);
+      }
+    });
+  },
+
+  'click .removeAssignedShift': function(event) {
+    var shiftId = $(event.target).prev().attr("data-id")
+    Meteor.call("removeWorkerFromAssignedShift", shiftId, function(err) {
+      if(err) {
+        return alert(err.reason);
+      }
+    });
+
   }
 });
 
@@ -67,23 +110,6 @@ Template.shiftsList.rendered = function() {
               Meteor.call("assignJobToShift", jobId, shiftId, function(err) {
                 if(err) {
                   console.log("this", event, ui);
-                  return alert(err.reason);
-                }
-              });
-            }
-          }
-        });
-
-
-        $(".shiftedWorkers")
-        .droppable({
-          drop: function(event, ui) {
-            if(ui.draggable[0].dataset.title == "worker") {
-              var workerId = ui.draggable[0].dataset.id;
-              var shiftId = $(this).attr("data-id");
-              var options = null;
-              Meteor.call("assignWorkerToShift", workerId, shiftId, function(err) {
-                if(err) {
                   return alert(err.reason);
                 }
               });

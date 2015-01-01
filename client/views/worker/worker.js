@@ -16,14 +16,4 @@ Template.worker.events({
 });
 
 Template.worker.helpers({
-  'deletePermitted': function() {
-    var worker = Workers.findOne(this._id);
-    if(worker) {
-      if(this.onShift) {
-        return true;
-      } else {
-        return false;
-      }      
-    }
-  }
 });

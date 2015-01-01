@@ -13,13 +13,23 @@
                 </th>
               </tr>
               <tr>
-                <th colspan="2"><div class="shiftedWorkers" data-id="{{_id}}">
-                  {{#if workerDetail}}
-                    {{> worker workerDetail}}
-                  {{else}}
-                    Drag a worker to assign
-                  {{/if}}
-                </div></th>
+                <th colspan="2">
+                  <div class="shiftedWorkers dropdown">
+                    <select name="workers" class="shiftAssign" data-id="{{_id}}">
+                      {{#if assignedWorker}}
+                      <option selected="selected" value="{{assignedWorker._id}}">{{assignedWorker.name}}</option>
+                      {{else}}
+                      <option selected="selected">Select a worker to assign</option>  
+                      {{/if}}
+                      {{#each workers}}
+                      <option value="{{_id}}">{{name}}</option>  
+                      {{/each}}
+                    </select>
+                    {{#if assignedWorker}}
+                    <img class="removeAssignedShift" src="/images/cancel.png" height="15px" width="15px">
+                    {{/if}}
+                  </div>
+                </th>
               </tr>
             </thead>
 

@@ -48,3 +48,11 @@ Template.workerProfile.events({
     }
   }
 });
+
+Template.workerProfile.rendered = function() {
+  $('#sandbox-container div').datepicker({
+    format: "yyyy/mm/dd",
+    forceParse: false,
+    todayHighlight: true
+  });
+}

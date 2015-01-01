@@ -7,6 +7,13 @@ a, a:hover {
   text-decoration: none;
 }
 
+select {
+  width: 90%;
+  border: none;
+  color: #000;
+  background-color: #bbb
+}
+
 .jobitem > a, .workeritem > a {
   color: #fff;
 }
@@ -29,7 +36,7 @@ a, a:hover {
 }
 
 .main-header-title {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   text-align: center;
 }
 

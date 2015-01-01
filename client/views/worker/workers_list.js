@@ -1,9 +1,6 @@
 Template.workersList.rendered = function() {
-  this.autorun(function() {
-    $("#workersList").sortable({
-      connectWith: ".shiftedWorkers"
-    });
-  });  
+  // this.autorun(function() {
+  // });  
 }
 
 Template.workersList.helpers({

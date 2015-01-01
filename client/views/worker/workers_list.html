@@ -1,10 +1,10 @@
 <template name="workersList">
-  <div class="itemlist">
-    <h5>Workers List</h5>
-    <div id="workersList">
-      {{#each workers}}
-        {{> worker}}
-      {{/each}}
-    </div>
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+      Workers List
+    </a>
+    {{#each workers}}
+      {{> worker}}
+    {{/each}}
   </div>
 </template>

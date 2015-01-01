@@ -12,6 +12,7 @@ Template.layout.events({
   },
 
   'click #adminPanel': function(e, instance) {
-    Router.go("adminSettings");
+    e.preventDefault();
+    Router.go("admin");
   }
 });
