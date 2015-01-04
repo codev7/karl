@@ -107,6 +107,7 @@ select {
 
 .job-panel {
   border-left: none !important;
+  height: 400px;
 }
 
 .shiftedWorkers {

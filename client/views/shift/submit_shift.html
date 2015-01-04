@@ -10,7 +10,10 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">Date</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="shiftDate" name="dateOfShift" placeholder="Date">
+              <div class="input-group">
+                <input type="text" class="form-control" id="shiftDate" name="dateOfShift" data-date-format="YYYY-MM-DD">
+                <span class="input-group-addon"><i class="images/glyphicon glyphicon-time"></i></span>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -26,7 +29,7 @@
             <label class="col-sm-4 control-label">End Time</label>
             <div class="col-sm-6 ">
               <div class="input-group">
-                <input type="text"  name="endTime" class="form-control timepicker">
+                <input type="text"  name="endTime" class="form-control timepicker" >
                 <span class="input-group-addon"><i class="images/glyphicon glyphicon-time"></i></span>
               </div>
             </div>

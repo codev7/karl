@@ -9,7 +9,8 @@ Meteor.methods({
       "createdOn": Date.now(),
       "createdBy": null, //add logged in users id
       "hourlyWage": info.wage,
-      "workLimit": info.limit
+      "workLimit": info.limit,
+      "resign": false
     }
     console.log("Inserted new worker");
     return Workers.insert(doc);
@@ -46,7 +47,10 @@ Meteor.methods({
     }
     var alreadyAssigned = Shifts.find({"assignedTo": id}).count();
     if(alreadyAssigned > 0) {
-      Workers.update({'_id': id}, {$set: {"resigned": true}});
+      var todaysDate = new Date().toISOString().slice(0,10).replace(/-/g,"-");
+      var assignedForFuture = Shifts.find({"shiftDate": {$gte: todaysDate}, "assignedTo": id});
+      Shifts.update({"shiftDate": {$gte: todaysDate}, "assignedTo": id}, {$set: {"assignedTo": null}}, {multi: true});
+      Workers.update({'_id': id}, {$set: {"resign": true}});
       console.log("Worker resigned - updated as resigned", {"workerId": id});
     } else {
       Workers.remove({'_id': id});

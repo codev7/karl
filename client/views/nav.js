@@ -14,5 +14,10 @@ Template.layout.events({
   'click #adminPanel': function(e, instance) {
     e.preventDefault();
     Router.go("admin");
+  },
+  
+  'click #week': function(event) {
+    event.preventDefault();
+    Router.go("weekly", {"_date": new Date().toISOString()});
   }
 });

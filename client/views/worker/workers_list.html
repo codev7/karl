@@ -1,9 +1,18 @@
 <template name="workersList">
   <div class="list-group">
     <a href="#" class="list-group-item active">
-      Workers List
+      Active Workers List
     </a>
     {{#each workers}}
+      {{> worker}}
+    {{/each}}
+  </div>
+
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+      Resigned Workers List
+    </a>
+    {{#each res_workers}}
       {{> worker}}
     {{/each}}
   </div>

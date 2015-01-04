@@ -48,10 +48,5 @@ Template.innerHeader.events({
 
   'click #today': function(event) {
     Router.go("home");
-  },
-
-  'click #week': function(event) {
-    event.preventDefault();
-    Router.go("weekly", {"_date": new Date().toISOString()});
   }
 });

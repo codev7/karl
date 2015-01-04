@@ -1,11 +1,17 @@
 <template name="nav">
   <div class="row">
-    <div class="col-md-12 settings-buttons">
+    <div class="col-md-7 settings-buttons">
       <i class="fa fa-times"></i>
       <button type="button" class="btn btn-info" id="addJob" data-toggle="modal">Add Job</button>
       <button type="button" class="btn btn-info" id="addShift" data-toggle="modal">Add Shift</button>
       <button type="button" class="btn btn-info" id="addWorker" data-toggle="modal">Add Worker</button> 
-      <button type="button" class="btn btn-info" id="adminPanel">Admin</button>
+    </div>
+
+    <div class="col-md-5 right">
+      <a href="/" class="btn btn-primary">Daily View</a>
+      <!-- <a href="/schedule" class="btn btn-primary btn-sm">Shift View</a> -->
+      <a href="" class="btn btn-primary" id="week">Weekly View</a>
+      <button type="button" class="btn btn-primary" id="adminPanel">Admin</button>
     </div>
   </div>
 </template>

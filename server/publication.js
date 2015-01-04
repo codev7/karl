@@ -87,7 +87,7 @@ Meteor.publish("availableWorkers", function(date) {
     }
   }
   busyWorkers = onShiftWorkers.concat(onHolidayWorkers);
-  var workers = Workers.find({_id: {$nin: busyWorkers}});
+  var workers = Workers.find({_id: {$nin: busyWorkers}, 'resign': false});
   return workers;
 });
 
@@ -96,3 +96,9 @@ Meteor.publish("allWorkers", function() {
   cursors.push(Workers.find());
   return cursors;
 });
+
+// Meteor.publish("resignedWorkers", function() {
+//   var cursors = [];
+//   cursors.push(Workers.find({"resign": true}));
+//   return cursors;
+// });
