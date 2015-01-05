@@ -2,22 +2,22 @@ Template.submitShift.events({
   'submit form': function(event, instance) {
     event.preventDefault();
     var dateOfShift = $(event.target).find('[name=dateOfShift]').val();
-    var startTime = $(event.target).find('[name=startTime]').val();
-    var endTime = $(event.target).find('[name=endTime]').val();
+    var startTime = $(event.target).find('[name=startTime]').val().trim();
+    var endTime = $(event.target).find('[name=endTime]').val().trim();
 
-    var start_hours = parseInt(startTime.slice(0,1).trim());
-    var start_mins = parseInt(startTime.slice(2,4).trim());
-    var start_light = startTime.slice(4,8).trim();
+    var start_hours = parseInt(startTime.slice(0, startTime.indexOf(":")).trim());
+    var start_mins = parseInt(startTime.slice(startTime.indexOf(":") + 1, startTime.indexOf(" ")).trim());
+    var start_light = startTime.slice(startTime.indexOf(" "), 8).trim();
     if(start_light == "PM") {
       start_hours += 12;
     }
 
     var dateObj_start = new Date(dateOfShift);
     dateObj_start.setHours(start_hours, start_mins)
-    
-    var end_hours = parseInt(endTime.slice(0,1).trim());
-    var end_mins = parseInt(endTime.slice(2,4).trim());
-    var end_light = endTime.slice(4,8).trim();
+      
+    var end_hours = parseInt(endTime.slice(0, endTime.indexOf(":")).trim());
+    var end_mins = parseInt(endTime.slice(endTime.indexOf(":") + 1, endTime.indexOf(" ")).trim());
+    var end_light = endTime.slice(endTime.indexOf(" "), 8).trim();
     if(end_light == "PM") {
       end_hours += 12;
     }

@@ -85,19 +85,10 @@ select {
   overflow-y: scroll; 
 }
 
-.time-divider-2hour {
+.time-divider-hour {
   height: 60px;
 }
 
-.time-divider-hour {
-  top: 20px;
-  position: relative;
-}
-
-.time-divider-30min {
-  position: relative;
-  top: 11px;
-}
 
 .time-divider-90min {
   position: relative;

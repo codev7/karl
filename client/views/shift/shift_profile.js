@@ -15,9 +15,9 @@ Template.shiftProfile.events({
     var startingTime = $(event.target).find('[name=startingTime]').val().trim();
     var endingTime = $(event.target).find('[name=endingTime]').val().trim();
 
-    var starting_hours = parseInt(startingTime.slice(0,1).trim());
-    var starting_mins = parseInt(startingTime.slice(2, 4).trim());
-    var starting_light = startingTime.slice(4,8).trim();
+    var starting_hours = parseInt(startingTime.slice(0, startingTime.indexOf(":")).trim());
+    var starting_mins = parseInt(startingTime.slice(startingTime.indexOf(":") + 1, startingTime.indexOf(" ")).trim());
+    var starting_light = startingTime.slice(startingTime.indexOf(" "), 8).trim();
     if(starting_light == "PM") {
       starting_hours += 12;
     }
@@ -25,9 +25,9 @@ Template.shiftProfile.events({
     var dateObj_starting = new Date(dateOfShift);
     dateObj_starting.setHours(starting_hours, starting_mins)
     
-    var ending_hours = parseInt(endingTime.slice(0,1).trim());
-    var ending_mins = parseInt(endingTime.slice(2,4).trim());
-    var ending_light = endingTime.slice(4,8).trim();
+    var ending_hours = parseInt(endingTime.slice(0, endingTime.indexOf(":")).trim());
+    var ending_mins = parseInt(endingTime.slice(endingTime.indexOf(":") + 1, endingTime.indexOf(" ")).trim());
+    var ending_light = endingTime.slice(endingTime.indexOf(" "), 8).trim();
     if(ending_light == "PM") {
       ending_hours += 12;
     }
