@@ -8,7 +8,7 @@
             <thead>
               <tr class="center-text">
                 <th colspan="2">
-                  <a href="" class="shift-profile" data-toggle="modal">{{startTime}} - {{endTime}} Shift</a>
+                  <a href="" class="shift-profile" data-toggle="modal">{{timeFormat startTime}} - {{timeFormat endTime}} Shift</a>
                   <!-- <a href="#shiftProfile" data-toggle="modal">Edit</a> -->
                 </th>
               </tr>
@@ -34,13 +34,10 @@
             </thead>
 
             <tbody>
-              <tr>
+              <tr class="shift-div">
                 <td class="time-panel">
                   {{#each timer120}}
                   <div class="time-divider-2hour">{{this}}- 
-                  <div class="time-divider-30min">-</div>
-                  <div class="time-divider-hour">--</div>
-                  <div class="time-divider-90min">-</div>
                    
                     <!-- <div class="time-divider">-</div> -->
                   </div>

@@ -7,10 +7,6 @@ Template.layout.events({
     $("#submitShiftModal").modal("show");
   },
 
-  'click #addWorker': function(e, instance) {
-    $("#submitWorkerModal").modal("show");
-  },
-
   'click #adminPanel': function(e, instance) {
     e.preventDefault();
     Router.go("admin");

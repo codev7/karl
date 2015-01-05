@@ -27,12 +27,11 @@ Template.shiftsList.helpers({
 
   "timer120": function() {
     var timer = [];
-    var startTime = parseInt(this.startTime)
-    var endTime = parseInt(this.endTime) + 1;
-    for (var i = startTime; i < endTime; i) {
-      var time = moment(i, "HH");
-      timer.push(time._i);
-      i = i+2;
+    var startTime = moment(this.startTime).format("HH:mm A");
+    var endTime = moment(this.endTime).format("HH:mm A");
+    for (var i = parseInt(startTime); i <= parseInt(endTime); i++) {
+      var time = i;
+      timer.push(time);
     };
     return timer;
   },
