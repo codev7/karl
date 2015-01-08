@@ -53,6 +53,7 @@ Template.submitShift.events({
   'focus #shiftDate': function(event) {
     $('#shiftDate').datetimepicker({
       pickTime: false,
+
     });
   },
 
@@ -66,5 +67,10 @@ Template.submitShift.events({
   }
 });
 
-Template.submitShift.rendered = function() {
-}
+Template.submitShift.helpers({
+  'today': function() {
+    var today = new Date();
+    today = moment(today).format("YYYY-MM-DD");
+    return today;
+  }
+});
