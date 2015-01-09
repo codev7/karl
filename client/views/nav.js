@@ -14,6 +14,6 @@ Template.layout.events({
   
   'click #week': function(event) {
     event.preventDefault();
-    Router.go("weekly", {"_date": new Date().toISOString()});
+    Router.go("weekly", {"_date": Session.get("thisDate")});
   }
 });

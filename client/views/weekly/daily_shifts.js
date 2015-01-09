@@ -4,23 +4,26 @@ Template.dailyShifts.helpers({
     return daysOfWeek;
   },
 
-  'shifts': function() {
-    var shifts = Shifts.find();
-  },
-
   'shiftsNWorkers': function() {
     var shiftNWorker = [];
-    var shifts = Shifts.find({"shiftDate": this.toString()}).fetch();
+    var shifts = Shifts.find({"shiftDate": this.date.toString()}).fetch();
     shifts.forEach(function(shift) {
       var doc = {};
-      doc.shift = shift.startTime + " - " + shift.endTime;
-      if(shift.assignedTo) {
-        var worker = Workers.findOne(shift.assignedTo);
-        if(worker) {
-          doc.worker = worker.name;
-        }
+      if(moment(shift.startTime).isValid()) {
+        doc.shiftStart = shift.startTime;    
       }
-      shiftNWorker.push(doc);
+      if(moment(shift.endTime).isValid()) {
+        doc.shiftEnd = shift.endTime;
+      }
+      if(doc.shiftStart && doc.shiftEnd) {
+        if(shift.assignedTo) {
+          var worker = Workers.findOne(shift.assignedTo);
+          if(worker) {
+            doc.worker = worker.name;
+          }
+        }
+        shiftNWorker.push(doc);
+      }
     });
     return shiftNWorker;
   }

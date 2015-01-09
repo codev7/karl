@@ -56,7 +56,7 @@ Meteor.publish("weeklyShifts", function(dates) {
     var workersOnShifts = Workers.find({_id: {$in: workersList}});
     cursors.push(workersOnShifts);
   }
-  console.log("Weekly shifts publication");;
+  console.log("Weekly shifts publication");
   return cursors;
 });
 
