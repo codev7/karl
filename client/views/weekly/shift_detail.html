@@ -2,7 +2,12 @@
   <td>
     <div>
       <p class="text-muted weekly-info-tag">Sales: </p>
-      <p class="text-info weekly-info-tag">[$2000]</p>
+      <p class="text-info weekly-info-tag">{{sales}}</p>
+      {{#if addSalesPermission}}
+      <a href="#addSales" data-toggle="modal" style="font-size: 10px">Add sales</a>
+      {{else}}
+      <a href="#addSales" data-toggle="modal" style="font-size: 10px">Edit sales</a>
+      {{/if}}
     </div>
     <div style="clear: both"></div>
     <div>

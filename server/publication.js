@@ -39,6 +39,9 @@ Meteor.publish("weeklyShifts", function(dates) {
   var shiftsCursor = Shifts.find({"shiftDate": {$gte: firstDate, $lte: lastDate}});
   cursors.push(shiftsCursor);
 
+  var revenueCursor = Revenue.find({"date": {$gte: firstDate, $lte: lastDate}});
+  cursors.push(revenueCursor);
+
   var shifts = shiftsCursor.fetch();
   var workersList = [];
   var shiftsList = [];
