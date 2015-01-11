@@ -6,7 +6,6 @@ Template.innerHeader.helpers({
       var weekTitle = moment(week.day1).format("MMM-DD") + " - " + moment(week.day7).format("MMM-DD");
       weekTitle += " of " + moment(week.day1).format("YYYY")
       return weekTitle;
-      console.log(week);
     } else if(routeName == "daily" || routeName == "home") {
       var date = Session.get("thisDate");
       var thisDate = "";

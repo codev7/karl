@@ -3,7 +3,12 @@ Template.submitSales.events({
     event.preventDefault();
 		var date = $(event.target).find('[name=date]').val();
 		var sales = $(event.target).find('[name=salesRevenue]').val();
-
+		if(!date) {
+			return alert("Enter date");
+		} 
+		if(!sales) {
+			return alert("Enter sales revenue");
+		}
 		Meteor.call("addSales", sales, date, function(err) {
 			if(err) {
 				console.log(err.reason);
