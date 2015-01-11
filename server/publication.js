@@ -94,14 +94,12 @@ Meteor.publish("availableWorkers", function(date) {
   return workers;
 });
 
-Meteor.publish("allWorkers", function() {
+Meteor.publish("admin", function() {
   var cursors = [];
   cursors.push(Workers.find());
+  cursors.push(WorkerTypes.find());
+  cursors.push(JobTypes.find());
   return cursors;
 });
 
-Meteor.publish("workerTypes", function() {
-  var cursors = [];
-  cursors.push(WorkerTypes.find());
-  return cursors;
-});
+

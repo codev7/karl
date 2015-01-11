@@ -5,6 +5,10 @@ Template.adminNav.events({
 
   'click #addWorkerType': function(e, instance) {
   	$("#addWorkerTypeModal").modal("show");
+  },
+
+  'click #addJobType': function(e, instance) {
+  	$("#addJobTypeModal").modal("show")
   }
 });
 
