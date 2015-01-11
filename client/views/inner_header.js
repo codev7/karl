@@ -1,14 +1,14 @@
 Template.innerHeader.helpers({
   "title": function() {
-    var date = Session.get("thisDate");
     var routeName = Router.current().route.getName();
     if(routeName == "weekly") {
-      var week = getDaysOfWeek(date);
+      var week = Session.get("thisWeek")
       var weekTitle = moment(week.day1).format("MMM-DD") + " - " + moment(week.day7).format("MMM-DD");
       weekTitle += " of " + moment(week.day1).format("YYYY")
       return weekTitle;
       console.log(week);
     } else if(routeName == "daily" || routeName == "home") {
+      var date = Session.get("thisDate");
       var thisDate = "";
       if(date) {
         thisDate = new Date(date);
@@ -16,6 +16,15 @@ Template.innerHeader.helpers({
         thisDate = new Date();
       }
       return moment(thisDate).format("MMM Do YY")
+    }
+  },
+
+  'navPermission': function() {
+    var routeName = Router.current().route.getName();
+    if(routeName == "weekly") {
+      return false;
+    } else if(routeName == "home" || routeName == "daily") {
+      return true;
     }
   }
 });
@@ -57,5 +66,21 @@ Template.innerHeader.events({
 
   'click #today': function(event) {
     Router.go("home");
+  },
+
+  'click #thisWeek': function(event) {
+    Router.go("weekly", {'_date': moment().format("YYYY-MM-DD")})
+  },
+
+  'click #prevWeek': function(event) {
+    var thisWeek = Session.get("thisWeek");
+    var prevWeek = moment(thisWeek.day1).weekday(-7).format("YYYY-MM-DD");
+    Router.go("weekly", {'_date': prevWeek});
+  },
+
+  'click #nextWeek': function(event) {
+    var thisWeek = Session.get("thisWeek");
+    var nextWeek = moment(thisWeek.day1).weekday(7).format("YYYY-MM-DD");
+    Router.go("weekly", {'_date': nextWeek});
   }
 });

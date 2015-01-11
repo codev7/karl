@@ -1,9 +1,15 @@
 <template name="innerHeader">
   <div class="row">
     <div class="col-md-4 left">
+    {{#if navPermission}}
       <button type="button" class="btn btn-warning btn-sm" id="prevDay">Prev</button>
       <button type="button" class="btn btn-warning btn-sm" id="today">Today</button>
       <button type="button" class="btn btn-warning btn-sm" id="nextDay">Next</button>
+    {{else}}
+      <button type="button" class="btn btn-warning btn-sm" id="prevWeek">Prev Week</button>
+      <button type="button" class="btn btn-warning btn-sm" id="thisWeek">This Week</button>
+      <button type="button" class="btn btn-warning btn-sm" id="nextWeek">Next Week</button>
+    {{/if}}
     </div>
     <div class="col-md-3 center">
       <h4><a href="">{{title}}</a></h4>
