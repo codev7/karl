@@ -15,3 +15,10 @@ Template.shiftDetail.helpers({
 		}
 	}
 });
+
+Template.shiftDetail.events({
+	'click .showSubmitSalesModal': function() {
+		Session.set("thisDay", this);
+		$("#addSales").modal("show");
+	}
+});

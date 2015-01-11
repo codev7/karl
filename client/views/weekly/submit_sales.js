@@ -22,10 +22,15 @@ Template.submitSales.events({
 
 Template.submitSales.helpers({
 	'sales': function() {
-		var revenue = Revenue.findOne({"date": this.date});
-		console.log(revenue);
-		if(revenue) {
-			return revenue.sales;
+		var thisDate = Session.get("thisDay");
+		var doc = {};
+		if(thisDate) {
+			doc.date = thisDate.date;
+			var revenue = Revenue.findOne({"date": thisDate.date});
+			if(revenue) {
+				doc.sales = revenue.sales;
+			}
+			return doc;
 		}
 	}
 });
