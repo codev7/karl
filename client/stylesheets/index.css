@@ -195,3 +195,8 @@ select {
   text-align: center;
   padding: 50px;
 }
+
+.icon {
+  padding-left: 20px;
+  padding-bottom: 2px;
+}

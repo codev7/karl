@@ -2,27 +2,27 @@
   <td>
     <div>
       <p class="text-muted weekly-info-tag">Sales: </p>
-      <p class="text-info weekly-info-tag">{{sales}}</p>
+      <p class="text-info weekly-info-tag">{{data.sales}}</p>
       {{#if addSalesPermission}}
-      <a href="#" class="showSubmitSalesModal" data-toggle="modal" style="font-size: 10px">Add sales</a>
+      <img src="/icons/pencil_add.png" class="showSubmitSalesModal icon" title="pencil_add.png" alt="pencil add ">
       {{else}}
-      <a href="#" class="showSubmitSalesModal" data-toggle="modal" style="font-size: 10px">Edit sales</a>
+      <img src="/icons/pencil_delete.png" class="showSubmitSalesModal icon" title="pencil_delete.png" alt="pencil delete ">
       {{/if}}
     </div>
     <div style="clear: both"></div>
     <div>
       <p class="text-muted weekly-info-tag">Wages: </p> 
-      <p class="text-info weekly-info-tag">[$200]</p>
+      <p class="text-info weekly-info-tag">{{data.totalWages}}</p>
     </div>
     <div style="clear: both"></div>
     <div>
       <p class="text-muted weekly-info-tag">Total hours planned: </p> 
-      <p class="text-info weekly-info-tag">[24]</p>
+      <p class="text-info weekly-info-tag">{{data.totalTimePlanned}}</p>
     </div>
     <div style="clear: both"></div>
     <div>
       <p class="text-muted weekly-info-tag">Hours actual: </p> 
-      <p class="text-info weekly-info-tag">[26]</p>
+      <p class="text-info weekly-info-tag">{{data.totalTimeActual}}</p>
     </div>
   </td>
 </template>
