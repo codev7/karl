@@ -19,8 +19,9 @@
               <div class="dropdown">
                 <select name="type">
                   <option selected="selected">{{job.type}}</option>
-                  <option value="service">Service</option>
-                  <option value="prep">Prep</option>
+                  {{#each jobTypes}}
+                  <option value="{{type}}">{{type}}</option>
+                  {{/each}}
                 </select>
               </div>
               <!-- <div class="dropdown">

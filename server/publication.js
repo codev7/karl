@@ -102,4 +102,15 @@ Meteor.publish("admin", function() {
   return cursors;
 });
 
+Meteor.publish('workerTypes', function() {
+  var cursors = [];
+  cursors.push(WorkerTypes.find());
+  return cursors;
+});
+
+Meteor.publish('jobTypes', function() {
+  var cursors = [];
+  cursors.push(JobTypes.find());
+  return cursors;
+});
 
