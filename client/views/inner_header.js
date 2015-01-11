@@ -1,13 +1,22 @@
 Template.innerHeader.helpers({
-  "dateTitle": function() {
+  "title": function() {
     var date = Session.get("thisDate");
-    var thisDate = "";
-    if(date) {
-      thisDate = new Date(date);
-    } else {
-      thisDate = new Date();
+    var routeName = Router.current().route.getName();
+    if(routeName == "weekly") {
+      var week = getDaysOfWeek(date);
+      var weekTitle = moment(week.day1).format("MMM-DD") + " - " + moment(week.day7).format("MMM-DD");
+      weekTitle += " of " + moment(week.day1).format("YYYY")
+      return weekTitle;
+      console.log(week);
+    } else if(routeName == "daily" || routeName == "home") {
+      var thisDate = "";
+      if(date) {
+        thisDate = new Date(date);
+      } else {
+        thisDate = new Date();
+      }
+      return moment(thisDate).format("MMM Do YY")
     }
-    return moment(thisDate).format("MMM Do YY")
   }
 });
 
