@@ -32,12 +32,15 @@ Meteor.publish("dailyShift", function(date) {
 
 Meteor.publish("weeklyShifts", function(dates) {
   var cursors = [];
-  var firstDate = dates.day1.slice(0,10).replace(/-/g,"-");
-  var lastDate = dates.day7.slice(0,10).replace(/-/g,"-");
+  var firstDate = dates.day1;
+  var lastDate = dates.day7;
 
   //get shifts
   var shiftsCursor = Shifts.find({"shiftDate": {$gte: firstDate, $lte: lastDate}});
   cursors.push(shiftsCursor);
+
+  var revenueCursor = Revenue.find({"date": {$gte: firstDate, $lte: lastDate}});
+  cursors.push(revenueCursor);
 
   var shifts = shiftsCursor.fetch();
   var workersList = [];
@@ -56,7 +59,7 @@ Meteor.publish("weeklyShifts", function(dates) {
     var workersOnShifts = Workers.find({_id: {$in: workersList}});
     cursors.push(workersOnShifts);
   }
-  console.log("Weekly shifts publication");;
+  console.log("Weekly shifts publication");
   return cursors;
 });
 
@@ -91,14 +94,23 @@ Meteor.publish("availableWorkers", function(date) {
   return workers;
 });
 
-Meteor.publish("allWorkers", function() {
+Meteor.publish("admin", function() {
   var cursors = [];
   cursors.push(Workers.find());
+  cursors.push(WorkerTypes.find());
+  cursors.push(JobTypes.find());
   return cursors;
 });
 
-// Meteor.publish("resignedWorkers", function() {
-//   var cursors = [];
-//   cursors.push(Workers.find({"resign": true}));
-//   return cursors;
-// });
+Meteor.publish('workerTypes', function() {
+  var cursors = [];
+  cursors.push(WorkerTypes.find());
+  return cursors;
+});
+
+Meteor.publish('jobTypes', function() {
+  var cursors = [];
+  cursors.push(JobTypes.find());
+  return cursors;
+});
+

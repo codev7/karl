@@ -33,3 +33,9 @@ Template.submitJob.events({
     }
   }
 });
+
+Template.submitJob.helpers({
+  'jobTypes': function() {
+    return JobTypes.find();
+  }
+});

@@ -1,7 +1,7 @@
 <template name="shiftWorker">
   <tr>
     <div class="shift-workers">
-      <div class="comb-div bg-primary">{{shift}}</div>
+      <div class="comb-div bg-primary">{{shiftName.startShift}} - {{shiftName.endShift}}</div>
       <div class="comb-div bg-info">
         {{#if worker}}
           {{worker}}

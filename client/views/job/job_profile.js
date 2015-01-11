@@ -17,6 +17,10 @@ Template.jobProfile.helpers({
         return false;
       }
     }
+  },
+
+  'jobTypes': function() {
+    return JobTypes.find();
   }
 });
 

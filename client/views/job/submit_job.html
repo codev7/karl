@@ -19,8 +19,9 @@
                 <div class="dropdown">
                   <select name="type" class="btn btn-default dropdown-toggle">
                     <option selected="selected">Type</option>
-                    <option value="service">Service</option>
-                    <option value="prep">Prep</option>
+                    {{#each jobTypes}}
+                    <option value="{{type}}">{{type}}</option>
+                    {{/each}}
                   </select>
                   <!-- <button class="btn btn-default dropdown-toggle" type="button" name="type" data-toggle="dropdown" aria-expanded="true">
                     Type
