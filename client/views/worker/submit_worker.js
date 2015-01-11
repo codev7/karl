@@ -25,3 +25,9 @@ Template.submitWorker.events({
     }
   }
 });
+
+Template.submitWorker.helpers({
+  'workerTypes': function() {
+    return WorkerTypes.find();
+  }
+});

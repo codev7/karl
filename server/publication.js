@@ -100,8 +100,8 @@ Meteor.publish("allWorkers", function() {
   return cursors;
 });
 
-// Meteor.publish("resignedWorkers", function() {
-//   var cursors = [];
-//   cursors.push(Workers.find({"resign": true}));
-//   return cursors;
-// });
+Meteor.publish("workerTypes", function() {
+  var cursors = [];
+  cursors.push(WorkerTypes.find());
+  return cursors;
+});
