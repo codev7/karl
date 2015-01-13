@@ -1,6 +1,11 @@
 Template.shiftDetail.helpers({
 	'data': function() {
-		var doc = {};
+		var doc = {
+      'sales': 0,
+      'totalTimePlanned': '0:0',
+      'totalTimeActual': '0:0',
+      'totalWages': 0
+    };
 		var date = this.date;
 		//get sales
 		var sales = Revenue.findOne({"date": date});
@@ -10,11 +15,13 @@ Template.shiftDetail.helpers({
 
 		var wokers = [];
 		var hoursPlanned = 0;
+    var minsPlanned = 0;
+
     var job_due_hours_total = 0;
     var job_due_mins_total = 0;
 
-    var minsPlanned = 0;
     var totalWages = 0;
+    //calc wages
     var shifts = Shifts.find({"shiftDate": this.date}).fetch();
     shifts.forEach(function(shift) {
       if(moment(shift.endTime).isValid() && moment(shift.startTime).isValid()) {
@@ -98,5 +105,10 @@ Template.shiftDetail.events({
 	'click .showSubmitSalesModal': function() {
 		Session.set("thisDay", this);
 		$("#addSales").modal("show");
-	}
+	},
+
+  'click .showEditSalesModal': function() {
+    Session.set("thisDay", this);
+    $("#editSales").modal("show");
+  }
 });
