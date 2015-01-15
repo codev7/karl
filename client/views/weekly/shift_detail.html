@@ -1,28 +1,28 @@
 <template name="shiftDetail">
   <td>
     <div>
-      <p class="text-muted weekly-info-tag">Sales: </p>
-      <p class="text-info weekly-info-tag">{{data.sales}}</p>
+      <p class="text-muted weekly-info-tag">Sales ($): </p>
+      <p class="text-info weekly-info-tag"> {{data.sales}}</p>
       {{#if addSalesPermission}}
-      <img src="/icons/pencil_add.png" class="showSubmitSalesModal icon" title="pencil_add.png" alt="pencil add ">
+      <img src="/icons/pencil_add.png" class="showSubmitSalesModal icon" title="Add sales revenue" alt="Sales Revenue">
       {{else}}
-      <!-- <img src="/icons/pencil_delete.png" class="showSubmitSalesModal icon" title="pencil_delete.png" alt="pencil delete "> -->
+      <img src="/icons/pencil_delete.png" class="showEditSalesModal icon" title="Edit sales revenue" alt="Sales Revenue ">
       {{/if}}
     </div>
     <div style="clear: both"></div>
     <div>
-      <p class="text-muted weekly-info-tag">Wages: </p> 
-      <p class="text-info weekly-info-tag">{{data.totalWages}}</p>
+      <p class="text-muted weekly-info-tag">Wages ($): </p> 
+      <p class="text-info weekly-info-tag"> {{data.totalWages}}</p>
     </div>
     <div style="clear: both"></div>
     <div>
-      <p class="text-muted weekly-info-tag">Total hours planned: </p> 
-      <p class="text-info weekly-info-tag">{{data.totalTimePlanned}}</p>
+      <p class="text-muted weekly-info-tag">Total hours planned (h:m): </p> 
+      <p class="text-info weekly-info-tag"> {{data.totalTimePlanned}}</p>
     </div>
     <div style="clear: both"></div>
     <div>
-      <p class="text-muted weekly-info-tag">Hours actual: </p> 
-      <p class="text-info weekly-info-tag">{{data.totalTimeActual}}</p>
+      <p class="text-muted weekly-info-tag">Hours actual (h:m): </p> 
+      <p class="text-info weekly-info-tag"> {{data.totalTimeActual}}</p>
     </div>
   </td>
 </template>
