@@ -56,26 +56,28 @@ Template.shiftDetail.helpers({
             var job_due_hours = null;
             var job_due_mins = null;
 
-            if(jobDoc.options.startedAt) {
-              jobStartTime = moment(jobDoc.options.startedAt).format("YYYY-MM-DD HH:mm:ss")
-            }
-            if(jobDoc.options.finishedAt) {
-              jobEndTime = moment(jobDoc.options.finishedAt).format("YYYY-MM-DD HH:mm:ss")
-            }
-            if(jobStartTime && jobEndTime) {
-              job_due = moment.preciseDiff(jobEndTime, jobStartTime).trim();
-              if(job_due) {
-                if(job_due.indexOf("hours") > 0) {
-                  job_due_hours = parseInt(job_due.slice(0, job_due.indexOf("hours"))); 
-                  job_due_hours_total += job_due_hours;
-                  job_due_mins = parseInt(job_due.slice(job_due.indexOf("s")+1, job_due.indexOf("minutes"))); 
-                  job_due_mins_total += job_due_mins;
-                } else if(job_due.indexOf("minutes")) {
-                  job_due_mins = parseInt(job_due.slice(0, job_due.indexOf("minutes")));
-                  job_due_mins_total += job_due_mins;
-                }
+            if(jobDoc.options) {
+              if(jobDoc.options.startedAt) {
+                jobStartTime = moment(jobDoc.options.startedAt).format("YYYY-MM-DD HH:mm:ss")
               }
-            } 
+              if(jobDoc.options.finishedAt) {
+                jobEndTime = moment(jobDoc.options.finishedAt).format("YYYY-MM-DD HH:mm:ss")
+              }
+              if(jobStartTime && jobEndTime) {
+                job_due = moment.preciseDiff(jobEndTime, jobStartTime).trim();
+                if(job_due) {
+                  if(job_due.indexOf("hours") > 0) {
+                    job_due_hours = parseInt(job_due.slice(0, job_due.indexOf("hours"))); 
+                    job_due_hours_total += job_due_hours;
+                    job_due_mins = parseInt(job_due.slice(job_due.indexOf("s")+1, job_due.indexOf("minutes"))); 
+                    job_due_mins_total += job_due_mins;
+                  } else if(job_due.indexOf("minutes")) {
+                    job_due_mins = parseInt(job_due.slice(0, job_due.indexOf("minutes")));
+                    job_due_mins_total += job_due_mins;
+                  }
+                }
+              } 
+            }
           });
         }
     	}
