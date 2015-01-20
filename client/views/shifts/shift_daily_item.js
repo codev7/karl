@@ -1,4 +1,4 @@
-Template.shiftsList.helpers({
+Template.shiftsDailyItem.helpers({
   "shifts": function() {
     var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
     shifts.forEach(function(shift) {
@@ -65,7 +65,7 @@ Template.shiftsList.helpers({
   }
 });
 
-Template.shiftsList.events({
+Template.shiftsDailyItem.events({
   'click .shift-profile': function(event, instance) {
     Session.set("thisShift", this);
     $("#shiftProfile").modal();
@@ -92,7 +92,7 @@ Template.shiftsList.events({
   }
 });
 
-Template.shiftsList.rendered = function() {
+Template.shiftsDailyItem.rendered = function() {
   this.autorun(function() {
     var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
     if(shifts) {
