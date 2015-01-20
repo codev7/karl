@@ -40,8 +40,8 @@ Meteor.publish("weekly", function(dates) {
   cursors.push(shiftsCursor);
 
   //revenues on each date
-  var revenueCursor = Revenue.find({"date": {$gte: firstDate, $lte: lastDate}});
-  cursors.push(revenueCursor);
+  var salesCursor = Sales.find({"date": {$gte: firstDate, $lte: lastDate}});
+  cursors.push(salesCursor);
 
   var shifts = shiftsCursor.fetch();
   var workersList = [];
