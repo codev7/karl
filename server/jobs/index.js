@@ -91,7 +91,7 @@ Meteor.methods({
       throw new Meteor.Error("Job type field not found");
     }
     var existingtype = JobTypes.findOne({'type': type});
-    if(!existingtype) {
+    if(existingtype) {
       logger.error("Existing job type");
       throw new Meteor.Error("Exsiting job type");
     } 
