@@ -2,9 +2,18 @@ Template.innerHeader.helpers({
   "title": function() {
     var routeName = Router.current().route.getName();
     if(routeName == "weekly") {
-      var week = Session.get("thisWeek")
-      var weekTitle = moment(week.day1).format("MMM-DD") + " - " + moment(week.day7).format("MMM-DD");
-      weekTitle += " of " + moment(week.day1).format("YYYY")
+      var week = Session.get("thisWeek");
+      var weekTitle = null;
+      var sunday_year = moment(week.day1).format("YYYY");
+      var saturday_year = moment(week.day7).format("YYYY");
+      if(sunday_year != saturday_year) {
+        weekTitle = moment(week.day1).format("MMM Do YYYY");
+        weekTitle += " - "
+        weekTitle += moment(week.day7).format("MMM Do YYYY");
+      } else {
+        weekTitle = moment(week.day1).format("MMM Do") + " - " + moment(week.day7).format("MMM Do");
+        weekTitle += " of " + moment(week.day1).format("YYYY")
+      }
       return weekTitle;
     } else if(routeName == "daily" || routeName == "home") {
       var date = Session.get("thisDate");
