@@ -19,15 +19,15 @@
                       {{#if assignedWorker}}
                       <option selected="selected" value="{{assignedWorker._id}}">{{assignedWorker.name}}</option>
                       {{else}}
-                      <option selected="selected">Select a worker to assign</option>  
+                      <option selected="selected" value="">Select a worker to assign</option>  
                       {{/if}}
                       {{#each workers}}
                       <option value="{{_id}}">{{name}}</option>  
                       {{/each}}
+                      {{#if assignedWorker}}
+                      <option value="">Remove</option>
+                      {{/if}}
                     </select>
-                    {{#if assignedWorker}}
-                    <img class="removeAssignedShift" src="/images/cancel.png" height="15px" width="15px">
-                    {{/if}}
                   </div>
                 </th>
               </tr>

@@ -1,5 +1,5 @@
 Meteor.methods({
-  'assignJobToShift': function(jobId, shiftId) {
+  'assignJob': function(jobId, shiftId) {
     if(!jobId) {
       logger.error("Job id field not found");
       throw new Meteor.Error(404, "Job id field not found");
@@ -45,7 +45,7 @@ Meteor.methods({
     Jobs.update({"_id": jobId}, {$set: {"onshift": shiftId, "status": status}, $addToSet: {'options': optionsDoc}});
   },
 
-  'assignShift': function(workerId, shiftId) {
+  'assignWorker': function(workerId, shiftId) {
     if(!shiftId) {
       logger.error("Shift Id not found");
       throw new Meteor.Error(404, "Shift Id not found");

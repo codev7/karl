@@ -1,14 +1,4 @@
 Template.worker.events({
-  'click .delete-worker-item': function(e, instance) {
-    var workerId = this._id;
-    var shiftId = $(e.target).parent().parent().parent().attr("data-id");
-    Meteor.call("deleteWorkerFromAssignedShift", workerId, shiftId, function(err) {
-      if(err) {
-        return alert(err.reason);
-      }
-    });
-  },
-
   'click .worker-profile': function(e, instance) {
     Session.set("thisWorker", this);
     $("#workerProfileModal").modal();
@@ -16,4 +6,12 @@ Template.worker.events({
 });
 
 Template.worker.helpers({
+  'resigned': function() {
+    var worker = this;
+    if(worker.resign) {
+      return "resigned-worker";
+    } else {
+      return "active-worker";
+    }
+  }
 });

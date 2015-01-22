@@ -4,13 +4,13 @@ Template.workersList.rendered = function() {
 }
 
 Template.workersList.helpers({
-  "workers": function() {
+  "activeWorkers": function() {
     var workers = Workers.find({"resign": false}).fetch();
     return workers;
   },
 
-  "res_workers": function() {
-    var workers = Workers.find({"resign": true});
+  "allWorkers": function() {
+    var workers = Workers.find().fetch();
     return workers;
   }
 });

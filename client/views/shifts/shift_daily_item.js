@@ -74,21 +74,11 @@ Template.shiftsDailyItem.events({
   'change .shiftAssign': function(event) {
     var workerId = $(event.target).val();
     var shiftId = $(event.target).attr("data-id")
-    Meteor.call("assignWorkerToShift", workerId, shiftId, function(err) {
+    Meteor.call("assignWorker", workerId, shiftId, function(err) {
       if(err) {
         return alert(err.reason);
       }
     });
-  },
-
-  'click .removeAssignedShift': function(event) {
-    var shiftId = $(event.target).prev().attr("data-id")
-    Meteor.call("removeWorkerFromAssignedShift", shiftId, function(err) {
-      if(err) {
-        return alert(err.reason);
-      }
-    });
-
   }
 });
 
