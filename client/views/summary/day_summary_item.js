@@ -1,4 +1,4 @@
-Template.shiftWeeklyItem.helpers({
+Template.daySummaryItem.helpers({
   'weekDays': function() {
     var date = Router.current().params._date;
     var daysOfWeek = getDaysOfWholeWeek(date);

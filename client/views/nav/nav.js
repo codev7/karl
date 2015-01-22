@@ -1,4 +1,4 @@
-Template.layout.events({
+Template.nav.events({
   'click #addJob': function(e, instance) {
     $("#submitJobModal").modal("show");
   },

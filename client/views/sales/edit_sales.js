@@ -26,9 +26,9 @@ Template.editSales.helpers({
 		var doc = {};
 		if(thisDate) {
 			doc.date = thisDate.date;
-			var revenue = Revenue.findOne({"date": thisDate.date});
-			if(revenue) {
-				doc.sales = revenue.sales;
+			var sales = Sales.findOne({"date": thisDate.date});
+			if(sales) {
+				doc.sales = sales.sales;
 			}
 			return doc;
 		}

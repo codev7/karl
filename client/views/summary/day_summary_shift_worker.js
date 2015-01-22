@@ -1,4 +1,4 @@
-Template.shiftWorker.helpers({
+Template.daySummaryShiftWorker.helpers({
   shiftName: function() {
     var thisShift = this;
     if(moment(this.shiftStart).isValid()) {

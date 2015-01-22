@@ -1,4 +1,4 @@
-Template.shiftSummary.helpers({
+Template.daySummaryDetailItem.helpers({
   'data': function() {
     var doc = {
       'sales': 0,
@@ -8,7 +8,7 @@ Template.shiftSummary.helpers({
     };
     var date = this.date;
     //get sales
-    var sales = Revenue.findOne({"date": date});
+    var sales = Sales.findOne({"date": date});
     if(sales) {
       doc.sales = sales.sales;
     }
@@ -94,7 +94,7 @@ Template.shiftSummary.helpers({
   },
 
   'addSalesPermission': function() {
-    var sales = Revenue.findOne({"date": this.date});
+    var sales = Sales.findOne({"date": this.date});
     if(sales) {
       return false;
     } else {
@@ -103,7 +103,7 @@ Template.shiftSummary.helpers({
   }
 });
 
-Template.shiftSummary.events({
+Template.daySummaryDetailItem.events({
   'click .showSubmitSalesModal': function() {
     Session.set("thisDay", this);
     $("#addSales").modal("show");

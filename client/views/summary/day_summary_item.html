@@ -1,4 +1,4 @@
-<template name="shiftWeeklyItem">
+<template name="daySummaryItem">
   <tr>
   {{#each weekDays}}
     <td>
@@ -11,12 +11,12 @@
 
         <tbody>
           <tr>
-            <td>{{> shiftSummary}}</td>
+            <td>{{> daySummaryDetailItem}}</td>
           </tr>
           <tr>
             <td class="new">
             {{#each shiftsNWorkers}}
-              <tr><td>{{> shiftWorker}}</td></tr>
+              <tr><td>{{> daySummaryShiftWorker}}</td></tr>
             {{/each}}
             </td>
           </tr>
