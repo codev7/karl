@@ -21,7 +21,7 @@ Template.submitShift.events({
     if(end_light == "PM") {
       end_hours += 12;
     }
-
+    console.log(dateOfShift, startTime, endTime)
     var dateObj_end = new Date(dateOfShift);
     dateObj_end.setHours(end_hours, end_mins)
 
@@ -50,19 +50,35 @@ Template.submitShift.events({
     }
   },
 
-  'focus #shiftDate': function(event) {
-    $('#shiftDate').datetimepicker({
-      pickTime: false,
-
+  'focus .form_date': function(event) {
+    $('.form_date').datetimepicker({
+      language:  'fr',
+      weekStart: 1,
+      todayBtn:  1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      minView: 2,
+      forceParse: 0
+    }).
+    on('changeDate', function(ev){
+      $(".timepicker")[0].focus();
     });
   },
 
-  'focus .timepicker': function(event) {
-    $(".timepicker").datetimepicker({
-      pickDate: false,
-      pickTime: true,
-      useMinutes: true,  
-      useCurrent: false
+  'focus .form_time': function(event) {
+    $(".form_time").datetimepicker({
+      language:  'fr',
+      todayBtn:  1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 1,
+      minView: 0,
+      maxView: 1,
+      forceParse: 0
+    })
+    .on('changeMinute', function(ev){
+      $(".timepicker")[1].focus();
     });
   }
 });
