@@ -3,13 +3,14 @@ Template.submitSales.events({
     event.preventDefault();
 		var date = $(event.target).find('[name=date]').val();
 		var sales = $(event.target).find('[name=salesRevenue]').val();
+		console.log(date, sales);
 		if(!date) {
 			return alert("Enter date");
 		} 
 		if(!sales) {
 			return alert("Enter sales revenue");
 		}
-		Meteor.call("addSales", sales, date, function(err) {
+		Meteor.call("createSales", sales, date, function(err) {
 			if(err) {
 				console.log(err.reason);
 				return;
@@ -17,6 +18,19 @@ Template.submitSales.events({
 				$("#addSales").modal("hide");
 			}
 		});
+	},
+
+	'focus .form_date': function(event) {
+		$(".form_date").datetimepicker({
+      language:  'fr',
+      weekStart: 1,
+      todayBtn:  1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      minView: 2,
+      forceParse: 0
+    })
 	}
 });
 

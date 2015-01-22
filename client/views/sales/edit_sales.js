@@ -9,7 +9,11 @@ Template.editSales.events({
 		if(!sales) {
 			return alert("Enter sales revenue");
 		}
-		Meteor.call("editSales", sales, date, function(err) {
+		var salesObjc = Sales.findOne({"date": date});
+		if(!salesObjc) {
+			return alert("Add sales first");
+		}
+		Meteor.call("editSales",salesObjc._id, date, sales, function(err) {
 			if(err) {
 				console.log(err.reason);
 				return;
@@ -17,6 +21,19 @@ Template.editSales.events({
 				$("#editSales").modal("hide");
 			}
 		});
+	},
+
+	'focus .form_date': function(event) {
+		$(".form_date").datetimepicker({
+      language:  'fr',
+      weekStart: 1,
+      todayBtn:  1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      minView: 2,
+      forceParse: 0
+    })
 	}
 });
 
