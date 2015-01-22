@@ -93,20 +93,39 @@ Template.innerHeader.events({
   },
 
   'click #title': function() {
-    $("#title").datetimepicker({
-      language:  'fr',
-      weekStart: 1,
-      todayBtn:  1,
-      autoclose: 1,
-      todayHighlight: 1,
-      startView: 2,
-      minView: 2,
-      forceParse: 0
-    })
-    .on('changeDate', function(ev){
-      var date = moment(ev.date).format("YYYY-MM-DD");
-      Session.set("thisDate", date);
-      Router.go("daily", {"_date": date});
-    });
-  } 
+    var routeName = Router.current().route.getName();
+    if(routeName == "weekly") {
+       $("#title").datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+      })
+      .on('changeDate', function(ev){
+        var date = moment(ev.date).format("YYYY-MM-DD");
+        Session.set("thisDate", date);
+        Router.go("weekly", {"_date": date});
+      });
+    } else if(routeName == "daily" || routeName == "home") {
+      $("#title").datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+      })
+      .on('changeDate', function(ev){
+        var date = moment(ev.date).format("YYYY-MM-DD");
+        Session.set("thisDate", date);
+        Router.go("daily", {"_date": date});
+      });
+    } 
+  }
 });
