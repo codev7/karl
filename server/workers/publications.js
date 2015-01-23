@@ -16,8 +16,10 @@ Meteor.publish("activeWorkers", function(date) {
   //workers on holiday
   var holidays = Holidays.findOne({"date": date});
   if(holidays) {
-    if(holidays.users.length > 0) {
-      onHolidayWorkers = holidays.users;
+    if(holidays.workers) {
+      if(holidays.workers.length > 0) {
+        onHolidayWorkers = holidays.workers;
+      }
     }
   }
   //all busy workers
@@ -55,5 +57,13 @@ Meteor.publish('workerTypes', function() {
   var cursors = [];
   cursors.push(WorkerTypes.find());
   logger.info("WorkerTypes publication");
+  return cursors;
+});
+
+Meteor.publish("monthlyHolidays", function(start, end) {
+  var cursors = [];
+  var holidays = Holidays.find({"date": {$gte: start, $lte: end}});
+  cursors.push(holidays);
+  logger.info("Holiday published");
   return cursors;
 });

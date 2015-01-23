@@ -55,8 +55,8 @@ Template.shiftsDailyItem.helpers({
     }
     var holidays = Holidays.findOne({"date": Session.get("thisDate")});
     if(holidays) {
-      if(holidays.users.length > 0) {
-        onHolidayWorkers = holidays.users;
+      if(holidays.workers.length > 0) {
+        onHolidayWorkers = holidays.workers;
       }
     }
     busyWorkers = onShiftWorkers.concat(onHolidayWorkers);

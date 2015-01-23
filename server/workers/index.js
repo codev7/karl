@@ -107,12 +107,10 @@ Meteor.methods({
         }
         doc.workers.push(workerId);
         var id = Holidays.insert(doc);
-        logger.info("New Holiday entry inserted", {"workerId": workerId, "date": date, "id": id});
-        return;
+        logger.info("New Holiday entry inserted - with leave", {"workerId": workerId, "date": date, "id": id});
       } else {
         Holidays.update({"_id": entryExist._id}, {$addToSet: {"workers": workerId}});
         logger.info("Leave added: ", {"id": entryExist._id, "workerId": workerId});
-        return;
       }
     } else {
       var entryExist = Holidays.findOne({"date": date});

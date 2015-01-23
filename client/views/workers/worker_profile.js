@@ -3,6 +3,8 @@ Template.workerProfile.helpers({
     var worker = Session.get("thisWorker");
     return worker;
   },
+
+
 });
 
 Template.workerProfile.events({
@@ -50,9 +52,50 @@ Template.workerProfile.events({
 });
 
 Template.workerProfile.rendered = function() {
-  $('#sandbox-container div').datepicker({
-    format: "yyyy/mm/dd",
-    forceParse: false,
+  $("#calendar").datepicker({
+    multidate: true,
+    multidateSeparator: '-',
+    todayBtn: "linked",
     todayHighlight: true
+  }).on("changeDate", function(ev) {
+    var date = moment(ev.date).format("YYYY-MM-DD");;
+    var workerId = $(".deleteWorker").attr("data-id");
+    var onHoliday = true;
+    var holiday = Holidays.findOne({"date": date});
+    if(holiday) {
+      if(holiday.workers.indexOf(workerId)) {
+        onHoliday = false;
+      }
+    }
+    console.log("-----", date, workerId, onHoliday, holiday);
+    Meteor.call("setLeave", workerId, date, onHoliday, function(err) {
+      if(err) {
+        return alert(err.reason);
+      }
+    });
+
+  }).on("changeMonth", function(ev) {
+    console.log(ev);
   });
+
+
+  // $('#calendar').datepicker('setDates', [new Date('2015-4-5'), new Date('2015-4-10')]);
+  // .on('changeDate', function(ev){
+  //   console.log(ev);
+  //   var date = moment(ev.date).format("YYYY-MM-DD");
+  //   var workerId = $(".deleteWorker").attr("data-id");
+  //   var onHoliday = true;
+  //   var holiday = Holidays.findOne({"date": date});
+  //   if(holiday) {
+  //     if(holiday.workers.indexOf(workerId)) {
+  //       onHoliday = false;
+  //     }
+  //   }
+  //   console.log("-----", date, workerId, onHoliday, holiday);
+  //   // Meteor.call("setLeave", workerId, date, onHoliday, function(err) {
+  //   //   if(err) {
+  //   //     return alert(err.reason);
+  //   //   }
+  //   // });
+  // });
 }

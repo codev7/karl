@@ -208,3 +208,7 @@ select {
 .active-worker {
   background-color: #fff;
 }
+
+.on-leave {
+  background-color: #DB4D4D;
+}
