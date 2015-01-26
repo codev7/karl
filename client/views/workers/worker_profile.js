@@ -58,7 +58,7 @@ Template.workerProfile.events({
 Template.workerProfile.rendered = function() {
   var date = moment(new Date()).format("YYYY-MM-DD");
   var dates = getDaysOfMonth(date);
-  var setDates = [];
+  var dates_before = [];
 
   Tracker.autorun(function() {
     var worker = Session.get("thisWorker");
@@ -72,55 +72,53 @@ Template.workerProfile.rendered = function() {
           var holi = Holidays.find({"date": {$gte: dates.start, $lte: dates.end}, "workers": {$all: [workerId]}}).fetch();
           var holidays_of_month = [];
           if(holi.length > 0) {
-            if(holi)
             holi.forEach(function(obj) {
               holidays_of_month.push(new Date(moment(obj.date).format("YYYY-M-D")));
+              dates_before.push(obj.date);
               
             });
-            setDates = holidays_of_month;
             $(".calendar").datepicker("setDates", holidays_of_month);
           }
         }, 1000);
       }).datepicker({
         multidate: true,
-        // multidateSeparator: '-',
+        multidateSeparator: '-',
         todayBtn: "linked",
         todayHighlight: true
       }).on("changeDate", function(ev) {
         var date = moment(ev.date).format("YYYY-MM-DD");
-        console.log(ev);
+        var data = {"state": "add", "onHoliday": true, "date": date};
 
-        var onHoliday = true;
-        var holiday = Holidays.findOne({"date": date});
-        if(holiday) {
-          if(holiday.workers.indexOf(workerId) >= 0) {
-            console.log("-----------");
-            onHoliday = false;
-          }
+        if(dates_before.length > ev.dates.length) {
+          var event_dates = [];
+          ev.dates.forEach(function(date) {
+            event_dates.push(moment(date).format("YYYY-MM-DD"));
+          });
+          dates_before.forEach(function(date) {
+            if($.inArray(date, event_dates) < 0) {
+              console.log("-------remove");
+              data.state = "remove";
+              data.onHoliday = false;
+              data.date = date;
+            }
+          });
         }
-        Meteor.call("setLeave", workerId, date, onHoliday, function(err) {
+        Meteor.call("setLeave", workerId, data.date, data.onHoliday, function(err) {
           if(err) {
             return alert(err.reason);
+          } else {
+            if(data.onHoliday) {
+              dates_before.push(data.date);
+            }
           }
-        })
-
-      }).on('clearDate', function(ev) {
-        console.log("...............................", ev)
+        });
+      }).on("changeMonth", function(ev) {
+        var date = moment(ev.date).format("YYYY-MM-DD");
+        var dates = getDaysOfMonth(date);
+        Meteor.subscribe("monthlyHolidays", dates.start, dates.end);
       });
     }
   });
-
-  // })
-  // .on("changeMonth", function(ev) {
-  //   date = moment(ev.date).format("YYYY-MM-DD");
-  //   dates = getDaysOfMonth(date);
-  //   Meteor.subscribe("monthlyHolidays", dates.start, dates.end);
-  //   // var holi = Holidays.find({"date": {$gte: dates.start, $lte: dates.end}}).fetch();
-  // }).on("clearDate", function(ev) {
-  //   console.log("-clearDate-----", ev);
-  // });
-  // var date = moment(ev.date).format("YYYY-MM-DD");
-  // var dates = getDaysOfMonth(date);
-  // console.log(dates,  $(".deleteWorker").attr("data-id"));
+  
  
 }

@@ -105,7 +105,7 @@ Meteor.methods({
         logger.info("New Holiday entry inserted - with leave", {"workerId": workerId, "date": date, "id": id});
       } else {
         Holidays.update({"_id": entryExist._id}, {$addToSet: {"workers": workerId}});
-        logger.info("Leave added: ", {"id": entryExist._id, "workerId": workerId});
+        logger.info("Leave added: ", {"id": entryExist._id, "workerId": workerId, "date": date});
       }
       var alreadyAssigned = Shifts.findOne({"shiftDate": date, "assignedTo": workerId});
       if(alreadyAssigned) {
