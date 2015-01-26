@@ -2,8 +2,8 @@ Template.daySummaryDetailItem.helpers({
   'data': function() {
     var doc = {
       'sales': 0,
-      'totalTimePlanned': '0:0',
-      'totalTimeActual': '0:0',
+      'totalTimePlanned': 0, //predicted time of each job
+      'totalTimeActual': 0, //time spent from start to end
       'totalWages': 0
     };
     var date = this.date;
@@ -14,83 +14,83 @@ Template.daySummaryDetailItem.helpers({
     }
 
     var wokers = [];
-    var hoursPlanned = 0;
-    var minsPlanned = 0;
+    var timePlanned = 0;
+    var timePlanned_hr = 0;
+    var timePlanned_min = 0;
+    var timeActual = 0;
+    var timeActual_hr = 0;
+    var timeActual_min = 0;
 
-    var job_due_hours_total = 0;
-    var job_due_mins_total = 0;
-
-    var totalWages = 0;
-    //calc wages
     var shifts = Shifts.find({"shiftDate": this.date}).fetch();
-    shifts.forEach(function(shift) {
-      if(moment(shift.endTime).isValid() && moment(shift.startTime).isValid()) {
-        var due = moment.preciseDiff(shift.endTime, shift.startTime).trim();
-        var hours = parseInt(due.slice(0, due.indexOf("hours")));
-        var mins = parseInt(due.slice(due.indexOf("s")+1, due.indexOf("minutes")))
-
-        if(hours) {
-         hoursPlanned += hours;
-        }
-        if(mins) {
-         minsPlanned += mins; 
-        }
-        if(shift.assignedTo) {
-          var worker = Workers.findOne(shift.assignedTo);
-          if(worker) {
-            if(hours) {
-              totalWages += hours * worker.hourlyWage;
-            }
-            if(mins) {
-              totalWages += (mins/60) * worker.hourlyWage;
-            }
-          }
-        }
-        //calc jobs actual time
+    if(shifts.length > 0) {
+      shifts.forEach(function(shift) {
+        var timeActualShift = 0;
         if(shift.jobs.length > 0) {
           shift.jobs.forEach(function(job) {
-            var jobDoc = Jobs.findOne(job.job);
-            var jobStartTime = null;
-            var jobEndTime = null;
-            var job_due = null;
-            var job_due_hours = null;
-            var job_due_mins = null;
+            var job = Jobs.findOne(job.job);
+            //calc job predicted time
+            if(job.activeTime) {
+              timePlanned += parseInt(job.activeTime);
+            }
 
-            if(jobDoc.options) {
-              if(jobDoc.options.startedAt) {
-                jobStartTime = moment(jobDoc.options.startedAt).format("YYYY-MM-DD HH:mm:ss")
-              }
-              if(jobDoc.options.finishedAt) {
-                jobEndTime = moment(jobDoc.options.finishedAt).format("YYYY-MM-DD HH:mm:ss")
-              }
-              if(jobStartTime && jobEndTime) {
-                job_due = moment.preciseDiff(jobEndTime, jobStartTime).trim();
-                if(job_due) {
-                  if(job_due.indexOf("hours") > 0) {
-                    job_due_hours = parseInt(job_due.slice(0, job_due.indexOf("hours"))); 
-                    job_due_hours_total += job_due_hours;
-                    job_due_mins = parseInt(job_due.slice(job_due.indexOf("s")+1, job_due.indexOf("minutes"))); 
-                    job_due_mins_total += job_due_mins;
-                  } else if(job_due.indexOf("minutes")) {
-                    job_due_mins = parseInt(job_due.slice(0, job_due.indexOf("minutes")));
-                    job_due_mins_total += job_due_mins;
-                  }
+            //calc time spent on each job
+            if(job.options) {
+              if(job.options.startedAt && job.options.finishedAt) {
+                var start = moment(job.options.startedAt);
+                var end = moment(job.options.finishedAt);
+                if(start && end) {
+                  var start_mins_total = start.hour()*60 + start.minute();
+                  var end_mins_total = end.hour()*60 + end.minute();
+
+                  var due_mins = end_mins_total - start_mins_total;
+                  timeActualShift += due_mins; 
+                  timeActual += due_mins
                 }
-              } 
+              }
             }
           });
         }
+
+        //calc wages for each shift
+        var shiftDoc = Shifts.findOne(shift);
+        // console.log(shiftDoc)
+        if(shiftDoc.assignedTo) {
+          var worker = Workers.findOne(shiftDoc.assignedTo);
+          console.log(worker.hourlyWage, timeActualShift);
+          
+        }
+      });
+
+      //calc job predicted time
+      timePlanned_min = parseInt(timePlanned)%60;
+      timePlanned_hr = parseInt(timePlanned - timePlanned_min)/60;
+      if(timePlanned_hr > 0) {
+        doc.totalTimePlanned = timePlanned_hr + ' hours';
       }
-    });
-    if(minsPlanned >= 60) {
-      var addi_hours = minsPlanned/60;
-      hoursPlanned += addi_hours;
-      minsPlanned = minsPlanned%60;
+      if((timePlanned_hr > 0) && (timePlanned_min > 0)) {
+        doc.totalTimePlanned += ' and ';
+      }
+      if(timePlanned_min > 0) {
+        doc.totalTimePlanned += timePlanned_min + ' minutes';
+      }
+
+      //calc time spent on each job
+      console.log(timeActual);
+      timeActual_min = parseInt(timeActual)%60;
+      timeActual_hr = parseInt(timeActual - timeActual_min)/60;
+      if(timeActual_hr > 0) {
+        doc.totalTimeActual = timeActual_hr + ' hours';
+      }
+      if((timeActual_hr > 0) && (timeActual_min > 0)) {
+        doc.totalTimeActual += ' and '
+      }
+      if(timeActual_min > 0) {
+        doc.totalTimeActual += timeActual_min + ' minutes';
+      }
+
     }
-    doc.totalTimePlanned = hoursPlanned + ":" + minsPlanned;
-    doc.totalTimeActual = job_due_hours_total + ":" + job_due_mins_total;
-    doc.totalWages = totalWages;
     return doc;
+
   },
 
   'addSalesPermission': function() {
