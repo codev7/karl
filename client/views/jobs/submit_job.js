@@ -3,7 +3,6 @@ Template.submitJob.events({
     event.preventDefault();
     var name = $(event.target).find('[name=name]').val();
     var type = $(event.target).find('[name=type]').val();;
-    var details = $(event.target).find('[name=details]').val();
     var portions = $(event.target).find('[name=portions]').val();;
     var activeTime = $(event.target).find('[name=activeTime]').val();
     var ingCost = $(event.target).find('[name=ingCost]').val();
@@ -17,7 +16,6 @@ Template.submitJob.events({
       var info = {
         "name": name,
         "type": type,
-        "details": details,
         "portions": portions,
         "activeTime": activeTime,
         "ingCost": ingCost,

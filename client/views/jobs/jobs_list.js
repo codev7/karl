@@ -16,7 +16,7 @@ Template.jobsList.rendered = function() {
         if(ui.draggable[0].dataset.title == "job") {
           var jobId = ui.draggable[0].dataset.id;
           var shiftId = $(this).attr("data-id");
-          Meteor.call("assignJobToShift", jobId, shiftId, function(err) {
+          Meteor.call("assignJob", jobId, shiftId, function(err) {
             if(err) {
               return alert(err.reason);
             }

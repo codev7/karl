@@ -29,7 +29,6 @@ Template.jobProfile.events({
     event.preventDefault();
     var name = $(event.target).find('[name=name]').val();
     var type = $(event.target).find('[name=type]').val();;
-    var details = $(event.target).find('[name=details]').val();
     var portions = $(event.target).find('[name=portions]').val();;
     var activeTime = $(event.target).find('[name=activeTime]').val();
     var ingCost = $(event.target).find('[name=ingCost]').val();
@@ -41,16 +40,14 @@ Template.jobProfile.events({
       alert("Please add active time for your job");
     } else {
       var info = {
-        "_id": $(e.target).attr("data-id"),
         "name": name,
         "type": type,
-        "details": details,
         "portions": portions,
         "activeTime": activeTime,
         "ingCost": ingCost,
         "shelfLife": shelfLife
       }
-      Meteor.call("editJob", info, function(err, id) {
+      Meteor.call("editJob",$(e.target).attr("data-id"), info, function(err, id) {
         if(err) {
           return alert(err.reason);
         } else {
