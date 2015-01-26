@@ -85,7 +85,7 @@ Template.shiftProfile.events({
     }
   },
 
-  'focus .shiftDate': function(event) {
+  'focus .form_date': function(event) {
     $('.form_date').datetimepicker({
       language:  'fr',
       weekStart: 1,
@@ -101,7 +101,7 @@ Template.shiftProfile.events({
     });
   },
 
-  'focus .timepicker': function(event) {
+  'focus .form_time': function(event) {
     $(".form_time").datetimepicker({
       language:  'fr',
       todayBtn:  1,
