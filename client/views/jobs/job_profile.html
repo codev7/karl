@@ -1,0 +1,122 @@
+<template name="jobProfile">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{job.name}}</h4>
+      </div>
+      <form class="form-horizontal" role="form" data-id="{{job._id}}">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Name</label>
+            <div class="col-sm-6">
+              <input type="text" name="name" class="form-control" value="{{job.name}}" placeholder="Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Type</label>
+            <div class="col-sm-6">
+              <div class="dropdown">
+                <select name="type">
+                  <option selected="selected">{{job.type}}</option>
+                  {{#each jobTypes}}
+                  <option value="{{type}}">{{type}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <!-- <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                  Type
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Prep</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Service</a></li>
+                </ul>
+              </div> -->
+              <!-- <p class="col-sm-4 control-label text-align-left">{{job.type}}</p> -->
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <label class="col-sm-4 control-label">Details</label>
+            <div class="col-sm-6">
+              <p class="col-sm-4 control-label text-align-left">{{job.details}}</p>
+              <textarea type="text" name="details" class="form-control" placeholder="Details">{{job.details}}</textarea>
+            </div>
+          </div> -->
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Portions</label>
+            <div class="col-sm-6">
+              <!-- <p class="col-sm-4 control-label text-align-left">{{job.portions}}</p> -->
+              <div class="dropdown">
+                <select name="portions">
+                  <option selected="selected">{{job.portions}}</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <!-- <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+                  No. of portions
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">8</a></li>
+                </ul> -->
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Active Time</label>
+            <div class="col-sm-6">
+              <!-- <p class="col-sm-4 control-label text-align-left">{{job.activeTime}}</p> -->
+              <div class="input-group">
+                <input type="text" class="form-control" name="activeTime" value="{{job.activeTime}}">
+                <span class="input-group-addon">min</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Ingredients Cost</label>
+            <div class="col-sm-6">
+              <!-- <p class="col-sm-4 control-label text-align-left">{{job.ingCost}}</p> -->
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" class="form-control" name="ingCost" value="{{job.ingCost}}">
+                <span class="input-group-addon">.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Shelf Life</label>
+            <div class="col-sm-6">
+              <!-- <p class="col-sm-4 control-label text-align-left">{{job.shelfLife}}</p> -->
+              <div class="input-group">
+                <input type="number" class="form-control" name="shelfLife" value="{{job.shelfLife}}">
+                <span class="input-group-addon">Days</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Status</label>
+            <div class="col-sm-6">
+              <p class="col-sm-4 control-label text-align-left">{{job.status}}</p>
+              <!-- <div class="input-group">
+                <input type="number" class="form-control" value="{{job.status}}">
+                <span class="input-group-addon">Days</span>
+              </div> -->
+            </div>
+          </div>
+       </div>
+        <div class="modal-footer">
+          {{#if permitted}}
+          <button type="button" class="btn btn-danger deleteJob" data-id="{{job._id}}">Delete</button>
+          {{/if}}
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
