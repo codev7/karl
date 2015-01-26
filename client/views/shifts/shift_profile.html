@@ -10,17 +10,17 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">Date</label>
             <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control shiftDate" value="{{shift.shiftDate}}" name="dateOfShift" placeholder="Date" data-date-format="YYYY-MM-DD">
-                <span class="input-group-addon"><i class="images/glyphicon glyphicon-time"></i></span>
+              <div class="input-group date form_date" data-date-format="yyyy-mm-dd">
+                <input class="form-control shiftDate" name="dateOfShift" size="16" type="text" value="{{shift.shiftDate}}">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
               </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-4 control-label">Start Time</label>
             <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" name="startingTime" value="{{timeFormat shift.startTime}}" placeholder="Time">
+              <div class="input-group date form_time" data-date="{{shift.shiftDate}}" data-date-format="hh:ii">
+                <input type="text"  name="startingTime" class="form-control" value="{{timeFormat shift.startTime}}">
                 <span class="input-group-addon"><i class="images/glyphicon glyphicon-time"></i></span>
               </div>
             </div>
@@ -28,8 +28,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">End Time</label>
             <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control timepicker"  value="{{timeFormat shift.endTime}}" name="endingTime" placeholder="Time">
+              <div class="input-group date form_time" data-date="{{shift.shiftDate}}" data-date-format="hh:ii">
+                <input type="text"  name="endingTime" class="form-control" value="{{timeFormat shift.endTime}}">
                 <span class="input-group-addon"><i class="images/glyphicon glyphicon-time"></i></span>
               </div>
             </div>

@@ -85,18 +85,35 @@ Template.shiftProfile.events({
     }
   },
 
-  'focus .timepicker': function(event) {
-    $(".timepicker").datetimepicker({
-      pickDate: false,
-      pickTime: true,
-      useMinutes: true,  
-      useCurrent: false
+  'focus .shiftDate': function(event) {
+    $('.form_date').datetimepicker({
+      language:  'fr',
+      weekStart: 1,
+      todayBtn:  1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      minView: 2,
+      forceParse: 0
+    }).
+    on('changeDate', function(ev){
+      $(".timepicker")[0].focus();
     });
   },
 
-  'focus .shiftDate': function(event) {
-    $('.shiftDate').datetimepicker({
-      pickTime: false,
+  'focus .timepicker': function(event) {
+    $(".form_time").datetimepicker({
+      language:  'fr',
+      todayBtn:  1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 1,
+      minView: 0,
+      maxView: 1,
+      forceParse: 0
+    })
+    .on('changeMinute', function(ev){
+      $(".timepicker")[1].focus();
     });
-  },
+  }
 });

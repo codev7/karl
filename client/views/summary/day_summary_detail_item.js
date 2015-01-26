@@ -75,7 +75,6 @@ Template.daySummaryDetailItem.helpers({
       }
 
       //calc time spent on each job
-      console.log(timeActual);
       timeActual_min = parseInt(timeActual)%60;
       timeActual_hr = parseInt(timeActual - timeActual_min)/60;
       if(timeActual_hr > 0) {
