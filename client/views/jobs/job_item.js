@@ -5,8 +5,10 @@ Template.jobItem.events({
   },
 
   'click .set-job-status': function(e, instance) {
-    if(this) {
-      Meteor.call("setJobStatus", this._id, function(err) {
+    var state = $(e.target).attr("data-state");
+    console.log("---", state);
+    if(this && state) {
+      Meteor.call("changeJobStatus", this._id, state, function(err) {
         if(err) {
           return alert(err.reason);
         }
@@ -16,8 +18,9 @@ Template.jobItem.events({
 });
 
 Template.jobItem.helpers({
-  'setStatusPermission': function() {
+  'changeStatePermission': function() {
     var permitted = true;
+    console.log("this", this);
     if(this.status == "draft") {
       permitted = false;
     }
@@ -25,12 +28,7 @@ Template.jobItem.helpers({
   },
 
   'jobHeight': function() {
-    return (this.activeTime * 1);
+    return this.activeTime;
   }
 });
 
-Template.jobItem.rendered = function() {
-  // $(function () {
-  //   $('[data-toggle="tooltip"]').tooltip()
-  // });
-}

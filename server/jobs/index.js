@@ -166,7 +166,7 @@ Meteor.methods({
     options[updateStatus] = new Date();
 
     logger.info("Job status updated", {"jobId": jobId, "status": updateStatus, "options": options});
-    Jobs.update({"_id": jobId}, {$set: {"status": status}, $addToSet: {"options": options}});
+    Jobs.update({"_id": jobId}, {$set: {"status": updateStatus}, $addToSet: {"options": options}});
     //if finished, add portions to inventory
     if(updateStatus == "finished") {
       logger.info("Inventory update ", {"jobId": jobId, "portions": job.portions});
