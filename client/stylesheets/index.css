@@ -141,24 +141,6 @@ select {
   text-align: center;
 }
 
-.draft {
-  background-color: #3E5AAF;
-}
-
-.assigned {
-  background-color: #3E5AAF;
-}
-
-.started {
-  background-color: #4DB870;
-}
-
-.finished {
-  background-color: #CCD6CC;
-  color: #3D403D;
-}
-
-
 /*WEEKELY VIEW*/
 .comb-div {
   float: left;
@@ -183,12 +165,41 @@ select {
 .set-job-status {
   position: relative;
   float: right;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
   border-radius: 50px;
   background-color: #fff;
+  margin-right: 5px;
+}
+
+.start {
+  background-color: #ffffff;
+}
+
+.cook {
+  background-color: #FFA366;
+}
+
+.cooking {
+  background-color: #FFDAC2;
+}
+
+.pause {
+  background-color: #000000;
+}
+
+.paused {
+  background-color: #A1A5A5;
+}
+
+.finish {
+  background-color: #80CC99;
+}
+
+.finished {
+  background-color: #B3E0C2;
 }
 
 .center-pad20 {
