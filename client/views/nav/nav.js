@@ -14,7 +14,7 @@ Template.nav.events({
   
   'click #week': function(event) {
     event.preventDefault();
-    var date = moment(new Date).format("YYYY-MM-DD");
+    var date = moment(new Date()).format("YYYY-MM-DD");
     if(Session.get("thisDate")) { 
       date = Session.get("thisDate");
     }

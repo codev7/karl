@@ -4,24 +4,22 @@ Template.innerHeader.helpers({
     if(routeName == "weekly") {
       var week = Session.get("thisWeek");
       var weekTitle = null;
-      var sunday_year = moment(week.day1).format("YYYY");
-      var saturday_year = moment(week.day7).format("YYYY");
+      var sunday_year = moment(new Date(week.day1)).format("YYYY");
+      var saturday_year = moment(new Date(week.day7)).format("YYYY");
       if(sunday_year != saturday_year) {
-        weekTitle = moment(week.day1).format("MMM Do YYYY");
+        weekTitle = moment(new Date(week.day1)).format("MMM Do YYYY");
         weekTitle += " - "
-        weekTitle += moment(week.day7).format("MMM Do YYYY");
+        weekTitle += moment(new Date(week.day7)).format("MMM Do YYYY");
       } else {
-        weekTitle = moment(week.day1).format("MMM Do") + " - " + moment(week.day7).format("MMM Do");
-        weekTitle += " of " + moment(week.day1).format("YYYY")
+        weekTitle = moment(new Date(week.day1)).format("MMM Do") + " - " + moment(new Date(week.day7)).format("MMM Do");
+        weekTitle += " of " + moment(new Date(week.day1)).format("YYYY")
       }
       return weekTitle;
     } else if(routeName == "daily" || routeName == "home") {
       var date = Session.get("thisDate");
-      var thisDate = "";
+      var thisDate = new Date();
       if(date) {
         thisDate = new Date(date);
-      } else {
-        thisDate = new Date();
       }
       return moment(thisDate).format("MMM Do YY")
     }
@@ -82,13 +80,13 @@ Template.innerHeader.events({
 
   'click #prevWeek': function(event) {
     var thisWeek = Session.get("thisWeek");
-    var prevWeek = moment(thisWeek.day1).weekday(-7).format("YYYY-MM-DD");
+    var prevWeek = moment(new Date(thisWeek.day1)).weekday(-7).format("YYYY-MM-DD");
     Router.go("weekly", {'_date': prevWeek});
   },
 
   'click #nextWeek': function(event) {
     var thisWeek = Session.get("thisWeek");
-    var nextWeek = moment(thisWeek.day1).weekday(7).format("YYYY-MM-DD");
+    var nextWeek = moment(new Date(thisWeek.day1)).weekday(7).format("YYYY-MM-DD");
     Router.go("weekly", {'_date': nextWeek});
   },
 
