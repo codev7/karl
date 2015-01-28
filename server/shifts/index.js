@@ -8,6 +8,14 @@ Meteor.methods({
       logger.error("End time field not found");
       throw new Meteor.Error(404, "End time field not found");
     }
+    if(!info.shiftDate) {
+      logger.error("Date field not found");
+      throw new Meteor.Error(404, "Date field not found");
+    }
+    if(new Date(info.shiftDate) < new Date()) {
+      logger.error("Can not create a shift for a previous date");
+      throw new Meteor.Error(404, "Can't create a shift for a previous date");
+    }
     var doc = {
       "startTime": info.startTime,
       "endTime": info.endTime,
@@ -18,9 +26,10 @@ Meteor.methods({
       "assignedBy": null, //update
       "jobs": []
     }
+
     var id = Shifts.insert(doc);
-    logger.info("Shift inserted ", {"shiftId": id, "date": info.shiftDate});
-    return;
+    logger.info("Shift inserted", {"shiftId": id, "date": info.shiftDate});
+    return id;
   },
 
   'editShift': function(info) {
@@ -40,10 +49,14 @@ Meteor.methods({
     if(info.endTime) {
       updateDoc.endTime = info.endTime;
     }
+    if(new Date(shift.shiftDate) < new Date()) {
+      logger.error("Can not edit shifts on previous days");
+      throw new Meteor.Error(404, "Can not edit shifts on previous days");
+    }
     if(shift.shiftDate != info.shiftDate) {
       if(shift.assignedTo || shift.jobs.length > 0) {
         logger.error("Can't change the date of an assigned shift ", {"id": info._id});
-        throw new Meteor.Error(404, "Can't change the date of this shift");
+        throw new Meteor.Error(404, "Can't change the date of shift when you have assigned jobs or workers");
       } else {
         updateDoc.shiftDate = info.shiftDate;
       }
@@ -67,9 +80,13 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
+    if(new Date(shift.shiftDate) < new Date()) {
+      logger.error("Can not delete shifts on previous days");
+      throw new Meteor.Error(404, "Can not delete shifts on previous days");
+    }
     if(shift.assignedTo || shift.jobs.length > 0) {
       logger.error("Can't delete a shift with assigned worker or jobs", {"id": id});
-      throw new Meteor.Error(404, "Can't delete this shift");
+      throw new Meteor.Error(404, "Can't delete a shift with assigned worker or jobs");
     }
     Shifts.remove({'_id': id});
     logger.info("Shift deleted", {"shiftId": id});
