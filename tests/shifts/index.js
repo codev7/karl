@@ -40,8 +40,8 @@ describe("Testing shift methods", function() {
       }, [info]);
       expect(result).to.not.be.equal(null);
 
-      var shift = server.execute(function() {
-        var doc = Shifts.findOne();
+      var shift = server.execute(function(id) {
+        var doc = Shifts.findOne(id);
         return (doc);
       }, [result]);
       expect(shift._id).to.be.equal(result);
@@ -263,6 +263,12 @@ describe("Testing shift methods", function() {
           });
         }, [shiftId]);
         expect(result).to.be.equal(null);
+
+        var shift = server.execute(function(id) {
+          var doc = Shifts.findOne(id);
+          return doc;
+        }, [shiftId]);
+        expect(shift).to.be.equal(undefined);
       });
     });
   });
