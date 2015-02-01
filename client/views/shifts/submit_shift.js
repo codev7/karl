@@ -21,7 +21,6 @@ Template.submitShift.events({
     if(end_light == "PM") {
       end_hours += 12;
     }
-    console.log(dateOfShift, startTime, endTime)
     var dateObj_end = new Date(dateOfShift);
     dateObj_end.setHours(end_hours, end_mins)
 

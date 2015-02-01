@@ -20,7 +20,7 @@ Meteor.methods({
         logger.error("Shift not found");
         throw new Meteor.Error(404, "Shift not found");
       }
-      if(new Date(job_on_shift.shiftDate) < new Date()) {
+      if(new Date(job_on_shift.shiftDate) <= new Date()) {
         logger.error("Shift cannot be edited");
         throw new Meteor.Error(404, "This shift cannot be");
       }
@@ -70,7 +70,9 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
-    if(new Date(shift.shiftDate) < new Date()) {
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if(new Date(shift.shiftDate) <= yesterday) {
       logger.error("Shift date passed");
       throw new Meteor.Error(404, "Shift cannot be assigned, date is passed");
     }

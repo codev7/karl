@@ -12,7 +12,9 @@ Meteor.methods({
       logger.error("Date field not found");
       throw new Meteor.Error(404, "Date field not found");
     }
-    if(new Date(info.shiftDate) < new Date()) {
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if(new Date(info.shiftDate) <= yesterday) {
       logger.error("Can not create a shift for a previous date");
       throw new Meteor.Error(404, "Can't create a shift for a previous date");
     }
@@ -49,7 +51,9 @@ Meteor.methods({
     if(info.endTime) {
       updateDoc.endTime = info.endTime;
     }
-    if(new Date(shift.shiftDate) < new Date()) {
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if(new Date(shift.shiftDate) <= yesterday) {
       logger.error("Can not edit shifts on previous days");
       throw new Meteor.Error(404, "Can not edit shifts on previous days");
     }
@@ -80,7 +84,9 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
-    if(new Date(shift.shiftDate) < new Date()) {
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if(new Date(shift.shiftDate) <= yesterday) {
       logger.error("Can not delete shifts on previous days");
       throw new Meteor.Error(404, "Can not delete shifts on previous days");
     }

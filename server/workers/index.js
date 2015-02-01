@@ -98,8 +98,9 @@ Meteor.methods({
       logger.error("Date not found");
       throw new Meteor.Error(404, "Date not found");
     }
-    var today = new Date();
-    if(new Date(date) < new Date()) {
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if(new Date(date) <= yesterday) {
       logger.error("Passed date", date);
       throw new Meteor.Error(404, "Can't change an entry of a past date");
     }
