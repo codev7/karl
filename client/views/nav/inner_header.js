@@ -21,7 +21,7 @@ Template.innerHeader.helpers({
       if(date) {
         thisDate = new Date(date);
       }
-      return moment(thisDate).format("MMM Do YY")
+      return moment(thisDate).format("MMM Do YYYY")
     }
   },
 
@@ -93,36 +93,43 @@ Template.innerHeader.events({
   'click #title': function() {
     var routeName = Router.current().route.getName();
     if(routeName == "weekly") {
-       $("#title").datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
+      $("#title").datepicker({
+        multidate: true,
+        multidateSeparator: '-',
+        todayBtn: "linked",
+        todayHighlight: true
       })
-      .on('changeDate', function(ev){
+      var week = getDaysOfWholeWeek(new Date());
+      var daysOfWeek = [];
+      if(Session.get("thisWeek")) {
+        week = getDaysOfWholeWeek(Session.get("thisWeek").day1);
+      } 
+      if(week) {
+        week.forEach(function(obj) {
+          daysOfWeek.push(new Date(moment(obj.date).format("YYYY-M-D")));
+        });
+      }
+      $("#title").datepicker("setDates", daysOfWeek);
+      $("#title").on('changeDate', function(ev){
         var date = moment(ev.date).format("YYYY-MM-DD");
         Session.set("thisDate", date);
         Router.go("weekly", {"_date": date});
+        $('#title').datepicker('remove');
       });
     } else if(routeName == "daily" || routeName == "home") {
-      $("#title").datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-      })
-      .on('changeDate', function(ev){
+      $("#title").datepicker({
+        todayHighlight: true
+      });
+      if(Session.get("thisDate")) {
+        $("#title").datepicker("setDate", new Date(moment(Session.get("thisDate")).format("YYYY-M-D")));
+      } else {
+        $("#title").datepicker("setDate", new Date(moment(new Date()).format("YYYY-M-D")));
+      }
+      $("#title").on('changeDate', function(ev){
         var date = moment(ev.date).format("YYYY-MM-DD");
         Session.set("thisDate", date);
         Router.go("daily", {"_date": date});
+        $('#title').datepicker('remove');
       });
     } 
   }

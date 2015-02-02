@@ -18,6 +18,10 @@ select {
   color: #fff;
 }
 
+.worker-profile-item {
+  padding: 10px 0px;
+}
+
 .left {
   /*background-color: #B2F0FF;*/
 }
@@ -213,7 +217,7 @@ select {
 }
 
 .resigned-worker {
-  background-color: #bbb;
+  color: #bbb;
 }
 
 .active-worker {
