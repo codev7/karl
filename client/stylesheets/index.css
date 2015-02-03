@@ -14,6 +14,11 @@ select {
   background-color: #bbb
 }
 
+/*.left {
+  float: right;
+  position: relative;
+}*/
+
 .jobitem > a, .workeritem > a {
   color: #fff;
 }
@@ -226,4 +231,8 @@ select {
 
 .on-leave {
   background-color: #DB4D4D;
+}
+
+.shift-profile-btn {
+  float: right;
 }

@@ -15,7 +15,7 @@ Template.innerHeader.helpers({
         weekTitle += " of " + moment(new Date(week.day1)).format("YYYY")
       }
       return weekTitle;
-    } else if(routeName == "daily" || routeName == "home") {
+    } else if(routeName == "daily" || routeName == "home" || routeName == "member") {
       var date = Session.get("thisDate");
       var thisDate = new Date();
       if(date) {
@@ -29,7 +29,7 @@ Template.innerHeader.helpers({
     var routeName = Router.current().route.getName();
     if(routeName == "weekly") {
       return false;
-    } else if(routeName == "home" || routeName == "daily") {
+    } else if(routeName == "home" || routeName == "daily" || routeName == "member") {
       return true;
     }
   }
@@ -93,39 +93,39 @@ Template.innerHeader.events({
   'click #title': function() {
     var routeName = Router.current().route.getName();
     if(routeName == "weekly") {
-      $("#title").datepicker({
+      $("#title").on("show", function(ev) {
+        var week = getDaysOfWholeWeek(new Date());
+        var daysOfWeek = [];
+        if(Session.get("thisWeek")) {
+          week = getDaysOfWholeWeek(Session.get("thisWeek").day1);
+        } 
+        if(week) {
+          week.forEach(function(obj) {
+            daysOfWeek.push(new Date(moment(obj.date).format("YYYY-M-D")));
+          });
+        }
+        $("#title").datepicker("setDates", daysOfWeek);
+      }).datepicker({
         multidate: true,
         multidateSeparator: '-',
         todayBtn: "linked",
         todayHighlight: true
-      })
-      var week = getDaysOfWholeWeek(new Date());
-      var daysOfWeek = [];
-      if(Session.get("thisWeek")) {
-        week = getDaysOfWholeWeek(Session.get("thisWeek").day1);
-      } 
-      if(week) {
-        week.forEach(function(obj) {
-          daysOfWeek.push(new Date(moment(obj.date).format("YYYY-M-D")));
-        });
-      }
-      $("#title").datepicker("setDates", daysOfWeek);
-      $("#title").on('changeDate', function(ev){
+      }).on('changeDate', function(ev){
         var date = moment(ev.date).format("YYYY-MM-DD");
         Session.set("thisDate", date);
         Router.go("weekly", {"_date": date});
         $('#title').datepicker('remove');
       });
     } else if(routeName == "daily" || routeName == "home") {
-      $("#title").datepicker({
+      $("#title").on("show", function(ev) {
+        var date = new Date(moment(new Date()).format("YYYY-M-D"));
+        if(Session.get("thisDate")) {
+          date = new Date(moment(Session.get("thisDate")).format("YYYY-M-D"))
+        }
+        $("#title").datepicker("setDate", date);
+      }).datepicker({
         todayHighlight: true
-      });
-      if(Session.get("thisDate")) {
-        $("#title").datepicker("setDate", new Date(moment(Session.get("thisDate")).format("YYYY-M-D")));
-      } else {
-        $("#title").datepicker("setDate", new Date(moment(new Date()).format("YYYY-M-D")));
-      }
-      $("#title").on('changeDate', function(ev){
+      }).on('changeDate', function(ev){
         var date = moment(ev.date).format("YYYY-MM-DD");
         Session.set("thisDate", date);
         Router.go("daily", {"_date": date});

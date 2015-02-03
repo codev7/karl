@@ -1,0 +1,39 @@
+<template name="teamMemberJobList">
+  <div class="table-responsive">
+    <table class="table">
+      <td>
+        <table class="table table-bordered">
+          <thead>
+            <tr class="center-text">
+              <th colspan="2">
+                <a href="" class="shift-profile" data-toggle="modal">{{timeFormat startTime}} - {{timeFormat endTime}} Shift</a>
+                <!-- <a href="#shiftProfile" data-toggle="modal">Edit</a> -->
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="shift-div">
+              <td class="time-panel">
+                {{#each timer120}}
+                <div class="time-divider-hour">{{this}}-</div>
+                {{/each}}
+              </td>
+              <td class="job-panel">
+                <div class="shift shiftedJobs" data-id="{{_id}}">
+                  {{#if jobs}}
+                    {{#each jobs}}
+                      {{> jobItem}}
+                    {{/each}}
+                  {{else}}
+                    Drag Jobs here
+                  {{/if}}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </table>
+  </div> 
+</template>

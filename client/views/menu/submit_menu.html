@@ -1,0 +1,36 @@
+<template name="submitMenu">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Menu</h4>
+      </div>
+      <form class="form-horizontal" role="form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Menu Item</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="menuItem" class="form-control" placeholder="Add Ingredient" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Ingredients</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="ingredient" class="form-control" placeholder="Add Ingredient" >
+            </div>
+          </div>
+           <div class="form-group">
+            <label class="col-sm-4 control-label">Cost</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="ingredient" class="form-control" placeholder="Add Ingredient" >
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
