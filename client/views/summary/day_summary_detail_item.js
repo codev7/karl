@@ -57,9 +57,7 @@ Template.daySummaryDetailItem.helpers({
         var shiftDoc = Shifts.findOne(shift);
         // console.log(shiftDoc)
         if(shiftDoc.assignedTo) {
-          var worker = Workers.findOne(shiftDoc.assignedTo);
-          console.log(worker.hourlyWage, timeActualShift);
-          
+          var worker = Workers.findOne(shiftDoc.assignedTo);          
         }
       });
 
