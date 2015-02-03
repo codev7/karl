@@ -5,7 +5,7 @@ Template.worker.events({
   },
 
   'click .shift-profile-btn': function() {
-    Router.go("member", {"_id": this._id, "date": new Date()});
+    Router.go("member", {"_id": this._id, "date": moment(new Date()).format("YYYY-MM-DD")});
   }
 });
 

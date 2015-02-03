@@ -4,12 +4,14 @@
       <td>
         <table class="table table-bordered">
           <thead>
+          {{#if shift}}
             <tr class="center-text">
               <th colspan="2">
-                <a href="" class="shift-profile" data-toggle="modal">{{timeFormat startTime}} - {{timeFormat endTime}} Shift</a>
+                <a href="" class="shift-profile" data-toggle="modal">{{timeFormat shift.startTime}} - {{timeFormat shift.endTime}} Shift</a>
                 <!-- <a href="#shiftProfile" data-toggle="modal">Edit</a> -->
               </th>
             </tr>
+            {{/if}}
           </thead>
 
           <tbody>
