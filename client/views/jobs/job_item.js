@@ -6,6 +6,7 @@ Template.jobItem.events({
 
   'click .set-job-status': function(e, instance) {
     var state = $(e.target).attr("data-state");
+    console.log(state);
     if(this && state) {
       Meteor.call("changeJobStatus", this._id, state, function(err) {
         if(err) {

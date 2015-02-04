@@ -23,7 +23,7 @@ Template.innerHeader.helpers({
       }
       var dateTitle = moment(thisDate).format("MMM Do YYYY");
       if(routeName == "member") {
-        var workerId = Session.get("thisWorker");
+        var workerId = Router.current().params._id;
         var worker = Workers.findOne(workerId);
         if(worker) {
           dateTitle += " - " + worker.name;
