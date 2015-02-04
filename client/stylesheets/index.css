@@ -81,7 +81,14 @@ select {
   color: #bbb;
 }
 
-.time-panel {
+.time-panel-daily {
+  width: 10px;
+  border-right: none !important;
+  /*background-color: #aaa;*/
+
+}
+
+.time-panel-member {
   width: 60px;
   border-right: none !important;
   /*background-color: #aaa;*/
@@ -96,7 +103,7 @@ select {
 
 .time-divider-hour {
   height: 60px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 

@@ -25,7 +25,7 @@ Template.teamMemberJobList.helpers({
       var endTime = moment(shift.endTime).format("HH:mm A");
       for (var i = parseInt(startTime); i <= parseInt(endTime); i++) {
         var time = i;
-        if(i <= 12) {
+        if(i < 12) {
           time += " AM";
         } else {
           time += " PM"

@@ -31,6 +31,11 @@ Template.shiftsDailyItem.helpers({
     var endTime = moment(this.endTime).format("HH:mm A");
     for (var i = parseInt(startTime); i <= parseInt(endTime); i++) {
       var time = i;
+      if(i < 12) {
+        time += " AM";
+      } else {
+        time += " PM"
+      }
       timer.push(time);
     };
     return timer;
