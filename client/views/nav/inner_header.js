@@ -21,7 +21,15 @@ Template.innerHeader.helpers({
       if(date) {
         thisDate = new Date(date);
       }
-      return moment(thisDate).format("MMM Do YYYY")
+      var dateTitle = moment(thisDate).format("MMM Do YYYY");
+      if(routeName == "member") {
+        var workerId = Session.get("thisWorker");
+        var worker = Workers.findOne(workerId);
+        if(worker) {
+          dateTitle += " - " + worker.name;
+        }
+      }
+      return dateTitle;
     }
   },
 
@@ -37,41 +45,68 @@ Template.innerHeader.helpers({
 
 Template.innerHeader.events({
   'click #prevDay': function(event) {
-    var pathname = location.pathname.slice(1, 15);
+    var routeName = Router.current().route.getName();
+    var date = null;
+    if(routeName == "daily" || routeName == "home") {
+      date = Router.current().params._date;
+    } else if(routeName == "member") {
+      date = Router.current().params.date;
+    }
     var toRoute = "";
-    if(pathname) {
-      var date = location.pathname.substring(1, 11);
+    if(date) {
       date = new Date(date);
-      date.setDate(date.getDate() - "1");
-      toRoute = date.toISOString().slice(0,10).replace(/-/g,"-");
+      date.setDate(date.getDate() - 1);
+      toRoute = moment(date).format("YYYY-MM-DD");
     } else {
       var today = new Date();   
-      today.setDate(today.getDate() - "1");
-      var yesterday = today.toISOString().slice(0,10).replace(/-/g,"-");
+      today.setDate(today.getDate() - 1);
+      var yesterday = moment(today).format("YYYY-MM-DD");
       toRoute = yesterday;
     }
-    Router.go("daily", {"_date": toRoute});
+    if(routeName == "daily" || routeName == "home") {
+      Router.go("daily", {"_date": toRoute});
+    } else if(routeName == "member") {
+      var worker = Router.current().params._id;
+      Router.go("member", {"_id": worker, "date": toRoute});
+    }
   },
 
   'click #nextDay': function(event) {
-    var pathname = location.pathname.slice(1, 15);
+    var routeName = Router.current().route.getName();
+    var date = null;
+    if(routeName == "daily" || routeName == "home") {
+      date = Router.current().params._date;
+    } else if(routeName == "member") {
+      date = Router.current().params.date;
+    }
     var toRoute = "";
-    if(pathname) {
-      var date = location.pathname.substring(1, 11);
+    if(date) {
       date = new Date(date);
       date.setDate(date.getDate() + 1);
-      toRoute = date.toISOString().slice(0,10).replace(/-/g,"-");
+      toRoute = moment(date).format("YYYY-MM-DD");
     } else {
-      var today = new Date(); 
+      var today = new Date();   
       today.setDate(today.getDate() + 1);
-      var yesterday = today.toISOString().slice(0,10).replace(/-/g,"-");
+      var yesterday = moment(today).format("YYYY-MM-DD");
       toRoute = yesterday;
     }
-    Router.go("daily", {"_date": toRoute});
+    if(routeName == "daily" || routeName == "home") {
+      Router.go("daily", {"_date": toRoute});
+    } else if(routeName == "member") {
+      var worker = Router.current().params._id;
+      Router.go("member", {"_id": worker, "date": toRoute});
+    }
   },
 
   'click #today': function(event) {
-    Router.go("home");
+    var routeName = Router.current().route.getName();
+    if(routeName == "home" || routeName == "daily") {
+      Router.go("home");
+    } else {
+      var worker = Router.current().params._id;
+      var today = moment(new Date()).format("YYYY-MM-DD");
+      Router.go("member", {"_id": worker, "date": today});
+    }
   },
 
   'click #thisWeek': function(event) {

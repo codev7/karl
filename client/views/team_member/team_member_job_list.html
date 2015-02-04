@@ -2,18 +2,16 @@
   <div class="table-responsive">
     <table class="table">
       <td>
+        {{#if shift}}
         <table class="table table-bordered">
           <thead>
-          {{#if shift}}
             <tr class="center-text">
               <th colspan="2">
                 <a href="" class="shift-profile" data-toggle="modal">{{timeFormat shift.startTime}} - {{timeFormat shift.endTime}} Shift</a>
                 <!-- <a href="#shiftProfile" data-toggle="modal">Edit</a> -->
               </th>
             </tr>
-            {{/if}}
           </thead>
-
           <tbody>
             <tr class="shift-div">
               <td class="time-panel">
@@ -35,6 +33,9 @@
             </tr>
           </tbody>
         </table>
+        {{else}}
+          <div class="center-pad20"><a href="#submitShiftModal" data-toggle="modal">Click here to create Shifts</a></div>
+        {{/if}}
       </td>
     </table>
   </div> 

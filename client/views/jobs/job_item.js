@@ -6,7 +6,6 @@ Template.jobItem.events({
 
   'click .set-job-status': function(e, instance) {
     var state = $(e.target).attr("data-state");
-    console.log("---", state);
     if(this && state) {
       Meteor.call("changeJobStatus", this._id, state, function(err) {
         if(err) {
@@ -20,8 +19,12 @@ Template.jobItem.events({
 Template.jobItem.helpers({
   'changeStatePermission': function() {
     var permitted = true;
-    console.log("this", this);
+    var routeName = Router.current().route.getName();
     if(this.status == "draft") {
+      permitted = false;
+    } else if(routeName == "member") {
+      permitted = true;
+    } else {
       permitted = false;
     }
     return permitted;
