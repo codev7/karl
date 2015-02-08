@@ -29,22 +29,24 @@ Template.daySummaryDetailItem.helpers({
           shift.jobs.forEach(function(job) {
             var job = Jobs.findOne(job.job);
             //calc job predicted time
-            if(job.activeTime) {
-              timePlanned += parseInt(job.activeTime);
-            }
+            if(job) {
+              if(job.activeTime) {
+                timePlanned += parseInt(job.activeTime);
+              }
 
-            //calc time spent on each job
-            if(job.options) {
-              if(job.options.startedAt && job.options.finishedAt) {
-                var start = moment(job.options.startedAt);
-                var end = moment(job.options.finishedAt);
-                if(start && end) {
-                  var start_mins_total = start.hour()*60 + start.minute();
-                  var end_mins_total = end.hour()*60 + end.minute();
+              //calc time spent on each job
+              if(job.options) {
+                if(job.options.startedAt && job.options.finishedAt) {
+                  var start = moment(job.options.startedAt);
+                  var end = moment(job.options.finishedAt);
+                  if(start && end) {
+                    var start_mins_total = start.hour()*60 + start.minute();
+                    var end_mins_total = end.hour()*60 + end.minute();
 
-                  var due_mins = end_mins_total - start_mins_total;
-                  timeActualShift += due_mins; 
-                  timeActual += due_mins
+                    var due_mins = end_mins_total - start_mins_total;
+                    timeActualShift += due_mins; 
+                    timeActual += due_mins
+                  }
                 }
               }
             }
@@ -55,9 +57,7 @@ Template.daySummaryDetailItem.helpers({
         var shiftDoc = Shifts.findOne(shift);
         // console.log(shiftDoc)
         if(shiftDoc.assignedTo) {
-          var worker = Workers.findOne(shiftDoc.assignedTo);
-          console.log(worker.hourlyWage, timeActualShift);
-          
+          var worker = Workers.findOne(shiftDoc.assignedTo);          
         }
       });
 

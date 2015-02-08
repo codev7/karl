@@ -1,7 +1,13 @@
-Meteor.publish("daily", function(date) {
+Meteor.publish("daily", function(date, worker) {
   var cursors = [];
   //get Shifts
-  var shiftsCursor = Shifts.find({"shiftDate": date}, {sort: {createdOn: 1}});
+  var query = {
+    "shiftDate": date
+  }
+  if(worker) {
+    query.assignedTo = worker
+  }
+  var shiftsCursor = Shifts.find(query, {sort: {createdOn: 1}});
   cursors.push(shiftsCursor);
 
   // get holidays
@@ -38,10 +44,6 @@ Meteor.publish("weekly", function(dates) {
   //get shifts
   var shiftsCursor = Shifts.find({"shiftDate": {$gte: firstDate, $lte: lastDate}});
   cursors.push(shiftsCursor);
-
-  //revenues on each date
-  var salesCursor = Sales.find({"date": {$gte: firstDate, $lte: lastDate}});
-  cursors.push(salesCursor);
 
   var shifts = shiftsCursor.fetch();
   var workersList = [];

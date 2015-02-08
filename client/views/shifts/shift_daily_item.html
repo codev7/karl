@@ -35,13 +35,13 @@
 
             <tbody>
               <tr class="shift-div">
-                <td class="time-panel">
+                <td class="time-panel-daily">
                   {{#each timer120}}
                   <div class="time-divider-hour">{{this}}-</div>
                   {{/each}}
                 </td>
-                <td class="job-panel">
-                  <div class="shift shiftedJobs" data-id="{{_id}}">
+                <td class="job-panel" data-id="{{_id}}">
+                  <div class="shift shiftedJobs">
                     {{#if jobs}}
                       {{#each jobs}}
                         {{> jobItem}}

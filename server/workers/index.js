@@ -15,7 +15,7 @@ Meteor.methods({
     }
     var id = Workers.insert(doc);
     logger.info("Inserted new worker", {"id": id});
-    return;
+    return id;
   },
 
   'editWorker': function(info) {
@@ -35,9 +35,10 @@ Meteor.methods({
     if(info.type) {
       updateDoc.type = info.type;
     }
-    if(info.wage) {
-      updateDoc.hourlyWage = info.wage;
-    }
+    //removed due to conflicting results
+    // if(info.wage) {
+    //   updateDoc.hourlyWage = info.wage;
+    // }
     if(info.limit) {
       updateDoc.workLimit = info.limit;
     }
@@ -59,6 +60,10 @@ Meteor.methods({
     if(!worker) {
       logger.error("Worker not found");
       throw new Meteor.Error(404, "Worker not found");
+    }
+    if(worker.resign) {
+      logger.error("Worker has already resigned", id);
+      throw new Meteor.Error(404, "Worker has already resigned");
     }
     //if has past records on shifts, resign
     var alreadyAssigned = Shifts.find({"assignedTo": id}).count();
@@ -93,35 +98,39 @@ Meteor.methods({
       logger.error("Date not found");
       throw new Meteor.Error(404, "Date not found");
     }
-    if(onHoliday) {
-      var entryExist = Holidays.findOne({"date": date});
-      if(!entryExist) {
-        var doc = {
-          "date": date,
-          "workers": []
-        }
-        doc.workers.push(workerId);
-        var id = Holidays.insert(doc);
-        logger.info("New Holiday entry inserted - with leave", {"workerId": workerId, "date": date, "id": id});
-      } else {
-        Holidays.update({"_id": entryExist._id}, {$addToSet: {"workers": workerId}});
-        logger.info("Leave added: ", {"id": entryExist._id, "workerId": workerId, "date": date});
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if(new Date(date) <= yesterday) {
+      logger.error("Passed date", date);
+      throw new Meteor.Error(404, "Can't change an entry of a past date");
+    }
+    var entryExist = Holidays.findOne({"date": date});
+    if(!entryExist) {
+      var doc = {
+        "date": date,
+        "workers": []
       }
+      var id = Holidays.insert(doc);
+      logger.info("New Holiday entry inserted", {"id": id});
+      doc._id = id;
+      entryExist = doc;
+    }
+    if(onHoliday) {  
       var alreadyAssigned = Shifts.findOne({"shiftDate": date, "assignedTo": workerId});
       if(alreadyAssigned) {
-        logger.info("Worker removed from shift", {"workerId": workerId, "shift": alreadyAssigned._id});
-        Shifts.update({_id: alreadyAssigned._id}, {$set: {"assignedTo": null}});
+        logger.error("Assigned to a shift on that date");
+        throw new Meteor.Error(404, "Assigned to a shift on that date");
+        // logger.info("Worker removed from shift", {"workerId": workerId, "shift": alreadyAssigned._id});
+        // Shifts.update({_id: alreadyAssigned._id}, {$set: {"assignedTo": null}});
       }
+      Holidays.update({"_id": entryExist._id}, {$addToSet: {"workers": workerId}});
+      logger.info("Leave added: ", {"id": entryExist._id, "workerId": workerId, "date": date});
+      return;
     } else {
-      var entryExist = Holidays.findOne({"date": date});
-      if(!entryExist) {
-        logger.error("Holiday not found");
-        throw new Meteor.Error(404, "Holiday not found");
-      }
       Holidays.update({"_id": entryExist._id}, {$pull: {"workers": workerId}});
       logger.info("Leave removed: ", {"date": date, "workerId": workerId});
-      return;
-    }
+      return;  
+    } 
   },
 
   'addWorkerType': function(type) {

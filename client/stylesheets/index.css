@@ -14,8 +14,17 @@ select {
   background-color: #bbb
 }
 
+/*.left {
+  float: right;
+  position: relative;
+}*/
+
 .jobitem > a, .workeritem > a {
   color: #fff;
+}
+
+.worker-profile-item {
+  padding: 10px 0px;
 }
 
 .left {
@@ -45,7 +54,7 @@ select {
 }
 
 .itemlist {
-  min-height: 200px;
+  height: 400px;
   background-color: #ddd;
   padding: 10px 10px;
 }
@@ -64,16 +73,23 @@ select {
 }
 
 #jobsList, .workersList {
-  min-height: 100px;
+  min-height: 400px;
 }
 
 .shift {
-  min-height: 100px;
+  height: 100%;
   color: #bbb;
 }
 
-.time-panel {
+.time-panel-daily {
   width: 10px;
+  border-right: none !important;
+  /*background-color: #aaa;*/
+
+}
+
+.time-panel-member {
+  width: 60px;
   border-right: none !important;
   /*background-color: #aaa;*/
 
@@ -87,6 +103,7 @@ select {
 
 .time-divider-hour {
   height: 60px;
+  font-size: 10px;
 }
 
 
@@ -213,7 +230,7 @@ select {
 }
 
 .resigned-worker {
-  background-color: #bbb;
+  color: #bbb;
 }
 
 .active-worker {
@@ -222,4 +239,8 @@ select {
 
 .on-leave {
   background-color: #DB4D4D;
+}
+
+.shift-profile-btn {
+  float: right;
 }

@@ -9,40 +9,57 @@ Meteor.methods({
       logger.error("Job does not exist", {"jobId": jobId});
       throw new Meteor.Error(404, "Job does not exist");
     }
+    if(!(job.status === "draft" || job.status === "assigned")) {
+      logger.error("Cannot assign a job in this status ", {"jobId": jobId, "status": job.status});
+      throw new Meteor.Error(404, "Cannot assign a job in this status");
+    }
+    var updateDoc = {};
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
     if(job.onshift) {
-      var shift = Shifts.findOne(shiftId);
-      if(!shift) {
+      var job_on_shift = Shifts.findOne(job.onshift);
+      if(!job_on_shift) {
         logger.error("Shift not found");
         throw new Meteor.Error(404, "Shift not found");
       }
-      if(job.status === 'assigned') {
-        logger.info("Job already on a shift, remove from shift", {"onshift": job.onshift, "jobId": jobId});
-        Shifts.update({"_id": job.onshift}, {$pull: {"jobs": jobId}});
-      } else {
-        logger.error("Job on this state, cannot be moved " + job.status);
-        throw new Meteor.Error(404, "Job on this state, cannot be moved: " + job.status);
+      if(new Date(job_on_shift.shiftDate) <= yesterday) {
+        logger.error("Shift cannot accept new jobs", {"shiftId": job.onshift});
+        throw new Meteor.Error(404, "This shift cannot accept new jobs");
       }
-    }
-    var status = null;
-    //if shift Id exists job move to that shift
-    //if does not remove from the shift
-    if(shiftId) {
-      var shift = Shifts.findOne(shiftId);
-      if(!shift) {
+      //removing from current onshift
+      Shifts.update({"_id": job.onshift}, {$pull: {"jobs": jobId}});
+      logger.info("Removed job from current shift");
+    } 
+    if(shiftId) { //assign job
+      var new_shift = Shifts.findOne(shiftId);
+      if(!new_shift) {
         logger.error("Shift not found");
         throw new Meteor.Error(404, "Shift not found");
       }
-      logger.info("Job added to the new shift", {"shiftId": shiftId, "jobId": jobId});
+      if(new Date(new_shift.shiftDate) <= yesterday) {
+        logger.error("Shift cannot accept new jobs", {"shiftId": shiftId});
+        throw new Meteor.Error(404, "This shift cannot accept new jobs");
+      }
+      updateDoc.onshift = shiftId;
+      updateDoc.status = "assigned";
+      updateDoc.options = {"assigned": new Date()}
+
+      //updating new shift
       Shifts.update({"_id": shiftId}, {$addToSet: {"jobs": jobId}});
-      status = "assigned";
-    } else {
-      status = "draft";
+      logger.info("Updated shift with assigned job", {"id": shiftId});
+    } else { // remove assigned job
+      if(job.status == "assigned") {
+        updateDoc.onshift = null;
+        updateDoc.status = "draft";
+        updateDoc.options = {"draft": new Date()};
+      } else {
+        logger.error("Can not remove un-assigned job");
+        throw new Meteor.Error(404, "Removing an un-assigned job");
+      }
     }
-    var optionsDoc = {
-      status: new Date()
-    }
-    logger.info("Job status and onshift updated ", {"JobId": jobId, "status": status, "onshift": shiftId});
-    Jobs.update({"_id": jobId}, {$set: {"onshift": shiftId, "status": status}, $addToSet: {'options': optionsDoc}});
+    //updating job
+    Jobs.update({"_id": jobId}, {$set: updateDoc});
+    logger.info("Updated job as assigned", {"id": jobId});
   },
 
   'assignWorker': function(workerId, shiftId) {
@@ -52,7 +69,14 @@ Meteor.methods({
     }
     var shift = Shifts.findOne(shiftId);
     if(!shift) {
+      logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
+    }
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if(new Date(shift.shiftDate) <= yesterday) {
+      logger.error("Shift date passed");
+      throw new Meteor.Error(404, "Shift cannot be assigned, date is passed");
     }
     var updateDoc = {
       "assignedTo": null

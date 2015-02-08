@@ -119,7 +119,7 @@ Meteor.methods({
     }
     var updateStatus = null;
     var currentStatus = job.status;
-    var options = {};
+    var options = job.options;
     //start, state to started
     if(currentStatus == "assigned") {
       if(state == "start") {
@@ -163,10 +163,11 @@ Meteor.methods({
       logger.error("Invalid state change ", {"currnet": currentStatus, "changeTo": state});
       throw new Meteor.Error(404, "Invalid state change");
     }
+
     options[updateStatus] = new Date();
 
     logger.info("Job status updated", {"jobId": jobId, "status": updateStatus, "options": options});
-    Jobs.update({"_id": jobId}, {$set: {"status": updateStatus}, $addToSet: {"options": options}});
+    Jobs.update({"_id": jobId}, {$set: {"status": updateStatus, "options": options}});
     //if finished, add portions to inventory
     if(updateStatus == "finished") {
       logger.info("Inventory update ", {"jobId": jobId, "portions": job.portions});
