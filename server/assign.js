@@ -23,8 +23,8 @@ Meteor.methods({
         throw new Meteor.Error(404, "Shift not found");
       }
       if(new Date(job_on_shift.shiftDate) <= yesterday) {
-        logger.error("Shift cannot be edited");
-        throw new Meteor.Error(404, "This shift cannot be edited");
+        logger.error("Shift cannot accept new jobs", {"shiftId": job.onshift});
+        throw new Meteor.Error(404, "This shift cannot accept new jobs");
       }
       //removing from current onshift
       Shifts.update({"_id": job.onshift}, {$pull: {"jobs": jobId}});
@@ -37,7 +37,7 @@ Meteor.methods({
         throw new Meteor.Error(404, "Shift not found");
       }
       if(new Date(new_shift.shiftDate) <= yesterday) {
-        logger.error("Shift cannot accept new jobs");
+        logger.error("Shift cannot accept new jobs", {"shiftId": shiftId});
         throw new Meteor.Error(404, "This shift cannot accept new jobs");
       }
       updateDoc.onshift = shiftId;
