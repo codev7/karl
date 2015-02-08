@@ -111,7 +111,7 @@ Template.shiftsDailyItem.rendered = function() {
             dropOnEmpty: true,
           })
           .droppable({
-            accept: ".assigned",
+            accept: ".jobitem",
             tolerance: "intersect",
             drop: function(event, ui) {
               var title = ui.draggable[0].dataset.title;
