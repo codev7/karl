@@ -89,28 +89,43 @@ Template.shiftsDailyItem.events({
 
 Template.shiftsDailyItem.rendered = function() {
   this.autorun(function() {
-    var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
-    if(shifts) {
-      Tracker.afterFlush(function() {
-        $(".shiftedJobs").sortable({
-          connectWith: "#jobsList, .shiftedJobs"
-        })
-        .droppable({
-          tolerance: "pointer",
-          drop: function(event, ui) {
-            if(ui.draggable[0].dataset.title == "job") {
-              var jobId = ui.draggable[0].dataset.id;
-              var shiftId = $(this).attr("data-id");
-              Meteor.call("assignJob", jobId, shiftId, function(err) {
-                if(err) {
-                  console.log("this", event, ui);
-                  return alert(err.reason);
-                }
-              });
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate());
+    yesterday = moment(yesterday).format("YYYY-MM-DD");
+    if(Session.get("thisDate") >= yesterday) {
+      var shifts = Shifts.find({"shiftDate": Session.get("thisDate")}).fetch();
+      if(shifts) {
+        Tracker.afterFlush(function() {
+          $(".job-panel").sortable({
+            items: ".jobitem",
+            disabled: false,
+            connectWith: "#jobsList, .shiftedJobs",
+            revert: true,
+            dropOnEmpty: true,
+          })
+          .droppable({
+            accept: ".assigned",
+            tolerance: "intersect",
+            drop: function(event, ui) {
+              var title = ui.draggable[0].dataset.title;
+              if(title == "draft" || title == "assigned") {
+                var thisShift = $(ui.draggable[0]).parent()[0];
+                var jobId = ui.draggable[0].dataset.id;
+                var self = this;
+                var shiftId = $(self).attr("data-id");
+                Meteor.call("assignJob", jobId, shiftId, function(err) {
+                  if(err) {
+                    alert(err.reason);
+                    return;
+                  }
+                });
+              } else {
+                return event;
+              }
             }
-          }
+          });
         });
-      });
+      }
     }
   });
 }

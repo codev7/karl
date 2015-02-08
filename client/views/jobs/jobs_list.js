@@ -8,19 +8,28 @@ Template.jobsList.helpers({
 Template.jobsList.rendered = function() {
   this.autorun(function() {
     $("#jobsList").sortable({
-      // helper: "clone",
-      connectWith: ".shiftedJobs"
+      disabled: false,
+      items: ".jobitem",
+      revert: true,
+      connectWith: ".shiftedJobs",
+      dropOnEmpty: true,
+      tolerance: "fit"
     })
     .droppable({
+      accept: ".assigned",
+      tolerance: "intersect",
       drop: function(event, ui) {
-        if(ui.draggable[0].dataset.title == "job") {
+        if(ui.draggable[0].dataset.title == "assigned") {
           var jobId = ui.draggable[0].dataset.id;
           var shiftId = $(this).attr("data-id");
           Meteor.call("assignJob", jobId, shiftId, function(err) {
             if(err) {
-              return alert(err.reason);
-            }
+              alert(err.reason);
+              return;
+            } 
           });
+        } else {
+          return event;
         }
       }
     });

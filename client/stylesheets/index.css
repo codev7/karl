@@ -54,7 +54,7 @@ select {
 }
 
 .itemlist {
-  min-height: 200px;
+  height: 400px;
   background-color: #ddd;
   padding: 10px 10px;
 }
@@ -73,11 +73,11 @@ select {
 }
 
 #jobsList, .workersList {
-  min-height: 100px;
+  min-height: 400px;
 }
 
 .shift {
-  min-height: 100px;
+  height: 100%;
   color: #bbb;
 }
 

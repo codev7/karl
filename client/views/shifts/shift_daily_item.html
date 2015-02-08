@@ -40,8 +40,8 @@
                   <div class="time-divider-hour">{{this}}-</div>
                   {{/each}}
                 </td>
-                <td class="job-panel">
-                  <div class="shift shiftedJobs" data-id="{{_id}}">
+                <td class="job-panel" data-id="{{_id}}">
+                  <div class="shift shiftedJobs">
                     {{#if jobs}}
                       {{#each jobs}}
                         {{> jobItem}}
