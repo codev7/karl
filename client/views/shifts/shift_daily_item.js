@@ -77,13 +77,20 @@ Template.shiftsDailyItem.events({
   },
 
   'change .shiftAssign': function(event) {
+    event.preventDefault();
+    var self = this;
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate());
+    yesterday = moment(yesterday).format("YYYY-MM-DD");
     var workerId = $(event.target).val();
     var shiftId = $(event.target).attr("data-id")
     Meteor.call("assignWorker", workerId, shiftId, function(err) {
       if(err) {
+        $('[name=workers]').val(self.assignedTo);
         return alert(err.reason);
+
       }
-    });
+    });      
   }
 });
 
