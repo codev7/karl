@@ -3,27 +3,29 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add Menu</h4>
+        <h4 class="modal-title" id="myModalLabel">Add Menu Items</h4>
       </div>
       <form class="form-horizontal" role="form">
         <div class="modal-body">
           <div class="form-group">
-            <label class="col-sm-4 control-label">Menu Item</label>
+            <label class="col-sm-4 control-label">Name</label>
             <div class="col-sm-6 ">
-              <input type="text" name="menuItem" class="form-control" placeholder="Add Ingredient" >
+              <input type="text" name="menuItemName" class="form-control" placeholder="Add Ingredient" >
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Ingredients</label>
+            <label class="col-sm-4 control-label">Shelf Life</label>
             <div class="col-sm-6 ">
-              <input type="text" name="ingredient" class="form-control" placeholder="Add Ingredient" >
+              <input type="text" name="shelfLife" class="form-control" placeholder="Add Ingredient" >
             </div>
           </div>
            <div class="form-group">
-            <label class="col-sm-4 control-label">Cost</label>
-            <div class="col-sm-6 ">
-              <input type="text" name="ingredient" class="form-control" placeholder="Add Ingredient" >
+            <label class="col-sm-4 control-label">Job items</label>
+            <div class="col-sm-6 jobItemsList">
+              <input type="text" name="jobItems" class="form-control" />
+              <br/>
             </div>
+            <button class="btn btn-sm addjob">+ Add job</button>
           </div>
         </div>
         <div class="modal-footer">
