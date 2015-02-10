@@ -13,6 +13,10 @@ Template.adminNav.events({
 
   'click #addMenu': function(e, instance) {
     $("#addMenuItemModal").modal("show");
+  },
+
+  'click #addIngredients': function(e, instance) {
+    $("#addIngredientModal").modal("show");
   }
 });
 
