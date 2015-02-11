@@ -11,12 +11,16 @@ Template.adminNav.events({
   	$("#addJobTypeModal").modal("show")
   },
 
-  'click #addMenu': function(e, instance) {
+  'click #addMenuItems': function(e, instance) {
     $("#addMenuItemModal").modal("show");
   },
 
   'click #addIngredients': function(e, instance) {
     $("#addIngredientModal").modal("show");
+  },
+
+  'click #addJobItems': function(e, instance) {
+    $("#addJobItemModal").modal("show");
   }
 });
 
