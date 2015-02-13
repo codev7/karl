@@ -1,7 +1,12 @@
 <template name="innerHeader">
   <div class="row">
-    <div class="col-md-4 left">
+    <div class="left">
     {{#if navPermission}}
+      <div class="col-md-3 settings-buttons">
+        <i class="fa fa-times"></i>
+        <button type="button" class="btn btn-info" id="addJob" data-toggle="modal">Add Job</button>
+        <button type="button" class="btn btn-info" id="addShift" data-toggle="modal">Add Shift</button>
+      </div>
       <button type="button" class="btn btn-warning btn-sm" id="prevDay">Prev</button>
       <button type="button" class="btn btn-warning btn-sm" id="today">Today</button>
       <button type="button" class="btn btn-warning btn-sm" id="nextDay">Next</button>
