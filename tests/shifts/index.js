@@ -3,24 +3,24 @@ var client = browser({flavor: "fiber", location: server});
 
 describe("Testing shift methods", function() {
   describe("Create shift - createShift method", function() {
-    it("Shift date (previous)", function() {
-      var info = {
-        "startTime": "8.00",
-        "endTime": "17.00",
-        "shiftDate": "2014-02-16",
-      }
+    // it("Shift date (previous)", function() {
+    //   var info = {
+    //     "startTime": "8.00",
+    //     "endTime": "17.00",
+    //     "shiftDate": "2014-02-16",
+    //   }
 
-      var result = client.promise(function(done, error, info) {
-        Meteor.call("createShift", info, function(err, id) {
-          if(err) {
-            done(err);
-          } else {
-            done(id);
-          }
-        });
-      }, [info]);
-      expect(result.error).to.be.equal(404);
-    });
+    //   var result = client.promise(function(done, error, info) {
+    //     Meteor.call("createShift", info, function(err, id) {
+    //       if(err) {
+    //         done(err);
+    //       } else {
+    //         done(id);
+    //       }
+    //     });
+    //   }, [info]);
+    //   expect(result.error).to.be.equal(404);
+    // });
 
     it("Shift date (future)", function() {
       var info = {
@@ -49,33 +49,33 @@ describe("Testing shift methods", function() {
   });
 
   describe("Edit shift - editShift method", function() {
-    it("Shift date (previous)", function() {
-      var shiftId = server.execute(function() {
-        var info = {
-          "startTime": "8.00",
-          "endTime": "17.00",
-          "shiftDate": "2015-01-16",
-          "assignedTo": null,
-          "jobs": []
-        }
-        return(Shifts.insert(info));
-      });
+    // it("Shift date (previous)", function() {
+    //   var shiftId = server.execute(function() {
+    //     var info = {
+    //       "startTime": "8.00",
+    //       "endTime": "17.00",
+    //       "shiftDate": "2015-01-16",
+    //       "assignedTo": null,
+    //       "jobs": []
+    //     }
+    //     return(Shifts.insert(info));
+    //   });
 
-      var editDoc = {
-        "_id": shiftId,
-        "startTime": "9.00"
-      }
-      var result = client.promise(function(done, error, editDoc) {
-        Meteor.call("editShift", editDoc, function(err) {
-          if(err) {
-            done(err)
-          } else {
-            done();
-          }
-        });
-      }, [editDoc]);
-      expect(result.error).to.be.equal(404);
-    });
+    //   var editDoc = {
+    //     "_id": shiftId,
+    //     "startTime": "9.00"
+    //   }
+    //   var result = client.promise(function(done, error, editDoc) {
+    //     Meteor.call("editShift", editDoc, function(err) {
+    //       if(err) {
+    //         done(err)
+    //       } else {
+    //         done();
+    //       }
+    //     });
+    //   }, [editDoc]);
+    //   expect(result.error).to.be.equal(404);
+    // });
 
     describe("Shift date (future)", function() {
       it("assigned to worker", function() {
@@ -168,29 +168,29 @@ describe("Testing shift methods", function() {
   });
 
   describe("Delete shift - deleteShift method", function() {
-    it("Shift date (previous)", function() {
-      var shiftId = server.execute(function() {
-        var info = {
-          "startTime": "8.00",
-          "endTime": "17.00",
-          "shiftDate": "2015-01-16",
-          "assignedTo": null,
-          "jobs": []
-        }
-        return(Shifts.insert(info));
-      });
+    // it("Shift date (previous)", function() {
+    //   var shiftId = server.execute(function() {
+    //     var info = {
+    //       "startTime": "8.00",
+    //       "endTime": "17.00",
+    //       "shiftDate": "2015-01-16",
+    //       "assignedTo": null,
+    //       "jobs": []
+    //     }
+    //     return(Shifts.insert(info));
+    //   });
 
-      var result = client.promise(function(done, error, id) {
-        Meteor.call("deleteShift", id, function(err) {
-          if(err) {
-            done(err)
-          } else {
-            done();
-          }
-        });
-      }, [shiftId]);
-      expect(result.error).to.be.equal(404);
-    });
+    //   var result = client.promise(function(done, error, id) {
+    //     Meteor.call("deleteShift", id, function(err) {
+    //       if(err) {
+    //         done(err)
+    //       } else {
+    //         done();
+    //       }
+    //     });
+    //   }, [shiftId]);
+    //   expect(result.error).to.be.equal(404);
+    // });
 
     describe("Shift date (future)", function() {
       it("Assigned to worker", function() {

@@ -12,12 +12,12 @@ Meteor.methods({
       logger.error("Date field not found");
       throw new Meteor.Error(404, "Date field not found");
     }
-    var yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if(new Date(info.shiftDate) <= yesterday) {
-      logger.error("Can not create a shift for a previous date");
-      throw new Meteor.Error(404, "Can't create a shift for a previous date");
-    }
+    // var yesterday = new Date();
+    // yesterday.setDate(yesterday.getDate() - 1);
+    // if(new Date(info.shiftDate) <= yesterday) {
+    //   logger.error("Can not create a shift for a previous date");
+    //   throw new Meteor.Error(404, "Can't create a shift for a previous date");
+    // }
     var doc = {
       "startTime": info.startTime,
       "endTime": info.endTime,
@@ -51,12 +51,12 @@ Meteor.methods({
     if(info.endTime) {
       updateDoc.endTime = info.endTime;
     }
-    var yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if(new Date(shift.shiftDate) <= yesterday) {
-      logger.error("Can not edit shifts on previous days");
-      throw new Meteor.Error(404, "Can not edit shifts on previous days");
-    }
+    // var yesterday = new Date();
+    // yesterday.setDate(yesterday.getDate() - 1);
+    // if(new Date(shift.shiftDate) <= yesterday) {
+    //   logger.error("Can not edit shifts on previous days");
+    //   throw new Meteor.Error(404, "Can not edit shifts on previous days");
+    // }
     if(shift.shiftDate != info.shiftDate) {
       if(shift.assignedTo || shift.jobs.length > 0) {
         logger.error("Can't change the date of an assigned shift ", {"id": info._id});
@@ -84,12 +84,12 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
-    var yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if(new Date(shift.shiftDate) <= yesterday) {
-      logger.error("Can not delete shifts on previous days");
-      throw new Meteor.Error(404, "Can not delete shifts on previous days");
-    }
+    // var yesterday = new Date();
+    // yesterday.setDate(yesterday.getDate() - 1);
+    // if(new Date(shift.shiftDate) <= yesterday) {
+    //   logger.error("Can not delete shifts on previous days");
+    //   throw new Meteor.Error(404, "Can not delete shifts on previous days");
+    // }
     if(shift.assignedTo || shift.jobs.length > 0) {
       logger.error("Can't delete a shift with assigned worker or jobs", {"id": id});
       throw new Meteor.Error(404, "Can't delete a shift with assigned worker or jobs");
