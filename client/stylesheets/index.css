@@ -244,3 +244,30 @@ select {
 .shift-profile-btn {
   float: right;
 }
+
+.menu-item {
+  height: 250px;
+  width: 250px;
+  margin: 10px;
+  position: relative;
+  padding: 0px;
+}
+
+.menu-image {
+  height: 200px;
+  max-height: 200px;
+  background-color: #bbb;
+}
+
+.menu-desc {
+  position: relative;
+}
+
+.menu-name {
+  margin-bottom: 1px;
+}
+
+.tag-line {
+  font-size: 12px;
+}
+
