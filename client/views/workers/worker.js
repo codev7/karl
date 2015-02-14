@@ -13,9 +13,15 @@ Template.worker.helpers({
   'resigned': function() {
     var worker = this;
     if(worker.resign) {
-      return "resigned-worker";
+      return {
+        "class": "resigned-worker",
+        "option": false
+      };
     } else {
-      return "active-worker";
+      return {
+        "class": "active-worker",
+        "option": true
+      };
     }
   }
 });
