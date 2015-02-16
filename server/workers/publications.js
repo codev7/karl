@@ -3,16 +3,6 @@ Meteor.publish("activeWorkers", function(date) {
   var busyWorkers = [];
   var onShiftWorkers = [];
   var onHolidayWorkers = [];
-  var shifts = Shifts.find({'shiftDate': date}).fetch();
-
-  //workers on shifts
-  if(shifts.length > 0) {
-    shifts.forEach(function(shift) {
-      if(shift.assignedTo) {
-        onShiftWorkers.push(shift.assignedTo);
-      }
-    });
-  }
   //workers on holiday
   var holidays = Holidays.findOne({"date": date});
   if(holidays) {
@@ -22,10 +12,7 @@ Meteor.publish("activeWorkers", function(date) {
       }
     }
   }
-  //all busy workers
-  busyWorkers = onShiftWorkers.concat(onHolidayWorkers);
-  //active workers
-  var workers = Workers.find({_id: {$nin: busyWorkers}, 'resign': false});
+  var workers = Workers.find({_id: {$nin: onHolidayWorkers}, 'resign': false});
   logger.info("ActiveWorkers publication");
   return workers;
 });
