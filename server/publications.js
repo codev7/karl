@@ -9,48 +9,41 @@ Meteor.publish("daily", function(date, worker) {
   }
   var shiftsCursor = Shifts.find(query, {sort: {createdOn: 1}});
   cursors.push(shiftsCursor);
-
-  // get holidays
-  var onHoliday = Holidays.find({"date": date});
-  cursors.push(onHoliday);
-
-  //get Workers on shift
+  
   var shifts = shiftsCursor.fetch();
-  var workersList = [];
   var shiftsList = [];
   shifts.forEach(function(shift) {
-    if(shift.assignedTo) {
-      workersList.push(shift.assignedTo);
-    }
     shiftsList.push(shift._id);
   });
   if(shiftsList.length > 0) {
     var jobsCursor = Jobs.find({"onshift": {$in: shiftsList}});
     cursors.push(jobsCursor);
   }
-  if(workersList.length > 0) {
-    var workersOnShifts = Workers.find({_id: {$in: workersList}});
-    cursors.push(workersOnShifts);
-  }
   logger.info("Daily shift detailed publication");;
   return cursors;
 });
 
-Meteor.publish("weekly", function(dates) {
+Meteor.publish("weekly", function(dates, worker) {
   var cursors = [];
   var firstDate = dates.day1;
   var lastDate = dates.day7;
 
+  var query = {"shiftDate": {$gte: firstDate, $lte: lastDate}};
+  if(worker) {
+    query["assignedTo"] = worker
+  }
   //get shifts
-  var shiftsCursor = Shifts.find({"shiftDate": {$gte: firstDate, $lte: lastDate}});
+  var shiftsCursor = Shifts.find(query);
   cursors.push(shiftsCursor);
 
   var shifts = shiftsCursor.fetch();
   var workersList = [];
   var shiftsList = [];
   shifts.forEach(function(shift) {
-    if(shift.assignedTo) {
-      workersList.push(shift.assignedTo);
+    if(!worker) {
+      if(shift.assignedTo) {
+        workersList.push(shift.assignedTo);
+      }
     }
     shiftsList.push(shift._id);
   });
@@ -62,9 +55,11 @@ Meteor.publish("weekly", function(dates) {
   }
 
   //workers on each shift
-  if(workersList.length > 0) {
-    var workersOnShifts = Workers.find({_id: {$in: workersList}});
-    cursors.push(workersOnShifts);
+  if(!worker) {
+    if(workersList.length > 0) {
+      var workersOnShifts = Workers.find({_id: {$in: workersList}});
+      cursors.push(workersOnShifts);
+    }
   }
   logger.info("Weekly shifts detailed publication");
   return cursors;
