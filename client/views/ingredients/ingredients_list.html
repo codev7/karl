@@ -1,0 +1,19 @@
+<template name="ingredientsList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Supplier</th>
+        <th>Portion Ordered</th>
+        <th>Cost per portion</th>
+        <th>Portion used</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+   <tbody>
+      {{#each ingredientsList}}
+        {{> ingredientItem}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
