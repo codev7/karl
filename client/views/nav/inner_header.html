@@ -1,23 +1,21 @@
 <template name="innerHeader">
-  <div class="row">
-    <div class="left">
-    {{#if navPermission}}
-      <div class="col-md-3 settings-buttons">
-        <i class="fa fa-times"></i>
-        <button type="button" class="btn btn-info" id="addJob" data-toggle="modal">Add Job</button>
-        <button type="button" class="btn btn-info" id="addShift" data-toggle="modal">Add Shift</button>
-      </div>
-      <button type="button" class="btn btn-warning btn-sm" id="prevDay">Prev</button>
-      <button type="button" class="btn btn-warning btn-sm" id="today">Today</button>
-      <button type="button" class="btn btn-warning btn-sm" id="nextDay">Next</button>
-    {{else}}
-      <button type="button" class="btn btn-warning btn-sm" id="prevWeek">Prev Week</button>
-      <button type="button" class="btn btn-warning btn-sm" id="thisWeek">This Week</button>
-      <button type="button" class="btn btn-warning btn-sm" id="nextWeek">Next Week</button>
-    {{/if}}
+  <div class="row inner-header">
+    <div class="inner-header-title">
+      <a href="" id="title">{{title}}</a>
     </div>
-    <div class="col-md-3 center">
-      <h4><a href="" id="title">{{title}}</a></h4>
+    <div class="inner-header-buttons">   
+      {{#if navPermission}}
+        <i class="fa fa-times"></i>
+        <button type="button" class="btn btn-info btn-sm" id="addJob" data-toggle="modal">Add Job</button>
+        <button type="button" class="btn btn-info btn-sm" id="addShift" data-toggle="modal">Add Shift</button>
+        <button type="button" class="btn btn-warning btn-sm" id="prevDay">Prev</button>
+        <button type="button" class="btn btn-warning btn-sm" id="today">Today</button>
+        <button type="button" class="btn btn-warning btn-sm" id="nextDay">Next</button>
+      {{else}}
+        <button type="button" class="btn btn-warning btn-sm" id="prevWeek">Prev Week</button>
+        <button type="button" class="btn btn-warning btn-sm" id="thisWeek">This Week</button>
+        <button type="button" class="btn btn-warning btn-sm" id="nextWeek">Next Week</button>
+      {{/if}}
     </div>
   </div>
 </template>

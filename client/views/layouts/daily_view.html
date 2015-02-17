@@ -1,9 +1,12 @@
 <template name="dailyView">
-  <div class="col-xs-4 col-sm-2">
-    {{> jobsList}}
-  </div>
-  <div class="col-xs-10 col-sm-10">
-    {{> innerHeader}}
-    {{> shiftsDailyItem}}
+  <div class="row center-page-title">Daily Job Schedular</div>
+  <div class="row">
+    <div class="col-xs-4 col-sm-2">
+      {{> jobsList}}
+    </div>
+    <div class="col-xs-10 col-sm-10">
+      {{> innerHeader}}
+      {{> shiftsDailyItem}}
+    </div>
   </div>
 </template>
