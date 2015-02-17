@@ -258,20 +258,8 @@ select {
   padding-bottom: 2px;
 }
 
-.resigned-worker {
-  color: #bbb;
-}
-
-.active-worker {
-  background-color: #fff;
-}
-
 .on-leave {
   background-color: #DB4D4D;
-}
-
-.shift-profile-btn {
-  float: right;
 }
 
 .menu-item {
