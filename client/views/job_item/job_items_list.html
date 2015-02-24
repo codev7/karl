@@ -1,4 +1,4 @@
-<template name="prepItemsList">
+<template name="jobItemsList">
   <table class="table table-condensed">
     <thead>
       <tr>
@@ -8,8 +8,8 @@
       </tr>
     </thead>
    <tbody>
-      {{#each prepItemsList}}
-        {{> ingredientItem}}
+      {{#each jobItemsList}}
+        {{> jobItemDetailed}}
       {{/each}}
     </tbody>
   </table>

@@ -1,5 +1,5 @@
-Template.prepItemsList.helpers({
-  prepItemsList: function() {
+Template.jobItemsList.helpers({
+  jobItemsList: function() {
     var list = JobItems.find().fetch();
     return list
   }
