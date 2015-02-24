@@ -1,6 +1,5 @@
 body{
   background: #F9FEFF;
-  padding: 30px;
 }
 
 a, a:hover {
@@ -19,6 +18,10 @@ select {
   position: relative;
 }*/
 
+.row {
+  padding: 0 10px;
+}
+
 .jobitem > a, .workeritem > a {
   color: #fff;
 }
@@ -35,8 +38,34 @@ select {
   text-align: left !important;
 }
 
-.center {
-  /*background-color: #bbb;*/
+.center-page-title {
+  position: relative;
+  text-align: left;
+  padding-bottom: 20px;
+  margin: 10px 20px;
+  font-size: 20px;
+  border-bottom: solid 2px;
+}
+
+.inner-header {
+  padding: 10px;
+  margin: 0 20px;
+}
+
+.inner-header-title {
+  width: 300px;
+  position: relative;
+  float: left;
+}
+
+.inner-header-buttons {
+  /*width: 100px;*/
+  position: relative;
+  float: right;
+}
+
+.inner-header-title > a {
+  font-size: 18px;
 }
 
 .right {
@@ -229,18 +258,36 @@ select {
   padding-bottom: 2px;
 }
 
-.resigned-worker {
-  color: #bbb;
-}
-
-.active-worker {
-  background-color: #fff;
-}
-
 .on-leave {
   background-color: #DB4D4D;
 }
 
-.shift-profile-btn {
-  float: right;
+.menu-item {
+  height: 250px;
+  width: 250px;
+  margin: 10px;
+  position: relative;
+  padding: 0px;
+}
+
+.menu-image {
+  height: 200px;
+  max-height: 200px;
+  background-color: #bbb;
+}
+
+.menu-desc {
+  position: relative;
+}
+
+.menu-name {
+  margin-bottom: 1px;
+}
+
+.tag-line {
+  font-size: 12px;
+}
+
+.margin-left20 {
+  margin-left: 20px;
 }

@@ -9,6 +9,18 @@ Template.adminNav.events({
 
   'click #addJobType': function(e, instance) {
   	$("#addJobTypeModal").modal("show")
+  },
+
+  'click #addMenuItems': function(e, instance) {
+    $("#addMenuItemModal").modal("show");
+  },
+
+  'click #addIngredients': function(e, instance) {
+    $("#addIngredientModal").modal("show");
+  },
+
+  'click #addJobItems': function(e, instance) {
+    $("#addJobItemModal").modal("show");
   }
 });
 

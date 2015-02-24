@@ -1,16 +1,13 @@
 <template name="nav">
-  <div class="row">
-    <div class="col-md-7 settings-buttons">
-      <i class="fa fa-times"></i>
-      <button type="button" class="btn btn-info" id="addJob" data-toggle="modal">Add Job</button>
-      <button type="button" class="btn btn-info" id="addShift" data-toggle="modal">Add Shift</button>
-    </div>
-
-    <div class="col-md-5 right">
-      <a href="/" class="btn btn-primary">Daily View</a>
-      <!-- <a href="/schedule" class="btn btn-primary btn-sm">Shift View</a> -->
-      <a href="" class="btn btn-primary" id="week">Weekly View</a>
-      <button type="button" class="btn btn-primary" id="adminPanel">Admin</button>
-    </div>
-  </div>
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="/">Daily View</a></li>
+    <li><a href="" id="week">Weekly View</a></li>
+    <li><a href="/workers" id="workerList">Workers List</a></li>
+    <li><a href="/menuItems" id="menu">Menu Items Index</a></li>
+    <!-- <li><a href="" id="menuSalesCaliberation">Menu Sales Caliberation</a></li> -->
+    <li><a href="/jobItemsList" id="jobItemsList">Job Items Master List</a></li>
+    <li><a href="/ingredients" id="ingreditents">Ingreditents</a></li>
+    <!-- <li><a href="" id="todaysMenu">Today's Menu</a></li> -->
+    <li><a href="" id="adminPanel">Admin</a></li>
+  </ul>
 </template>

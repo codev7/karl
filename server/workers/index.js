@@ -74,7 +74,7 @@ Meteor.methods({
         Shifts.update({"shiftDate": {$gte: todaysDate}, "assignedTo": id}, {$set: {"assignedTo": null}}, {multi: true});
         logger.info("Removed worker from future assigned shifts", {"workerId": id, "date greater than": todaysDate});
       }
-      Workers.update({'_id': id}, {$set: {"resign": true}});
+      Workers.update({'_id': id}, {$set: {"resign": true, "resignedOn": new Date().getTime()}});
       logger.info("Worker resigned - updated as resigned", {"workerId": id});
       return;
     } else {

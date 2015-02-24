@@ -1,6 +1,22 @@
 <template name="worker">
-  <div class="worker-profile-item">
-    <a href="#" class="worker-profile {{resigned}}" data-toggle="modal">{{name}}</a>
-    <button class="btn btn-sm shift-profile-btn">Go to shift profile</button>
-  </div>
+
+  <tr class="info">
+    <td>
+      <a href="#" class="worker-profile" data-toggle="modal">{{name}}</a>
+    </td>
+    <td>{{createdOn}}</td>
+    <td>{{type}}</td>
+    <td>{{hourlyWage}}</td>
+    <td><button class="btn btn-sm shift-profile-btn">Go to shift profile</button></td>
+  </tr>
+  <!-- <t d>Column content</td> -->
+  <!-- <td>Column content</td> -->
+  <!-- <td>Column content</td> -->
+
+<!--   <div class="worker-profile-item">
+    <a href="#" class="worker-profile {{resigned.class}}" data-toggle="modal">{{name}}</a>
+    {{#if resigned.option}}
+      <button class="btn btn-sm shift-profile-btn">Go to shift profile</button>
+    {{/if}}
+  </div> -->
 </template>
