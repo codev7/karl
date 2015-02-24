@@ -1,4 +1,4 @@
-<template name="submitIngredient">
+<template name="submitIngredientItem">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -14,19 +14,39 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Measuring unit</label>
+            <label class="col-sm-4 control-label">Supplier</label>
             <div class="col-sm-6 ">
-              <select name="measuringUnit">
+              <input type="text" name="supplier" class="form-control" placeholder="Add Ingredient" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Portion Ordered</label>
+            <div class="col-sm-6 ">
+              <select name="measuringUnit" class="form-control">
+                <option>kg (kilo grams)</option>
                 <option selected="selected">g (grams)</option>
                 <option>mg (mili grams)</option>
                 <option>ml (mili liters)</option>
+                <option>l (liters)</option>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Item Cost</label>
+            <label class="col-sm-4 control-label">Cost per portion</label>
             <div class="col-sm-6 ">
               <input type="text" name="cost" class="form-control" placeholder="Add Ingredient" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Portion Used</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="portionUsed" class="form-control" placeholder="Add Ingredient" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Quantity</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="quantity" class="form-control" placeholder="Add Ingredient" >
             </div>
           </div>
         </div>
