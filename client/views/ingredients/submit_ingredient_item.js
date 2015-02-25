@@ -12,7 +12,7 @@ Template.submitIngredientItem.events({
     var info = {
       "code": code,
       "description": desc,
-      "supplier": [supplier],
+      "suppliers": [supplier],
       "unitOrdered": unitOrdered,
       "unitSize": unitSize,
       "costperUnit": costperUnit,

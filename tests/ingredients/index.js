@@ -52,15 +52,12 @@ describe("Testing ingredients related methods", function() {
           }
         });
       }, [info]);
-      console.log(result)
       expect(result).not.to.be.equal(null);
 
       var check = server.execute(function(id) {
         var doc = Ingredients.findOne(id);
         return doc;
       }, [result]);
-      console.log(check)
-
       expect(check._id).to.be.equal(info.code);
     });
   });
