@@ -1,0 +1,76 @@
+<template name="submitIngredientItem">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Ingredients</h4>
+      </div>
+      <form class="form-horizontal" role="form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Code</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="code" class="form-control" placeholder="Add Name" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Description</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="desc" class="form-control" placeholder="Add Name" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Supplier</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="supplier" class="form-control" placeholder="Add Supplier's name" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Units Ordered</label>
+            <div class="col-sm-6">
+              <input type="text" name="unitOrdered" class="form-control" placeholder="Add unit ordered" >
+              <!-- <select name="unitOrdered" class="form-control">
+                <option selected="selected">packets</option>
+                <option>boxes</option>
+                <option>bottles</option>
+                <option>etc...</option>
+              </select> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Unit Size</label>
+            <div class="col-sm-6">
+              <input type="text" name="unitSize" class="form-control" placeholder="Unit Size" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Cost per unit</label>
+            <div class="col-sm-6">
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="text" name="costperUnit" class="form-control" placeholder="Cost of a unit" >
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Portion Used</label>
+            <div class="col-sm-6 ">
+              <input type="text" name="portionUsed" class="form-control" placeholder="Portion used" >
+              <!-- <select name="portionUsed" class="form-control">
+                <option>kg (kilo grams)</option>
+                <option selected="selected">g (grams)</option>
+                <option>mg (mili grams)</option>
+                <option>ml (mili liters)</option>
+                <option>l (liters)</option>
+              </select> -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
