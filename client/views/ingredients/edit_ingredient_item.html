@@ -28,12 +28,13 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">Units Ordered</label>
             <div class="col-sm-6">
-              <select name="unitOrdered" class="form-control">
+              <input type="text" name="unitOrdered" class="form-control" placeholder="Add unit ordered" value="{{item.unitOrdered}}">
+              <!-- <select name="unitOrdered" class="form-control">
                 <option selected="selected">packets</option>
                 <option>boxes</option>
                 <option>bottles</option>
                 <option>etc...</option>
-              </select>
+              </select> -->
             </div>
           </div>
           <div class="form-group">
@@ -54,13 +55,14 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">Portion Used</label>
             <div class="col-sm-6 ">
-              <select name="portionUsed" class="form-control">
+              <input type="text" name="portionUsed" class="form-control" placeholder="Portion used" value="{{item.portionUsed}}">
+              <!-- <select name="portionUsed" class="form-control">
                 <option>kg (kilo grams)</option>
                 <option selected="selected">g (grams)</option>
                 <option>mg (mili grams)</option>
                 <option>ml (mili liters)</option>
                 <option>l (liters)</option>
-              </select>
+              </select> -->
             </div>
           </div>
         </div>
