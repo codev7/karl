@@ -1,11 +1,12 @@
 <template name="ingredientItem">
   <tr class="info">
-    <td><a href="" data-toggle="modal" id="editIngredient">{{_id}}</a></td>
+    <td><a href="" data-toggle="modal" class="editIngredient">{{_id}}</a></td>
     <td>{{description}}</td>
     <td>{{suppliers}}</td>
     <td>{{unitOrdered}}</td>
     <td>{{unitSize}}</td>
     <td>{{costPerUnit}}</td>
     <td>{{portionUsed}}</td>
+    <td><button class="btn btn-xs deleteIngredient">Remove</button></td>
   </tr>
 </template>

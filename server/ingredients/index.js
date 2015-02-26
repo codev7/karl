@@ -87,5 +87,19 @@ Meteor.methods({
       loggerDoc.codeUpdated = info.code;
     }
     logger.info("Ingredient details updated: ", loggerDoc);
+  },
+
+  deleteIngredient: function(id) {
+    if(!id) {
+      logger.error("Id field not found");
+      throw new Meteor.Error(404, "Id field not found");
+    }
+    var item = Ingredients.findOne(id);
+    if(!item) {
+      logger.error("Item not found");
+      throw new Meteor.Error(404, "Item not found");
+    }
+    Ingredients.remove(id);
+    logger.info("Ingredient removed", id);
   }
 });
