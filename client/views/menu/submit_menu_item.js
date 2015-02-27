@@ -3,5 +3,10 @@ Template.submitMenuItem.events({
     e.preventDefault();
     var htmlInput = "<input type='text' name='jobItems' class='form-control'/> <br/>"
     $(".jobItemsList").append(htmlInput)
+  },
+
+  'click #addPrepItem': function(e, instance) {
+    e.preventDefault();
+    console.log("-----------");
   }
 });
