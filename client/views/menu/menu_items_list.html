@@ -3,7 +3,7 @@
     <div class="col-md-1 menu-item add-menu-item">
       <a href="/menuItem/submit">
         <div class="col-md-1 menu-item">
-          <div class="menu-image">
+          <div class="menu-image height180 thumbnail">
             <img src="" alt="image">
           </div>
           <div class="menu-desc">
@@ -13,6 +13,8 @@
         </div>
       </a>
     </div>
-    {{> menuItem}}
+    {{#each items}}
+      {{> menuItem}}
+    {{/each}}
   </div>
 </template>

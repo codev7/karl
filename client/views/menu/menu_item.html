@@ -1,12 +1,12 @@
 <template name="menuItem">
-  <a href="/menuItem/2312">
+  <a href="/menuItem/{{_id}}">
     <div class="col-md-1 menu-item">
-      <div class="menu-image">
-        <img src="" alt="image">
+      <div class="menu-image ">
+        <img src="/images/farmer's.jpg" class="col-md-12 thumbnail">
       </div>
       <div class="menu-desc">
-        <p class="menu-name">Farmer’s Breakfast</p>
-        <p class="tag-line">Tag: Main Menu</p>
+        <p class="menu-name">{{name}}</p>
+        <p class="tag-line">{{tag}}</p>
       </div>
     </div>
   </a>

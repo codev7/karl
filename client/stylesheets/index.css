@@ -271,9 +271,12 @@ select {
 }
 
 .menu-image {
-  height: 200px;
   max-height: 200px;
   background-color: #bbb;
+}
+
+.height180 {
+  height: 160px;
 }
 
 .menu-desc {

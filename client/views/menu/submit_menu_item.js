@@ -31,12 +31,12 @@ Template.submitMenuItem.events({
       "salesPrice": salesPrice,
       "image": image
     }
-    console.log("------", info);
     Meteor.call("createMenuItem", info, function(err) {
       if(err) {
         console.log(err);
         return alert(err.reason);
       }
     });
+    Router.go("menuMaster");
   }
 });
