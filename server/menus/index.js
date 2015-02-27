@@ -4,11 +4,22 @@ Meteor.methods({
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
     }
+    var id = info.name.trim().toLowerCase().replace(/ /g, "");
+    var doc = {
+      "_id": id,
+      "name": info.name,
+      "tag": info.tag,
+      "prepItems": info.prepItems,
+      "shelfLife": info.shelfLife,
+      "instructions": info.instructions,
+      "ingredients": info.ingredients,
+      "salesPrice": info.salesPrice
+    };
     // if(!info.tag) {
     //   logger.error("Menu item should have a tag");
     //   throw new Meteor.Error(404, "Menu item should have a tag");
     // }
-    var id = MenuItems.insert(info);
+    var id = MenuItems.insert(doc);
     logger.info("Menu items added ", id);
     return id;
   },
