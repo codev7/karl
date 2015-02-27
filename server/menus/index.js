@@ -15,6 +15,11 @@ Meteor.methods({
       "ingredients": info.ingredients,
       "salesPrice": info.salesPrice
     };
+    var exist = MenuItems.findOne(id);
+    if(exist) {
+      logger.error("Duplicate entry");
+      throw new Meteor.Error(404, "Duplicate entry, change name and try again");
+    }
     // if(!info.tag) {
     //   logger.error("Menu item should have a tag");
     //   throw new Meteor.Error(404, "Menu item should have a tag");
