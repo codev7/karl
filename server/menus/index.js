@@ -34,13 +34,29 @@ Meteor.methods({
       logger.error("Menu item should provide a id");
       throw new Meteor.Error(404, "Menu item should provide a id");
     }
+    var item = MenuItems.findOne(id);
+    if(!item) {
+      logger.error("Menu item should exist");
+      throw new Meteor.Error(404, "Menu item should exist");
+    }
     if(Object.keys(info).length < 0) {
       logger.error("Menu item should provide fields to be updated");
       throw new Meteor.Error(404, "Menu item should provide fields to be updated");
     }
-    var result = MenuItems.update({"_id": id}, {$set: info});
+    var updateDoc = {};
+    if(info.name) {
+      if(info.name != item.name) {
+        updateDoc.name = info.name;
+      }
+    }
+    if(info.shelfLife) {
+      if(info.shelfLife != item.shelfLife) {
+        updateDoc.shelfLife = info.shelfLife;
+      }
+    }
+    MenuItems.update({"_id": id}, {$set: updateDoc});
     logger.info("Menu item updated ", id);
-    return result;
+    return;
   },
 
   deleteMenuItem: function(id) {
