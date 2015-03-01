@@ -6,3 +6,13 @@ Template.menuItemDetail.helpers({
     }
   }
 });
+
+Template.menuItemDetail.events({
+  'click .editBtn': function(e) {
+    e.preventDefault();
+    Router.go("menuItemEdit", {"_id": $(e.target).attr("data-id")})
+  }
+});
+
+Template.menuItemDetail.rendered = function() {
+}
