@@ -61,10 +61,45 @@ Meteor.methods({
 
   deleteMenuItem: function(id) {
     if(!id) {
-      logger.error("Menu item should provide a id");
-      throw new Meteor.Error(404, "Menu item should provide a id");
+      logger.error("Menu item should provide an id");
+      throw new Meteor.Error(404, "Menu item should provide an id");
     }
     var result = MenuItems.update({"_id": id}, {$set: {"status": false}});
     return result;
+  },
+
+  addIngredients: function(menuId, ingredients) {
+    if(!menuId) {
+      logger.error("Menu item should provide an id");
+      throw new Meteor.Error(404, "Menu item should provide an id");
+    }
+    var menuItem = MenuItems.findOne(menuId);
+    if(!menuItem) {
+      logger.error("Menu item does not exist");
+      throw new Meteor.Error(404, "Menu item does not exist");
+    }
+    if(ingredients.length < 0) {
+      logger.error("Ingredients should be an array of items");
+      throw new Meteor.Error(404, "Ingredients should be an array of items");
+    }
+    var updateIngredients = [];
+    var ingredientIds = [];
+    if(menuItem.ingredients.length > 0) {
+      updateIngredients = menuItem.ingredients;
+      menuItem.ingredients.forEach(function(item) {
+        ingredientIds.push(item.id);
+      });
+    }
+    ingredients.forEach(function(item) {
+      if(item.id && item.quantity) {
+        if(ingredientIds.indexOf(item.id) < 0) {
+          updateIngredients.push(item);
+          ingredientIds.push(item.id);
+        }
+      }
+    });
+    MenuItems.update({'_id': menuId}, {$set: {'ingredients': updateIngredients}});
+    logger.info("Ingredients updated for menu item", menuId);
+    return;
   }
 });

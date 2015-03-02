@@ -90,4 +90,134 @@ describe("Testing menu related methods", function() {
       expect(check.name).to.be.equal(toUpdate.name);
     });
   });
+
+  describe("addIngredients method", function() {
+    it("without menu item", function() {
+      var menuItem = "1";
+      var ingredients = [{"id": "1", "quantity": "10g"}];
+
+      var result = client.promise(function(done, error, menuItem, ingredients) {
+        Meteor.call("addIngredients", menuItem, ingredients, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [menuItem, ingredients]);
+      expect(result.error).to.be.equal(404);
+    });
+
+    describe("with menu item", function() {
+      it("without existing ingredients", function() {
+        var info = {
+          "name": "Burger" + Math.random(),
+          "tag": "Kids menu",
+          "prepItems": ["1", "3"],
+          "shelfLife": 123,
+          "instructions": "Heat before serve",
+          "ingredients": [],
+          "salesPrice": 60
+        }
+        var menuItem = server.execute(function(info) {
+          return MenuItems.insert(info);
+        }, [info]);
+        expect(menuItem).to.be.not.equal(null);
+
+        var ingredients = [
+          {"id": 1, "quantity": '10g'},
+          {"id": 2, "quantity": '100g'}
+        ];
+
+        var result = client.promise(function(done, error, menuItem, ingredients) {
+          Meteor.call("addIngredients", menuItem, ingredients, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [menuItem, ingredients]);
+        expect(result).to.be.equal(null);
+
+        var check = server.execute(function(menuItem) {
+          return MenuItems.findOne(menuItem);
+        }, [menuItem]);
+        expect(check.ingredients.length).to.be.equal(2);
+      });
+
+      it("with existing ingredients", function() {
+        var info = {
+          "name": "Burger" + Math.random(),
+          "tag": "Kids menu",
+          "prepItems": ["1", "3"],
+          "shelfLife": 123,
+          "instructions": "Heat before serve",
+          "ingredients": [{"id": 1, "quantity": '10g'}],
+          "salesPrice": 60
+        }
+        var menuItem = server.execute(function(info) {
+          return MenuItems.insert(info);
+        }, [info]);
+        expect(menuItem).to.be.not.equal(null);
+
+        var ingredients = [
+          {"id": 2, "quantity": '100g'}
+        ];
+
+        var result = client.promise(function(done, error, menuItem, ingredients) {
+          Meteor.call("addIngredients", menuItem, ingredients, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [menuItem, ingredients]);
+        expect(result).to.be.equal(null);
+
+        var check = server.execute(function(menuItem) {
+          return MenuItems.findOne(menuItem);
+        }, [menuItem]);
+        expect(check.ingredients.length).to.be.equal(2);
+      });
+
+
+      it("with duplicated ingredients", function() {
+        var info = {
+          "name": "Burger" + Math.random(),
+          "tag": "Kids menu",
+          "prepItems": ["1", "3"],
+          "shelfLife": 123,
+          "instructions": "Heat before serve",
+          "ingredients": [{"id": 1, "quantity": '10g'}, {"id": 2, "quantity": '10g'}],
+          "salesPrice": 60
+        }
+        var menuItem = server.execute(function(info) {
+          return MenuItems.insert(info);
+        }, [info]);
+        expect(menuItem).to.be.not.equal(null);
+
+        var ingredients = [
+          {"id": 2, "quantity": '100g'}
+        ];
+        
+        var result = client.promise(function(done, error, menuItem, ingredients) {
+          Meteor.call("addIngredients", menuItem, ingredients, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [menuItem, ingredients]);
+        expect(result).to.be.equal(null);
+
+        var check = server.execute(function(menuItem) {
+          return MenuItems.findOne(menuItem);
+        }, [menuItem]);
+        expect(check.ingredients.length).to.be.equal(2);
+      });
+    });
+  });
 });

@@ -5,8 +5,13 @@ Meteor.methods({
       throw new Meteor.Error(404, "Code field not found");
     }
     if(!info.description) {
-      logger.error("Name field not found");
-      throw new Meteor.Error(404, "Name field not found");
+      logger.error("Description field not found");
+      throw new Meteor.Error(404, "Description field not found");
+    }
+    var exist = Ingredients.findOne(info.code);
+    if(exist) {
+      logger.error("Duplicate entry");
+      throw new Meteor.Error(404, "Duplicate entry, change name and try again");
     }
     var suppliers = [];
     if(info.suppliers) {
