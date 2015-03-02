@@ -1,4 +1,4 @@
-Template.submitMenuItem.events({
+Template.menuStep1Submit.events({
   'click .addjob': function(e, instance) {
     e.preventDefault();
     var htmlInput = "<input type='text' name='jobItems' class='form-control'/> <br/>"
@@ -31,12 +31,13 @@ Template.submitMenuItem.events({
       "salesPrice": salesPrice,
       "image": image
     }
-    Meteor.call("createMenuItem", info, function(err) {
+    Meteor.call("createMenuItem", info, function(err, id) {
       if(err) {
         console.log(err);
         return alert(err.reason);
       }
+      console.log("-------------", id);
+      Router.go("menuItemSubmitStep2", {"_id": id});
     });
-    Router.go("menuMaster");
   }
 });

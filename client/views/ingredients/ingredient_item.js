@@ -15,3 +15,6 @@ Template.ingredientItem.events({
     });
   }
 });
+
+Template.ingredientItem.helpers({
+});

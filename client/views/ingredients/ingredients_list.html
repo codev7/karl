@@ -2,6 +2,9 @@
   <table class="table table-condensed">
     <thead>
       <tr>
+        {{#if actionPermissionReverse}}
+        <th>Action</th>
+        {{/if}}
         <th>Code</th>
         <th>Description</th>
         <th>Supplier</th>
@@ -9,7 +12,9 @@
         <th>Unit Size</th>
         <th>Cost per Unit</th>
         <th>Portion used</th>
+        {{#if actionPermission}}
         <th>Action</th>
+        {{/if}}
       </tr>
     </thead>
    <tbody>
