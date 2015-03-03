@@ -19,7 +19,6 @@ Template.showJobItemsList.events({
       }
     } else {
       if(!isChecked) {
-        console.log("...remove.");
         selectedJobItems.splice(index, 1)
       } 
     }

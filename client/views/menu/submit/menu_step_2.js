@@ -70,5 +70,17 @@ Template.menuStep2Submit.events({
   'click #showJobItemsList': function(event) {
     event.preventDefault();
     $("#jobItemListModal").modal("show");
+  },
+
+  'keyup .ing_qty': function(event, instance) {
+    var qty = $($(event.target)[0]).val();
+    var id = $(event.target).attr("data-id");
+    Session.set("thisPrepItemQty", {"id": id, "qty": qty});
+  },
+
+  'click .viewIngredient': function(event) {
+    event.preventDefault();
+    Session.set("thisIngredient", this);
+    $("#editIngredientModal").modal("show");
   }
 });

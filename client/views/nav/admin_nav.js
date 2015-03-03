@@ -12,7 +12,7 @@ Template.adminNav.events({
   },
 
   'click #addMenuItems': function(e, instance) {
-    $("#addMenuItemModal").modal("show");
+    Router.go("menuItemSubmitStep1");
   },
 
   'click #addIngredients': function(e, instance) {
@@ -20,7 +20,7 @@ Template.adminNav.events({
   },
 
   'click #addJobItems': function(e, instance) {
-    $("#addJobItemModal").modal("show");
+    Router.go("submitJobItem");
   }
 });
 

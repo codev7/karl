@@ -12,7 +12,10 @@
         </div>
         <div class="form-group">
           <label>Shelf Life</label>
-          <input type="text" name="shelfLife" class="form-control" placeholder="shelfLife">
+          <div class="input-group">
+            <input type="number" name="shelfLife" class="form-control" placeholder="shelfLife">
+            <div class="input-group-addon">Days</div>
+          </div>
         </div>
         <div class="form-group">
           <label>Instructions</label>
@@ -22,11 +25,15 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Sale price</label>
-          <input type="text" name="salesPrice" class="form-control" placeholder="Sale price">
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <input type="number" class="form-control" name="salesPrice" placeholder="Sale price">     
+          </div>
         </div>
         <div class="form-group">
           <label>Image</label><br>
-          <img src="/images/farmer's.jpg" class="col-md-12 thumbnail">
+          <input type="file" disabled="true" />
+          <!-- <img src="/images/farmer's.jpg" class="col-md-12 thumbnail"> -->
         </div>
       </div>
     </div>

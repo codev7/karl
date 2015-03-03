@@ -1,15 +1,4 @@
 Template.menuStep1Submit.events({
-  'click .addjob': function(e, instance) {
-    e.preventDefault();
-    var htmlInput = "<input type='text' name='jobItems' class='form-control'/> <br/>"
-    $(".jobItemsList").append(htmlInput)
-  },
-
-  'click #addPrepItem': function(e, instance) {
-    e.preventDefault();
-    console.log("-----------");
-  },
-
   'submit form': function(e, instance) {
     e.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim(); 
@@ -21,14 +10,18 @@ Template.menuStep1Submit.events({
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = [];
 
+    var onShelf = parseInt(shelfLife)*24*60*60;
+    if(typeof(parseInt(salesPrice)) != 'number') {
+      salesPrice = 0;
+    }
     var info = {
       "name": name,
       "tag": tag,
       "instructions": instructions,
-      "shelfLife": shelfLife,
+      "shelfLife": onShelf,
       "prepItems": prepItems,
       "ingredients": ingredients,
-      "salesPrice": salesPrice,
+      "salesPrice": parseInt(salesPrice),
       "image": image
     }
     Meteor.call("createMenuItem", info, function(err, id) {
@@ -36,7 +29,8 @@ Template.menuStep1Submit.events({
         console.log(err);
         return alert(err.reason);
       }
-      console.log("-------------", id);
+      Session.set("selectedIngredients", []);
+      Session.set("selectedJobItems", []);
       Router.go("menuItemSubmitStep2", {"_id": id});
     });
   }

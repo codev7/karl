@@ -23,6 +23,7 @@
                   <th>Name</th>
                   <th>Type</th>
                   <th>Portions</th>
+                  <th>Quantity</th>
                   <th>Cost</th>
                 </tr>
               </thead>
@@ -32,7 +33,8 @@
                   <td>{{name}}</td>
                   <td>{{type}}</td>
                   <td>{{portions}}</td>
-                  <td>{{cost}}</td>
+                  <td><input type="number" name="prep_qty" class="prepQty" data-id="{{_id}}"/></td>
+                  <td>$ {{calculatedPrepCost _id}}</td>
                 </tr>
                 {{/each}}
               </tbody>
@@ -61,12 +63,12 @@
               <tbody>
                 {{#each ingredientsList}}
                 <tr>
-                  <td>{{_id}}</td>
+                  <td><a href="#" data-toggle="modal" data-id="{{_id}}" class="viewIngredient">{{_id}}</a></td>
                   <td>{{description}}</td>
                   <td>{{portionUsed}}</td>
                   <!-- <td>{{costPerUnit}}</td> -->
-                  <td><input name="ing_qty" data-id="{{_id}}"/></td>
-                  <td>$ {{cost}}</td>
+                  <td><input name="ing_qty" class="ing_qty" data-id="{{_id}}"/></td>
+                  <td>$ {{calculatedIngCost _id}}</td>
                   <!-- <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td> -->
                 </tr>
                 {{/each}}

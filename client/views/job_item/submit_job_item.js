@@ -4,7 +4,7 @@ Template.submitJobItem.helpers({
     if(ing) {
       if(ing.length > 0) {
         var ingredientsList = Ingredients.find({'_id': {$in: ing}});
-        return ingredientsList
+        return ingredientsList;
       }
     }
   }
@@ -75,6 +75,8 @@ Template.submitJobItem.events({
         var menuItem = Session.get("thisMenuItem");
         if(menuItem) {
           Router.go("menuItemSubmitStep2", {'_id': menuItem});
+        } else {
+          Router.go("admin");
         }
       }
     });
