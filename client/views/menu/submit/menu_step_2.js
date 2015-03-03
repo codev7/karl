@@ -3,14 +3,23 @@ Template.menuStep2Submit.helpers({
     var id = Session.get("thisMenuItem");
     if(id) {
       var menuItem = MenuItems.findOne(id)
+      menuItem.totalIngCost = 0;
+      menuItem.tax = 0;
+      menuItem.contribution = 0;
+      if(menuItem.salesPrice) {
+        menuItem.tax = (menuItem.salesPrice * 10)/100;
+      }
       if(menuItem.ingredients.length > 0) {
         menuItem.ingredients.forEach(function(item) {
           var ingItem = Ingredients.findOne(item.id);
           item.desc = ingItem.description;
           item.portionUsed = ingItem.portionUsed;
+          item.unitPrice = parseInt(ingItem.costPerUnit)/parseInt(ingItem.unitSize);
           item.cost = (parseInt(ingItem.costPerUnit)/parseInt(ingItem.unitSize)) * parseInt(item.quantity);
+          menuItem.totalIngCost += item.cost;
         });
       }
+      console.log(menuItem);
       return menuItem;
     }
   }
@@ -37,5 +46,9 @@ Template.menuStep2Submit.events({
         return alert(err.reason);
       } 
     });
+  },
+
+  'click .finishMenu': function(event) {
+    Router.go("menuMaster");
   }
 });
