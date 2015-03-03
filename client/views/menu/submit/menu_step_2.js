@@ -25,5 +25,17 @@ Template.menuStep2Submit.events({
   'click #addNewIngredient': function(event) {
     event.preventDefault();
     $("#addIngredientModal").modal('show');
+  },
+
+  'click .removeIng': function(event) {
+    event.preventDefault();
+    var menuId = Session.get("thisMenuItem");
+    var ingId = $(event.target).attr("data-id");
+    Meteor.call("removeIngredients", menuId, ingId, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } 
+    });
   }
 });

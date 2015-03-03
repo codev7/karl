@@ -101,5 +101,35 @@ Meteor.methods({
     MenuItems.update({'_id': menuId}, {$set: {'ingredients': updateIngredients}});
     logger.info("Ingredients updated for menu item", menuId);
     return;
+  },
+
+  removeIngredients: function(menuId, ingredient) {
+    if(!menuId) {
+      logger.error("Menu item should provide an id");
+      throw new Meteor.Error(404, "Menu item should provide an id");
+    }
+    var menuItem = MenuItems.findOne(menuId);
+    if(!menuItem) {
+      logger.error("Menu item does not exist");
+      throw new Meteor.Error(404, "Menu item does not exist");
+    }
+    if(menuItem.ingredients.length < 0) {
+      logger.error("Ingredients does not exist for this menu item");
+      throw new Meteor.Error(404, "Ingredients does not exist for this menu item");
+    }
+    var item = MenuItems.findOne(
+      {"_id": menuId, "ingredients": {$elemMatch: {"id": ingredient}}},
+      {fields: {"ingredients": {$elemMatch: {"id": ingredient}}}}
+    );
+    var query = {
+      $pull: {}
+    };
+    if(!item) {
+      logger.error("Ingredients does not exist");
+      throw new Meteor.Error(404, "Ingredients does not exist");
+    }
+    query['$pull']['ingredients'] = item.ingredients[0];
+    MenuItems.update({'_id': menuId}, query);
+    logger.info("Ingredients removed from menu item", menuId);
   }
 });

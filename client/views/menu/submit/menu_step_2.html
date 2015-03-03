@@ -48,6 +48,7 @@
                   <th>Quantity</th>
                   <th>Unit used</th>
                   <th>Cost</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,6 +59,7 @@
                   <td>{{quantity}}</td>
                   <td>{{portionUsed}}</td>
                   <td>$ {{cost}}</td>
+                  <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td>
                 </tr>
                 {{/each}}
               </tbody>
@@ -90,7 +92,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <button type="submit" class="btn btn-primary">Submit</button> 
+        <button type="submit" class="btn btn-primary">Done</button> 
       </div>
     </div>
   </form>
