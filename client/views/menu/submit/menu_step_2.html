@@ -27,12 +27,14 @@
                 </tr>
               </thead>
               <tbody>
+                {{#each jobItemsList}}
                 <tr>
-                  <td>qe</td>
-                  <td>qwe</td>
-                  <td>q</td>
-                  <td>wq</td>
+                  <td>{{name}}</td>
+                  <td>{{type}}</td>
+                  <td>{{portions}}</td>
+                  <td>{{cost}}</td>
                 </tr>
+                {{/each}}
               </tbody>
             </table>
           </div>
@@ -49,23 +51,23 @@
                 <tr>
                   <th>Code</th>
                   <th>Description</th>
-                  <th>Quantity</th>
                   <th>Unit used</th>
-                  <th>Unit Price</th>
+                  <!-- <th>Unit Price</th> -->
+                  <th>Quantity</th>
                   <th>Cost</th>
-                  <th>Action</th>
+                  <!-- <th>Action</th> -->
                 </tr>
               </thead>
               <tbody>
-                {{#each item.ingredients}}
+                {{#each ingredientsList}}
                 <tr>
-                  <td>{{id}}</td>
-                  <td>{{desc}}</td>
-                  <td>{{quantity}}</td>
+                  <td>{{_id}}</td>
+                  <td>{{description}}</td>
                   <td>{{portionUsed}}</td>
-                  <td>{{unitPrice}}</td>
+                  <!-- <td>{{costPerUnit}}</td> -->
+                  <td><input name="ing_qty" data-id="{{_id}}"/></td>
                   <td>$ {{cost}}</td>
-                  <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td>
+                  <!-- <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td> -->
                 </tr>
                 {{/each}}
               </tbody>

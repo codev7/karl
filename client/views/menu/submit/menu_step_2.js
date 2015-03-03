@@ -1,4 +1,24 @@
 Template.menuStep2Submit.helpers({
+  ingredientsList: function() {
+    var ing = Session.get("selectedIngredients");
+    if(ing) {
+      if(ing.length > 0) {
+        var ingredientsList = Ingredients.find({'_id': {$in: ing}});
+        return ingredientsList
+      }
+    }
+  },
+
+  jobItemsList: function() {
+    var jobItems = Session.get("selectedJobItems");
+    if(jobItems) {
+      if(jobItems.length > 0) {
+        var jobItemsList = JobItems.find({'_id': {$in: jobItems}});
+        return jobItemsList
+      }
+    }
+  },
+
   item: function() {
     var id = Session.get("thisMenuItem");
     if(id) {
@@ -9,19 +29,10 @@ Template.menuStep2Submit.helpers({
       if(menuItem.salesPrice) {
         menuItem.tax = (menuItem.salesPrice * 10)/100;
       }
-      if(menuItem.ingredients.length > 0) {
-        menuItem.ingredients.forEach(function(item) {
-          var ingItem = Ingredients.findOne(item.id);
-          item.desc = ingItem.description;
-          item.portionUsed = ingItem.portionUsed;
-          item.unitPrice = parseInt(ingItem.costPerUnit)/parseInt(ingItem.unitSize);
-          item.cost = (parseInt(ingItem.costPerUnit)/parseInt(ingItem.unitSize)) * parseInt(item.quantity);
-          menuItem.totalIngCost += item.cost;
-        });
-      }
       return menuItem;
     }
-  }
+  },
+
 });
 
 Template.menuStep2Submit.events({

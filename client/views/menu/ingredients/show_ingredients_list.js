@@ -32,34 +32,5 @@ Template.showIngredientsList.events({
       Session.set("selectedIngredients", selectedIngredients);
     }
     $("#ingredientsListModal").modal("hide");
-    var doc = [];
-    var id = Session.get("thisMenuItem");
-    var allInputs = $(event.target).find('[name=ingredient_quantity]').get();
-    var allChecks = $(event.target).find('[name=selectedIng]').get();
-    allChecks.forEach(function(item) {
-      if($(item)[0].checked) {
-        var dataid = $(item).attr("data-id");
-        allInputs.forEach(function(inputItem) {
-          if($(inputItem).attr("data-id") == dataid) {
-            var info = {
-              "id": dataid,
-              "quantity": $(inputItem).val()
-            }
-            doc.push(info);
-          }
-        });
-      }
-    });
-    if(doc.length > 0) {
-      Meteor.call("addIngredients", id, doc, function(err) {
-        if(err) {
-          console.log(err);
-          return alert(err.reason);
-        } else {
-          $("#ingredientsListModal").modal("hide");
-        }
-      });
-      
-    }
   }
 });
