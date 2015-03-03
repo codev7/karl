@@ -1,9 +1,9 @@
-<template name="showIngredientsList">
+<template name="showJobItemsList">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 130%">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Select Ingredients</h4>
+        <h4 class="modal-title" id="myModalLabel">Select Prep Items</h4>
       </div>
       <form class="form-horizontal" role="form" id="newJob" style="padding: 10px 20px">
         <div class="modal-body">
@@ -11,27 +11,19 @@
             <table class="table table-condensed">
               <thead>
                 <tr>
-                  <th>Code</th>
-                  <th>Description</th>
-                  <!-- <th>Portion Ordered</th> -->
-                  <th>Unit Size</th>
-                  <th>Cost per Unit</th>
-                  <th>Portion used</th>
-                  <!-- <th>Quantity</th> -->
+                  <th>Name</th>
+                  <th>Portions</th>
+                  <th>Active Time</th>
                   <th>Action</th>
                 </tr>
               </thead>
              <tbody>
-                {{#each ingredientsList}}
+                {{#each jobItemsList}}
                   <tr>
-                    <td><a href="" data-toggle="modal" class="editIngredient">{{_id}}</a></td>
-                    <td>{{description}}</td>
-                    <!-- <td>{{unitOrdered}}</td> -->
-                    <td>{{unitSize}}</td>
-                    <td>{{costPerUnit}}</td>
-                    <td>{{portionUsed}}</td>
-                    <!-- <td><input type="text" name="ingredient_quantity" style="width: 100px" data-id="{{_id}}"/></td> -->
-                    <td><input type="checkbox" data-id="{{_id}}" class="selectedIng" name="selectedIng"></td>
+                    <td><a href="" data-toggle="modal" class="editIngredient">{{name}}</a></td>
+                    <td>{{portions}}</td>
+                    <td>{{activeTime}}</td>
+                    <td><input type="checkbox" data-id="{{_id}}" class="selectedPrep" name="selectedPrep"></td>
                   </tr>
                 {{/each}}
               </tbody>

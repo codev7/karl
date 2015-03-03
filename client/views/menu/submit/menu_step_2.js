@@ -5,7 +5,7 @@ Template.menuStep2Submit.helpers({
       var menuItem = MenuItems.findOne(id)
       menuItem.totalIngCost = 0;
       menuItem.tax = 0;
-      menuItem.contribution = 0;
+      menuItem.contribution = 0; // calc this after adding preps
       if(menuItem.salesPrice) {
         menuItem.tax = (menuItem.salesPrice * 10)/100;
       }
@@ -19,7 +19,6 @@ Template.menuStep2Submit.helpers({
           menuItem.totalIngCost += item.cost;
         });
       }
-      console.log(menuItem);
       return menuItem;
     }
   }
@@ -50,5 +49,15 @@ Template.menuStep2Submit.events({
 
   'click .finishMenu': function(event) {
     Router.go("menuMaster");
+  },
+
+  'click #addNewJobItem': function(event) {
+    event.preventDefault();
+    Router.go("submitJobItem");
+  },
+
+  'click #showJobItemsList': function(event) {
+    event.preventDefault();
+    $("#jobItemListModal").modal("show");
   }
 });

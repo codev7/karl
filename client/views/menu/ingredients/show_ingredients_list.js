@@ -6,39 +6,32 @@ Template.showIngredientsList.helpers({
 });
 
 var selectedIngredients = [];
-var addToDb = [];
 Template.showIngredientsList.events({
-  // 'click .selectedIng': function(event) {
-  //   var item = $(event.target).attr("data-id");
-  //   var qty = $(event.target).parent().parent().find("input[type=text]").val();
-  //   // console.log(qty);
-  //   var index = selectedIngredients.indexOf(item);
-  //   var isChecked = $(event.target)[0].checked;
-  //   var doc = {
-  //     "id": item,
-  //     "quantity": qty
-  //   }
-  //   var spliceIndex = addToDb.indexOf(doc);
-  //   // console.log(spliceIndex);
-  //   if(index < 0) {
-  //     if(isChecked) {
-  //       selectedIngredients.push(item);
-  //       addToDb.push(doc);
-  //     }
-  //   } else {
-  //     if(!isChecked) {
-  //       // console.log("...remove.");
-  //       selectedIngredients.splice(index, 1)
-  //       addToDb.splice(spliceIndex, 1);
-  //     } 
-  //   }
-  //   // console.log("selectedIngredients", selectedIngredients);
-  //   // console.log("addToDb", addToDb);
-
-  // },
+  'click .selectedIng': function(event) {
+    var item = $(event.target).attr("data-id");
+    var qty = $(event.target).parent().parent().find("input[type=text]").val();
+    // console.log(qty);
+    var index = selectedIngredients.indexOf(item);
+    var isChecked = $(event.target)[0].checked;
+    if(index < 0) {
+      if(isChecked) {
+        selectedIngredients.push(item);
+      }
+    } else {
+      if(!isChecked) {
+        console.log("...remove.");
+        selectedIngredients.splice(index, 1)
+      } 
+    }
+  },
 
   'submit form': function(event) {
     event.preventDefault();
+    if(selectedIngredients.length > 0) {
+      console.log("selectedIngredients", selectedIngredients);
+      Session.set("selectedIngredients", selectedIngredients);
+    }
+    $("#ingredientsListModal").modal("hide");
     var doc = [];
     var id = Session.get("thisMenuItem");
     var allInputs = $(event.target).find('[name=ingredient_quantity]').get();
