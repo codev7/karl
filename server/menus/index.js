@@ -64,7 +64,13 @@ Meteor.methods({
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
     }
-    var result = MenuItems.update({"_id": id}, {$set: {"status": false}});
+    var item = MenuItems.findOne(id);
+    if(!item) {
+      logger.error("Menu item does not exist");
+      throw new Meteor.Error(404, "Menu item does not exist");
+    }
+    var result = MenuItems.remove(id);
+    // var result = MenuItems.update({"_id": id}, {$set: {"status": false}});
     return result;
   },
 

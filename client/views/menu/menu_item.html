@@ -4,9 +4,14 @@
       <div class="menu-image ">
         <img src="/images/farmer's.jpg" class="col-md-12 thumbnail">
       </div>
-      <div class="menu-desc">
-        <p class="menu-name">{{name}}</p>
-        <p class="tag-line">{{tag}}</p>
+      <div class="row">
+        <div class="col-md-8">
+           <p class="menu-name">{{name}}</p>
+            <p class="tag-line">{{tag}}</p>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-xs removeMenuItem" data-id="{{_id}}">Remove</button>
+        </div>
       </div>
     </div>
   </a>
