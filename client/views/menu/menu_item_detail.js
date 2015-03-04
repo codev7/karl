@@ -20,7 +20,9 @@ Template.menuItemDetail.helpers({
         if(item.jobItems.length > 0) {
           item.jobItems.forEach(function(doc) {
             var jobitem = JobItems.findOne(doc.id);
+            jobitem.prepCostPerPortion = 0;
             if(jobitem) {
+              // console.log(jobitem);
               doc.name = jobitem.name;
               doc.cost = 0;
               if(jobitem.ingredients.length > 0) {
@@ -30,9 +32,10 @@ Template.menuItemDetail.helpers({
                     doc.cost += parseFloat(ing.unitPrice) * ing_item.quantity;
                   }
                 });
+                doc.prepCostPerPortion = parseFloat(doc.cost)/parseInt(jobitem.portions);
+                item.prepCost += doc.cost;
               }
             }
-            item.prepCost += doc.cost;
           });
         }
       }
@@ -41,6 +44,7 @@ Template.menuItemDetail.helpers({
       }
       var totalCost = parseFloat(parseFloat(item.prepCost) + parseFloat(item.ingCost) + parseFloat(item.tax));
       item.contribution = parseFloat(item.salesPrice - totalCost);
+      console.log("---------", item)
       return item;
     }
   }

@@ -21,7 +21,7 @@ Meteor.methods({
       "name": info.name,
       "type": info.type,
       "recipe": info.recipe,
-      "portions": info.portions,
+      "portions": parseInt(info.portions),
       "activeTime": activeTime,
       "shelfLife": shelfLife,
       "createdOn": Date.now(),

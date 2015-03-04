@@ -17,4 +17,18 @@ Template.ingredientItem.events({
 });
 
 Template.ingredientItem.helpers({
+  costPerPortion: function() {
+    console.log(this);
+    var unitId = this.unit + "-" + this.portionUsed;
+    console.log(unitId);
+    var conversion = Conversions.findOne(unitId);
+    console.log(conversion);
+    var costPerPortion = 0;
+    if(conversion) {
+      costPerPortion = parseFloat(this.costPerUnit)/parseInt(conversion.count);
+    } else {
+      costPerPortion = "Convertion not defined"
+    }
+    return costPerPortion;
+  }
 });

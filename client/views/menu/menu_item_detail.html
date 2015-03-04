@@ -31,6 +31,7 @@
             <thead>
               <tr>
                 <th>Code</th>
+                <th>Cost per Portion</th>
                 <th>Quantity</th>
                 <th>Cost</th>
               </tr>
@@ -39,6 +40,7 @@
               {{#each item.jobItems}}
               <tr>
                 <td>{{name}}</td>
+                <td>{{prepCostPerPortion}}</td>
                 <td>{{quantity}}</td>
                 <td>{{cost}}</td>
               </tr>
@@ -116,7 +118,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="btn btn-primary editBtn" data-id="{{item._id}}">Edit</button>
+      <!-- <button type="button" class="btn btn-primary editBtn" data-id="{{item._id}}">Edit</button> -->
     </div>
   </div>
 </template>
