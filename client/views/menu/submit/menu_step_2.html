@@ -29,13 +29,7 @@
               </thead>
               <tbody>
                 {{#each jobItemsList}}
-                <tr>
-                  <td>{{name}}</td>
-                  <td>{{type}}</td>
-                  <td>$ {{cost}}</td>
-                  <td><input type="number" name="prep_qty" class="prepQty" data-id="{{_id}}"/></td>
-                  <!-- <td>$ {{calculatedPrepCost _id}}</td> -->
-                </tr>
+                  {{> prepItem}}
                 {{/each}}
               </tbody>
             </table>
@@ -53,24 +47,14 @@
                 <tr>
                   <th>Code</th>
                   <th>Description</th>
-                  <th>Cost per Portion ($)</th>
-                  <!-- <th>Unit Price</th> -->
-                  <th>Portions</th>
-                  <!-- <th>Cost</th> -->
-                  <!-- <th>Action</th> -->
+                  <th>Unit used</th>
+                  <th>Unit Price ($)</th>
+                  <th>Quantity</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each ingredientsList}}
-                <tr>
-                  <td><a href="#" data-toggle="modal" data-id="{{_id}}" class="viewIngredient">{{_id}}</a></td>
-                  <td>{{description}}</td>
-                  <td>{{unitPrice}}</td>
-                  <!-- <td>{{costPerUnit}}</td> -->
-                  <td><input name="ing_qty" class="ing_qty" data-id="{{_id}}"/></td>
-                  <!-- <td>$ {{calculatedIngCost _id}}</td> -->
-                  <!-- <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td> -->
-                </tr>
+                  {{> ingItem}}
                 {{/each}}
               </tbody>
             </table>

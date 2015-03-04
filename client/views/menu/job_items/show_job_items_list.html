@@ -12,8 +12,8 @@
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Portions</th>
                   <th>Active Time</th>
+                  <th>Cost per Portion ($)</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -21,8 +21,8 @@
                 {{#each jobItemsList}}
                   <tr>
                     <td><a href="" data-toggle="modal" class="editIngredient">{{name}}</a></td>
-                    <td>{{portions}}</td>
                     <td>{{activeTime}}</td>
+                    <td>$ {{costPerPortion}}</td>
                     <td><input type="checkbox" data-id="{{_id}}" class="selectedPrep" name="selectedPrep"></td>
                   </tr>
                 {{/each}}

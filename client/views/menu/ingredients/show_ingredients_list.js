@@ -10,7 +10,6 @@ Template.showIngredientsList.events({
   'click .selectedIng': function(event) {
     var item = $(event.target).attr("data-id");
     var qty = $(event.target).parent().parent().find("input[type=text]").val();
-    // console.log(qty);
     var index = selectedIngredients.indexOf(item);
     var isChecked = $(event.target)[0].checked;
     if(index < 0) {
@@ -19,7 +18,6 @@ Template.showIngredientsList.events({
       }
     } else {
       if(!isChecked) {
-        console.log("...remove.");
         selectedIngredients.splice(index, 1)
       } 
     }
@@ -27,9 +25,6 @@ Template.showIngredientsList.events({
 
   'submit form': function(event) {
     event.preventDefault();
-    if(selectedIngredients.length > 0) {
-      Session.set("selectedIngredients", selectedIngredients);
-    }
     $("#ingredientsListModal").modal("hide");
   }
 });

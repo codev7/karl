@@ -4,7 +4,6 @@ Template.menuStep2Submit.helpers({
     if(ing) {
       if(ing.length > 0) {
         var ingredientsList = Ingredients.find({'_id': {$in: ing}});
-        console.log(ingredientsList.fetch());
         return ingredientsList
       }
     }
@@ -15,15 +14,6 @@ Template.menuStep2Submit.helpers({
     if(jobItems) {
       if(jobItems.length > 0) {
         var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
-        jobItemsList.forEach(function(jobItem) {
-          jobItem.cost = 0;
-          jobItem.ingredients.forEach(function(doc) {
-            var ing = Ingredients.findOne(doc.id);
-            if(ing) {
-              jobItem.cost += parseInt(ing.unitPrice) * parseInt(doc.quantity);
-            }
-          });
-        });
         return jobItemsList
       }
     }
@@ -37,7 +27,7 @@ Template.menuStep2Submit.helpers({
       menuItem.tax = 0;
       menuItem.contribution = 0; // calc this after adding preps
       if(menuItem.salesPrice) {
-        menuItem.tax = (menuItem.salesPrice * 10)/100;
+        menuItem.tax = parseFloat(menuItem.salesPrice * 10)/100;
       }
       return menuItem;
     }

@@ -30,10 +30,10 @@
           <table class="table table-hover thumbnail">
             <thead>
               <tr>
-                <th>Code</th>
+                <th>Name</th>
                 <th>Cost per Portion</th>
                 <th>Quantity</th>
-                <th>Cost</th>
+                <th>Cost ($)</th>
               </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@
                 <td>{{name}}</td>
                 <td>{{prepCostPerPortion}}</td>
                 <td>{{quantity}}</td>
-                <td>{{cost}}</td>
+                <td>$ {{prepTotalCost}}</td>
               </tr>
               {{/each}}
             </tbody>
@@ -62,7 +62,8 @@
                 <th>Code</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>Cost</th>
+                <th>Unit</th>
+                <th>Cost ($)</th>
               </tr>
             </thead>
             <tbody>
@@ -71,7 +72,8 @@
                 <td>{{id}}</td>
                 <td>{{desc}}</td>
                 <td>{{quantity}}</td>
-                <td>[{{cost}}]</td>
+                <td>{{portionUsed}}</td>
+                <td>$ {{cost}}</td>
               </tr>
               {{/each}}
             </tbody>

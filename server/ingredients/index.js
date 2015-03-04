@@ -21,10 +21,6 @@ Meteor.methods({
         suppliers.push(info.suppliers);
       }
     }
-    var unitPrice = 0;
-    if(info.costPerUnit && info.unitSize) {
-      unitPrice = parseFloat(info.costPerUnit)/parseInt(info.unitSize);
-    }
     var doc = {
       "_id": info.code,
       "description": info.description,
@@ -33,8 +29,7 @@ Meteor.methods({
       "costPerUnit": info.costPerUnit,
       "unitSize": parseInt(info.unitSize),
       "unit": info.unit,
-      "portionUsed": info.portionUsed,
-      "unitPrice": unitPrice
+      "portionUsed": info.portionUsed
     }
     var id = Ingredients.insert(doc);
     logger.info("New ingredient inserted ", id);
@@ -83,20 +78,6 @@ Meteor.methods({
     if(info.costPerUnit) {
       if(item.costPerUnit != info.costPerUnit) {
         updateDoc.costPerUnit = parseFloat(info.costPerUnit);
-      }
-    }
-    if(updateDoc.unitSize && updateDoc.unitPrice) {
-      var unitPrice = parseFloat(updateDoc.costPerUnit)/parseInt(updateDoc.unitSize);
-    } else {
-      if(updateDoc.unitSize) {
-        var unitPrice = parseFloat(item.costPerUnit)/parseInt(updateDoc.unitSize);
-      } else if(updateDoc.costPerUnit) {
-        var unitPrice = parseFloat(updateDoc.costPerUnit)/parseInt(item.unitSize);
-      }   
-    }
-    if(unitPrice) {
-      if(unitPrice != item.unitPrice) {
-        updateDoc.unitPrice = unitPrice;
       }
     }
     if(info.portionUsed) {

@@ -7,7 +7,24 @@ Template.jobItemDetailed.helpers({
         item.ingredients.forEach(function(doc) {
           if(doc.id) {
             var ing_doc = Ingredients.findOne(doc.id);
-            cost += parseInt(ing_doc.unitPrice) * doc.quantity;
+            var costPerPortion = 0;
+            if(ing_doc.unit == "each") {
+              costPerPortion = parseFloat(ing_doc.costPerUnit)/parseInt(ing_doc.unitSize)
+            }  else {
+              var unitId = ing_doc.unit + "-" + ing_doc.portionUsed;
+              var conversion = Conversions.findOne(unitId);
+              if(conversion) {
+                var convertedCount = parseInt(conversion.count);
+                if(ing_doc.unitSize > 1) {
+                  convertedCount = (convertedCount * parseInt(ing_doc.unitSize));
+                }
+                costPerPortion = parseFloat(ing_doc.costPerUnit)/convertedCount;
+              } else {
+                costPerPortion = "Convertion not defined"
+              }
+            }
+            var calc_cost = costPerPortion * doc.quantity
+            cost += calc_cost;
           }
         });
       }

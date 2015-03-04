@@ -11,7 +11,24 @@ Template.menuItemDetail.helpers({
           var ing = Ingredients.findOne(doc.id);
           if(ing) {
             doc.desc = ing.description;
-            doc.cost = parseFloat(ing.unitPrice) * doc.quantity;
+            doc.portionUsed = ing.portionUsed;
+            if(ing.unit == "each") {
+              costPerPortion = parseFloat(ing.costPerUnit)/parseInt(ing.unitSize)
+            }  else {
+              var unitId = ing.unit + "-" + ing.portionUsed;
+              var conversion = Conversions.findOne(unitId);
+              if(conversion) {
+                var convertedCount = parseInt(conversion.count);
+                if(ing.unitSize > 1) {
+                  convertedCount = (convertedCount * parseInt(ing.unitSize));
+                }
+                costPerPortion = parseFloat(ing.costPerUnit)/convertedCount;
+              } else {
+                costPerPortion = 0;
+                console.log("Convertion not defined");
+              }
+            }
+            doc.cost = parseFloat(costPerPortion * parseInt(doc.quantity));
             item.ingCost += doc.cost;
           }
         });
@@ -20,20 +37,39 @@ Template.menuItemDetail.helpers({
         if(item.jobItems.length > 0) {
           item.jobItems.forEach(function(doc) {
             var jobitem = JobItems.findOne(doc.id);
-            jobitem.prepCostPerPortion = 0;
             if(jobitem) {
-              // console.log(jobitem);
+              jobitem.prepCostPerPortion = 0;
               doc.name = jobitem.name;
               doc.cost = 0;
               if(jobitem.ingredients.length > 0) {
                 jobitem.ingredients.forEach(function(ing_item) {
                   var ing = Ingredients.findOne(ing_item.id);
+                  var costPerPortion = 0;
+
                   if(ing) {
-                    doc.cost += parseFloat(ing.unitPrice) * ing_item.quantity;
+                    if(ing.unit == "each") {
+                      costPerPortion = parseFloat(ing.costPerUnit)/parseInt(ing.unitSize)
+                    }  else {
+                      var unitId = ing.unit + "-" + ing.portionUsed;
+                      var conversion = Conversions.findOne(unitId);
+                      if(conversion) {
+                        var convertedCount = parseInt(conversion.count);
+                        if(ing.unitSize > 1) {
+                          convertedCount = (convertedCount * parseInt(ing.unitSize));
+                        }
+                        costPerPortion = parseFloat(ing.costPerUnit)/convertedCount;
+                      } else {
+                        costPerPortion = 0;
+                        console.log("Convertion not defined");
+                      }
+                    }
                   }
+                  var calc_cost = costPerPortion * parseInt(ing_item.quantity);
+                  doc.cost += calc_cost;
                 });
                 doc.prepCostPerPortion = parseFloat(doc.cost)/parseInt(jobitem.portions);
-                item.prepCost += doc.cost;
+                doc.prepTotalCost = parseFloat(doc.prepCostPerPortion * doc.quantity);
+                item.prepCost += doc.prepTotalCost;
               }
             }
           });
@@ -44,7 +80,6 @@ Template.menuItemDetail.helpers({
       }
       var totalCost = parseFloat(parseFloat(item.prepCost) + parseFloat(item.ingCost) + parseFloat(item.tax));
       item.contribution = parseFloat(item.salesPrice - totalCost);
-      console.log("---------", item)
       return item;
     }
   }

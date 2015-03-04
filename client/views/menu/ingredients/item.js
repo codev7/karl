@@ -1,22 +1,26 @@
-Template.ingredientItem.events({
-  'click .editIngredient': function(event) {
-    event.preventDefault();
-    Session.set("thisIngredient", this);
-    $("#editIngredientModal").modal("show");
-  },
-
-  'click .deleteIngredient': function(event) {
-    event.preventDefault();
-    Meteor.call("deleteIngredient", this._id, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
+var selectedIngredients = [];
+Template.item.events({
+  'click .selectedIng': function(event) {
+    var item = $(event.target).attr("data-id");
+    var qty = $(event.target).parent().parent().find("input[type=text]").val();
+    var index = selectedIngredients.indexOf(item);
+    var isChecked = $(event.target)[0].checked;
+    if(index < 0) {
+      if(isChecked) {
+        selectedIngredients.push(item);
       }
-    });
+    } else {
+      if(!isChecked) {
+        selectedIngredients.splice(index, 1)
+      } 
+    }
+    if(selectedIngredients.length > 0) {
+      Session.set("selectedIngredients", selectedIngredients);
+    }
   }
 });
 
-Template.ingredientItem.helpers({
+Template.item.helpers({
   costPerPortion: function() {
     var costPerPortion = 0;
     if(this.unit == "each") {

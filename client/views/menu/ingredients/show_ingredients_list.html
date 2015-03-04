@@ -13,26 +13,15 @@
                 <tr>
                   <th>Code</th>
                   <th>Description</th>
-                  <!-- <th>Portion Ordered</th> -->
-                  <th>Unit Size</th>
-                  <th>Cost per Unit</th>
+                  <!-- <th>Unit Size</th> -->
                   <th>Portion used</th>
-                  <!-- <th>Quantity</th> -->
+                  <th>Cost per Portion ($)</th>
                   <th>Action</th>
                 </tr>
               </thead>
              <tbody>
                 {{#each ingredientsList}}
-                  <tr>
-                    <td><a href="" data-toggle="modal" class="editIngredient">{{_id}}</a></td>
-                    <td>{{description}}</td>
-                    <!-- <td>{{unitOrdered}}</td> -->
-                    <td>{{unitSize}}</td>
-                    <td>{{costPerUnit}}</td>
-                    <td>{{portionUsed}}</td>
-                    <!-- <td><input type="text" name="ingredient_quantity" style="width: 100px" data-id="{{_id}}"/></td> -->
-                    <td><input type="checkbox" data-id="{{_id}}" class="selectedIng" name="selectedIng"></td>
-                  </tr>
+                  {{> item}}
                 {{/each}}
               </tbody>
             </table>

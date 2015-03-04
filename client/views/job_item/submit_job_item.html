@@ -30,14 +30,7 @@
               </thead>
               <tbody>
                 {{#each ingredientsList}}
-                <tr>
-                  <td>{{_id}}</td>
-                  <td>{{description}}</td>
-                  <td>{{portionUsed}}</td>
-                  <td>$ {{unitPrice}}</td>
-                  <td><input name="ing_qty" data-id="{{_id}}"/></td>
-                  <!-- <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td> -->
-                </tr>
+                  {{> ingItem}}
                 {{/each}}
               </tbody>
             </table>
