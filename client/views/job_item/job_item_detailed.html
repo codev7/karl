@@ -1,10 +1,11 @@
 <template name="jobItemDetailed">
   <tr class="info">
     <td><a href="#" data-toggle="modal">{{name}}</a></td>
-    <td>{{activeTime}}</td>
+    <td>{{activeTime}} secs</td>
     <td>{{type}}</td>
-    <td>{{shelfLife}}</td>
+    <td>{{shelfLife}} days</td>
     <td>{{portions}}</td>
-    <td>{{cost}}</td>
+    <td>$ {{cost}}</td>
+    <td><button class="btn btn-xs deleteJobItem">Remove</button></td>
   </tr>
 </template>

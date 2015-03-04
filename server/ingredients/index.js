@@ -31,7 +31,7 @@ Meteor.methods({
       "suppliers": suppliers,
       "unitOrdered": info.unitOrdered,
       "costPerUnit": info.costPerUnit,
-      "unitSize": info.unitSize,
+      "unitSize": parseInt(info.unitSize),
       "unit": info.unit,
       "portionUsed": info.portionUsed,
       "unitPrice": unitPrice
