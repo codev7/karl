@@ -76,10 +76,10 @@ Template.menuItemDetail.helpers({
         }
       }
       if(item.salesPrice) {
-        item.tax = parseFloat(item.salesPrice * 10)/100;
+        item.tax = (parseFloat(item.salesPrice * 10)/100).toFixed(2);
       }
-      var totalCost = parseFloat(parseFloat(item.prepCost) + parseFloat(item.ingCost) + parseFloat(item.tax));
-      item.contribution = parseFloat(item.salesPrice - totalCost);
+      var totalCost = parseFloat(parseFloat(item.prepCost) + parseFloat(item.ingCost) + parseFloat(item.tax)).toFixed(2);
+      item.contribution = parseFloat(item.salesPrice - totalCost).toFixed(2);
       return item;
     }
   }

@@ -28,7 +28,7 @@ Template.showJobItemsList.helpers({
               jobItem.totalCost += calc_cost;
             }
           }
-          jobItem.costPerPortion = parseFloat(jobItem.totalCost/jobItem.portions);
+          jobItem.costPerPortion = parseFloat(jobItem.totalCost/jobItem.portions).toFixed(2);
         });
       }
     });

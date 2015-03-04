@@ -16,6 +16,6 @@ Template.ingItem.helpers({
         costPerPortion = "Convertion not defined"
       }
     }
-    return costPerPortion;
+    return parseFloat(costPerPortion).toFixed(2);
   }
 });
