@@ -31,14 +31,18 @@
             <thead>
               <tr>
                 <th>Code</th>
-                <th>Desc</th>
+                <th>Quantity</th>
+                <th>Cost</th>
               </tr>
             </thead>
             <tbody>
+              {{#each item.jobItems}}
               <tr>
-                <td>qe</td>
-                <td>qwe</td>
+                <td>{{name}}</td>
+                <td>{{quantity}}</td>
+                <td>[cost]</td>
               </tr>
+              {{/each}}
             </tbody>
           </table>
         </div>
@@ -54,14 +58,20 @@
             <thead>
               <tr>
                 <th>Code</th>
-                <th>Desc</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Cost</th>
               </tr>
             </thead>
             <tbody>
+              {{#each item.ingredients}}
               <tr>
-                <td>qe</td>
-                <td>qwe</td>
+                <td>{{id}}</td>
+                <td>{{desc}}</td>
+                <td>{{quantity}}</td>
+                <td>[{{cost}}]</td>
               </tr>
+              {{/each}}
             </tbody>
           </table>
         </div>

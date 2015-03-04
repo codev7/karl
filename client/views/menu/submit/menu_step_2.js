@@ -95,9 +95,7 @@ Template.menuStep2Submit.events({
     var menuId = Session.get("thisMenuItem");
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
-
-    console.log(preps, ings);
-
+    
     var ing_doc = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
@@ -119,7 +117,6 @@ Template.menuStep2Submit.events({
       }
       prep_doc.push(info);
     });
-    console.log("...........", prep_doc);
 
     if(ing_doc.length > 0) {
       Meteor.call("addIngredients", menuId, ing_doc, function(err) {
