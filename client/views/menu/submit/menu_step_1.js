@@ -21,7 +21,7 @@ Template.menuStep1Submit.events({
       "shelfLife": onShelf,
       "prepItems": prepItems,
       "ingredients": ingredients,
-      "salesPrice": parseInt(salesPrice),
+      "salesPrice": parseFloat(salesPrice),
       "image": image
     }
     Meteor.call("createMenuItem", info, function(err, id) {

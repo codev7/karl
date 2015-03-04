@@ -69,7 +69,7 @@ Meteor.methods({
       }
     }
     if(info.portions) {
-      var portions = parseInt(info.portions);
+      var portions = parseFloat(info.portions);
       if(portions != job.portions) {
         updateDoc.portions = portions;
       }

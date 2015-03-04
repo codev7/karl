@@ -13,7 +13,7 @@ Meteor.methods({
       "instructions": info.instructions,
       "ingredients": info.ingredients,
       "jobItems": info.prepItems,
-      "salesPrice": parseInt(info.salesPrice)
+      "salesPrice": parseFloat(info.salesPrice)
     };
     var exist = MenuItems.findOne(id);
     if(exist) {

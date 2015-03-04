@@ -11,7 +11,7 @@ Template.menuItemDetail.helpers({
           var ing = Ingredients.findOne(doc.id);
           if(ing) {
             doc.desc = ing.description;
-            doc.cost = parseInt(ing.unitPrice) * doc.quantity;
+            doc.cost = parseFloat(ing.unitPrice) * doc.quantity;
             item.ingCost += doc.cost;
           }
         });
@@ -27,7 +27,7 @@ Template.menuItemDetail.helpers({
                 jobitem.ingredients.forEach(function(ing_item) {
                   var ing = Ingredients.findOne(ing_item.id);
                   if(ing) {
-                    doc.cost += parseInt(ing.unitPrice) * ing_item.quantity;
+                    doc.cost += parseFloat(ing.unitPrice) * ing_item.quantity;
                   }
                 });
               }
@@ -37,10 +37,10 @@ Template.menuItemDetail.helpers({
         }
       }
       if(item.salesPrice) {
-        item.tax = parseInt(item.salesPrice * 10)/100;
+        item.tax = parseFloat(item.salesPrice * 10)/100;
       }
-      var totalCost = (item.prepCost + item.ingCost + item.tax);
-      item.contribution = (item.salesPrice - totalCost);
+      var totalCost = parseFloat(parseFloat(item.prepCost) + parseFloat(item.ingCost) + parseFloat(item.tax));
+      item.contribution = parseFloat(item.salesPrice - totalCost);
       return item;
     }
   }

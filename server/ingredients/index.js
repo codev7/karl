@@ -23,7 +23,7 @@ Meteor.methods({
     }
     var unitPrice = 0;
     if(info.costPerUnit && info.unitSize) {
-      unitPrice = parseInt(info.costPerUnit)/parseInt(info.unitSize);
+      unitPrice = parseFloat(info.costPerUnit)/parseInt(info.unitSize);
     }
     var doc = {
       "_id": info.code,
@@ -77,21 +77,21 @@ Meteor.methods({
     }
     if(info.unitSize) {
       if(item.unitSize != info.unitSize) {
-        updateDoc.unitSize = info.unitSize;
+        updateDoc.unitSize = parseInt(info.unitSize);
       }
     }
     if(info.costPerUnit) {
       if(item.costPerUnit != info.costPerUnit) {
-        updateDoc.costPerUnit = info.costPerUnit;
+        updateDoc.costPerUnit = parseFloat(info.costPerUnit);
       }
     }
     if(updateDoc.unitSize && updateDoc.unitPrice) {
-      var unitPrice = parseInt(updateDoc.costPerUnit)/parseInt(updateDoc.unitSize);
+      var unitPrice = parseFloat(updateDoc.costPerUnit)/parseInt(updateDoc.unitSize);
     } else {
       if(updateDoc.unitSize) {
-        var unitPrice = parseInt(item.costPerUnit)/parseInt(updateDoc.unitSize);
+        var unitPrice = parseFloat(item.costPerUnit)/parseInt(updateDoc.unitSize);
       } else if(updateDoc.costPerUnit) {
-        var unitPrice = parseInt(updateDoc.costPerUnit)/parseInt(item.unitSize);
+        var unitPrice = parseFloat(updateDoc.costPerUnit)/parseInt(item.unitSize);
       }   
     }
     if(unitPrice) {
