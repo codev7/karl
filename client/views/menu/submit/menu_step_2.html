@@ -34,7 +34,7 @@
                   <td>{{type}}</td>
                   <td>{{portions}}</td>
                   <td><input type="number" name="prep_qty" class="prepQty" data-id="{{_id}}"/></td>
-                  <td>$ {{calculatedPrepCost _id}}</td>
+                  <!-- <td>$ {{calculatedPrepCost _id}}</td> -->
                 </tr>
                 {{/each}}
               </tbody>
@@ -68,7 +68,7 @@
                   <td>{{portionUsed}}</td>
                   <!-- <td>{{costPerUnit}}</td> -->
                   <td><input name="ing_qty" class="ing_qty" data-id="{{_id}}"/></td>
-                  <td>$ {{calculatedIngCost _id}}</td>
+                  <!-- <td>$ {{calculatedIngCost _id}}</td> -->
                   <!-- <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td> -->
                 </tr>
                 {{/each}}
@@ -102,7 +102,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <button type="button" class="btn btn-primary finishMenu">Done</button> 
+        <button type="submit" class="btn btn-primary finishMenu">Done</button> 
       </div>
     </div>
   </form>

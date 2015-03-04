@@ -28,7 +28,6 @@ Template.showIngredientsList.events({
   'submit form': function(event) {
     event.preventDefault();
     if(selectedIngredients.length > 0) {
-      console.log("selectedIngredients", selectedIngredients);
       Session.set("selectedIngredients", selectedIngredients);
     }
     $("#ingredientsListModal").modal("hide");

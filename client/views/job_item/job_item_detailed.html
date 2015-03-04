@@ -1,9 +1,10 @@
 <template name="jobItemDetailed">
   <tr class="info">
-    <td>
-      <a href="#" class="worker-profile" data-toggle="modal">{{name}}</a>
-    </td>
+    <td><a href="#" data-toggle="modal">{{name}}</a></td>
+    <td>{{activeTime}}</td>
+    <td>{{type}}</td>
+    <td>{{shelfLife}}</td>
     <td>{{portions}}</td>
-    <td>Cost</td>
+    <td>{{cost}}</td>
   </tr>
 </template>

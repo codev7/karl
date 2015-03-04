@@ -8,9 +8,8 @@ describe("Testing job item methods", function() {
         "type": "prep",
         "recipe": "Recipe",
         "portions": 10,
-        "activeTime": 10*60,
-        "shelfLife": 1*24*60*60,
-        "createdOn": Date.now()
+        "activeTime": 10,
+        "shelfLife": 1
       }
       var result = client.promise(function(done, error, info) {
         Meteor.call("createJobItem", info, function(err, id) {
@@ -31,8 +30,8 @@ describe("Testing job item methods", function() {
           "type": "prep",
           "recipe": "Recipe",
           "portions": 10,
-          "activeTime": 10*60,
-          "shelfLife": 1*24*60*60,
+          "activeTime": 10,
+          "shelfLife": 1,
           "createdOn": Date.now()
         }
 
@@ -56,8 +55,8 @@ describe("Testing job item methods", function() {
             "type": "prep",
             "recipe": "Recipe",
             "portions": 10,
-            "activeTime": 10*60,
-            "shelfLife": 1*24*60*60,
+            "activeTime": 10,
+            "shelfLife": 1,
             "createdOn": Date.now()
           }
           var id = JobItems.insert(info);
@@ -70,8 +69,8 @@ describe("Testing job item methods", function() {
           "type": "prep",
           "recipe": "Recipe",
           "portions": 10,
-          "activeTime": 10*60,
-          "shelfLife": 1*24*60*60,
+          "activeTime": 10,
+          "shelfLife": 1,
           "createdOn": Date.now()
         }
         var result = client.promise(function(done, error, info) {
@@ -85,6 +84,83 @@ describe("Testing job item methods", function() {
         }, [doc]);
         expect(result.error).to.be.equal(404);
       });
+    });
+  });
+
+  describe("editJobItem method", function() {
+    it("check", function() {
+      var jobItem = server.execute(function() {
+        var info = {
+          "_id": "new" + Math.random(),
+          "name": "new",
+          "type": "prep",
+          "recipe": "Recipe",
+          "portions": 10,
+          "activeTime": 10,
+          "shelfLife": 1
+        }
+        var id = JobItems.insert(info);
+        return id;
+      });
+      expect(jobItem).to.be.not.equal(null);
+
+      var info = {
+        "name": "new job item",
+        "recipe": "Recipe new",
+        "activeTime": 20,
+        "shelfLife": 2,
+        "portions": 20
+      }
+      var result = client.promise(function(done, error, id, info) {
+        Meteor.call("editJobItem", id, info, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [jobItem, info]);
+      expect(result).to.be.equal(null);
+
+     var check = server.execute(function(id) {
+      return JobItems.findOne(id)
+     }, [jobItem]);
+     expect(check.name).to.be.equal(info.name);
+    });
+  });
+
+  describe("deleteJobItem method", function() {
+    it("delete", function() {
+      var jobItem = server.execute(function() {
+        var info = {
+          "_id": "new" + Math.random(),
+          "name": "new",
+          "type": "prep",
+          "recipe": "Recipe",
+          "portions": 10,
+          "activeTime": 10,
+          "shelfLife": 1
+        }
+        var id = JobItems.insert(info);
+        return id;
+      });
+      expect(jobItem).to.be.not.equal(null);
+
+      var result = client.promise(function(done, error, id) {
+        Meteor.call("deleteJobItem", id, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [jobItem]);
+      expect(result).to.be.equal(null);
+
+      var check = server.execute(function(id) {
+        return JobItems.findOne(id)
+      }, [jobItem]);
+      expect(check).to.be.equal(undefined);
     });
   });
 });

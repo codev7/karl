@@ -58,10 +58,6 @@ Template.menuStep2Submit.events({
     });
   },
 
-  'click .finishMenu': function(event) {
-    Router.go("menuMaster");
-  },
-
   'click #addNewJobItem': function(event) {
     event.preventDefault();
     Router.go("submitJobItem");
@@ -82,5 +78,36 @@ Template.menuStep2Submit.events({
     event.preventDefault();
     Session.set("thisIngredient", this);
     $("#editIngredientModal").modal("show");
+  },
+
+  'submit form': function(event) {
+    event.preventDefault();
+    console.log(event);
+    var menuId = Session.get("thisMenuItem");
+    var preps = $(event.target).find("[name=prep_qty]").get();
+    var ings = $(event.target).find("[name=ing_qty]").get();
+
+    console.log(preps, ings);
+
+    var ing_doc = [];
+    ings.forEach(function(item) {
+      var dataid = $(item).attr("data-id");
+      var quantity = $(item).val();
+      var info = {
+        "id": dataid,
+        "quantity": quantity
+      }
+      ing_doc.push(info);
+    });
+
+    if(ing_doc.length > 0) {
+      Meteor.call("addIngredients", menuId, ing_doc, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
+    } 
+    console.log("------ing_doc", ing_doc);
   }
 });
