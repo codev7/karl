@@ -26,6 +26,7 @@ Meteor.methods({
       "shelfLife": shelfLife,
       "createdOn": Date.now(),
       "createdBy": null, //add logged in users id
+      "ingredients": []
     }
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
