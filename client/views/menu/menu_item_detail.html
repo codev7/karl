@@ -23,8 +23,8 @@
       <div class="form-group">
         <label>
           Prep items used
-          <button class="btn btn-xs" id="addPrepItem">Select Preps</button>
-          <button class="btn btn-xs" id="addPrepItem">Add New Prep</button>
+          <!-- <button class="btn btn-xs" id="addPrepItem">Select Preps</button> -->
+          <!-- <button class="btn btn-xs" id="addPrepItem">Add New Prep</button> -->
         </label>
         <div>
           <table class="table table-hover thumbnail">
@@ -40,7 +40,7 @@
               <tr>
                 <td>{{name}}</td>
                 <td>{{quantity}}</td>
-                <td>[cost]</td>
+                <td>{{cost}}</td>
               </tr>
               {{/each}}
             </tbody>
@@ -50,8 +50,8 @@
       <div class="form-group">
         <label>
           Ingredients used
-          <button class="btn btn-xs" id="addPrepItem">Select Ingredients</button>
-          <button class="btn btn-xs" id="addPrepItem">Add New Ingredient</button>
+          <!-- <button class="btn btn-xs" id="addPrepItem">Select Ingredients</button> -->
+          <!-- <button class="btn btn-xs" id="addPrepItem">Add New Ingredient</button> -->
         </label>
         <div>
           <table class="table table-hover thumbnail">
@@ -86,25 +86,25 @@
       <br>
       <div class="form-group">
         <label>Prep item cost :</label>
-        <p class="form-control non-edit">{{item.prepItemCost}}</p>
+        <p class="form-control non-edit">$ {{item.prepCost}}</p>
         <!-- <input type="text" class="form-control" placeholder="Prep item cost" readonly> -->
       </div>
       <br>
       <div class="form-group">
         <label>Ingredient cost :</label>
-        <p class="form-control non-edit">{{item.ingredientCost}}</p>
+        <p class="form-control non-edit">$ {{item.ingCost}}</p>
         <!-- <input type="text" class="form-control" placeholder="Ingredient cost" readonly> -->
       </div>
       <br>
       <div class="form-group">
         <label>Tax (10%): </label>
-        <p class="form-control non-edit">{{item.tax}}</p>
+        <p class="form-control non-edit">$ {{item.tax}}</p>
         <!-- <input type="text" class="form-control" placeholder="Tax" readonly> -->
       </div>
       <br>
       <div class="form-group">
         <label>Contribution: </label>
-        <p class="form-control non-edit">{{item.contribution}}</p>
+        <p class="form-control non-edit">$ {{item.contribution}}</p>
         <!-- <input type="text" class="form-control" placeholder="Contribution" readonly> -->
       </div>
       <br>
