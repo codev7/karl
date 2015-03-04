@@ -4,6 +4,7 @@ Template.menuStep2Submit.helpers({
     if(ing) {
       if(ing.length > 0) {
         var ingredientsList = Ingredients.find({'_id': {$in: ing}});
+        console.log(ingredientsList.fetch());
         return ingredientsList
       }
     }
@@ -13,7 +14,16 @@ Template.menuStep2Submit.helpers({
     var jobItems = Session.get("selectedJobItems");
     if(jobItems) {
       if(jobItems.length > 0) {
-        var jobItemsList = JobItems.find({'_id': {$in: jobItems}});
+        var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
+        jobItemsList.forEach(function(jobItem) {
+          jobItem.cost = 0;
+          jobItem.ingredients.forEach(function(doc) {
+            var ing = Ingredients.findOne(doc.id);
+            if(ing) {
+              jobItem.cost += parseInt(ing.unitPrice) * parseInt(doc.quantity);
+            }
+          });
+        });
         return jobItemsList
       }
     }
@@ -82,7 +92,6 @@ Template.menuStep2Submit.events({
 
   'submit form': function(event) {
     event.preventDefault();
-    console.log(event);
     var menuId = Session.get("thisMenuItem");
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
@@ -100,6 +109,18 @@ Template.menuStep2Submit.events({
       ing_doc.push(info);
     });
 
+    var prep_doc = [];
+    preps.forEach(function(item) {
+      var dataid = $(item).attr("data-id");
+      var quantity = $(item).val();
+      var info = {
+        "id": dataid,
+        "quantity": quantity
+      }
+      prep_doc.push(info);
+    });
+    console.log("...........", prep_doc);
+
     if(ing_doc.length > 0) {
       Meteor.call("addIngredients", menuId, ing_doc, function(err) {
         if(err) {
@@ -108,6 +129,15 @@ Template.menuStep2Submit.events({
         }
       });
     } 
-    console.log("------ing_doc", ing_doc);
+
+    if(prep_doc.length > 0) {
+      Meteor.call("addJobItems", menuId, prep_doc, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
+    }
+    Router.go("menuMaster");
   }
 });

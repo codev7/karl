@@ -103,5 +103,5 @@ Meteor.methods({
     }
     logger.info("Job Item removed", {"id": id});
     JobItems.remove({'_id': id});
-  } 
+  }
 });

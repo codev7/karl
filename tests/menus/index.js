@@ -349,4 +349,134 @@ describe("Testing menu related methods", function() {
       expect(check).to.be.equal(undefined);
     });
   });
+
+  describe("addJobItems method", function() {
+    it("without menu item", function() {
+      var menuItem = "1";
+      var jobItems = [{"id": "1", "quantity": "10g"}];
+
+      var result = client.promise(function(done, error, menuItem, jobItems) {
+        Meteor.call("addJobItems", menuItem, jobItems, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [menuItem, jobItems]);
+      expect(result.error).to.be.equal(404);
+    });
+
+    describe("with menu item", function() {
+      it("without existing jobItems", function() {
+        var info = {
+          "name": "Burger" + Math.random(),
+          "tag": "Kids menu",
+          "jobItems": [],
+          "shelfLife": 123,
+          "instructions": "Heat before serve",
+          "ingredients": [],
+          "salesPrice": 60
+        }
+        var menuItem = server.execute(function(info) {
+          return MenuItems.insert(info);
+        }, [info]);
+        expect(menuItem).to.be.not.equal(null);
+
+        var jobItems = [
+          {"id": 1, "quantity": '10g'},
+          {"id": 2, "quantity": '100g'}
+        ];
+
+        var result = client.promise(function(done, error, menuItem, jobItems) {
+          Meteor.call("addJobItems", menuItem, jobItems, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [menuItem, jobItems]);
+        expect(result).to.be.equal(null);
+
+        var check = server.execute(function(menuItem) {
+          return MenuItems.findOne(menuItem);
+        }, [menuItem]);
+        expect(check.jobItems.length).to.be.equal(2);
+      });
+
+      it("with existing jobItems", function() {
+        var info = {
+          "name": "Burger" + Math.random(),
+          "tag": "Kids menu",
+          "jobItems": [{"id": 1, "quantity": 10}],
+          "shelfLife": 123,
+          "instructions": "Heat before serve",
+          "ingredients": [{"id": 1, "quantity": '10g'}],
+          "salesPrice": 60
+        }
+        var menuItem = server.execute(function(info) {
+          return MenuItems.insert(info);
+        }, [info]);
+        expect(menuItem).to.be.not.equal(null);
+
+        var jobItems = [
+          {"id": 2, "quantity": '100g'}
+        ];
+
+        var result = client.promise(function(done, error, menuItem, jobItems) {
+          Meteor.call("addJobItems", menuItem, jobItems, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [menuItem, jobItems]);
+        expect(result).to.be.equal(null);
+
+        var check = server.execute(function(menuItem) {
+          return MenuItems.findOne(menuItem);
+        }, [menuItem]);
+        expect(check.jobItems.length).to.be.equal(2);
+      });
+
+
+      it("with duplicated jobItems", function() {
+        var info = {
+          "name": "Burger" + Math.random(),
+          "tag": "Kids menu",
+          "jobItems": [{"id": 2, "quantity": '10g'}],
+          "shelfLife": 123,
+          "instructions": "Heat before serve",
+          "ingredients": [{"id": 1, "quantity": '10g'}, {"id": 2, "quantity": '10g'}],
+          "salesPrice": 60
+        }
+        var menuItem = server.execute(function(info) {
+          return MenuItems.insert(info);
+        }, [info]);
+        expect(menuItem).to.be.not.equal(null);
+
+        var jobItems = [
+          {"id": 2, "quantity": '100g'}
+        ];
+        
+        var result = client.promise(function(done, error, menuItem, jobItems) {
+          Meteor.call("addJobItems", menuItem, jobItems, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [menuItem, jobItems]);
+        expect(result).to.be.equal(null);
+
+        var check = server.execute(function(menuItem) {
+          return MenuItems.findOne(menuItem);
+        }, [menuItem]);
+        expect(check.jobItems.length).to.be.equal(1);
+      });
+    });
+  });
 });

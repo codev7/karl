@@ -9,11 +9,11 @@ Meteor.methods({
       "_id": id,
       "name": info.name,
       "tag": info.tag,
-      "prepItems": info.prepItems,
-      "shelfLife": info.shelfLife,
+      "shelfLife": parseInt(info.shelfLife),
       "instructions": info.instructions,
       "ingredients": info.ingredients,
-      "salesPrice": info.salesPrice
+      "jobItems": info.prepItems,
+      "salesPrice": parseInt(info.salesPrice)
     };
     var exist = MenuItems.findOne(id);
     if(exist) {
@@ -75,6 +75,7 @@ Meteor.methods({
   },
 
   addIngredients: function(menuId, ingredients) {
+    // console.log("-------", arguments);
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -101,9 +102,13 @@ Meteor.methods({
         if(ingredientIds.indexOf(item.id) < 0) {
           updateIngredients.push(item);
           ingredientIds.push(item.id);
+        } else {
+          var index = ingredientIds.indexOf(item.id);
+          updateIngredients[index].quantity = item.quantity;
         }
       }
     });
+    // console.log(updateIngredients);
     MenuItems.update({'_id': menuId}, {$set: {'ingredients': updateIngredients}});
     logger.info("Ingredients updated for menu item", menuId);
     return;
@@ -137,5 +142,47 @@ Meteor.methods({
     query['$pull']['ingredients'] = item.ingredients[0];
     MenuItems.update({'_id': menuId}, query);
     logger.info("Ingredients removed from menu item", menuId);
+  },
+
+  addJobItems: function(menuId, jobItems) {
+    if(!menuId) {
+      logger.error("Menu item should provide an id");
+      throw new Meteor.Error(404, "Menu item should provide an id");
+    }
+    var menuItem = MenuItems.findOne(menuId);
+    if(!menuItem) {
+      logger.error("Menu item does not exist");
+      throw new Meteor.Error(404, "Menu item does not exist");
+    }
+    if(jobItems.length < 0) {
+      logger.error("Job Items should be an array of items");
+      throw new Meteor.Error(404, "Job Items should be an array of items");
+    }
+    var updateJobItems = [];
+    var jobItemIds = [];
+    if(menuItem.jobItems) {
+      if(menuItem.jobItems.length > 0) {
+        updateJobItems = menuItem.jobItems;
+        menuItem.jobItems.forEach(function(item) {
+          jobItemIds.push(item.id);
+        });
+      }
+    }
+    jobItems.forEach(function(item) {
+      if(item.id && item.quantity) {
+        if(jobItemIds.indexOf(item.id) < 0) {
+          updateJobItems.push(item);
+          jobItemIds.push(item.id);
+        } else {
+          var index = jobItemIds.indexOf(item.id);
+          updateJobItems[index].quantity = item.quantity;
+        }
+      }
+    });
+    if(Object.keys(updateJobItems).length > 0) {
+      MenuItems.update({'_id': menuId}, {$set: {'jobItems': updateJobItems}});
+      logger.info("Job Items updated for menu item", menuId);
+    }
+    return;
   }
 });

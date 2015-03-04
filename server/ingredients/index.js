@@ -85,6 +85,20 @@ Meteor.methods({
         updateDoc.costPerUnit = info.costPerUnit;
       }
     }
+    if(updateDoc.unitSize && updateDoc.unitPrice) {
+      var unitPrice = parseInt(updateDoc.costPerUnit)/parseInt(updateDoc.unitSize);
+    } else {
+      if(updateDoc.unitSize) {
+        var unitPrice = parseInt(item.costPerUnit)/parseInt(updateDoc.unitSize);
+      } else if(updateDoc.costPerUnit) {
+        var unitPrice = parseInt(updateDoc.costPerUnit)/parseInt(item.unitSize);
+      }   
+    }
+    if(unitPrice) {
+      if(unitPrice != item.unitPrice) {
+        updateDoc.unitPrice = unitPrice;
+      }
+    }
     if(info.portionUsed) {
       if(item.portionUsed != info.portionUsed) {
         updateDoc.portionUsed = info.portionUsed;
