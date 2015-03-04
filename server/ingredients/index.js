@@ -30,8 +30,9 @@ Meteor.methods({
       "description": info.description,
       "suppliers": suppliers,
       "unitOrdered": info.unitOrdered,
-      "unitSize": info.unitSize,
       "costPerUnit": info.costPerUnit,
+      "unitSize": info.unitSize,
+      "unit": info.unit,
       "portionUsed": info.portionUsed,
       "unitPrice": unitPrice
     }
@@ -87,6 +88,11 @@ Meteor.methods({
     if(info.portionUsed) {
       if(item.portionUsed != info.portionUsed) {
         updateDoc.portionUsed = info.portionUsed;
+      }
+    }
+    if(info.unit) {
+      if(item.unit != info.unit) {
+        updateDoc.unit = info.unit;
       }
     }
     Ingredients.update({'_id': id}, {$set: updateDoc});
