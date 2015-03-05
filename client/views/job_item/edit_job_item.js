@@ -38,6 +38,7 @@ Template.editJobItem.events({
     var recipe = $(event.target).find('[name=recipe]').val();
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
     // var ing = $(event.target).find("[name=ing_qty]").get();
+
     var info = {};
     info.name = name.trim();
     info.type = type.trim();
@@ -46,7 +47,6 @@ Template.editJobItem.events({
     info.recipe = recipe.trim();
     info.shelfLife = parseInt(shelfLife.trim());
 
-    console.log(info);
     Meteor.call("editJobItem", id, info, function(err) {
       if(err) {
         console.log(err);
