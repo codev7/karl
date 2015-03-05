@@ -1,0 +1,18 @@
+<template name="mainMenuList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Sales Price ($)</th>
+        <th>No. of Items</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+   <tbody>
+      {{#each menusList}}
+        {{> mainMenuItem}}
+      {{/each}}
+    </tbody>
+  </table>
+  <button class="btn btn-small btn-primary">Generate Jobs</button>
+</template>
