@@ -3,14 +3,14 @@ Template.menuStep1Submit.events({
     e.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim(); 
     var tag = $(event.target).find('[name=tag]').val().trim(); 
-    var shelfLife = $(event.target).find('[name=shelfLife]').val().trim(); 
+    // var shelfLife = $(event.target).find('[name=shelfLife]').val().trim(); 
     var instructions = $(event.target).find('[name=instructions]').val().trim(); 
     var prepItems = [];
     var ingredients = [];
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = [];
 
-    var onShelf = parseInt(shelfLife)*24*60*60;
+    // var onShelf = parseInt(shelfLife)*24*60*60;
     if(typeof(parseInt(salesPrice)) != 'number') {
       salesPrice = 0;
     }
@@ -18,7 +18,7 @@ Template.menuStep1Submit.events({
       "name": name,
       "tag": tag,
       "instructions": instructions,
-      "shelfLife": onShelf,
+      // "shelfLife": onShelf,
       "prepItems": prepItems,
       "ingredients": ingredients,
       "salesPrice": parseFloat(salesPrice),

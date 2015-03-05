@@ -29,7 +29,9 @@ Template.menuItemDetail.helpers({
               }
             }
             doc.cost = parseFloat(costPerPortion * parseInt(doc.quantity));
+            doc.cost = Math.round(doc.cost * 100)/100;
             item.ingCost += doc.cost;
+            item.ingCost = Math.round(item.ingCost * 100)/100;
           }
         });
       }
@@ -86,7 +88,7 @@ Template.menuItemDetail.helpers({
 });
 
 Template.menuItemDetail.events({
-  'click .editBtn': function(e) {
+  'click .editMenuItemBtn': function(e) {
     e.preventDefault();
     Router.go("menuItemEdit", {"_id": $(e.target).attr("data-id")})
   }

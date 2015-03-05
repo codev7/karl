@@ -9,7 +9,7 @@ Meteor.methods({
       "_id": id,
       "name": info.name,
       "tag": info.tag,
-      "shelfLife": parseInt(info.shelfLife),
+      // "shelfLife": parseInt(info.shelfLife),
       "instructions": info.instructions,
       "ingredients": info.ingredients,
       "jobItems": info.prepItems,
@@ -49,11 +49,11 @@ Meteor.methods({
         updateDoc.name = info.name;
       }
     }
-    if(info.shelfLife) {
-      if(info.shelfLife != item.shelfLife) {
-        updateDoc.shelfLife = info.shelfLife;
-      }
-    }
+    // if(info.shelfLife) {
+    //   if(info.shelfLife != item.shelfLife) {
+    //     updateDoc.shelfLife = info.shelfLife;
+    //   }
+    // }
     MenuItems.update({"_id": id}, {$set: updateDoc});
     logger.info("Menu item updated ", id);
     return;
