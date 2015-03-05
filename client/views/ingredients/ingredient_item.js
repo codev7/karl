@@ -35,6 +35,6 @@ Template.ingredientItem.helpers({
         console.log("Convertion not defined");
       }
     }
-    return parseFloat(costPerPortion).toFixed(2);
+    return Math.round(parseFloat(costPerPortion) * 100)/100;
   }
 });

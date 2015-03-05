@@ -1,4 +1,4 @@
-Template.jobItem.events({
+Template.job.events({
   'click .job-profile': function(e, instance) {
     Session.set("thisJob", this);
     $("#jobProfile").modal("show");
@@ -17,7 +17,7 @@ Template.jobItem.events({
   }
 });
 
-Template.jobItem.helpers({
+Template.job.helpers({
   'changeStatePermission': function() {
     var permitted = true;
     var routeName = Router.current().route.getName();

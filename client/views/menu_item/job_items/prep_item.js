@@ -19,7 +19,8 @@ Template.prepItem.helpers({
             }
             cost = parseFloat(ing.costPerUnit)/convertedCount;
           } else {
-            cost = "Convertion not defined"
+            cost = 0;
+            console.log("Convertion not defined");
           }
           var calc_cost = cost * doc.quantity
           jobItem.totalCost += calc_cost;
