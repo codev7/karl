@@ -13,9 +13,10 @@ Template.ingItem.helpers({
         }
         costPerPortion = parseFloat(this.costPerUnit)/convertedCount;
       } else {
-        costPerPortion = "Convertion not defined"
+        costPerPortion = 0;
+        console.log("Convertion not defined");
       }
     }
-    return parseFloat(costPerPortion).toFixed(2);
+    return costPerPortion;
   }
 });

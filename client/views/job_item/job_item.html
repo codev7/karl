@@ -1,7 +1,7 @@
 <template name="jobItem">
   <tr class="info">
     <td><a href="/jobItem/{{_id}}">{{name}}</a></td>
-    <td>{{activeTime}} secs</td>
+    <td>{{secondsToMinutes activeTime}} mins</td>
     <td>{{type}}</td>
     <td>{{shelfLife}} days</td>
     <td>{{portions}}</td>

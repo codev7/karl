@@ -8,6 +8,7 @@ Template.showIngredientsList.helpers({
 var selectedIngredients = [];
 Template.showIngredientsList.events({
   'click .selectedIng': function(event) {
+    console.log("----------");
     var item = $(event.target).attr("data-id");
     var qty = $(event.target).parent().parent().find("input[type=text]").val();
     var index = selectedIngredients.indexOf(item);
@@ -20,6 +21,9 @@ Template.showIngredientsList.events({
       if(!isChecked) {
         selectedIngredients.splice(index, 1)
       } 
+    }
+    if(selectedIngredients.length > 0) {
+      Session.set("selectedIngredients", selectedIngredients);
     }
   },
 

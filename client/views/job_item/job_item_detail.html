@@ -53,7 +53,7 @@
       <br>
       <div class="form-group">
         <label>Active Time :</label>
-        <p class="form-control non-edit">{{item.activeTime}}</p>
+        <p class="form-control non-edit">{{secondsToMinutes item.activeTime}} Mins</p>
         <!-- <input type="text" class="form-control" placeholder="Prep item cost" readonly> -->
       </div>
       <br>
@@ -65,7 +65,7 @@
       <br>
       <div class="form-group">
         <label>Shelf Life: </label>
-        <p class="form-control non-edit">{{item.shelfLife}}</p>
+        <p class="form-control non-edit">{{item.shelfLife}} Days</p>
         <!-- <input type="text" class="form-control" placeholder="Tax" readonly> -->
       </div>
       <br>
@@ -73,7 +73,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="btn btn-primary editMenuItemBtn" data-id="{{item._id}}">Edit</button>
+      <button type="button" class="btn btn-primary editJobItemBtn" data-id="{{item._id}}">Edit</button>
     </div>
   </div>
 </template>
