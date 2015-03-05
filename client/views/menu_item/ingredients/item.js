@@ -1,5 +1,5 @@
 var selectedIngredients = [];
-Template.item.events({
+Template.ingre_item.events({
   'click .selectedIng': function(event) {
     var item = $(event.target).attr("data-id");
     var qty = $(event.target).parent().parent().find("input[type=text]").val();
@@ -20,7 +20,7 @@ Template.item.events({
   }
 });
 
-Template.item.helpers({
+Template.ingre_item.helpers({
   costPerPortion: function() {
     var costPerPortion = 0;
     if(this.unit == "each") {

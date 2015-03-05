@@ -90,7 +90,27 @@ Template.editMenuItem.helpers({
         return item;
       }
     }
-  }
+  },
+
+  jobItemsList: function() {
+    var jobItems = Session.get("selectedJobItems");
+    if(jobItems) {
+      if(jobItems.length > 0) {
+        var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
+        return jobItemsList
+      }
+    }
+  },
+
+  ingredientsList: function() {
+    var ing = Session.get("selectedIngredients");
+    if(ing) {
+      if(ing.length > 0) {
+        var ingredientsList = Ingredients.find({'_id': {$in: ing}});
+        return ingredientsList
+      }
+    }
+  },
 });
 
 Template.editMenuItem.events({
@@ -113,4 +133,69 @@ Template.editMenuItem.events({
     event.preventDefault();
     $("#jobItemListModal").modal("show");
   },
+
+  'submit form': function(event) {
+    event.preventDefault();
+    var id = Session.get("thisMenuItem");
+    var name = $(event.target).find('[name=name]').val().trim(); 
+    var tag = $(event.target).find('[name=tag]').val().trim(); 
+    var instructions = $(event.target).find('[name=instructions]').val().trim(); 
+    var preps = $(event.target).find("[name=prep_qty]").get();;
+    var ings = $(event.target).find("[name=ing_qty]").get();
+    var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
+    var image = [];
+
+    var info = {
+      "name": name,
+      "tag": tag,
+      "instructions": instructions,
+      "salesPrice": parseFloat(salesPrice)
+    }
+
+    var prep_doc = [];
+    var jobItemsIds = [];
+    preps.forEach(function(item) {
+      var dataid = $(item).attr("data-id");
+      var quantity = $(item).val();
+      var info = {
+        "id": dataid,
+        "quantity": quantity
+      }
+      prep_doc.push(info);
+      jobItemsIds.push(dataid);
+    });
+
+    var ing_doc = [];
+    var ingredientIds = [];
+    ings.forEach(function(item) {
+      var dataid = $(item).attr("data-id");
+      var quantity = $(item).val();
+      var info = {
+        "id": dataid,
+        "quantity": quantity
+      }
+      ing_doc.push(info);
+      ingredientIds.push(dataid);
+    });
+
+    if(prep_doc.length > 0 && jobItemsIds.length > 0) {
+      info.jobItems = prep_doc;
+      info.jobItemsIds = jobItemsIds;
+    }
+
+    if(ing_doc.length > 0 && ingredientIds.length > 0) {
+      info.ingredients = ing_doc;
+      info.ingredientIds = ingredientIds;
+    }
+
+    Meteor.call("editMenuItem", id, info, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        Router.go("menuMaster");
+      }
+    });
+
+  }
 });
