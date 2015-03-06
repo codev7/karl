@@ -51,6 +51,8 @@ Template.editJobItem.events({
       if(err) {
         console.log(err);
         return alert(err.reason);
+      } else {
+        Router.go("jobItemsMaster");
       }
     });
   },

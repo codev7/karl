@@ -70,13 +70,14 @@
             </thead>
             <tbody>
               {{#each item.ingredients}}
-              <tr>
+                {{> ingredientItemView}}
+              <!-- <tr>
                 <td>{{id}}</td>
                 <td>{{desc}}</td>
                 <td>{{quantity}}</td>
                 <td>{{portionUsed}}</td>
                 <td>$ {{cost}}</td>
-              </tr>
+              </tr> -->
               {{/each}}
             </tbody>
           </table>
