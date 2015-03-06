@@ -200,6 +200,5 @@ Template.editMenuItem.events({
 });
 
 Template.editMenuItem.rendered = function() {
-  console.log("--------------------");
   Session.set("selectedIngredients", null);
 }

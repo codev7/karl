@@ -54,7 +54,51 @@ describe("Testing menu related methods", function() {
   // });
 
   describe("editMenuItem method", function() {
-    // it("update ingredients", function() {
+    it("update ingredients", function() {
+      var info = {
+        "name": "Burger" + Math.random(),
+        "tag": "Kids menu",
+        "jobItems": [{"id": 1, "quantity": 10}],
+        "shelfLife": 123,
+        "instructions": "Heat before serve",
+        "ingredients": [{"id": "ing1", "quantity": 10}],
+        "salesPrice": 60
+      }
+      var id = server.execute(function(info) {
+        return MenuItems.insert(info);
+      }, [info]);
+      expect(id).not.to.be.equal(null);
+
+      var check_1 = server.execute(function(id) {
+        return MenuItems.findOne(id);
+      }, [id]);
+      console.log("........1", check_1.ingredients)
+
+      var toUpdate = {
+        "name": "Chicken Burger",
+        "instructions": "Put in oven before serve",
+        "ingredients": [{"id": "ing2", "quantity": 100}, {"id": "ing1", "quantity": 90}],
+        "ingredientIds": ['ing2', 'ing1']
+      }
+      var result = client.promise(function(done, error, id, info) {
+        Meteor.call("editMenuItem", id, info, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [id, toUpdate]);
+      expect(result).to.be.equal(null);
+
+      var check = server.execute(function(id) {
+        return MenuItems.findOne(id);
+      }, [id]);
+      console.log(".........2", check.ingredients)
+      expect(check.name).to.be.equal(toUpdate.name);
+    });
+
+    // it("update jobItems", function() {
     //   var info = {
     //     "name": "Burger" + Math.random(),
     //     "tag": "Kids menu",
@@ -79,8 +123,6 @@ describe("Testing menu related methods", function() {
     //     "instructions": "Put in oven before serve",
     //     "jobItems": [{"id": 2, "quantity": 1}, {"id": 3, "quantity": 1}, {"id": 1, "quantity": 23}],
     //     "jobItemsIds": [2, 3, 1],
-    //     "ingredients": [{"id": "ing1", "quantity": 090}],
-    //     "ingredientIds": ['ing1']
     //   }
     //   var result = client.promise(function(done, error, id, info) {
     //     Meteor.call("editMenuItem", id, info, function(err) {
@@ -99,52 +141,6 @@ describe("Testing menu related methods", function() {
     //   console.log(check)
     //   expect(check.name).to.be.equal(toUpdate.name);
     // });
-
-    it("update jobItems", function() {
-      var info = {
-        "name": "Burger" + Math.random(),
-        "tag": "Kids menu",
-        "jobItems": [{"id": 1, "quantity": 10}],
-        "shelfLife": 123,
-        "instructions": "Heat before serve",
-        "ingredients": [{"id": "ing1", "quantity": 10}],
-        "salesPrice": 60
-      }
-      var id = server.execute(function(info) {
-        return MenuItems.insert(info);
-      }, [info]);
-      expect(id).not.to.be.equal(null);
-
-      var check_1 = server.execute(function(id) {
-        return MenuItems.findOne(id);
-      }, [id]);
-      console.log(check_1)
-
-      var toUpdate = {
-        "name": "Chicken Burger",
-        "instructions": "Put in oven before serve",
-        "jobItems": [{"id": 2, "quantity": 1}, {"id": 3, "quantity": 1}, {"id": 1, "quantity": 23}],
-        "jobItemsIds": [2, 3, 1],
-        "ingredients": [{"id": "ing1", "quantity": 090}],
-        "ingredientIds": ['ing1']
-      }
-      var result = client.promise(function(done, error, id, info) {
-        Meteor.call("editMenuItem", id, info, function(err) {
-          if(err) {
-            done(err);
-          } else {
-            done();
-          }
-        });
-      }, [id, toUpdate]);
-      expect(result).to.be.equal(null);
-
-      var check = server.execute(function(id) {
-        return MenuItems.findOne(id);
-      }, [id]);
-      console.log(check)
-      expect(check.name).to.be.equal(toUpdate.name);
-    });
   });
 
   // describe("addIngredients method", function() {
