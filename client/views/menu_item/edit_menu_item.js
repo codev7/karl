@@ -196,6 +196,10 @@ Template.editMenuItem.events({
         Router.go("menuMaster");
       }
     });
-
   }
 });
+
+Template.editMenuItem.rendered = function() {
+  console.log("--------------------");
+  Session.set("selectedIngredients", null);
+}

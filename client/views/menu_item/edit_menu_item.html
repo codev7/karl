@@ -67,14 +67,14 @@
               <tr>
                 <th>Code</th>
                 <th>Description</th>
+                <th>Unit Used</th>
+                <th>Unit Price ($)</th>
                 <th>Quantity</th>
-                <th>Unit</th>
-                <th>Cost ($)</th>
               </tr>
             </thead>
             <tbody>
               {{#each item.ingredients}}
-                {{> ingredientItemView}}
+                {{> ingredientItemEdit}}
               {{/each}}
               {{#each ingredientsList}}
                 {{> ingredientItemEdit}}

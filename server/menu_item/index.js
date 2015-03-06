@@ -110,21 +110,27 @@ Meteor.methods({
     if(info.ingredients && info.ingredients.length > 0) {
       if(info.ingredientIds && info.ingredientIds.length > 0) {
         info.ingredientIds.forEach(function(thisId) {
+          // console.log(thisId);
           var index = ingredientIds.indexOf(thisId);
           if(index < 0) {
             var point = info.ingredientIds.indexOf(thisId);
             updateIngredients.push(info.ingredients[point]);
           } else {
-            // console.log("-------------------------", index);
-            // var exist = MenuItems.findOne(
-            //   {"_id": id, "jobItems": {$elemMatch: {"id": thisId}}},
-            //   {fields: {"jobItems": {$elemMatch: {"id": thisId}}}});
-            // // console.log("------------exist--------", exist);
-            // if(exist) {
-            //   if(exist.jobItems[0].id == thisId) {
-            //     console.log("...........", thisId, index)
-            //   }
-            // }
+            console.log("-------------------------", index);
+            var exist = MenuItems.findOne(
+              {"_id": id, "ingredients": {$elemMatch: {"id": thisId}}},
+              {fields: {"ingredients": {$elemMatch: {"id": thisId}}}});
+            console.log("------------exist--------", exist);
+            if(exist) {
+              var item = info.ingredients[index];
+              if(exist.ingredients[0].id == item.id) {
+                if(exist.ingredients[0].quantity != item.quantity) {
+                  console.log("...........",exist.ingredients[0], item);
+                  MenuItems.update({'_id': id}, {$pull: {"ingredients": exist.ingredients[0]}});
+                  updateIngredients.push(item);
+                }
+              }
+            }
           }
         });
         
