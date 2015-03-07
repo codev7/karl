@@ -33,19 +33,14 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Cost per Portion</th>
+                <!-- <th>Cost per Portion ($)</th> -->
                 <th>Quantity</th>
                 <th>Cost ($)</th>
               </tr>
             </thead>
             <tbody>
               {{#each item.jobItems}}
-              <tr>
-                <td>{{name}}</td>
-                <td>{{prepCostPerPortion}}</td>
-                <td>{{quantity}}</td>
-                <td>$ {{prepTotalCost}}</td>
-              </tr>
+                {{> jobItemView}}
               {{/each}}
             </tbody>
           </table>

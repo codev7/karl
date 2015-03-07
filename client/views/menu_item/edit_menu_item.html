@@ -35,21 +35,14 @@
                   <th>Type</th>
                   <th>Cost per Portion</th>
                   <th>Quantity</th>
-                  <th>Cost ($)</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each item.jobItems}}
-                <tr>
-                  <td>{{name}}</td>
-                  <td>{{type}}</td>
-                  <td>{{prepCostPerPortion}}</td>
-                  <td>{{quantity}}</td>
-                  <td>$ {{prepTotalCost}}</td>
-                </tr>
+                  {{> jobItemEdit}}
                 {{/each}}
                 {{#each jobItemsList}}
-                  {{> prepItem}}
+                  {{> jobItemEdit}}
                 {{/each}}
               </tbody>
             </table>
@@ -70,6 +63,7 @@
                 <th>Unit Used</th>
                 <th>Unit Price ($)</th>
                 <th>Quantity</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>

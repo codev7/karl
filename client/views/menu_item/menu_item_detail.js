@@ -72,16 +72,20 @@ Template.menuItemDetail.helpers({
                 doc.prepCostPerPortion = parseFloat(doc.cost)/parseInt(jobitem.portions);
                 doc.prepTotalCost = parseFloat(doc.prepCostPerPortion * doc.quantity);
                 item.prepCost += doc.prepTotalCost;
+                doc.prepTotalCost = Math.round(doc.prepTotalCost * 100)/100;
+                item.prepCost = Math.round(item.prepCost * 100)/100;
               }
             }
           });
         }
       }
       if(item.salesPrice) {
-        item.tax = (parseFloat(item.salesPrice * 10)/100).toFixed(2);
+        item.tax = parseFloat(item.salesPrice * 10)/100;
+        item.tax = Math.round(item.tax * 100)/100;
       }
-      var totalCost = parseFloat(parseFloat(item.prepCost) + parseFloat(item.ingCost) + parseFloat(item.tax)).toFixed(2);
-      item.contribution = parseFloat(item.salesPrice - totalCost).toFixed(2);
+      var totalCost = parseFloat(parseFloat(item.prepCost) + item.ingCost + item.tax);
+      item.contribution = parseFloat(item.salesPrice - totalCost);
+      item.contribution = Math.round(item.contribution * 100)/100;
       return item;
     }
   }

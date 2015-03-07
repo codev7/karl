@@ -60,22 +60,19 @@ Template.editJobItem.events({
       ingredientIds.push(dataid);
     });
 
-    console.log("..........ing......", ings, ing_doc);
-
+    console.log("..............ings....", ing_doc)
     if(ing_doc.length > 0 && ingredientIds.length > 0) {
       info.ingredients = ing_doc;
       info.ingredientIds = ingredientIds;
     }
-    console.log("............", info);
-
-    Meteor.call("editJobItem", id, info, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      } else {
-        Router.go("jobItemsMaster");
-      }
-    });
+    // Meteor.call("editJobItem", id, info, function(err) {
+    //   if(err) {
+    //     console.log(err);
+    //     return alert(err.reason);
+    //   } else {
+    //     Router.go("jobItemsMaster");
+    //   }
+    // });
   },
 
   'click #showIngredientsList': function(event) {

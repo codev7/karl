@@ -1,6 +1,7 @@
 Template.jobItemEdit.helpers({
   costPerPortion: function() {
     var jobItem = this;
+    console.log("...........", this);
     jobItem.totalCost = 0;
     jobItem.costPerPortion = 0;
     jobItem.ingredients.forEach(function(doc) {

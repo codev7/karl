@@ -108,6 +108,9 @@ Template.menuStep2Submit.events({
       prep_doc.push(info);
     });
 
+    console.log("======ing_doc======", ing_doc);
+    console.log("======prep_doc======", prep_doc);
+    
     if(ing_doc.length > 0) {
       Meteor.call("addIngredients", menuId, ing_doc, function(err) {
         if(err) {
@@ -125,6 +128,12 @@ Template.menuStep2Submit.events({
         }
       });
     }
-    Router.go("menuMaster");
+    // Router.go("menuMaster");
   }
 });
+
+Template.menuStep2Submit.rendered = function() {
+  console.log("----------");
+  Session.set("selectedJobItems", null);
+  Session.set("selectedIngredients", null);
+}

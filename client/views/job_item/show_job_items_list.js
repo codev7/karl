@@ -13,6 +13,7 @@ Template.showJobItemsList.helpers({
               cost = parseFloat(ing.costPerUnit)/parseInt(ing.unitSize)
             }  else {
               var unitId = ing.unit + "-" + ing.portionUsed;
+              // console.log(ing);
               var conversion = Conversions.findOne(unitId);
               if(conversion) {
                 var convertedCount = parseInt(conversion.count);

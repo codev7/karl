@@ -44,6 +44,7 @@ Template.editMenuItem.helpers({
               if(jobitem) {
                 jobitem.prepCostPerPortion = 0;
                 doc.name = jobitem.name;
+                doc.type = jobitem.type;
                 doc.cost = 0;
                 if(jobitem.ingredients.length > 0) {
                   jobitem.ingredients.forEach(function(ing_item) {
@@ -73,10 +74,10 @@ Template.editMenuItem.helpers({
                   });
                   doc.prepCostPerPortion = parseFloat(doc.cost)/parseInt(jobitem.portions);
                   doc.prepTotalCost = parseFloat(doc.prepCostPerPortion * doc.quantity);
+                  // doc.prepCostPerPortion = Math.round(doc.prepCostPerPortion * 100)/100;
                   doc.prepTotalCost = Math.round(doc.prepTotalCost * 100)/100;
                   item.prepCost += doc.prepTotalCost;
                   item.prepCost = Math.round(item.prepCost * 100)/100;
-
                 }
               }
             });
@@ -183,6 +184,7 @@ Template.editMenuItem.events({
       info.jobItemsIds = jobItemsIds;
     }
 
+    console.log("--------ing_doc--------------", ing_doc);
     if(ing_doc.length > 0 && ingredientIds.length > 0) {
       info.ingredients = ing_doc;
       info.ingredientIds = ingredientIds;
@@ -200,5 +202,7 @@ Template.editMenuItem.events({
 });
 
 Template.editMenuItem.rendered = function() {
+  console.log("--------editMenuItem rendered----------");
   Session.set("selectedIngredients", null);
+  Session.set("selectedJobItems", null);
 }
