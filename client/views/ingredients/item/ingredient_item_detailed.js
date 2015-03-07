@@ -18,23 +18,7 @@ Template.ingredientItemDetailed.events({
 
 Template.ingredientItemDetailed.helpers({
   costPerPortion: function() {
-    var costPerPortion = 0;
-    if(this.unit == "each") {
-      costPerPortion = parseFloat(this.costPerUnit)/parseInt(this.unitSize)
-    }  else {
-      var unitId = this.unit + "-" + this.portionUsed;
-      var conversion = Conversions.findOne(unitId);
-      if(conversion) {
-        var convertedCount = parseInt(conversion.count);
-        if(this.unitSize > 1) {
-          convertedCount = (convertedCount * parseInt(this.unitSize));
-        }
-        costPerPortion = parseFloat(this.costPerUnit)/convertedCount;
-      } else {
-        costPerPortion = 0;
-        console.log("Convertion not defined");
-      }
-    }
-    return Math.round(parseFloat(costPerPortion) * 100)/100;
+    var item = getIngredientItem(this._id);
+    return item.costPerPortion;
   }
 });

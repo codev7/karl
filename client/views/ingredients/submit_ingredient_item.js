@@ -15,9 +15,9 @@ Template.submitIngredientItem.events({
       "description": desc,
       "suppliers": [supplier],
       "unitOrdered": unitOrdered,
-      "costPerUnit": costperUnit,
+      "costPerUnit": parseFloat(costperUnit),
       "unit": unit,
-      "unitSize": unitSize,
+      "unitSize": parseFloat(unitSize),
       "portionUsed": portionUsed
     }
     Meteor.call("createIngredients", info, function(err) {
