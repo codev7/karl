@@ -2,6 +2,7 @@ Template.editJobItem.helpers({
   item: function() {
     var id = Session.get("thisJobItem");
     var item = JobItems.findOne(id);
+    console.log("------------------", item);
     if(item.ingredients || item.ingredients.length > 0) {
       item.ingredients.forEach(function(doc) {
         var ing = Ingredients.findOne(doc.id);
@@ -65,14 +66,14 @@ Template.editJobItem.events({
       info.ingredients = ing_doc;
       info.ingredientIds = ingredientIds;
     }
-    // Meteor.call("editJobItem", id, info, function(err) {
-    //   if(err) {
-    //     console.log(err);
-    //     return alert(err.reason);
-    //   } else {
-    //     Router.go("jobItemsMaster");
-    //   }
-    // });
+    Meteor.call("editJobItem", id, info, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        Router.go("jobItemsMaster");
+      }
+    });
   },
 
   'click #showIngredientsList': function(event) {

@@ -107,8 +107,9 @@ Template.editMenuItem.helpers({
     var ing = Session.get("selectedIngredients");
     if(ing) {
       if(ing.length > 0) {
-        var ingredientsList = Ingredients.find({'_id': {$in: ing}});
-        return ingredientsList
+        var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
+        console.log(ingredientsList)
+        return ingredientsList;
       }
     }
   },
@@ -183,8 +184,6 @@ Template.editMenuItem.events({
       info.jobItems = prep_doc;
       info.jobItemsIds = jobItemsIds;
     }
-
-    console.log("--------ing_doc--------------", ing_doc);
     if(ing_doc.length > 0 && ingredientIds.length > 0) {
       info.ingredients = ing_doc;
       info.ingredientIds = ingredientIds;
@@ -202,7 +201,6 @@ Template.editMenuItem.events({
 });
 
 Template.editMenuItem.rendered = function() {
-  console.log("--------editMenuItem rendered----------");
   Session.set("selectedIngredients", null);
   Session.set("selectedJobItems", null);
 }

@@ -5,17 +5,13 @@ Template.ingredientItemListed.events({
     var qty = $(event.target).parent().parent().find("input[type=text]").val();
     var index = selectedIngredients.indexOf(item);
     var isChecked = $(event.target)[0].checked;
-    console.log(index, isChecked);
     if(index < 0) {
       if(isChecked) {
         selectedIngredients.push(item);
       }
     } else if(index >= 0) {
       if(!isChecked) {
-        console.log("-------", selectedIngredients)
         selectedIngredients.splice(index, 1)
-        console.log("-------1", selectedIngredients)
-
       } 
     }
   }
