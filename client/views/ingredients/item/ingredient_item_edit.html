@@ -1,14 +1,14 @@
 <template name="ingredientItemEdit">
   <tr>
-    <td>{{item._id}}</td>
+    <td>{{item.id}}</td>
     <td>{{item.description}}</td>
-    <td>{{portionUsed}}</td>
-    {{#if costOfPortion}}
-      <td>$ {{costOfPortion}}</td>
-    {{else}}
-      <td>$ {{costPerPortion}}</td>
-    {{/if}}
-    <td><input name="ing_qty" data-id="{{_id}}" value="{{quantity}}"/></td>
-    <td><button class="btn btn-xs removeIng" data-id="{{id}}">X</button></td>
+    <td>{{item.portionUsed}}</td>
+    <!-- {{#if costOfPortion}} -->
+      <!-- <td>$ {{costOfPortion}}</td> -->
+    <!-- {{else}} -->
+      <td>$ {{item.costPerPortion}}</td>
+    <!-- {{/if/}} -->
+    <td><input name="ing_qty" data-id="{{item.id}}" value="{{item.quantity}}"/></td>
+    <td><button class="btn btn-xs removeIng" data-id="{{item.id}}">X</button></td>
   </tr>
 </template>

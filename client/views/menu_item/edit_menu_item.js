@@ -158,26 +158,30 @@ Template.editMenuItem.events({
     var jobItemsIds = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      var quantity = $(item).val();
-      var info = {
-        "id": dataid,
-        "quantity": quantity
+      if(dataid) {
+        var quantity = $(item).val();
+        var info = {
+          "id": dataid,
+          "quantity": quantity
+        }
+        prep_doc.push(info);
+        jobItemsIds.push(dataid);
       }
-      prep_doc.push(info);
-      jobItemsIds.push(dataid);
     });
 
     var ing_doc = [];
     var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      var quantity = $(item).val();
-      var info = {
-        "id": dataid,
-        "quantity": quantity
+      if(dataid) {
+        var quantity = $(item).val();
+        var info = {
+          "id": dataid,
+          "quantity": quantity
+        }
+        ing_doc.push(info);
+        ingredientIds.push(dataid);
       }
-      ing_doc.push(info);
-      ingredientIds.push(dataid);
     });
 
     if(prep_doc.length > 0 && jobItemsIds.length > 0) {

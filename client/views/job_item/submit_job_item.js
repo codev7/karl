@@ -55,18 +55,19 @@ Template.submitJobItem.events({
     var ing_doc = [];
     ing.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      var quantity = $(item).val();
-      var info = {
-        "id": dataid,
-        "quantity": quantity
+      if(dataid) {
+        var quantity = $(item).val();
+        var info = {
+          "id": dataid,
+          "quantity": quantity
+        }
+        ing_doc.push(info);
       }
-      ing_doc.push(info);
     });
 
     if(ing_doc.length > 0) {
       info.ingredients = ing_doc
     } 
-    console.log(ing_doc);
     Meteor.call("createJobItem", info, function(err, id) {
       if(err) {
         console.log(err);

@@ -19,6 +19,11 @@ Template.ingredientItemListed.events({
 
 Template.ingredientItemListed.helpers({
   costPerPortion: function() {
-    return getIngredientItem(this._id).costPerPortion;
+    if(this) {
+      var item = getIngredientItem(this._id);
+      if(item) {
+        return item.costPerPortion;
+      }
+    }
   }
 });

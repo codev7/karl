@@ -4,7 +4,7 @@ Template.menuStep2Submit.helpers({
     if(ing) {
       if(ing.length > 0) {
         var ingredientsList = Ingredients.find({'_id': {$in: ing}});
-        return ingredientsList
+        return ingredientsList;
       }
     }
   },
@@ -128,7 +128,7 @@ Template.menuStep2Submit.events({
         }
       });
     }
-    // Router.go("menuMaster");
+    Router.go("menuMaster");
   }
 });
 

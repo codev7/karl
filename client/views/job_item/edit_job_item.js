@@ -2,18 +2,6 @@ Template.editJobItem.helpers({
   item: function() {
     var id = Session.get("thisJobItem");
     var item = JobItems.findOne(id);
-    console.log("------------------", item);
-    if(item.ingredients || item.ingredients.length > 0) {
-      item.ingredients.forEach(function(doc) {
-        var ing = Ingredients.findOne(doc.id);
-        doc._id = ing._id;
-        doc.description = ing.description;
-        doc.portionUsed = ing.portionUsed;
-        doc.costPerUnit = ing.costPerUnit;
-        doc.unit = ing.unit;
-        doc.unitSize = ing.unitSize;
-      });
-    }
     return item;
   },
 
@@ -21,7 +9,7 @@ Template.editJobItem.helpers({
     var ing = Session.get("selectedIngredients");
     if(ing) {
       if(ing.length > 0) {
-        var ingredientsList = Ingredients.find({'_id': {$in: ing}});
+        var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
         return ingredientsList;
       }
     }
@@ -52,16 +40,17 @@ Template.editJobItem.events({
     var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      var quantity = $(item).val();
-      var info = {
-        "id": dataid,
-        "quantity": quantity
+      if(dataid) {
+        var quantity = $(item).val();
+        var info = {
+          "id": dataid,
+          "quantity": quantity
+        }
+        ing_doc.push(info);
+        ingredientIds.push(dataid);
       }
-      ing_doc.push(info);
-      ingredientIds.push(dataid);
     });
 
-    console.log("..............ings....", ing_doc)
     if(ing_doc.length > 0 && ingredientIds.length > 0) {
       info.ingredients = ing_doc;
       info.ingredientIds = ingredientIds;
