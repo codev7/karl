@@ -1,5 +1,5 @@
 Template.jobItemEdit.helpers({
-  costPerPortion: function() {
+  item: function() {
     var id = null;
     if(this) {
       if(this.id) {
@@ -10,7 +10,7 @@ Template.jobItemEdit.helpers({
       if(id) {
         var item = getPrepItem(id);
         if(item) {
-          return item.prepCostPerPortion;
+          return item;
         }
       }
     }

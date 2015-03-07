@@ -89,28 +89,29 @@ Template.menuStep2Submit.events({
     var ing_doc = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      var quantity = $(item).val();
-      var info = {
-        "id": dataid,
-        "quantity": quantity
+      if(dataid) {
+        var quantity = $(item).val();
+        var info = {
+          "id": dataid,
+          "quantity": quantity
+        }
+        ing_doc.push(info);
       }
-      ing_doc.push(info);
     });
 
     var prep_doc = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      var quantity = $(item).val();
-      var info = {
-        "id": dataid,
-        "quantity": quantity
+      if(dataid) {
+        var quantity = $(item).val();
+        var info = {
+          "id": dataid,
+          "quantity": quantity
+        }
+        prep_doc.push(info);
       }
-      prep_doc.push(info);
     });
 
-    console.log("======ing_doc======", ing_doc);
-    console.log("======prep_doc======", prep_doc);
-    
     if(ing_doc.length > 0) {
       Meteor.call("addIngredients", menuId, ing_doc, function(err) {
         if(err) {
@@ -133,7 +134,6 @@ Template.menuStep2Submit.events({
 });
 
 Template.menuStep2Submit.rendered = function() {
-  console.log("----------");
   Session.set("selectedJobItems", null);
   Session.set("selectedIngredients", null);
 }
