@@ -74,7 +74,7 @@ Template.editMenuItem.helpers({
                   });
                   doc.prepCostPerPortion = parseFloat(doc.cost)/parseInt(jobitem.portions);
                   doc.prepTotalCost = parseFloat(doc.prepCostPerPortion * doc.quantity);
-                  // doc.prepCostPerPortion = Math.round(doc.prepCostPerPortion * 100)/100;
+                  doc.prepCostPerPortion = Math.round(doc.prepCostPerPortion * 100)/100;
                   doc.prepTotalCost = Math.round(doc.prepTotalCost * 100)/100;
                   item.prepCost += doc.prepTotalCost;
                   item.prepCost = Math.round(item.prepCost * 100)/100;
@@ -98,7 +98,7 @@ Template.editMenuItem.helpers({
     if(jobItems) {
       if(jobItems.length > 0) {
         var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
-        return jobItemsList
+        return jobItemsList;
       }
     }
   },

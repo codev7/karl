@@ -29,7 +29,7 @@ Template.jobItemDetailed.helpers({
         });
       }
     }
-    return parseFloat(cost).toFixed(2);
+    return Math.round(cost * 100)/100;
   }
 });
 

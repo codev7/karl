@@ -1,35 +1,72 @@
 Template.jobItemEdit.helpers({
   costPerPortion: function() {
-    var jobItem = JobItems.findOne(this.id);
-    if(jobItem) {
-      jobItem.totalCost = 0;
-      jobItem.costPerPortion = 0;
-      jobItem.ingredients.forEach(function(doc) {
-        var ing = Ingredients.findOne(doc.id);
-        var cost = 0;
-        if(ing) {
-          if(ing.unit == "each") {
-            cost = parseFloat(ing.costPerUnit)/parseInt(ing.unitSize)
-          }  else {
-            var unitId = ing.unit + "-" + ing.portionUsed;
-            var conversion = Conversions.findOne(unitId);
-            if(conversion) {
-              var convertedCount = parseInt(conversion.count);
-              if(ing.unitSize > 1) {
-                convertedCount = (convertedCount * parseInt(ing.unitSize));
+    console.log(this);
+    var cost = 0;
+    var costOfPortion = 0;
+    var item = this;
+    if(item && item.ingredients) {
+      if(item.ingredients.length > 0) {
+        item.ingredients.forEach(function(doc) {
+          if(doc.id) {
+            var ing_doc = Ingredients.findOne(doc.id);
+            var costPerPortion = 0;
+            if(ing_doc.unit == "each") {
+              costPerPortion = parseFloat(ing_doc.costPerUnit)/parseInt(ing_doc.unitSize)
+            }  else {
+              var unitId = ing_doc.unit + "-" + ing_doc.portionUsed;
+              var conversion = Conversions.findOne(unitId);
+              if(conversion) {
+                var convertedCount = parseInt(conversion.count);
+                if(ing_doc.unitSize > 1) {
+                  convertedCount = (convertedCount * parseInt(ing_doc.unitSize));
+                }
+                costPerPortion = parseFloat(ing_doc.costPerUnit)/convertedCount;
+              } else {
+                costPerPortion = "Convertion not defined"
               }
-              cost = parseFloat(ing.costPerUnit)/convertedCount;
-            } else {
-              cost = 0;
-              console.log("Convertion not defined");
             }
-            var calc_cost = cost * doc.quantity
-            jobItem.totalCost += calc_cost;
+            var calc_cost = costPerPortion * doc.quantity
+            cost += calc_cost;
           }
-        }
-        jobItem.costPerPortion = (jobItem.totalCost/jobItem.portions);
-      });
-      return parseFloat(jobItem.costPerPortion).toFixed(2);
+        });
+      }
+    }
+    costOfPortion = Math.round((cost/item.portions) * 100)/100;
+    return costOfPortion;
+  }
+});
+
+Template.jobItemEdit.events({
+  'click .removePrep': function(event) {
+    event.preventDefault();
+    var routename = Router.current().route.getName();
+    var id = $(event.target).attr("data-id");
+    if(routename == "menuItemEdit") {
+      var menuId = Session.get("thisMenuItem");
+      if(id) {
+        // Meteor.call("removeIngredients", menuId, id, function(err) {
+        //   if(err) {
+        //     console.log(err);
+        //     return alert(err.reason);
+        //   }
+        // });
+      } else {
+        var item = $(event.target).parent().parent();
+        $(item).remove();
+      }
+    } else if(routename == "jobItemEdit") {
+      var jobId = Session.get("thisJobItem");
+      if(id) {
+        // Meteor.call("removeIngredientsFromJob", jobId, id, function(err) {
+        //   if(err) {
+        //     console.log(err);
+        //     return alert(err.reason);
+        //   }
+        // });
+      } else {
+        var item = $(event.target).parent().parent();
+        $(item).remove();
+      }
     }
   }
 });

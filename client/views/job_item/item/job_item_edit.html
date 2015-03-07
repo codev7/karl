@@ -9,6 +9,7 @@
       <td>$ {{prepCostPerPortion}}</td>
     {{/if}}
     <td><input type="number" name="prep_qty" class="prepQty" data-id="{{_id}}" value="{{quantity}}"/></td>
+    <td><button class="btn btn-xs removePrep" data-id="{{id}}">X</button></td>
     <!-- <td>$ {{calculatedPrepCost _id}}</td> -->
   </tr>
 </template>
