@@ -146,5 +146,35 @@ Meteor.methods({
     }
     logger.info("Job Item removed", {"id": id});
     JobItems.remove({'_id': id});
-  }
+  },
+
+  removeIngredientsFromJob: function(id, ingredient) {
+    if(!id) {
+      logger.error("Job item should provide an id");
+      throw new Meteor.Error(404, "Job item should provide an id");
+    }
+    var jobItem = JobItems.findOne(id);
+    if(!jobItem) {
+      logger.error("Job item does not exist");
+      throw new Meteor.Error(404, "Job item does not exist");
+    }
+    if(jobItem.ingredients.length < 0) {
+      logger.error("Ingredients does not exist for this job item");
+      throw new Meteor.Error(404, "Ingredients does not exist for this job item");
+    }
+    var item = JobItems.findOne(
+      {"_id": id, "ingredients": {$elemMatch: {"id": ingredient}}},
+      {fields: {"ingredients": {$elemMatch: {"id": ingredient}}}}
+    );
+    var query = {
+      $pull: {}
+    };
+    if(!item) {
+      logger.error("Ingredients does not exist");
+      throw new Meteor.Error(404, "Ingredients does not exist");
+    }
+    query['$pull']['ingredients'] = item.ingredients[0];
+    JobItems.update({'_id': id}, query);
+    logger.info("Ingredients removed from job item", id);
+  },
 });
