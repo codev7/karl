@@ -37,7 +37,7 @@ Template.editJobItem.events({
     var activeTime = $(event.target).find('[name=activeTime]').val();
     var recipe = $(event.target).find('[name=recipe]').val();
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
-    // var ing = $(event.target).find("[name=ing_qty]").get();
+    var ings = $(event.target).find("[name=ing_qty]").get();
 
     var info = {};
     info.name = name.trim();
@@ -46,6 +46,27 @@ Template.editJobItem.events({
     info.activeTime = parseInt(activeTime.trim());
     info.recipe = recipe.trim();
     info.shelfLife = parseInt(shelfLife.trim());
+
+    var ing_doc = [];
+    var ingredientIds = [];
+    ings.forEach(function(item) {
+      var dataid = $(item).attr("data-id");
+      var quantity = $(item).val();
+      var info = {
+        "id": dataid,
+        "quantity": quantity
+      }
+      ing_doc.push(info);
+      ingredientIds.push(dataid);
+    });
+
+    console.log("..........ing......", ings, ing_doc);
+
+    if(ing_doc.length > 0 && ingredientIds.length > 0) {
+      info.ingredients = ing_doc;
+      info.ingredientIds = ingredientIds;
+    }
+    console.log("............", info);
 
     Meteor.call("editJobItem", id, info, function(err) {
       if(err) {
@@ -67,3 +88,7 @@ Template.editJobItem.events({
     $("#addIngredientModal").modal('show');
   },
 });
+
+Template.editJobItem.rendered = function() {
+  Session.set("selectedIngredients", null);
+}

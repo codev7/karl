@@ -1,4 +1,4 @@
-Template.jobItem.helpers({
+Template.jobItemDetailed.helpers({
   'cost': function() {
     var item = this;
     var cost = 0;
@@ -33,7 +33,7 @@ Template.jobItem.helpers({
   }
 });
 
-Template.jobItem.events({
+Template.jobItemDetailed.events({
   'click .deleteJobItem': function(event) {
     event.preventDefault();
     if(this) {

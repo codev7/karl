@@ -31,13 +31,7 @@
             </thead>
             <tbody>
               {{#each item.ingredients}}
-              <tr>
-                <td>{{id}}</td>
-                <td>{{desc}}</td>
-                <td>{{quantity}}</td>
-                <td>{{portionUsed}}</td>
-                <td>$ {{cost}}</td>
-              </tr>
+                {{> ingredientItemView}}
               {{/each}}
             </tbody>
           </table>
