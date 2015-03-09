@@ -1,4 +1,54 @@
 Meteor.methods({
+  generateJobs: function(menuInfo, date) {
+    console.log(menuInfo);
+    var jobIds = [];
+    if(Object.keys(menuInfo).length > 0) {
+      menuInfo.forEach(function(menu) {
+        var menuItem = MenuItems.findOne(menu.id);
+
+        if(Object.keys(menuItem.jobItems).length > 0) { 
+          menuItem.jobItems.forEach(function(jobItem) {
+            var item = JobItems.findOne(jobItem.id);
+
+            var quantity = jobItem.quantity * menu.quantity;
+            var timeTaken = (item.activeTime/item.portions) * quantity;
+            var today = new Date(date).toISOString().slice(0,10).replace(/-/g,"-");
+            var todayJobExist = Jobs.findOne({"name": item.name, "createdOn": today});
+            if(todayJobExist) {
+              var newActiveTime = todayJobExist.activeTime + timeTaken;
+              var newPortions = todayJobExist.portions + quantity;
+              Jobs.update({"_id": todayJobExist._id}, {$set: {"activeTime": newActiveTime, "portions": newPortions}});
+            } else {
+              var info = {
+                "name": item.name,
+                "type": item.type,
+                "status": "draft",
+                "options": [],
+                "onshift": null,
+                "portions": quantity,
+                "activeTime": timeTaken,
+                "assignedTo": null,
+                "shelfLife": item.shelfLife,
+                "createdOn": today,
+                "createdBy": null, //add logged in users id,
+                "ingredients": [],
+                "totalIngredientCost": 0
+              }
+              var jobId = Jobs.insert(info);
+              if(jobId) {
+                jobIds.push(jobId);
+              }
+            }
+          });
+        }
+      });
+    }
+    return jobIds;
+  },
+
+
+
+
   'createJob': function(info) {
     if(!info.name) {
       logger.error("Name field not found");
