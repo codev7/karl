@@ -26,5 +26,10 @@ Template.nav.events({
     event.preventDefault();
     var date = new Date().toISOString().slice(0,10).replace(/-/g,"-");
     Router.go("jobs", {"date": date});
+  },
+
+  'click #salesMaster': function(event) {
+    event.preventDefault();
+    Router.go("salesMaster");
   }
 });

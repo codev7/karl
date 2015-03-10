@@ -1,0 +1,18 @@
+<template name="menuListSubmit">
+  <form>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Add to List</th>
+        </tr>
+      </thead>
+     <tbody>
+        {{#each menusList}}
+          {{> menuListItem}}
+        {{/each}}
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-small btn-primary" id="createMenu">Create Menu</button>
+  </form>
+</template>
