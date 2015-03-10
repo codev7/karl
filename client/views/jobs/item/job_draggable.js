@@ -1,4 +1,4 @@
-Template.job.events({
+Template.jobDraggable.events({
   'click .job-profile': function(e, instance) {
     Session.set("thisJob", this);
     $("#jobProfile").modal("show");
@@ -17,7 +17,7 @@ Template.job.events({
   }
 });
 
-Template.job.helpers({
+Template.jobDraggable.helpers({
   'changeStatePermission': function() {
     var permitted = true;
     var routeName = Router.current().route.getName();
@@ -32,7 +32,6 @@ Template.job.helpers({
   },
 
   'jobHeight': function() {
-    return this.activeTime;
+    return this.activeTime/60;
   }
 });
-

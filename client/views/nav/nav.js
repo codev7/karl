@@ -10,7 +10,7 @@ Template.nav.events({
     if(Session.get("thisDate")) { 
       date = Session.get("thisDate");
     }
-    Router.go("daily", {"_date": date});
+    Router.go("shiftsDaily", {"_date": date});
   },
   
   'click #week': function(event) {
