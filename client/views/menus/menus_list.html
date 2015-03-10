@@ -1,20 +1,14 @@
-<template name="mainMenuList">
-  <form>
-    <table class="table table-condensed">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Sales Price ($)</th>
-          <th>Quantity</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-     <tbody>
-        {{#each menusList}}
-          {{> mainMenuItem}}
-        {{/each}}
-      </tbody>
-    </table>
-    <button type="submit" class="btn btn-small btn-primary" id="generateJobs">Generate Jobs</button>
-  </form>
+<template name="menusList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Existing Menus</th>
+      </tr>
+    </thead>
+   <tbody>
+      {{#each menusList}}
+        {{> menu}}
+      {{/each}}
+    </tbody>
+  </table>
 </template>
