@@ -1,5 +1,5 @@
 <template name="job">
-  <div class="item jobitem {{status}}" data-id="{{_id}}" data-title="{{status}}" style="height: {{jobHeight}}px">
+  <!-- <div class="item jobitem {{status}}" data-id="{{_id}}" data-title="{{status}}" style="height: {{jobHeight}}px">
     <a href="" class="job-profile" data-toggle="modal">{{name}}</a>
     {{#if changeStatePermission}}
     <div class="set-job-status finish" data-toggle="tooltip" data-placement="top"  title="Change job state" data-state="finish"></div>
@@ -7,5 +7,14 @@
     <div class="set-job-status cook" data-toggle="tooltip" data-placement="top"  title="Change job state" data-state="cooking"></div>
     <div class="set-job-status start" data-toggle="tooltip" data-placement="top"  title="Change job state" data-state="start"></div>
     {{/if}}
-  </div>
+  </div> -->
+  <tr class="info">
+    <td><a href="" data-toggle="modal" class="editIngredient">{{name}}</a></td>
+    <td>{{type}}</td>
+    <td>{{status}}</td>
+    <td>{{secondsToMinutes activeTime}} mins</td>
+    <td>{{assingedTo}}</td>
+    <td>{{shelfLife}}</td>
+    <td>{{portions}}</td>
+  </tr>
 </template>

@@ -1,10 +1,20 @@
 <template name="jobsList">
-  <div class="itemlist">
-    <h5>Jobs List</h5>
-    <div id="jobsList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Job</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Active Time (mins)</th>
+        <th>Assinged to</th>
+        <th>Shelf Life</th>
+        <th>Portions</th>
+      </tr>
+    </thead>
+   <tbody>
       {{#each jobs}}
-        {{> jobItem}}
+        {{> job}}
       {{/each}}
-    </div>
-  </div>
+    </tbody>
+  </table>
 </template>

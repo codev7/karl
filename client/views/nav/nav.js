@@ -20,5 +20,11 @@ Template.nav.events({
       date = Session.get("thisDate");
     }
     Router.go("weekly", {"_date": date});
+  },
+
+  'click #jobsPanel': function(event) {
+    event.preventDefault();
+    var date = new Date().toISOString().slice(0,10).replace(/-/g,"-");
+    Router.go("jobs", {"date": date});
   }
 });
