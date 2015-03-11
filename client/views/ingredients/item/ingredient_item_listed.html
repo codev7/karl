@@ -1,0 +1,10 @@
+<template name="ingredientItemListed">
+  <tr>
+    <td><a href="" data-toggle="modal" class="editIngredient">{{_id}}</a></td>
+    <td>{{description}}</td>
+    <!-- <td>{{unitSize}}</td> -->
+    <td>{{portionUsed}}</td>
+    <td>$ {{costPerPortion}}</td>
+    <td><input type="checkbox" data-id="{{_id}}" class="selectedIng" name="selectedIng"></td>
+  </tr>
+</template>

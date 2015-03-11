@@ -1,0 +1,20 @@
+<template name="menuItemsSummaryList">
+  <form>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Existing Items</th>
+          <th>Add expected quantity</th>
+          <th>Sales Price per Item ($)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+     <tbody>
+        {{#each items}}
+          {{> menu}}
+        {{/each}}
+      </tbody>
+    </table> 
+    <button class="btn btn-small btn-primary">Generate Jobs</button>
+  </form>
+</template>

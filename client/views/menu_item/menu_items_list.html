@@ -1,0 +1,20 @@
+<template name="menuItemsList">
+  <div class="row">
+    <div class="col-md-1 menu-item add-menu-item">
+      <a href="/menuItem/submit">
+        <div class="col-md-1 menu-item">
+          <div class="menu-image height180 thumbnail">
+            <img src="" alt="image">
+          </div>
+          <div class="menu-desc">
+            <p class="menu-name">Menu Item name</p>
+            <p class="tag-line">Tag: Menu</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    {{#each items}}
+      {{> menuItem}}
+    {{/each}}
+  </div>
+</template>

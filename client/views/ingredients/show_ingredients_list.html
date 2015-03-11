@@ -1,0 +1,37 @@
+<template name="showIngredientsList">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 130%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Select Ingredients</h4>
+      </div>
+      <form class="form-horizontal" role="form" id="newJob" style="padding: 10px 20px">
+        <div class="modal-body">
+          <div class="row">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Description</th>
+                  <!-- <th>Unit Size</th> -->
+                  <th>Portion used</th>
+                  <th>Cost per Portion ($)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+             <tbody>
+                {{#each ingredientsList}}
+                  {{> ingredientItemListed}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary setIngListSession">Add To List</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>

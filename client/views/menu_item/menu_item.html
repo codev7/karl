@@ -1,0 +1,18 @@
+<template name="menuItem">
+  <a href="/menuItem/{{_id}}">
+    <div class="col-md-1 menu-item">
+      <div class="menu-image ">
+        <img src="/images/farmer's.jpg" class="col-md-12 thumbnail">
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+           <p class="menu-name">{{name}}</p>
+            <p class="tag-line">{{tag}}</p>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-xs removeMenuItem" data-id="{{_id}}">Remove</button>
+        </div>
+      </div>
+    </div>
+  </a>
+</template>

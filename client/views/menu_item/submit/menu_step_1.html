@@ -1,0 +1,46 @@
+<template name="menuStep1Submit">
+  <form>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" placeholder="Enter Name for the menu">
+        </div>
+        <div class="form-group">
+          <label>Tag</label>
+          <input type="text" name="tag" class="form-control" placeholder="tag">
+        </div>
+       <!--  <div class="form-group">
+          <label>Shelf Life</label>
+          <div class="input-group">
+            <input type="number" name="shelfLife" class="form-control" placeholder="shelfLife">
+            <div class="input-group-addon">Days</div>
+          </div>
+        </div> -->
+        <div class="form-group">
+          <label>Instructions</label>
+          <textarea class="form-control" name="instructions" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Sale price</label>
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <input type="text" class="form-control" name="salesPrice" placeholder="Sale price">     
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image</label><br>
+          <input type="file" disabled="true" />
+          <!-- <img src="/images/farmer's.jpg" class="col-md-12 thumbnail"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Next Step</button> 
+      </div>
+    </div>
+  </form>
+</template>

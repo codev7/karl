@@ -1,0 +1,93 @@
+<template name="menuStep2Submit">
+  <form>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <h3>{{item.name}}</h3>
+          <p>{{item.tag}}</p>
+        </div>
+        <div class="form-group">
+          <label>Instructions</label>
+          <textarea class="form-control" name="instructions" rows="3" value="{{item.instructions}}"></textarea>
+        </div>
+        <div class="form-group">
+          <label>
+            Prep items used
+            <button class="btn btn-xs" id="showJobItemsList">Select Preps</button>
+            <button class="btn btn-xs" id="addNewJobItem">Add New Prep</button>
+          </label>
+          <div>
+            <table class="table table-hover thumbnail">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Cost per Portion ($)</th>
+                  <th>Portions</th>
+                  <!-- <th>Cost</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {{#each jobItemsList}}
+                  {{> jobItemEdit}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>
+            Ingredients used
+            <button class="btn btn-xs" id="showIngredientsList">Select Ingredients</button>
+            <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button>
+          </label>
+          <div>
+            <table class="table table-hover thumbnail">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Description</th>
+                  <th>Unit used</th>
+                  <th>Unit Price ($)</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each ingredientsList}}
+                  {{> ingredientItemEdit}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Sale price ($)</label>
+          <input type="text" name="salesPrice" class="form-control" placeholder="Sale price" value="$ {{item.salesPrice}}" readonly>
+        </div>
+        <div class="form-group">
+          <label>Prep item cost</label>
+          <input type="text" class="form-control" placeholder="Prep item cost" readonly>
+        </div>
+        <div class="form-group">
+          <label>Ingredient cost</label>
+          <input type="text" class="form-control" placeholder="Ingredient cost" readonly value="$ {{item.totalIngCost}}">
+        </div>
+        <div class="form-group">
+          <label>Tax (10%)</label>
+          <input type="text" class="form-control" placeholder="Tax" readonly value="$ {{item.tax}}">
+        </div>
+        <div class="form-group">
+          <label>Contribution</label>
+          <input type="text" class="form-control" placeholder="Contribution" readonly value="{{item.contribution}}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary finishMenu">Done</button> 
+      </div>
+    </div>
+  </form>
+</template>

@@ -2,17 +2,26 @@
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th>Name</th>
+        {{#if actionPermissionReverse}}
+        <th>Action</th>
+        {{/if}}
+        <th>Code</th>
+        <th>Description</th>
         <th>Supplier</th>
-        <th>Portion Ordered</th>
-        <th>Cost per portion</th>
+        <th>Unit Ordered</th>
+        <th>Cost per Unit ($)</th>
+        <th>Unit Size</th>
+        <th>Unit</th>
         <th>Portion used</th>
-        <th>Quantity</th>
+        <th>Cost per Portion ($)</th>
+        {{#if actionPermission}}
+        <th>Action</th>
+        {{/if}}
       </tr>
     </thead>
    <tbody>
       {{#each ingredientsList}}
-        {{> ingredientItem}}
+        {{> ingredientItemDetailed}}
       {{/each}}
     </tbody>
   </table>

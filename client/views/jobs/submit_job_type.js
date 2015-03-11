@@ -2,7 +2,6 @@ Template.submitJobType.events({
   'click #submitJobType': function(event) {
     event.preventDefault();
     var jobType = $("#jobType").val();
-    console.log(jobType);
     if(!jobType || !jobType.trim()) {
       return alert("Add job type");
     } 

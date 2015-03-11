@@ -1,0 +1,14 @@
+<template name="menusList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Existing Menus</th>
+      </tr>
+    </thead>
+   <tbody>
+      {{#each menusList}}
+        {{> menuListItem}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>

@@ -1,0 +1,15 @@
+<template name="unitConversionList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Unit</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+   <tbody>
+      {{#each items}}
+        {{> conversionItem}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>

@@ -1,0 +1,72 @@
+<template name="submitJobItem">
+  <form>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" placeholder="Enter Name for the job">
+        </div>
+        <div class="form-group">
+          <label>Recipe</label>
+          <textarea class="form-control" name="recipe" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>
+            Ingredients used
+            <button class="btn btn-xs" id="showIngredientsList">Select Ingredients</button>
+            <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button>
+          </label>
+          <div>
+            <table class="table table-hover thumbnail">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Description</th>
+                  <th>Unit used</th>
+                  <th>Unit Price</th>
+                  <th>Quantity</th>
+                  <!-- <th>Action</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {{#each ingredientsList}}
+                  {{> ingredientItemEdit}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Type</label>
+          <input type="text" name="type" class="form-control" placeholder="type" value="Prep">
+        </div>
+        <div class="form-group">
+          <label>Active Time</label>
+          <div class="input-group">
+            <input type="number" name="activeTime" class="form-control" placeholder="Active Time">
+            <div class="input-group-addon">minutes</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Portions</label>
+          <input type="number" name="portions" class="form-control" placeholder="portions">
+        </div>
+        <div class="form-group">
+          <label>Shelf Life</label>
+          <div class="input-group">
+             <input type="number" name="shelfLife" class="form-control" placeholder="Shelf Life">
+            <span class="input-group-addon">Days</span>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Submit</button> 
+      </div>
+    </div>
+  </form>
+</template>

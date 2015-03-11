@@ -1,0 +1,73 @@
+<template name="jobItemDetail">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <h3>{{item.name}}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label>Recipe</label>
+        <div class="">
+          {{item.recipe}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          Ingredients used
+        </label>
+        <div>
+          <table class="table table-hover thumbnail">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Cost ($)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each item.ingredients}}
+                {{> ingredientItemView}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 form-inline">
+      <div class="form-group">
+        <label>Type: </label>
+        <p class="form-control non-edit">{{item.type}}</p>
+        <!-- <input type="text" name="salesPrice" class="form-control" placeholder="Sale price" value="{{item.salesPrice}}"> -->
+      </div>
+      <br>
+      <div class="form-group">
+        <label>Active Time :</label>
+        <p class="form-control non-edit">{{secondsToMinutes item.activeTime}} Mins</p>
+        <!-- <input type="text" class="form-control" placeholder="Prep item cost" readonly> -->
+      </div>
+      <br>
+      <div class="form-group">
+        <label>Portions :</label>
+        <p class="form-control non-edit">{{item.portions}}</p>
+        <!-- <input type="text" class="form-control" placeholder="Ingredient cost" readonly> -->
+      </div>
+      <br>
+      <div class="form-group">
+        <label>Shelf Life: </label>
+        <p class="form-control non-edit">{{item.shelfLife}} Days</p>
+        <!-- <input type="text" class="form-control" placeholder="Tax" readonly> -->
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-primary editJobItemBtn" data-id="{{item._id}}">Edit</button>
+    </div>
+  </div>
+</template>
