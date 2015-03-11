@@ -26,9 +26,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Units Ordered</label>
+            <label class="col-sm-4 control-label">Portion Ordered (b)</label>
             <div class="col-sm-6">
-              <input type="text" name="unitOrdered" class="form-control" placeholder="Add unit ordered eg: Boxes, bottles etc." >
+              <input type="text" name="portionOrdered" class="form-control" placeholder="Add portion ordered eg: Boxes, bottles etc." >
               <!-- <select name="unitOrdered" class="form-control">
                 <option selected="selected">packets</option>
                 <option>boxes</option>
@@ -38,30 +38,18 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Cost per unit</label>
+            <label class="col-sm-4 control-label">Cost per Portion (b)</label>
             <div class="col-sm-6">
               <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input type="text" name="costperUnit" class="form-control" placeholder="Cost of a unit" >
+                <input type="text" name="costPerPortion" class="form-control" placeholder="Cost of a portion ordered" >
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Unit Size</label>
-            <div class="col-sm-6">
-              <input type="text" name="unitSize" class="form-control" placeholder="Unit Size (Total weight in used portion)" >
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Unit</label>
-            <div class="col-sm-6">
-              <input type="text" name="unit" class="form-control" placeholder="Unit Size measurement eg: kg, g, mg" >
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Portion Used</label>
+            <label class="col-sm-4 control-label">Portion Used (a)</label>
             <div class="col-sm-6 ">
-              <input type="text" name="portionUsed" class="form-control" placeholder="Unit used as portion" >
+              <input type="text" name="portionUsed" class="form-control" placeholder="Portion used eg: kg, g" >
               <!-- <select name="portionUsed" class="form-control">
                 <option>kg (kilo grams)</option>
                 <option selected="selected">g (grams)</option>
@@ -69,6 +57,12 @@
                 <option>ml (mili liters)</option>
                 <option>l (liters)</option>
               </select> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">How many (a)'s in (b)</label>
+            <div class="col-sm-6">
+              <input type="text" name="unitSize" class="form-control" placeholder="Unit Size" >
             </div>
           </div>
         </div>

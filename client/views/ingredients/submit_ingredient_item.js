@@ -4,21 +4,19 @@ Template.submitIngredientItem.events({
     var code = $(event.target).find('[name=code]').val().trim();
     var desc = $(event.target).find('[name=desc]').val().trim();
     var supplier = $(event.target).find('[name=supplier]').val().trim();
-    var unitOrdered = $(event.target).find('[name=unitOrdered]').val().trim();
-    var costperUnit = $(event.target).find('[name=costperUnit]').val().trim();
-    var unit = $(event.target).find('[name=unit]').val().trim();
-    var unitSize = $(event.target).find('[name=unitSize]').val().trim();
+    var portionOrdered = $(event.target).find('[name=portionOrdered]').val().trim();
+    var costPerPortion = $(event.target).find('[name=costPerPortion]').val();
     var portionUsed = $(event.target).find('[name=portionUsed]').val().trim();
+    var unitSize = $(event.target).find('[name=unitSize]').val().trim();
 
     var info = {
       "code": code,
       "description": desc,
       "suppliers": [supplier],
-      "unitOrdered": unitOrdered,
-      "costPerUnit": parseFloat(costperUnit),
-      "unit": unit,
-      "unitSize": parseFloat(unitSize),
-      "portionUsed": portionUsed
+      "portionOrdered": portionOrdered,
+      "costPerPortion": parseFloat(costPerPortion),
+      "portionUsed": portionUsed,
+      "unitSize": parseFloat(unitSize)
     }
     Meteor.call("createIngredients", info, function(err) {
       if(err) {

@@ -5,12 +5,12 @@ describe("Testing ingredients related methods", function() {
   describe("createIngredients method", function() {
     it("with one supplier", function() {
       var info = {
-        "code": "VV Eggs" + Math.random(),
+        "code": "VV Eggs",
         "description": "Eggs box",
-        "suppliers": "Villa",
-        "unitOrdered": "box",
+        "suppliers": ["Villa"],
+        "portionOrdered": "box",
         "unitSize": 180,
-        "costPerUnit": 60,
+        "costPerPortion": 60,
         "portionUsed": 1
       }
 
@@ -29,18 +29,19 @@ describe("Testing ingredients related methods", function() {
         var doc = Ingredients.findOne(id);
         return doc;
       }, [result]);
-      expect(check._id).to.be.equal(info.code);
+      // console.log(check);
+      expect(check._id).to.be.equal(result);
     });
 
     it("with few suppliers", function() {
       var info = {
-        "code": "VV Eggs" + Math.random(),
+        "code": "VV Eggs",
         "description": "Eggs box",
         "suppliers": ["Villa", "Bella"],
-        "unitOrdered": "box",
+        "portionOrdered": "box",
+        "costPerPortion": 60,
+        "portionUsed": 1,
         "unitSize": 180,
-        "costPerUnit": 60,
-        "portionUsed": 1
       }
 
       var result = client.promise(function(done, error, info) {
@@ -58,19 +59,20 @@ describe("Testing ingredients related methods", function() {
         var doc = Ingredients.findOne(id);
         return doc;
       }, [result]);
-      expect(check._id).to.be.equal(info.code);
+      // console.log(check);
+      expect(check._id).to.be.equal(result);
     });
   });
 
   describe("editIngredient method", function() {
     it("update supplier", function() {
       var info = {
-        "_id": "VV Eggs" + Math.random(),
+        "code": "VV Eggs",
         "description": "Eggs box",
         "suppliers": "Villa",
-        "unitOrdered": "box",
+        "portionOrdered": "box",
         "unitSize": 180,
-        "costPerUnit": 60,
+        "costPerPortion": 60,
         "portionUsed": 1
       }
 
@@ -98,18 +100,19 @@ describe("Testing ingredients related methods", function() {
       var check = server.execute(function(id) {
         var doc = Ingredients.findOne(id);
         return doc;
-      }, [info._id]);
+      }, [ingredientId]);
+      // console.log(check);
       expect(check.suppliers.length).to.be.equal(2);
     });
 
     it("update description", function() {
       var info = {
-        "_id": "VV Eggs" + Math.random(),
+        "code": "VV Eggs",
         "description": "Eggs box",
         "suppliers": "Villa",
-        "unitOrdered": "box",
+        "portionOrdered": "box",
         "unitSize": 180,
-        "costPerUnit": 60,
+        "costPerPortion": 60,
         "portionUsed": 1
       }
 
@@ -137,8 +140,47 @@ describe("Testing ingredients related methods", function() {
       var check = server.execute(function(id) {
         var doc = Ingredients.findOne(id);
         return doc;
-      }, [info._id]);
+      }, [ingredientId]);
       expect(check.description).to.be.equal(updateDoc.description);
+    });
+
+    it("update code", function() {
+      var info = {
+        "code": "VV Eggs",
+        "description": "Eggs box",
+        "suppliers": "Villa",
+        "portionOrdered": "box",
+        "unitSize": 180,
+        "costPerPortion": 60,
+        "portionUsed": 1
+      }
+
+      var ingredientId = server.execute(function(info) {
+        var id = Ingredients.insert(info);
+        return id;
+      }, [info]);
+      expect(ingredientId).not.to.be.equal(null);
+
+      var updateDoc = {
+        "code": "VVV Egg Boxes"
+      }
+
+      var update = client.promise(function(done, error, id, info) {
+        Meteor.call("editIngredient", id, info, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [ingredientId, updateDoc]);
+      expect(update).to.be.equal(null);
+
+      var check = server.execute(function(id) {
+        var doc = Ingredients.findOne(id);
+        return doc;
+      }, [ingredientId]);
+      expect(check.code).to.be.equal(updateDoc.code);
     });
   });
 
@@ -148,9 +190,9 @@ describe("Testing ingredients related methods", function() {
         "_id": "VV Eggs" + Math.random(),
         "description": "Eggs box",
         "suppliers": "Villa",
-        "unitOrdered": "box",
+        "portionOrdered": "box",
         "unitSize": 180,
-        "costPerUnit": 60,
+        "costPerPortion": 60,
         "portionUsed": 1
       }
 

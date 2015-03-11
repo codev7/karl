@@ -1,14 +1,12 @@
 <template name="ingredientItemDetailed">
   <tr class="info">
-    <td><a href="" data-toggle="modal" class="editIngredient">{{_id}}</a></td>
+    <td><a href="" data-toggle="modal" class="editIngredient">{{code}}</a></td>
     <td>{{description}}</td>
     <td>{{suppliers}}</td>
-    <td>{{unitOrdered}}</td>
-    <td>$ {{costPerUnit}}</td>
-    <td>{{unitSize}}</td>
-    <td>{{unit}}</td>
-    <td>{{portionUsed}}</td>
+    <td>{{portionOrdered}}</td>
     <td>$ {{costPerPortion}}</td>
+    <td>{{portionUsed}}</td>
+    <td><p data-toggle="tooltip" data-placement="top" title="How many {{portionUsed}}s in a {{portionOrdered}}">{{unitSize}}</p></td>
     <td><button class="btn btn-xs deleteIngredient">Remove</button></td>
   </tr>
 </template>

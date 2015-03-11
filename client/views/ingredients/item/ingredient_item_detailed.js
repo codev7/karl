@@ -16,9 +16,6 @@ Template.ingredientItemDetailed.events({
   }
 });
 
-Template.ingredientItemDetailed.helpers({
-  costPerPortion: function() {
-    var item = getIngredientItem(this._id);
-    return item.costPerPortion;
-  }
-});
+Template.ingredientItemDetailed.rendered = function() {
+  $('[data-toggle="tooltip"]').tooltip();
+}

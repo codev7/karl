@@ -5,12 +5,12 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">Edit Ingredients</h4>
       </div>
-      <form class="form-horizontal" role="form">
+      <form class="form-horizontal" role="form" data-id="{{item._id}}">
         <div class="modal-body">
           <div class="form-group">
             <label class="col-sm-4 control-label">Code</label>
             <div class="col-sm-6 ">
-              <input type="text" name="code" class="form-control" placeholder="Add Name" readonly value="{{item._id}}">
+              <input type="text" name="code" class="form-control" placeholder="Add Name" value="{{item.code}}">
             </div>
           </div>
           <div class="form-group">
@@ -26,9 +26,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Units Ordered</label>
+            <label class="col-sm-4 control-label">Portion Ordered (b)</label>
             <div class="col-sm-6">
-              <input type="text" name="unitOrdered" class="form-control" placeholder="Add unit ordered" value="{{item.unitOrdered}}">
+              <input type="text" name="portionOrdered" class="form-control" placeholder="Add unit ordered" value="{{item.portionOrdered}}">
               <!-- <select name="unitOrdered" class="form-control">
                 <option selected="selected">packets</option>
                 <option>boxes</option>
@@ -38,24 +38,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-4 control-label">Cost per unit</label>
+            <label class="col-sm-4 control-label">Cost per Portion (b)</label>
             <div class="col-sm-6">
               <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input type="text" name="costPerUnit" class="form-control" placeholder="Cost of a unit" value="{{item.costPerUnit}}">
+                <input type="text" name="costPerPortion" class="form-control" placeholder="Cost of a unit" value="{{item.costPerPortion}}">
               </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Unit Size</label>
-            <div class="col-sm-6">
-              <input type="text" name="unitSize" class="form-control" placeholder="Unit Size" value="{{item.unitSize}}">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-4 control-label">Unit</label>
-            <div class="col-sm-6">
-              <input type="text" name="unit" class="form-control" placeholder="Unit Size" value="{{item.unit}}">
             </div>
           </div>
           <div class="form-group">
@@ -69,6 +57,12 @@
                 <option>ml (mili liters)</option>
                 <option>l (liters)</option>
               </select> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">How many (a)'s in a (b)</label>
+            <div class="col-sm-6">
+              <input type="text" name="unitSize" class="form-control" placeholder="Unit Size" value="{{item.unitSize}}">
             </div>
           </div>
         </div>
