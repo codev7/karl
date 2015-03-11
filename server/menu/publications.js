@@ -9,6 +9,13 @@ Meteor.publish("menus", function() {
 Meteor.publish("menu", function(id) {
   var cursors = [];
   var menu = Menus.find({"_id": id}, {fields: {"name": 1, "menuItems": 1}});
-  cursors.push(menu);
-  return menu;
+  if(menu) {
+    cursors.push(menu);
+    var menuFetched = menu.fetch();
+    if(menuFetched[0].menuItems.length > 0)  {
+      var menuItems = MenuItems.find({"_id": {$in: menuFetched[0].menuItems}}, {fields: {"name": 1, "salesPrice": 1, "tag": 1}});
+      cursors.push(menuItems);      
+    }
+  }
+  return cursors;
 });

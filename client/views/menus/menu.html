@@ -1,6 +1,8 @@
 <template name="menu">
  <tr class="info">
-    <td><a href="/menu/{{_id}}" data-toggle="modal">{{name}}</a></td>
-    <!-- <td><input name="item_qty"></td> -->
+    <td><a href="#">{{name}}</a></td>
+    <td><input name="item_qty" data-id="{{_id}}"></td>
+    <td>$ {{salesPrice}}</td>
+    <td><button class="btn btn-xs">Remove</button></td>
   </tr>
 </template>

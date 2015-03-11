@@ -1,5 +1,6 @@
 Template.menusList.helpers({
   menusList: function() {
-    return Menus.find().fetch();
+    var items = Menus.find().fetch();
+    return items;   
   }
 });

@@ -61,7 +61,7 @@ describe("Testing job methods", function() {
       var menuInfo = [{"id": menuItemId1, "quantity": 100}, {"id": menuItemId2, "quantity": 10}];
 
       var generatedJobs = client.promise(function(done, error, menuInfo) {
-        var jobs = Meteor.call("generateJobs", menuInfo, function(err, result) {
+        var jobs = Meteor.call("generateJobs", menuInfo, new Date(), function(err, result) {
           if(err) {
             done(err);
           } else {
