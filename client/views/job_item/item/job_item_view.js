@@ -1,16 +1,13 @@
 Template.jobItemView.helpers({
   'item': function() {
-    var self = this;
-    var id = 0;
-    if(self) {
-      if(self.id) {
-        id = self.id;
-      } else if(self._id) {
-        id = self._id;
-      }
-      var item = getPrepItem(id);
-      if(item) {
-        return item;
+    if(this) {
+      if(this._id) {
+        var item = getPrepItem(this._id);
+        if(item) {
+          item.cost = item.prepCostPerPortion * this.quantity;
+          item.cost = Math.round(item.cost * 100)/100;
+          return item;
+        }
       }
     }
   }

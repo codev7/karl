@@ -42,7 +42,7 @@ Template.submitJobItem.events({
     var recipe = $(event.target).find('[name=recipe]').val();
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
     var ing = $(event.target).find("[name=ing_qty]").get();
-    console.log(ing);
+
     var info = {
       "name": name,
       "type": type,
@@ -58,7 +58,7 @@ Template.submitJobItem.events({
       if(dataid) {
         var quantity = $(item).val();
         var info = {
-          "id": dataid,
+          "_id": dataid,
           "quantity": quantity
         }
         ing_doc.push(info);

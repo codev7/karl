@@ -3,8 +3,8 @@ Template.ingredientItemEdit.helpers({
     if(this._id) {
       var item = getIngredientItem(this._id);
       if(item) {
-        if(self.quantity) {
-          item.quantity = self.quantity;
+        if(this.quantity) {
+          item.quantity = this.quantity;
         }
         return item;
       }

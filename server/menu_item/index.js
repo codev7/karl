@@ -4,6 +4,11 @@ Meteor.methods({
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
     }
+    var exist = MenuItems.findOne({"name": info.name});
+    if(exist) {
+      logger.error("Duplicate entry");
+      throw new Meteor.Error(404, "Duplicate entry, change name and try again");
+    }
     var doc = {
       "name": info.name,
       "tag": info.tag,

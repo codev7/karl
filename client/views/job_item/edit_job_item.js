@@ -43,7 +43,7 @@ Template.editJobItem.events({
       if(dataid) {
         var quantity = $(item).val();
         var info = {
-          "id": dataid,
+          "_id": dataid,
           "quantity": quantity
         }
         ing_doc.push(info);

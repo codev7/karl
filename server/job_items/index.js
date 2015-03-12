@@ -8,8 +8,7 @@ Meteor.methods({
       logger.error("Time field not found");
       throw new Meteor.Error(404, "Time field not found");
     }
-    var id = info.name.trim().toLowerCase().replace(/ /g, "_");
-    var exist = JobItems.findOne(id);
+    var exist = JobItems.findOne({"name": info.name});
     if(exist) {
       logger.error("Duplicate entry");
       throw new Meteor.Error(404, "Duplicate entry, change name and try again");
@@ -17,7 +16,6 @@ Meteor.methods({
     var activeTime = parseInt(info.activeTime) * 60; //seconds
     var shelfLife = parseInt(info.shelfLife); //days
     var doc = {
-      "_id": id,
       "name": info.name,
       "type": info.type,
       "recipe": info.recipe,
