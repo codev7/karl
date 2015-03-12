@@ -11,7 +11,7 @@ Meteor.methods({
     var exist = Ingredients.findOne(info.code);
     if(exist) {
       logger.error("Duplicate entry");
-      throw new Meteor.Error(404, "Duplicate entry, change name and try again");
+      throw new Meteor.Error(404, "Duplicate entry, change code and try again");
     }
     var suppliers = [];
     if(info.suppliers) {
@@ -20,6 +20,9 @@ Meteor.methods({
       } else {
         suppliers.push(info.suppliers);
       }
+    }
+    if(info.costPerPortion) {
+      info.costPerPortion = 0;
     }
     var doc = {
       "code": info.code,

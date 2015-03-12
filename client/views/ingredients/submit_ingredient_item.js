@@ -14,9 +14,19 @@ Template.submitIngredientItem.events({
       "description": desc,
       "suppliers": [supplier],
       "portionOrdered": portionOrdered,
-      "costPerPortion": parseFloat(costPerPortion),
       "portionUsed": portionUsed,
-      "unitSize": parseFloat(unitSize)
+    }
+
+    if(!costPerPortion || typeof(costPerPortion) != "number") {
+      info.costPerPortion =  0;
+    } else {
+      info.costPerPortion = parseFloat(costPerPortion);
+    }
+
+    if(!unitSize || typeof(unitSize) != "number") {
+      info.unitSize =  0;
+    } else {
+      info.unitSize = parseFloat(unitSize);
     }
     Meteor.call("createIngredients", info, function(err) {
       if(err) {

@@ -50,17 +50,9 @@ Meteor.methods({
       logger.error("No editing fields found");
       throw new Meteor.Error(404, "No editing fields found");
     }
-
-    var ingredientIds = [];
-    if(job.ingredients && job.ingredients.length > 0) {
-      job.ingredients.forEach(function(doc) {
-        ingredientIds.push(doc.id);
-      });
-    }
-
+    JobItems.update({{'_id': id}, {$set: "ingredients": []}});
     var query = {
-      $set: {},
-      $push: {}
+      $set: {}
     }
     var updateDoc = {};
     if(info.name) {
@@ -96,37 +88,11 @@ Meteor.methods({
         updateDoc.recipe = info.recipe;
       }
     }
-    var updateIngredients = [];
-    if(info.ingredients && info.ingredients.length > 0) {
-      if(info.ingredientIds && info.ingredientIds.length > 0) {
-        info.ingredientIds.forEach(function(thisId) {
-          var index = ingredientIds.indexOf(thisId);
-          var point = info.ingredientIds.indexOf(thisId);
-          if(index < 0) {
-            updateIngredients.push(info.ingredients[point]);
-          } else {
-            var exist = JobItems.findOne(
-              {"_id": id, "ingredients": {$elemMatch: {"id": thisId}}},
-              {fields: {"ingredients": {$elemMatch: {"id": thisId}}}});
-            if(exist) {
-              var item = info.ingredients[point];
-              if(exist.ingredients[0].id == item.id) {
-                if(exist.ingredients[0].quantity != item.quantity) {
-                  JobItems.update({'_id': id}, {$pull: {"ingredients": exist.ingredients[0]}});
-                  updateIngredients.push(item);
-                }
-              }
-            }
-          }
-        });
-        
-      }
+    if(info.ingredients.length > 0) {
+      updateDoc.ingredients = info.ingredients;
     }
     if(Object.keys(updateDoc).length > 0) {
       query["$set"] = updateDoc;
-    }
-    if(Object.keys(updateIngredients).length > 0) {
-      query['$push'] = {"ingredients": {$each: updateIngredients}};
     }
     logger.info("Job updated", {"JobId": id});
     return JobItems.update({'_id': id}, query);

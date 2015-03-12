@@ -39,6 +39,7 @@ Template.editJobItem.events({
     var ing_doc = [];
     var ingredientIds = [];
     ings.forEach(function(item) {
+      console.log(item);
       var dataid = $(item).attr("data-id");
       if(dataid) {
         var quantity = $(item).val();
