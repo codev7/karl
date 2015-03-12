@@ -1,6 +1,18 @@
 Template.showIngredientsList.helpers({
   ingredientsList: function() {
-    var list = Ingredients.find().fetch();
+    var id = Session.get("thisJobItem");
+    var item = JobItems.findOne(id);
+    var ing_ids = [];
+    if(item) {
+      if(item.ingredients.length > 0) {
+        item.ingredients.forEach(function(doc) {
+          if(ing_ids.indexOf(doc._id) < 0) {
+            ing_ids.push(doc._id);
+          }
+        });
+      }
+    }
+    var list = Ingredients.find({"_id": {$nin: ing_ids}}).fetch();
     return list;
   },
 });

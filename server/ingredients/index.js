@@ -99,8 +99,7 @@ Meteor.methods({
       {"type": "Prep", "ingredients": {$elemMatch: {"_id": id}}},
       {fields: {"ingredients": {$elemMatch: {"_id": id}}}}
     );
-    console.log(existInPreps);
-    if(existInPreps) {
+    if(existInPreps.ingredients.length > 0) {
       logger.error("Item found in Prep jobs, can't delete");
       throw new Meteor.Error(404, "Item cannot be deleted"); 
     }
