@@ -217,8 +217,8 @@ Meteor.methods({
       throw new Meteor.Error(404, "Ingredients does not exist for this menu item");
     }
     var item = MenuItems.findOne(
-      {"_id": menuId, "ingredients": {$elemMatch: {"id": ingredient}}},
-      {fields: {"ingredients": {$elemMatch: {"id": ingredient}}}}
+      {"_id": menuId, "ingredients": {$elemMatch: {"_id": ingredient}}},
+      {fields: {"ingredients": {$elemMatch: {"_id": ingredient}}}}
     );
     var query = {
       $pull: {}

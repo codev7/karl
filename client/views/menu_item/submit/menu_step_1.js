@@ -3,14 +3,24 @@ Template.menuStep1Submit.events({
     e.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim(); 
     var tag = $(event.target).find('[name=tag]').val().trim(); 
-    // var shelfLife = $(event.target).find('[name=shelfLife]').val().trim(); 
     var instructions = $(event.target).find('[name=instructions]').val().trim(); 
     var prepItems = [];
     var ingredients = [];
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = [];
 
-    // var onShelf = parseInt(shelfLife)*24*60*60;
+    if(tag) {
+      var tags = [];
+      tag = tag.trim().split(",");
+      if(tag.length > 0) {
+        tag.forEach(function(item) {
+          var doc = item.trim();
+          if(doc) {
+            tags.push(doc);
+          }
+        });
+      }
+    }
     if(typeof(parseInt(salesPrice)) != 'number') {
       salesPrice = 0;
     }
@@ -18,7 +28,6 @@ Template.menuStep1Submit.events({
       "name": name,
       "tag": tag,
       "instructions": instructions,
-      // "shelfLife": onShelf,
       "prepItems": prepItems,
       "ingredients": ingredients,
       "salesPrice": parseFloat(salesPrice),
@@ -29,8 +38,8 @@ Template.menuStep1Submit.events({
         console.log(err);
         return alert(err.reason);
       }
-      Session.set("selectedIngredients", []);
-      Session.set("selectedJobItems", []);
+      Session.set("selectedIngredients", null);
+      Session.set("selectedJobItems", null);
       Router.go("menuItemSubmitStep2", {"_id": id});
     });
   }

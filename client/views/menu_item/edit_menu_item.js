@@ -28,7 +28,6 @@ Template.editMenuItem.helpers({
     if(ing) {
       if(ing.length > 0) {
         var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
-        console.log(ingredientsList)
         return ingredientsList;
       }
     }
@@ -66,7 +65,7 @@ Template.editMenuItem.events({
     var ings = $(event.target).find("[name=ing_qty]").get();
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = [];
-
+    console.log(ings);
     var info = {
       "name": name,
       "tag": tag,
@@ -81,7 +80,7 @@ Template.editMenuItem.events({
       if(dataid) {
         var quantity = $(item).val();
         var info = {
-          "id": dataid,
+          "_id": dataid,
           "quantity": quantity
         }
         prep_doc.push(info);
@@ -96,7 +95,7 @@ Template.editMenuItem.events({
       if(dataid) {
         var quantity = $(item).val();
         var info = {
-          "id": dataid,
+          "_id": dataid,
           "quantity": quantity
         }
         ing_doc.push(info);
@@ -118,7 +117,7 @@ Template.editMenuItem.events({
         console.log(err);
         return alert(err.reason);
       } else {
-        Router.go("menuMaster");
+        Router.go("menuItemsMaster");
       }
     });
   }
