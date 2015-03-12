@@ -95,6 +95,15 @@ Meteor.methods({
       logger.error("Item not found");
       throw new Meteor.Error(404, "Item not found");
     }
+    var existInPreps = JobItems.findOne(
+      {"type": "Prep", "ingredients": {$elemMatch: {"_id": id}}},
+      {fields: {"ingredients": {$elemMatch: {"_id": id}}}}
+    );
+    console.log(existInPreps);
+    if(existInPreps) {
+      logger.error("Item found in Prep jobs, can't delete");
+      throw new Meteor.Error(404, "Item cannot be deleted"); 
+    }
     Ingredients.remove(id);
     logger.info("Ingredient removed", id);
   }
