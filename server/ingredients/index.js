@@ -99,9 +99,21 @@ Meteor.methods({
       {"type": "Prep", "ingredients": {$elemMatch: {"_id": id}}},
       {fields: {"ingredients": {$elemMatch: {"_id": id}}}}
     );
-    if(existInPreps.ingredients.length > 0) {
-      logger.error("Item found in Prep jobs, can't delete");
-      throw new Meteor.Error(404, "Item cannot be deleted"); 
+    if(existInPreps) {
+      if(existInPreps.ingredients.length > 0) {
+        logger.error("Item found in Prep jobs, can't delete");
+        throw new Meteor.Error(404, "Item is in use on prep jobs, cannot be deleted."); 
+      }
+    }
+    var existInMenuItems = MenuItems.findOne(
+      {"ingredients": {$elemMatch: {"_id": id}}},
+      {fields: {"ingredients": {$elemMatch: {"_id": id}}}}
+    );
+    if(existInMenuItems) {
+      if(existInMenuItems.ingredients.length > 0) {
+        logger.error("Item found in Menu Items, can't delete");
+        throw new Meteor.Error(404, "Item is in use on menu items, cannot be deleted."); 
+      }
     }
     Ingredients.remove(id);
     logger.info("Ingredient removed", id);

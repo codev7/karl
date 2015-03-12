@@ -109,6 +109,16 @@ Meteor.methods({
       logger.error("Job Item not found", {"id": id});
       throw new Meteor.Error(404, "Job Item not found");
     }
+    var existInMenuItems = MenuItems.findOne(
+      {"jobItems": {$elemMatch: {"_id": id}}},
+      {fields: {"jobItems": {$elemMatch: {"_id": id}}}}
+    );
+    if(existInMenuItems) {
+      if(existInMenuItems.jobItems.length > 0) {
+        logger.error("Item found in Menu Items, can't delete");
+        throw new Meteor.Error(404, "Item is in use on menu items, cannot be deleted."); 
+      }
+    }
     logger.info("Job Item removed", {"id": id});
     JobItems.remove({'_id': id});
   },
