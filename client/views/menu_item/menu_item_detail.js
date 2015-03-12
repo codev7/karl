@@ -8,9 +8,9 @@ Template.menuItemDetail.helpers({
       item.contribution = 0;
       if(item.ingredients.length > 0) {
         item.ingredients.forEach(function(doc) {
-          var ing = getIngredientItem(doc.id);
+          var ing = getIngredientItem(doc._id);
           if(ing) {
-            ing.totalCost = ing.costPerPortion * doc.quantity;
+            ing.totalCost = ing.costPerPortionUsed * doc.quantity;
             item.totalIngCost += ing.totalCost;
           }
         });
@@ -18,7 +18,7 @@ Template.menuItemDetail.helpers({
       if(item.jobItems) {
         if(item.jobItems.length > 0) {
           item.jobItems.forEach(function(doc) {
-            var jobitem = getPrepItem(doc.id);
+            var jobitem = getPrepItem(doc._id);
             if(jobitem) {
               jobitem.totalCost = jobitem.prepCostPerPortion * doc.quantity;
               item.totalPrepCost += jobitem.totalCost;
@@ -44,6 +44,3 @@ Template.menuItemDetail.events({
     Router.go("menuItemEdit", {"_id": $(e.target).attr("data-id")})
   }
 });
-
-Template.menuItemDetail.rendered = function() {
-}

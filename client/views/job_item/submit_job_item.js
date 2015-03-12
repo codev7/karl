@@ -53,20 +53,22 @@ Template.submitJobItem.events({
       "ing": []      
     }
     var ing_doc = [];
+    var ingIds = [];
     ing.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && ingIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
         var info = {
           "_id": dataid,
           "quantity": quantity
         }
         ing_doc.push(info);
+        ingIds.push(dataid);
       }
     });
 
     if(ing_doc.length > 0) {
-      info.ingredients = ing_doc
+      info.ingredients = ing_doc;
     } 
     Meteor.call("createJobItem", info, function(err, id) {
       if(err) {

@@ -1,6 +1,23 @@
 Template.showJobItemsList.helpers({
   jobItemsList: function() {
-    var list = JobItems.find().fetch();
+    var jobItem_ids = [];
+    if(Router.current()) {
+      var routeName = Router.current().route.getName();
+      if(routeName == "menuItemEdit") {
+        var id = Session.get("thisMenuItem");
+        var item = MenuItems.findOne(id);
+        if(item) {
+          if(item.jobItems.length > 0) {
+            item.jobItems.forEach(function(doc) {
+              if(jobItem_ids.indexOf(doc._id) < 0) {
+                jobItem_ids.push(doc._id);
+              }
+            });
+          }
+        }
+      }
+    }
+    var list = JobItems.find({"_id": {$nin: jobItem_ids}}).fetch();
     return list;
   },
 });

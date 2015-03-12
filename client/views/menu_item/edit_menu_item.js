@@ -65,7 +65,6 @@ Template.editMenuItem.events({
     var ings = $(event.target).find("[name=ing_qty]").get();
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = [];
-    console.log(ings);
     var info = {
       "name": name,
       "tag": tag,
@@ -77,7 +76,7 @@ Template.editMenuItem.events({
     var jobItemsIds = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && jobItemsIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
         var info = {
           "_id": dataid,
@@ -92,7 +91,7 @@ Template.editMenuItem.events({
     var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && ingredientIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
         var info = {
           "_id": dataid,
@@ -103,13 +102,11 @@ Template.editMenuItem.events({
       }
     });
 
-    if(prep_doc.length > 0 && jobItemsIds.length > 0) {
+    if(prep_doc.length > 0) {
       info.jobItems = prep_doc;
-      info.jobItemsIds = jobItemsIds;
     }
-    if(ing_doc.length > 0 && ingredientIds.length > 0) {
+    if(ing_doc.length > 0) {
       info.ingredients = ing_doc;
-      info.ingredientIds = ingredientIds;
     }
 
     Meteor.call("editMenuItem", id, info, function(err) {

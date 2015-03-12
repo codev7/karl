@@ -1,16 +1,33 @@
 Template.showIngredientsList.helpers({
   ingredientsList: function() {
-    var id = Session.get("thisJobItem");
-    var item = JobItems.findOne(id);
     var ing_ids = [];
-    if(item) {
-      if(item.ingredients.length > 0) {
-        item.ingredients.forEach(function(doc) {
-          if(ing_ids.indexOf(doc._id) < 0) {
-            ing_ids.push(doc._id);
+    if(Router.current()) {
+      var routeName = Router.current().route.getName();
+      if(routeName == "jobItemEdit") {
+        var id = Session.get("thisJobItem");
+        var item = JobItems.findOne(id);
+        if(item) {
+          if(item.ingredients.length > 0) {
+            item.ingredients.forEach(function(doc) {
+              if(ing_ids.indexOf(doc._id) < 0) {
+                ing_ids.push(doc._id);
+              }
+            });
           }
-        });
-      }
+        }
+      } else if(routeName == "menuItemEdit") {
+        var id = Session.get("thisMenuItem");
+        var item = MenuItems.findOne(id);
+        if(item) {
+          if(item.ingredients.length > 0) {
+            item.ingredients.forEach(function(doc) {
+              if(ing_ids.indexOf(doc._id) < 0) {
+                ing_ids.push(doc._id);
+              }
+            });
+          }
+        }
+      }    
     }
     var list = Ingredients.find({"_id": {$nin: ing_ids}}).fetch();
     return list;

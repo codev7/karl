@@ -33,26 +33,27 @@ Meteor.methods({
       logger.error("Menu item should exist");
       throw new Meteor.Error(404, "Menu item should exist");
     }
-    var jobItemsIds = [];
-    if(item.jobItems && item.jobItems.length > 0) {
-      item.jobItems.forEach(function(doc) {
-        jobItemsIds.push(doc.id);
-      });
-    }
+    MenuItems.update({'_id': id}, {$set: {"ingredients": [], "jobItems": []}});
 
-    var ingredientIds = [];
-    if(item.ingredients && item.ingredients.length > 0) {
-      item.ingredients.forEach(function(doc) {
-        ingredientIds.push(doc.id);
-      });
-    }
+    // var jobItemsIds = [];
+    // if(item.jobItems && item.jobItems.length > 0) {
+    //   item.jobItems.forEach(function(doc) {
+    //     jobItemsIds.push(doc.id);
+    //   });
+    // }
+
+    // var ingredientIds = [];
+    // if(item.ingredients && item.ingredients.length > 0) {
+    //   item.ingredients.forEach(function(doc) {
+    //     ingredientIds.push(doc.id);
+    //   });
+    // }
     if(Object.keys(info).length < 0) {
       logger.error("Menu item should provide fields to be updated");
       throw new Meteor.Error(404, "Menu item should provide fields to be updated");
     }
     var query = {
-      $set: {},
-      $push: {}
+      $set: {}
     }
     var updateDoc = {};
     if(info.name) {
@@ -75,66 +76,15 @@ Meteor.methods({
         updateDoc.instructions = info.instructions;
       }
     }
-    var updateJobItems = [];
-    if(info.jobItems && info.jobItems.length > 0) {
-      if(info.jobItemsIds && info.jobItemsIds.length > 0) {
-        info.jobItemsIds.forEach(function(thisId) {
-          var index = jobItemsIds.indexOf(thisId);
-          var point = info.jobItemsIds.indexOf(thisId);
-          if(index < 0) {
-            updateJobItems.push(info.jobItems[point]);
-          } else {
-            var exist = MenuItems.findOne(
-              {"_id": id, "jobItems": {$elemMatch: {"id": thisId}}},
-              {fields: {"jobItems": {$elemMatch: {"id": thisId}}}});
-            if(exist) {
-              var item = info.jobItems[point];
-              if(exist.jobItems[0].id == item.id) {
-                if(exist.jobItems[0].quantity != item.quantity) {
-                  MenuItems.update({'_id': id}, {$pull: {"jobItems": exist.jobItems[0]}});
-                  updateJobItems.push(item);
-                }
-              }
-            }
-          }
-        });        
-      }
+    if(info.ingredients.length > 0) {
+      updateDoc.ingredients = info.ingredients;
+    }
+    if(info.jobItems.length > 0) {
+      updateDoc.jobItems = info.jobItems;
     }
 
-    var updateIngredients = [];
-    if(info.ingredients && info.ingredients.length > 0) {
-      if(info.ingredientIds && info.ingredientIds.length > 0) {
-        info.ingredientIds.forEach(function(thisId) {
-          var index = ingredientIds.indexOf(thisId);
-          var point = info.ingredientIds.indexOf(thisId);
-          if(index < 0) {
-            updateIngredients.push(info.ingredients[point]);
-          } else {
-            var exist = MenuItems.findOne(
-              {"_id": id, "ingredients": {$elemMatch: {"id": thisId}}},
-              {fields: {"ingredients": {$elemMatch: {"id": thisId}}}});
-            if(exist) {
-              var item = info.ingredients[point];
-              if(exist.ingredients[0].id == item.id) {
-                if(exist.ingredients[0].quantity != item.quantity) {
-                  MenuItems.update({'_id': id}, {$pull: {"ingredients": exist.ingredients[0]}});
-                  updateIngredients.push(item);
-                }
-              }
-            }
-          }
-        });
-        
-      }
-    }
     if(Object.keys(updateDoc).length > 0) {
       query['$set'] = updateDoc;
-    }
-    if(Object.keys(updateJobItems).length > 0) {
-      query['$push'] = {"jobItems": {$each: updateJobItems}};
-    }
-    if(Object.keys(updateIngredients).length > 0) {
-      query['$push'] = {"ingredients": {$each: updateIngredients}};
     }
     MenuItems.update({"_id": id}, query);
     logger.info("Menu item updated ", id);

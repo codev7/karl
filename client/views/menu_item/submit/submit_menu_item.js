@@ -42,28 +42,32 @@ Template.submitMenuItem.events({
     var ings = $(event.target).find("[name=ing_qty]").get();
     
     var ing_doc = [];
+    var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && ingredientIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
         var info = {
           "_id": dataid,
           "quantity": quantity
         }
         ing_doc.push(info);
+        ingredientIds.push(dataid);
       }
     });
 
     var prep_doc = [];
+    var jobItemsIds = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && jobItemsIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
         var info = {
           "_id": dataid,
           "quantity": quantity
         }
         prep_doc.push(info);
+        jobItemsIds.push(dataid);
       }
     });
 
