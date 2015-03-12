@@ -1,6 +1,7 @@
 Template.ingredientsList.helpers({
   ingredientsList: function() {
     var list = Ingredients.find().fetch();
+    console.log(list);
     return list;
   },
 

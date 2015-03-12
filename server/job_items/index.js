@@ -50,7 +50,8 @@ Meteor.methods({
       logger.error("No editing fields found");
       throw new Meteor.Error(404, "No editing fields found");
     }
-    JobItems.update({{'_id': id}, {$set: "ingredients": []}});
+    JobItems.update({'_id': id}, {$set: {"ingredients": []}});
+
     var query = {
       $set: {}
     }

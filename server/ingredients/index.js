@@ -8,7 +8,7 @@ Meteor.methods({
       logger.error("Description field not found");
       throw new Meteor.Error(404, "Description field not found");
     }
-    var exist = Ingredients.findOne(info.code);
+    var exist = Ingredients.findOne({"code": info.code});
     if(exist) {
       logger.error("Duplicate entry");
       throw new Meteor.Error(404, "Duplicate entry, change code and try again");
@@ -20,9 +20,6 @@ Meteor.methods({
       } else {
         suppliers.push(info.suppliers);
       }
-    }
-    if(info.costPerPortion) {
-      info.costPerPortion = 0;
     }
     var doc = {
       "code": info.code,

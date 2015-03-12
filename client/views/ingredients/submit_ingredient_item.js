@@ -9,6 +9,7 @@ Template.submitIngredientItem.events({
     var portionUsed = $(event.target).find('[name=portionUsed]').val().trim();
     var unitSize = $(event.target).find('[name=unitSize]').val().trim();
 
+    console.log(costPerPortion, unitSize);
     var info = {
       "code": code,
       "description": desc,
@@ -17,17 +18,19 @@ Template.submitIngredientItem.events({
       "portionUsed": portionUsed,
     }
 
-    if(!costPerPortion || typeof(costPerPortion) != "number") {
+    if(!costPerPortion || typeof(parseFloat(costPerPortion)) != "number") {
       info.costPerPortion =  0;
     } else {
       info.costPerPortion = parseFloat(costPerPortion);
     }
 
-    if(!unitSize || typeof(unitSize) != "number") {
+    if(!unitSize || typeof(parseFloat(unitSize)) != "number") {
       info.unitSize =  0;
     } else {
       info.unitSize = parseFloat(unitSize);
     }
+    console.log(info);
+
     Meteor.call("createIngredients", info, function(err) {
       if(err) {
         console.log(err);
