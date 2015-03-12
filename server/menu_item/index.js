@@ -4,26 +4,15 @@ Meteor.methods({
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
     }
-    var id = info.name.trim().toLowerCase().replace(/ /g, "");
     var doc = {
-      "_id": id,
       "name": info.name,
       "tag": info.tag,
-      // "shelfLife": parseInt(info.shelfLife),
       "instructions": info.instructions,
       "ingredients": info.ingredients,
       "jobItems": info.prepItems,
-      "salesPrice": parseFloat(info.salesPrice)
+      "salesPrice": parseFloat(info.salesPrice),
+      "staus": "active"
     };
-    var exist = MenuItems.findOne(id);
-    if(exist) {
-      logger.error("Duplicate entry");
-      throw new Meteor.Error(404, "Duplicate entry, change name and try again");
-    }
-    // if(!info.tag) {
-    //   logger.error("Menu item should have a tag");
-    //   throw new Meteor.Error(404, "Menu item should have a tag");
-    // }
     var id = MenuItems.insert(doc);
     logger.info("Menu items added ", id);
     return id;

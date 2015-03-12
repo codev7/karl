@@ -2,146 +2,146 @@ var server = meteor({flavor: "fiber"});
 var client = browser({flavor: "fiber", location: server});
 
 describe("Testing menu related methods", function() {
-  // describe("createMenuItem method", function() {
-  //   it("without name", function() {
-  //     var info = {
-  //       "tag": "kids",
-  //       "instructions": "Cook",
-  //       "prepItems": [],
-  //       "shelfLife": 20,
-  //       "ingredients": [],
-  //       "salesPrice": 30
-  //     }
-  //     var result = client.promise(function(done, error, info) {
-  //       Meteor.call("createMenuItem", info, function(err, id) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done(id);
-  //         }
-  //       });
-  //     }, [info]);
-  //     expect(result.error).to.be.equal(404);
-  //   });
-
-  //   it("check insert", function() {
-  //     var info = {
-  //       "name": "Sa ndwit ch" + Math.random(),
-  //       "tag": "kids",
-  //       "instructions": "Cook",
-  //       "prepItems": [],
-  //       "shelfLife": 20,
-  //       "ingredients": [],
-  //       "salesPrice": 30
-  //     }
-  //     var id = info.name.trim().toLowerCase().replace(/ /g, "");
-  //     var result = client.promise(function(done, error, info) {
-  //       Meteor.call("createMenuItem", info, function(err, id) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done(id);
-  //         }
-  //       });
-  //     }, [info]);
-  //     expect(result).not.to.be.equal(null);
-
-  //     var check = server.execute(function(id) {
-  //       return MenuItems.findOne(id);
-  //     }, [result]);
-  //     expect(check._id).to.be.equal(id);
-  //   });
-  // });
-
-  describe("editMenuItem method", function() {
-    it("update ingredients", function() {
+  describe("createMenuItem method", function() {
+    it("without name", function() {
       var info = {
-        "name": "Burger" + Math.random(),
-        "tag": "Kids menu",
-        "jobItems": [{"id": 1, "quantity": 10}],
-        "shelfLife": 123,
-        "instructions": "Heat before serve",
-        "ingredients": [{"id": "ing1", "quantity": 10}],
-        "salesPrice": 60
+        "tag": "kids",
+        "instructions": "Cook",
+        "prepItems": [],
+        "shelfLife": 20,
+        "ingredients": [],
+        "salesPrice": 30
       }
-      var id = server.execute(function(info) {
-        return MenuItems.insert(info);
-      }, [info]);
-      expect(id).not.to.be.equal(null);
-
-      var check_1 = server.execute(function(id) {
-        return MenuItems.findOne(id);
-      }, [id]);
-      console.log("........1", check_1.ingredients)
-
-      var toUpdate = {
-        "name": "Chicken Burger",
-        "instructions": "Put in oven before serve",
-        "ingredients": [{"id": "ing2", "quantity": 100}, {"id": "ing1", "quantity": 90}],
-        "ingredientIds": ['ing2', 'ing1']
-      }
-      var result = client.promise(function(done, error, id, info) {
-        Meteor.call("editMenuItem", id, info, function(err) {
+      var result = client.promise(function(done, error, info) {
+        Meteor.call("createMenuItem", info, function(err, id) {
           if(err) {
             done(err);
           } else {
-            done();
+            done(id);
           }
         });
-      }, [id, toUpdate]);
-      expect(result).to.be.equal(null);
+      }, [info]);
+      expect(result.error).to.be.equal(404);
+    });
+
+    it("check insert", function() {
+      var info = {
+        "name": "Sa ndwit ch" + Math.random(),
+        "tag": "kids",
+        "instructions": "Cook",
+        "prepItems": [],
+        "shelfLife": 20,
+        "ingredients": [],
+        "salesPrice": 30
+      }
+      var result = client.promise(function(done, error, info) {
+        Meteor.call("createMenuItem", info, function(err, id) {
+          if(err) {
+            done(err);
+          } else {
+            done(id);
+          }
+        });
+      }, [info]);
+      expect(result).not.to.be.equal(null);
 
       var check = server.execute(function(id) {
         return MenuItems.findOne(id);
-      }, [id]);
-      console.log(".........2", check.ingredients)
-      expect(check.name).to.be.equal(toUpdate.name);
+      }, [result]);
+      // console.log(check);
+      expect(check._id).to.be.equal(result);
     });
-
-    // it("update jobItems", function() {
-    //   var info = {
-    //     "name": "Burger" + Math.random(),
-    //     "tag": "Kids menu",
-    //     "jobItems": [{"id": 1, "quantity": 10}],
-    //     "shelfLife": 123,
-    //     "instructions": "Heat before serve",
-    //     "ingredients": [{"id": "ing1", "quantity": 10}],
-    //     "salesPrice": 60
-    //   }
-    //   var id = server.execute(function(info) {
-    //     return MenuItems.insert(info);
-    //   }, [info]);
-    //   expect(id).not.to.be.equal(null);
-
-    //   var check_1 = server.execute(function(id) {
-    //     return MenuItems.findOne(id);
-    //   }, [id]);
-    //   console.log(check_1)
-
-    //   var toUpdate = {
-    //     "name": "Chicken Burger",
-    //     "instructions": "Put in oven before serve",
-    //     "jobItems": [{"id": 2, "quantity": 1}, {"id": 3, "quantity": 1}, {"id": 1, "quantity": 23}],
-    //     "jobItemsIds": [2, 3, 1],
-    //   }
-    //   var result = client.promise(function(done, error, id, info) {
-    //     Meteor.call("editMenuItem", id, info, function(err) {
-    //       if(err) {
-    //         done(err);
-    //       } else {
-    //         done();
-    //       }
-    //     });
-    //   }, [id, toUpdate]);
-    //   expect(result).to.be.equal(null);
-
-    //   var check = server.execute(function(id) {
-    //     return MenuItems.findOne(id);
-    //   }, [id]);
-    //   console.log(check)
-    //   expect(check.name).to.be.equal(toUpdate.name);
-    // });
   });
+
+  // describe("editMenuItem method", function() {
+  //   it("update ingredients", function() {
+  //     var info = {
+  //       "name": "Burger" + Math.random(),
+  //       "tag": "Kids menu",
+  //       "jobItems": [{"id": 1, "quantity": 10}],
+  //       "shelfLife": 123,
+  //       "instructions": "Heat before serve",
+  //       "ingredients": [{"id": "ing1", "quantity": 10}],
+  //       "salesPrice": 60
+  //     }
+  //     var id = server.execute(function(info) {
+  //       return MenuItems.insert(info);
+  //     }, [info]);
+  //     expect(id).not.to.be.equal(null);
+
+  //     var check_1 = server.execute(function(id) {
+  //       return MenuItems.findOne(id);
+  //     }, [id]);
+  //     console.log("........1", check_1.ingredients)
+
+  //     var toUpdate = {
+  //       "name": "Chicken Burger",
+  //       "instructions": "Put in oven before serve",
+  //       "ingredients": [{"id": "ing2", "quantity": 100}, {"id": "ing1", "quantity": 90}],
+  //       "ingredientIds": ['ing2', 'ing1']
+  //     }
+  //     var result = client.promise(function(done, error, id, info) {
+  //       Meteor.call("editMenuItem", id, info, function(err) {
+  //         if(err) {
+  //           done(err);
+  //         } else {
+  //           done();
+  //         }
+  //       });
+  //     }, [id, toUpdate]);
+  //     expect(result).to.be.equal(null);
+
+  //     var check = server.execute(function(id) {
+  //       return MenuItems.findOne(id);
+  //     }, [id]);
+  //     console.log(".........2", check.ingredients)
+  //     expect(check.name).to.be.equal(toUpdate.name);
+  //   });
+
+  //   // it("update jobItems", function() {
+  //   //   var info = {
+  //   //     "name": "Burger" + Math.random(),
+  //   //     "tag": "Kids menu",
+  //   //     "jobItems": [{"id": 1, "quantity": 10}],
+  //   //     "shelfLife": 123,
+  //   //     "instructions": "Heat before serve",
+  //   //     "ingredients": [{"id": "ing1", "quantity": 10}],
+  //   //     "salesPrice": 60
+  //   //   }
+  //   //   var id = server.execute(function(info) {
+  //   //     return MenuItems.insert(info);
+  //   //   }, [info]);
+  //   //   expect(id).not.to.be.equal(null);
+
+  //   //   var check_1 = server.execute(function(id) {
+  //   //     return MenuItems.findOne(id);
+  //   //   }, [id]);
+  //   //   console.log(check_1)
+
+  //   //   var toUpdate = {
+  //   //     "name": "Chicken Burger",
+  //   //     "instructions": "Put in oven before serve",
+  //   //     "jobItems": [{"id": 2, "quantity": 1}, {"id": 3, "quantity": 1}, {"id": 1, "quantity": 23}],
+  //   //     "jobItemsIds": [2, 3, 1],
+  //   //   }
+  //   //   var result = client.promise(function(done, error, id, info) {
+  //   //     Meteor.call("editMenuItem", id, info, function(err) {
+  //   //       if(err) {
+  //   //         done(err);
+  //   //       } else {
+  //   //         done();
+  //   //       }
+  //   //     });
+  //   //   }, [id, toUpdate]);
+  //   //   expect(result).to.be.equal(null);
+
+  //   //   var check = server.execute(function(id) {
+  //   //     return MenuItems.findOne(id);
+  //   //   }, [id]);
+  //   //   console.log(check)
+  //   //   expect(check.name).to.be.equal(toUpdate.name);
+  //   // });
+  // });
 
   // describe("addIngredients method", function() {
   //   it("without menu item", function() {

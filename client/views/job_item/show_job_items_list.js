@@ -7,26 +7,21 @@ Template.showJobItemsList.helpers({
 
 var selectedJobItems = [];
 Template.showJobItemsList.events({
-  'click .selectedPrep': function(event) {
-    var item = $(event.target).attr("data-id");
-    var qty = $(event.target).parent().parent().find("input[type=text]").val();
-    var index = selectedJobItems.indexOf(item);
-    var isChecked = $(event.target)[0].checked;
-    if(index < 0) {
-      if(isChecked) {
-        selectedJobItems.push(item);
-      }
-    } else {
-      if(!isChecked) {
-        selectedJobItems.splice(index, 1)
-      } 
-    }
-  },
-
   'submit form': function(event) {
     event.preventDefault();
-    if(selectedJobItems.length > 0) {
-      Session.set("selectedJobItems", selectedJobItems);
+    var prep_items = $(event.target).find("[name=selectedPrep]").get();
+    var prep_items_doc = [];
+    prep_items.forEach(function(prep) {
+      var dataid = $(prep).attr("data-id");
+      var check = $(prep).is(':checked');
+      if(dataid && check) {
+        prep_items_doc.push(dataid);
+      }
+    });
+    if(prep_items_doc.length > 0) {
+      Session.set("selectedJobItems", prep_items_doc);
+    } else {
+      Session.set("selectedJobItems", null);
     }
     $("#jobItemListModal").modal("hide");
   }

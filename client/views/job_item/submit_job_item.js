@@ -73,12 +73,9 @@ Template.submitJobItem.events({
         console.log(err);
         return alert(err.reason);
       } else {
-        var menuItem = Session.get("thisMenuItem");
-        if(menuItem) {
-          Router.go("menuItemSubmitStep2", {'_id': menuItem});
-        } else {
-          Router.go("jobItemsMaster");
-        }
+        Session.set("selectedIngredients", null);
+        Session.set("selectedJobItems", null);
+        Router.go("jobItemsMaster");
       }
     });
   }

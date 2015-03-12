@@ -1,19 +1,13 @@
 Template.ingredientItemEdit.helpers({
   item: function() {
-    var self = this;
-    var id = null;
-    if(self.id) {
-      id = this.id;
-    } else if(this._id) {
-      id = this._id;
-    }
-    var item = getIngredientItem(id);
-    if(item) {
-      item.id = id;
-      if(self.quantity) {
-        item.quantity = self.quantity;
+    if(this._id) {
+      var item = getIngredientItem(this._id);
+      if(item) {
+        if(self.quantity) {
+          item.quantity = self.quantity;
+        }
+        return item;
       }
-      return item;
     }
   }
 });
