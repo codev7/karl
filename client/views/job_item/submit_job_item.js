@@ -43,6 +43,12 @@ Template.submitJobItem.events({
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
     var ing = $(event.target).find("[name=ing_qty]").get();
 
+    if(typeof(portions) != "number") {
+      portions = 0;
+    }
+    if(typeof(shelfLife) != "number") {
+      shelfLife = 0;
+    }
     var info = {
       "name": name,
       "type": type,
@@ -70,6 +76,7 @@ Template.submitJobItem.events({
     if(ing_doc.length > 0) {
       info.ingredients = ing_doc;
     } 
+    console.log(info);
     Meteor.call("createJobItem", info, function(err, id) {
       if(err) {
         console.log(err);
