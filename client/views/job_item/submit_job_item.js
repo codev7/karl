@@ -1,3 +1,8 @@
+Template.submitJobItem.created = function () {
+  this.textEditor = new TextEditor();
+  console.log(this.textEditor)
+}
+
 Template.submitJobItem.helpers({
   ingredientsList: function() {
     var ing = Session.get("selectedIngredients");
@@ -7,6 +12,10 @@ Template.submitJobItem.helpers({
         return ingredientsList;
       }
     }
+  },
+
+  editorInstance: function () {
+    return Template.instance().textEditor;
   }
 });
 
