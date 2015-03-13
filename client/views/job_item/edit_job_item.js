@@ -42,12 +42,14 @@ Template.editJobItem.events({
       var dataid = $(item).attr("data-id");
       if(dataid && ingredientIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
-        var info = {
-          "_id": dataid,
-          "quantity": quantity
+        if(quantity > 0) {
+          var info = {
+            "_id": dataid,
+            "quantity": quantity
+          }
+          ing_doc.push(info);
+          ingredientIds.push(dataid);
         }
-        ing_doc.push(info);
-        ingredientIds.push(dataid);
       }
     });
 
