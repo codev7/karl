@@ -348,3 +348,13 @@ select {
    -o-transform:      rotate(-70deg);
    content: '';
 }
+
+@media print {
+  table {
+    font-size: 10px;
+  }
+  table > th,
+  table > td{
+    padding: 2px;
+  }
+}

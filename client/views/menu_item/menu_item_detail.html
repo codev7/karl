@@ -18,7 +18,7 @@
     <div class="col-md-7 col-sm-8 col-lg-7">
       <div class="form-group">
         <label>Instructions</label>
-        <div class="">
+        <div class="print-font-sm">
           {{item.instructions}}
         </div>
       </div>
@@ -112,6 +112,7 @@
   <div class="row">
     <div class="col-md-12">
       <button type="button" class="btn btn-primary editMenuItemBtn hidden-print" data-id="{{item._id}}">Edit</button>
+      <button type="button" class="btn btn-primary printMenuItemBtn hidden-print">Print</button>
     </div>
   </div>
 </template>
