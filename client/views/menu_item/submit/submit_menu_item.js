@@ -40,7 +40,7 @@ Template.submitMenuItem.events({
     var image = [];
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
-    
+
     var ing_doc = [];
     var ingredientIds = [];
     ings.forEach(function(item) {
@@ -83,7 +83,7 @@ Template.submitMenuItem.events({
         });
       }
     }
-    if(typeof(parseInt(salesPrice)) != 'number') {
+    if(typeof(salesPrice) != 'number') {
       salesPrice = 0;
     }
     var info = {
@@ -96,9 +96,13 @@ Template.submitMenuItem.events({
 
     if(ing_doc.length > 0) {
       info.ingredients = ing_doc;
+    } else {
+      info.ingredients = [];
     }
     if(prep_doc.length > 0) {
       info.prepItems = prep_doc;
+    } else {
+      info.prepItems = [];
     }
     Meteor.call("createMenuItem", info, function(err, id) {
       if(err) {

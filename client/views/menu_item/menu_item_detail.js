@@ -6,6 +6,7 @@ Template.menuItemDetail.helpers({
       item.totalIngCost = 0;
       item.totalPrepCost = 0;
       item.contribution = 0;
+      item.tax = 0;
       if(item.ingredients.length > 0) {
         item.ingredients.forEach(function(doc) {
           var ing = getIngredientItem(doc._id);
@@ -31,7 +32,17 @@ Template.menuItemDetail.helpers({
         item.tax = Math.round(item.tax * 100)/100;
       }
       var totalCost = parseFloat(parseFloat(item.totalIngCost) + item.totalPrepCost + item.tax);
-      item.contribution = parseFloat(item.salesPrice - totalCost);
+      var contribution = item.salesPrice - totalCost;
+      if(typeof(contribution) != "number") {
+        contribution = 0;
+      }
+      if(typeof(item.salesPrice) != "number") {
+        item.salesPrice = 0;
+      }
+      if(typeof(totalCost) != "number") {
+        totalCost = 0;
+      }
+      item.contribution = parseFloat(contribution);
       item.contribution = Math.round(item.contribution * 100)/100;
       return item;
     }
