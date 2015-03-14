@@ -69,7 +69,9 @@ Template.editMenuItem.events({
       "name": name,
       "tag": tag,
       "instructions": instructions,
-      "salesPrice": parseFloat(salesPrice)
+      "salesPrice": parseFloat(salesPrice),
+      "jobItems": [],
+      "ingredients": []
     }
 
     var prep_doc = [];
@@ -108,7 +110,7 @@ Template.editMenuItem.events({
 
     if(prep_doc.length > 0) {
       info.jobItems = prep_doc;
-    }
+    } 
     if(ing_doc.length > 0) {
       info.ingredients = ing_doc;
     }

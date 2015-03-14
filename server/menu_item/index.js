@@ -76,11 +76,15 @@ Meteor.methods({
         updateDoc.instructions = info.instructions;
       }
     }
-    if(info.ingredients.length > 0) {
-      updateDoc.ingredients = info.ingredients;
+    if(info.ingredients) {
+      if(info.ingredients.length > 0) {
+        updateDoc.ingredients = info.ingredients;
+      }
     }
-    if(info.jobItems.length > 0) {
-      updateDoc.jobItems = info.jobItems;
+    if(info.jobItems) {
+      if(info.jobItems.length > 0) {
+        updateDoc.jobItems = info.jobItems;
+      }
     }
 
     if(Object.keys(updateDoc).length > 0) {
