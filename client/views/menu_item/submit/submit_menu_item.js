@@ -37,7 +37,7 @@ Template.submitMenuItem.events({
     var tag = $(event.target).find('[name=tag]').val().trim(); 
     var instructions = $(event.target).find('[name=instructions]').val().trim(); 
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
-    var image = [];
+    var image = $("#uploadedImageUrl").attr("src");
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
     
@@ -100,6 +100,7 @@ Template.submitMenuItem.events({
     if(prep_doc.length > 0) {
       info.prepItems = prep_doc;
     }
+    console.log(info);
     Meteor.call("createMenuItem", info, function(err, id) {
       if(err) {
         console.log(err);
@@ -108,6 +109,18 @@ Template.submitMenuItem.events({
       Session.set("selectedIngredients", null);
       Session.set("selectedJobItems", null);
       Router.go("menuItemsMaster");
+    });
+  },
+
+  'click #uploadMenuItem': function(event) {
+    event.preventDefault();
+    filepicker.pickAndStore({mimetype:"image/*"},{},
+      function(InkBlobs){
+        var doc = (InkBlobs);
+        if(doc) {
+          console.log(doc);
+          $("#uploadedImageUrl").attr("src", doc[0].url).removeClass("hide");
+        }
     });
   }
 });
