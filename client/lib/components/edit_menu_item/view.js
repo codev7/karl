@@ -64,14 +64,15 @@ Template.editMenuItem.events({
     var preps = $(event.target).find("[name=prep_qty]").get();;
     var ings = $(event.target).find("[name=ing_qty]").get();
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
-    var image = [];
+    var image = $("#uploadedImageUrl").attr("src");
     var info = {
       "name": name,
       "tag": tag,
       "instructions": instructions,
       "salesPrice": parseFloat(salesPrice),
       "jobItems": [],
-      "ingredients": []
+      "ingredients": [],
+      "image": image
     }
 
     var prep_doc = [];
@@ -115,6 +116,17 @@ Template.editMenuItem.events({
       info.ingredients = ing_doc;
     }
     FlowComponents.callAction('submit', id, info);
+  },
+
+  'click #uploadMenuItem': function(event) {
+    event.preventDefault();
+    filepicker.pickAndStore({mimetype:"image/*"},{},
+      function(InkBlobs){
+        var doc = (InkBlobs);
+        if(doc) {
+          $("#uploadedImageUrl").attr("src", doc[0].url).removeClass("hide");
+        }
+    });
   }
 });
 

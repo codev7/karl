@@ -46,7 +46,6 @@ Template.menuItemDetail.helpers({
       }
       item.contribution = parseFloat(contribution);
       item.contribution = Math.round(item.contribution * 100)/100;
-      console.log(item);
       return item;
     }
   }

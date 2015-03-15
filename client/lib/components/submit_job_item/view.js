@@ -35,20 +35,25 @@ Template.submitJobItem.events({
 
   'submit form': function(event) {
     event.preventDefault();
-    var name = $(event.target).find('[name=name]').val();
-    var type = $(event.target).find('[name=type]').val();;
-    var portions = $(event.target).find('[name=portions]').val();;
-    var activeTime = $(event.target).find('[name=activeTime]').val();
-    var shelfLife = $(event.target).find('[name=shelfLife]').val();
+    var name = $(event.target).find('[name=name]').val().trim();
+    var type = $(event.target).find('[name=type]').val();
+    var portions = $(event.target).find('[name=portions]').val().trim();
+    var activeTime = $(event.target).find('[name=activeTime]').val().trim();
+    var shelfLife = $(event.target).find('[name=shelfLife]').val().trim();
     var ing = $(event.target).find("[name=ing_qty]").get();
     var recipe = FlowComponents.child('jobItemEditorSubmit').getState('content');
 
-    if(typeof(portions) != "number") {
+    if(!portions) {
       portions = 0;
+    } else {
+      portions = parseInt(portions);
     }
-    if(typeof(shelfLife) != "number") {
+    if(!shelfLife) {
       shelfLife = 0;
+    } else {
+      shelfLife = parseInt(shelfLife);
     }
+
     var info = {
       "name": name,
       "type": type,

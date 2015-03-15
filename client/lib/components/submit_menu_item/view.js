@@ -104,7 +104,6 @@ Template.submitMenuItem.events({
     } else {
       info.prepItems = [];
     }
-    console.log(info);
     FlowComponents.callAction('submit', info);
   },
 
@@ -114,7 +113,6 @@ Template.submitMenuItem.events({
       function(InkBlobs){
         var doc = (InkBlobs);
         if(doc) {
-          console.log(doc);
           $("#uploadedImageUrl").attr("src", doc[0].url).removeClass("hide");
         }
     });

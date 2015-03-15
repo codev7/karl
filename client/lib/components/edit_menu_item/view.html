@@ -27,8 +27,8 @@
         <div class="form-group">
           <label>
             Prep items used
-            <button class="btn btn-xs" id="showJobItemsList">Select Preps</button>
-            <button class="btn btn-xs" id="addNewJobItem">Add New Prep</button>
+            <a href="#jobItemListModal" class="btn btn-xs" data-toggle="modal">Select Preps</a>
+            <!-- <button class="btn btn-xs" id="addNewJobItem">Add New Prep</button> -->
           </label>
           <div>
             <table class="table table-hover thumbnail">
@@ -54,8 +54,9 @@
          <div class="form-group">
         <label>
           Ingredients used
-          <button class="btn btn-xs" id="showIngredientsList">Select Ingredients</button>
-          <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button>
+          <a href="#ingredientsListModal" class="btn btn-xs" data-toggle="modal">Select Ingredients</a>
+          <!-- <button class="btn btn-xs" id="showIngredientsList">Select Ingredients</button> -->
+          <!-- <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button> -->
         </label>
         <div>
           <table class="table table-hover thumbnail">
@@ -118,7 +119,14 @@
         </div> -->
         <div class="form-group">
           <label>Image</label><br>
-          <img src="/images/farmer's.jpg" class="col-md-12 thumbnail">
+          <button type="button" class="btn btn-sm" id="uploadMenuItem">Upload Image</button>
+          <div>
+          {{#if item.image}}
+            <img id="uploadedImageUrl" src="{{item.image}}" class="img-thumbnail img-responsive menu-item-image">
+          {{else}}
+            <img id="uploadedImageUrl" src="" class="img-thumbnail img-responsive menu-item-image hide">
+          {{/if}}
+          </div>
         </div>
       </div>
     </div>

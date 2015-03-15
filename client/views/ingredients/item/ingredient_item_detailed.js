@@ -2,7 +2,7 @@ Template.ingredientItemDetailed.events({
   'click .editIngredient': function(event) {
     event.preventDefault();
     Session.set("thisIngredient", this);
-    $("#editIngredientModal").modal("show");
+    // $("#editIngredientModal").modal("show");
   },
 
   'click .deleteIngredient': function(event) {

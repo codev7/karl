@@ -105,10 +105,12 @@
         <!-- <input type="text" class="form-control" placeholder="Contribution" readonly> -->
       </div>
       <br>
+      {{#if item.image}}
       <div class="form-group">
         <label>Image</label><br>
         <img src="{{item.image}}" class="img-thumbnail img-responsive menu-item-image">
       </div>
+      {{/if}}
     </div>
   </div>
   <div class="row">
