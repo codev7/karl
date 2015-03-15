@@ -1,5 +1,5 @@
 <template name="submitJobItem">
-  <!-- <form> -->
+  <form>
     <div class="row">
       <div class="col-md-8">
         <div class="form-group">
@@ -8,8 +8,8 @@
         </div>
         <div class="form-group">
           <label>Recipe</label>
-          {{> textEditor editorInstance}}
-          <!-- <textarea class="form-control" name="recipe" rows="3"></textarea> -->
+          {{> render component = 'textEditor' id='jobItemEditorSubmit' 
+            initialHtml=state$initialHTML}}
         </div>
         <div class="form-group">
           <label>
@@ -72,5 +72,5 @@
         <button type="submit" class="btn btn-primary">Submit</button> 
       </div>
     </div>
-  <!-- </form> -->
+  </form>
 </template>

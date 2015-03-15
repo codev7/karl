@@ -1,8 +1,3 @@
-Template.submitJobItem.created = function () {
-  this.textEditor = new TextEditor();
-  console.log(this.textEditor)
-}
-
 Template.submitJobItem.helpers({
   ingredientsList: function() {
     var ing = Session.get("selectedIngredients");
@@ -12,10 +7,6 @@ Template.submitJobItem.helpers({
         return ingredientsList;
       }
     }
-  },
-
-  editorInstance: function () {
-    return Template.instance().textEditor;
   }
 });
 
@@ -43,23 +34,24 @@ Template.submitJobItem.events({
   },
 
   'submit form': function(event) {
+    debugger;
     event.preventDefault();
     var name = $(event.target).find('[name=name]').val();
     var type = $(event.target).find('[name=type]').val();;
     var portions = $(event.target).find('[name=portions]').val();;
     var activeTime = $(event.target).find('[name=activeTime]').val();
-    var recipe = $(event.target).find('[name=recipe]').val();
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
     var ing = $(event.target).find("[name=ing_qty]").get();
+    var recipe = FlowComponents.child('jobItemEditorSubmit').getState('content');
 
     var info = {
       "name": name,
       "type": type,
       "portions": portions,
       "activeTime": activeTime,
-      "recipe": recipe,
       "shelfLife": shelfLife,
-      "ing": []      
+      "ing": [],
+      "recipe": recipe     
     }
     var ing_doc = [];
     var ingIds = [];
@@ -79,15 +71,6 @@ Template.submitJobItem.events({
     if(ing_doc.length > 0) {
       info.ingredients = ing_doc;
     } 
-    Meteor.call("createJobItem", info, function(err, id) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      } else {
-        Session.set("selectedIngredients", null);
-        Session.set("selectedJobItems", null);
-        Router.go("jobItemsMaster");
-      }
-    });
+    FlowComponents.callAction('submit', info);
   }
 });
