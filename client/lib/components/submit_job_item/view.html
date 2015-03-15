@@ -1,14 +1,15 @@
-<template name="editJobItem">
+<template name="submitJobItem">
   <form>
     <div class="row">
       <div class="col-md-8">
         <div class="form-group">
           <label>Name</label>
-          <input type="text" name="name" class="form-control" placeholder="Enter Name for the job" value="{{item.name}}">
+          <input type="text" name="name" class="form-control" placeholder="Enter Name for the job">
         </div>
         <div class="form-group">
           <label>Recipe</label>
-          <textarea class="form-control" name="recipe" rows="3" value="{{item.recipe}}"></textarea>
+          {{> render component = 'textEditor' id='jobItemEditorSubmit' 
+            initialHtml=state$initialHTML}}
         </div>
         <div class="form-group">
           <label>
@@ -22,16 +23,13 @@
                 <tr>
                   <th>Code</th>
                   <th>Description</th>
-                  <th>Portion used</th>
-                  <th>Price per portion</th>
+                  <th>Unit used</th>
+                  <th>Unit Price</th>
                   <th>Quantity</th>
-                  <th>Action</th>
+                  <!-- <th>Action</th> -->
                 </tr>
               </thead>
               <tbody>
-                {{#each item.ingredients}}
-                  {{> ingredientItemEdit}}
-                {{/each}}
                 {{#each ingredientsList}}
                   {{> ingredientItemEdit}}
                 {{/each}}
@@ -43,23 +41,26 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Type</label>
-          <input type="text" name="type" class="form-control" placeholder="type" value="{{item.type}}">
+          <select name="type" class="form-control">
+            <option value="Prep">Prep</option>
+            <option value="Service">Service</option>
+          </select>
         </div>
         <div class="form-group">
           <label>Active Time</label>
           <div class="input-group">
-            <input type="number" name="activeTime" class="form-control" placeholder="Active Time" value="{{secondsToMinutes item.activeTime}}">
+            <input type="number" name="activeTime" class="form-control" placeholder="Active Time">
             <div class="input-group-addon">minutes</div>
           </div>
         </div>
         <div class="form-group">
           <label>Portions</label>
-          <input type="number" name="portions" class="form-control" placeholder="portions" value="{{item.portions}}">
+          <input type="number" name="portions" class="form-control" placeholder="portions">
         </div>
         <div class="form-group">
           <label>Shelf Life</label>
           <div class="input-group">
-             <input type="number" name="shelfLife" class="form-control" placeholder="Shelf Life" value="{{item.shelfLife}}">
+             <input type="number" name="shelfLife" class="form-control" placeholder="Shelf Life">
             <span class="input-group-addon">Days</span>
           </div>
          

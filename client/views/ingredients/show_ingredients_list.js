@@ -7,24 +7,28 @@ Template.showIngredientsList.helpers({
         var id = Session.get("thisJobItem");
         var item = JobItems.findOne(id);
         if(item) {
-          if(item.ingredients.length > 0) {
-            item.ingredients.forEach(function(doc) {
-              if(ing_ids.indexOf(doc._id) < 0) {
-                ing_ids.push(doc._id);
-              }
-            });
+          if(item.ingredients) {
+            if(item.ingredients.length > 0) {
+              item.ingredients.forEach(function(doc) {
+                if(ing_ids.indexOf(doc._id) < 0) {
+                  ing_ids.push(doc._id);
+                }
+              });
+            }
           }
         }
       } else if(routeName == "menuItemEdit") {
         var id = Session.get("thisMenuItem");
         var item = MenuItems.findOne(id);
         if(item) {
-          if(item.ingredients.length > 0) {
-            item.ingredients.forEach(function(doc) {
-              if(ing_ids.indexOf(doc._id) < 0) {
-                ing_ids.push(doc._id);
-              }
-            });
+          if(item.ingredients) {
+            if(item.ingredients.length > 0) {
+              item.ingredients.forEach(function(doc) {
+                if(ing_ids.indexOf(doc._id) < 0) {
+                  ing_ids.push(doc._id);
+                }
+              });
+            }
           }
         }
       } else {

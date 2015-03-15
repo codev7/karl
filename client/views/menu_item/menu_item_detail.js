@@ -7,14 +7,16 @@ Template.menuItemDetail.helpers({
       item.totalPrepCost = 0;
       item.contribution = 0;
       item.tax = 0;
-      if(item.ingredients.length > 0) {
-        item.ingredients.forEach(function(doc) {
-          var ing = getIngredientItem(doc._id);
-          if(ing) {
-            ing.totalCost = ing.costPerPortionUsed * doc.quantity;
-            item.totalIngCost += ing.totalCost;
-          }
-        });
+      if(item.ingredients) {
+        if(item.ingredients.length > 0) {
+          item.ingredients.forEach(function(doc) {
+            var ing = getIngredientItem(doc._id);
+            if(ing) {
+              ing.totalCost = ing.costPerPortionUsed * doc.quantity;
+              item.totalIngCost += ing.totalCost;
+            }
+          });
+        }
       }
       if(item.jobItems) {
         if(item.jobItems.length > 0) {
@@ -44,6 +46,7 @@ Template.menuItemDetail.helpers({
       }
       item.contribution = parseFloat(contribution);
       item.contribution = Math.round(item.contribution * 100)/100;
+      console.log(item);
       return item;
     }
   }

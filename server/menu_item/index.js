@@ -16,7 +16,8 @@ Meteor.methods({
       "ingredients": info.ingredients,
       "jobItems": info.prepItems,
       "salesPrice": parseFloat(info.salesPrice),
-      "staus": "active"
+      "staus": "active",
+      "image": info.image
     };
     var id = MenuItems.insert(doc);
     logger.info("Menu items added ", id);
@@ -85,6 +86,9 @@ Meteor.methods({
       if(info.jobItems.length > 0) {
         updateDoc.jobItems = info.jobItems;
       }
+    }
+    if(info.image) {
+      updateDoc.image = info.image;
     }
 
     if(Object.keys(updateDoc).length > 0) {

@@ -60,7 +60,7 @@ Template.editMenuItem.events({
     var id = Session.get("thisMenuItem");
     var name = $(event.target).find('[name=name]').val().trim(); 
     var tag = $(event.target).find('[name=tag]').val().trim(); 
-    var instructions = $(event.target).find('[name=instructions]').val().trim(); 
+    var instructions = FlowComponents.child('menuItemEditorEdit').getState('content'); 
     var preps = $(event.target).find("[name=prep_qty]").get();;
     var ings = $(event.target).find("[name=ing_qty]").get();
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
@@ -114,15 +114,7 @@ Template.editMenuItem.events({
     if(ing_doc.length > 0) {
       info.ingredients = ing_doc;
     }
-
-    Meteor.call("editMenuItem", id, info, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      } else {
-        Router.go("menuItemsMaster");
-      }
-    });
+    FlowComponents.callAction('submit', id, info);
   }
 });
 
