@@ -275,6 +275,11 @@ select {
   background-color: #bbb;
 }
 
+.menu-item-image {
+  width: 260px;
+  height: 180px;
+}
+
 .height180 {
   height: 160px;
 }

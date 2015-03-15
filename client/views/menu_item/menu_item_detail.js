@@ -35,6 +35,7 @@ Template.menuItemDetail.helpers({
       var totalCost = parseFloat(parseFloat(item.totalIngCost) + item.totalPrepCost + item.tax);
       item.contribution = parseFloat(item.salesPrice - totalCost);
       item.contribution = Math.round(item.contribution * 100)/100;
+      console.log(item);
       return item;
     }
   }

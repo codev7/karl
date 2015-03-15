@@ -8,12 +8,16 @@
   </div>
   <div class="row">
     <div class="col-md-8">
+      {{#if item.recipe}}
       <div class="form-group">
         <label>Recipe</label>
-        <div class="">
-          {{{item.recipe}}}
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {{{item.recipe}}}
+          </div>
         </div>
       </div>
+      {{/if}}
       <div class="form-group">
         <label>
           Ingredients used
