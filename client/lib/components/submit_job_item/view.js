@@ -34,7 +34,6 @@ Template.submitJobItem.events({
   },
 
   'submit form': function(event) {
-    debugger;
     event.preventDefault();
     var name = $(event.target).find('[name=name]').val();
     var type = $(event.target).find('[name=type]').val();;
