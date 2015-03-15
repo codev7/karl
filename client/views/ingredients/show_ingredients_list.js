@@ -1,6 +1,6 @@
+var ing_ids = [];
 Template.showIngredientsList.helpers({
   ingredientsList: function() {
-    var ing_ids = [];
     if(Router.current()) {
       var routeName = Router.current().route.getName();
       if(routeName == "jobItemEdit") {
@@ -27,7 +27,9 @@ Template.showIngredientsList.helpers({
             });
           }
         }
-      }    
+      } else {
+        ing_ids = [];
+      }   
     }
     var list = Ingredients.find({"_id": {$nin: ing_ids}}).fetch();
     return list;
@@ -52,5 +54,19 @@ Template.showIngredientsList.events({
       Session.set("selectedIngredients", null);
     }
     $("#ingredientsListModal").modal("hide");
+  },
+
+  'keyup #searchText-box': function(event) {
+    var searchText = $("#searchText-box").val();
+    Session.set("searchText", searchText);
   }
+});
+
+Template.showIngredientsList.rendered = function() {
+  Session.set("searchText", "");
+}
+
+Tracker.autorun(function() {
+  var searchText = Session.get('searchText');
+  return Meteor.subscribe("ingredientsSearch", searchText, ing_ids);
 });

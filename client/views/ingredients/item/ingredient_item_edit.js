@@ -12,38 +12,21 @@ Template.ingredientItemEdit.helpers({
   }
 });
 
-// Template.ingredientItemEdit.events({
-//   'click .removeIng': function(event) {
-//     event.preventDefault();
-//     var routename = Router.current().route.getName();
-//     var id = $(event.target).attr("data-id");
-//     console.log(id);
-//     if(routename == "menuItemEdit") {
-//       var menuId = Session.get("thisMenuItem");
-//       if(id) {
-//         Meteor.call("removeIngredients", menuId, id, function(err) {
-//           if(err) {
-//             console.log(err);
-//             return alert(err.reason);
-//           }
-//         });
-//       } else {
-//         var item = $(event.target).parent().parent();
-//         $(item).remove();
-//       }
-//     } else if(routename == "jobItemEdit") {
-//       var jobId = Session.get("thisJobItem");
-//       if(id) {
-//         Meteor.call("removeIngredientsFromJob", jobId, id, function(err) {
-//           if(err) {
-//             console.log(err);
-//             return alert(err.reason);
-//           }
-//         });
-//       } else {
-//         var item = $(event.target).parent().parent();
-//         $(item).remove();
-//       }
-//     }
-//   }
-// });
+Template.ingredientItemEdit.events({
+  'click .removeIng': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    var ingList = Session.get("selectedIngredients");
+    if(ingList) {
+      if(ingList.length > 0) {
+        var index = ingList.indexOf(id);
+        if(index >= 0) {
+          ingList.splice(index, 1);
+          Session.set("selectedIngredients", ingList);
+        }
+      }
+    }
+    var item = $(event.target).parent().parent();
+    $(item).remove();
+  }
+});

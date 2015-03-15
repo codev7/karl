@@ -95,7 +95,7 @@ Meteor.methods({
     if(Object.keys(updateDoc).length > 0) {
       query["$set"] = updateDoc;
     }
-    logger.info("Job updated", {"JobId": id});
+    logger.info("Job Item updated", {"JobItemId": id});
     return JobItems.update({'_id': id}, query);
   },
 

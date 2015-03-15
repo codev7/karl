@@ -21,17 +21,17 @@ Template.submitJobItem.events({
     $("#addIngredientModal").modal('show');
   },
 
-  'click .removeIng': function(event) {
-    event.preventDefault();
-    var menuId = Session.get("thisMenuItem");
-    var ingId = $(event.target).attr("data-id");
-    Meteor.call("removeIngredients", menuId, ingId, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      } 
-    });
-  },
+  // 'click .removeIng': function(event) {
+  //   event.preventDefault();
+  //   var menuId = Session.get("thisMenuItem");
+  //   var ingId = $(event.target).attr("data-id");
+  //   Meteor.call("removeIngredients", menuId, ingId, function(err) {
+  //     if(err) {
+  //       console.log(err);
+  //       return alert(err.reason);
+  //     } 
+  //   });
+  // },
 
   'submit form': function(event) {
     event.preventDefault();
@@ -87,5 +87,11 @@ Template.submitJobItem.events({
         Router.go("jobItemsMaster");
       }
     });
+  }
+});
+
+Tracker.autorun(function() {
+  if(Session.get("thisJobItem") == null) {
+    return Meteor.subscribe("ingredients", []);
   }
 });
