@@ -1,5 +1,5 @@
 Meteor.publish('jobItems', function() {
-  var cursors = JobItems.find();
+  var cursors = JobItems.find({}, {sort: {'name': 1}});
   return cursors;
 });
 
