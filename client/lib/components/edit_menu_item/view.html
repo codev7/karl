@@ -19,7 +19,10 @@
         </div>-->
         <div class="form-group">
           <label>Instructions</label>
-          <textarea class="form-control" name="instructions" rows="3" value="{{item.instructions}}"></textarea>
+            {{> render component = 'textEditor' id='menuItemEditorEdit' 
+            initialHtml=state$initialHTML}}
+
+          <!-- <textarea class="form-control" name="instructions" rows="3" value="{{item.instructions}}"></textarea> -->
         </div>
         <div class="form-group">
           <label>

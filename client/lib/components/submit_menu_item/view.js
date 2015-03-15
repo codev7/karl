@@ -35,7 +35,7 @@ Template.submitMenuItem.events({
     e.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim(); 
     var tag = $(event.target).find('[name=tag]').val().trim(); 
-    var instructions = $(event.target).find('[name=instructions]').val().trim(); 
+    var instructions = FlowComponents.child('menuItemEditorSubmit').getState('content');
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = $("#uploadedImageUrl").attr("src");
     var preps = $(event.target).find("[name=prep_qty]").get();
@@ -101,15 +101,7 @@ Template.submitMenuItem.events({
       info.prepItems = prep_doc;
     }
     console.log(info);
-    Meteor.call("createMenuItem", info, function(err, id) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      }
-      Session.set("selectedIngredients", null);
-      Session.set("selectedJobItems", null);
-      Router.go("menuItemsMaster");
-    });
+    FlowComponents.callAction('submit', info);
   },
 
   'click #uploadMenuItem': function(event) {
