@@ -1,10 +1,7 @@
 Template.ingredientItemListed.helpers({
   costPerPortionUsed: function() {
-    if(this) {
-      var item = getIngredientItem(this._id);
-      if(item) {
-        return item.costPerPortionUsed;
-      }
-    }
+    var costPerPortionUsed = this.costPerPortion/this.unitSize;
+    costPerPortionUsed = Math.round(costPerPortionUsed * 100)/100;
+    return costPerPortionUsed;
   }
 });

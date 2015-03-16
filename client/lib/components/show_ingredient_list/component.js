@@ -1,3 +1,7 @@
 var component = FlowComponents.define('showIngredientsList', function(props) {
-  // this.onRendered(this.renderTextEditor);
+  // this.onRendered(this.renderSearch);
 });
+
+component.prototype.renderSearch = function() {
+  
+}
