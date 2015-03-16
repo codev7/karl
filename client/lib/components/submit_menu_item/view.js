@@ -84,7 +84,7 @@ Template.submitMenuItem.events({
         });
       }
     }
-    if(typeof(salesPrice) != 'number') {
+    if(!salesPrice) {
       salesPrice = 0;
     }
     var info = {
