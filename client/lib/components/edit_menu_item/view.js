@@ -27,6 +27,7 @@ Template.editMenuItem.helpers({
     var ing = Session.get("selectedIngredients");
     if(ing) {
       if(ing.length > 0) {
+        Meteor.subscribe("ingredients", ing);
         var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
         return ingredientsList;
       }
@@ -131,6 +132,6 @@ Template.editMenuItem.events({
 });
 
 Template.editMenuItem.rendered = function() {
-  Session.set("selectedIngredients", null);
-  Session.set("selectedJobItems", null);
+  // Session.set("selectedIngredients", null);
+  // Session.set("selectedJobItems", null);
 }

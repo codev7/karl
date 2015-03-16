@@ -3,6 +3,7 @@ Template.submitMenuItem.helpers({
     var ing = Session.get("selectedIngredients");
     if(ing) {
       if(ing.length > 0) {
+        Meteor.subscribe("ingredients", ing);
         var ingredientsList = Ingredients.find({'_id': {$in: ing}});
         return ingredientsList;
       }
