@@ -47,6 +47,7 @@ Template.showIngredientsList.events({
     } 
     $(event.target).find('[type=checkbox]').attr('checked', false);
     $("#searchText-box").val("");
+    IngredientsSearch.search("");
     $("#ingredientsListModal").modal("hide");
   }
 });
