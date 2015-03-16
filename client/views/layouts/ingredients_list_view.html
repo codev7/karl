@@ -1,11 +1,16 @@
 <template name="ingredientsListView">
   <div class="row center-page-title">
-    Ingredients List
+    Ingredients
     <a class="btn btn-xs" data-toggle="modal" href="#addIngredientModal">+</a>
   </div>
   <div class="row">
     <div class="col-xs-10 col-sm-10">
       {{> ingredientsList}}
     </div>
-  </div>  
+  </div> 
+    <!-- EDIT INGREDIENT-->
+  <div class="modal fade" id="editIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> editIngredientItem}}
+  </div>
+  <!-- /EDIT INGREDIENT --> 
 </template>

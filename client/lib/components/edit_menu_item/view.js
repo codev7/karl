@@ -28,7 +28,6 @@ Template.editMenuItem.helpers({
     if(ing) {
       if(ing.length > 0) {
         var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
-        console.log(ingredientsList)
         return ingredientsList;
       }
     }
@@ -61,31 +60,35 @@ Template.editMenuItem.events({
     var id = Session.get("thisMenuItem");
     var name = $(event.target).find('[name=name]').val().trim(); 
     var tag = $(event.target).find('[name=tag]').val().trim(); 
-    var instructions = $(event.target).find('[name=instructions]').val().trim(); 
+    var instructions = FlowComponents.child('menuItemEditorEdit').getState('content'); 
     var preps = $(event.target).find("[name=prep_qty]").get();;
     var ings = $(event.target).find("[name=ing_qty]").get();
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
-    var image = [];
-
+    var image = $("#uploadedImageUrl").attr("src");
     var info = {
       "name": name,
       "tag": tag,
       "instructions": instructions,
-      "salesPrice": parseFloat(salesPrice)
+      "salesPrice": parseFloat(salesPrice),
+      "jobItems": [],
+      "ingredients": [],
+      "image": image
     }
 
     var prep_doc = [];
     var jobItemsIds = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && jobItemsIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
-        var info = {
-          "id": dataid,
-          "quantity": quantity
+        if(quantity > 0) {
+          var info = {
+            "_id": dataid,
+            "quantity": quantity
+          }
+          prep_doc.push(info);
+          jobItemsIds.push(dataid);
         }
-        prep_doc.push(info);
-        jobItemsIds.push(dataid);
       }
     });
 
@@ -93,33 +96,36 @@ Template.editMenuItem.events({
     var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && ingredientIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
-        var info = {
-          "id": dataid,
-          "quantity": quantity
+        if(quantity > 0) {
+          var info = {
+            "_id": dataid,
+            "quantity": quantity
+          }
+          ing_doc.push(info);
+          ingredientIds.push(dataid);
         }
-        ing_doc.push(info);
-        ingredientIds.push(dataid);
       }
     });
 
-    if(prep_doc.length > 0 && jobItemsIds.length > 0) {
+    if(prep_doc.length > 0) {
       info.jobItems = prep_doc;
-      info.jobItemsIds = jobItemsIds;
-    }
-    if(ing_doc.length > 0 && ingredientIds.length > 0) {
+    } 
+    if(ing_doc.length > 0) {
       info.ingredients = ing_doc;
-      info.ingredientIds = ingredientIds;
     }
+    FlowComponents.callAction('submit', id, info);
+  },
 
-    Meteor.call("editMenuItem", id, info, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      } else {
-        Router.go("menuMaster");
-      }
+  'click #uploadMenuItem': function(event) {
+    event.preventDefault();
+    filepicker.pickAndStore({mimetype:"image/*"},{},
+      function(InkBlobs){
+        var doc = (InkBlobs);
+        if(doc) {
+          $("#uploadedImageUrl").attr("src", doc[0].url).removeClass("hide");
+        }
     });
   }
 });

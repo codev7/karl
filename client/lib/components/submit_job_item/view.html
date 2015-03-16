@@ -8,7 +8,8 @@
         </div>
         <div class="form-group">
           <label>Recipe</label>
-          <textarea class="form-control" name="recipe" rows="3"></textarea>
+          {{> render component = 'textEditor' id='jobItemEditorSubmit' 
+            initialHtml=state$initialHTML}}
         </div>
         <div class="form-group">
           <label>
@@ -40,7 +41,10 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Type</label>
-          <input type="text" name="type" class="form-control" placeholder="type" value="Prep">
+          <select name="type" class="form-control">
+            <option value="Prep">Prep</option>
+            <option value="Service">Service</option>
+          </select>
         </div>
         <div class="form-group">
           <label>Active Time</label>

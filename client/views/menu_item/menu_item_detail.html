@@ -1,6 +1,6 @@
 <template name="menuItemDetail">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 col-lg-8">
       <div class="form-group">
         <h3>{{item.name}}</h3>
         <p>{{item.tag}}</p>
@@ -15,11 +15,13 @@
     </div> -->
   </div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7 col-sm-8 col-lg-7">
       <div class="form-group">
         <label>Instructions</label>
-        <div class="">
-          {{item.instructions}}
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {{{item.instructions}}}
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -72,10 +74,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 form-inline">
+    <div class="col-md-4 col-sm-4 col-lg-4 form-inline">
       <div class="form-group">
         <label>Sale price: </label>
-        <p class="form-control non-edit">${{item.salesPrice}}</p>
+        <p class="form-control non-edit">$ {{item.salesPrice}}</p>
         <!-- <input type="text" name="salesPrice" class="form-control" placeholder="Sale price" value="{{item.salesPrice}}"> -->
       </div>
       <br>
@@ -103,15 +105,18 @@
         <!-- <input type="text" class="form-control" placeholder="Contribution" readonly> -->
       </div>
       <br>
+      {{#if item.image}}
       <div class="form-group">
         <label>Image</label><br>
-        <img src="/images/farmer's.jpg" class="col-md-12 thumbnail">
+        <img src="{{item.image}}" class="img-thumbnail img-responsive menu-item-image">
       </div>
+      {{/if}}
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="btn btn-primary editMenuItemBtn" data-id="{{item._id}}">Edit</button>
+      <button type="button" class="btn btn-primary editMenuItemBtn hidden-print" data-id="{{item._id}}">Edit</button>
+      <button type="button" class="btn btn-primary printMenuItemBtn hidden-print">Print</button>
     </div>
   </div>
 </template>

@@ -13,7 +13,8 @@ Template.jobItemDetailed.helpers({
 Template.jobItemDetailed.events({
   'click .deleteJobItem': function(event) {
     event.preventDefault();
-    if(this) {
+    var result = confirm("Are you sure, you want to delete this item ?");
+    if (result == true) {
       Meteor.call("deleteJobItem", this._id, function(err) {
         if(err) {
           console.log(err);

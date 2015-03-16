@@ -275,6 +275,11 @@ select {
   background-color: #bbb;
 }
 
+.menu-item-image {
+  width: 260px;
+  height: 180px;
+}
+
 .height180 {
   height: 160px;
 }
@@ -347,4 +352,14 @@ select {
    -ms-transform:     rotate(-70deg);
    -o-transform:      rotate(-70deg);
    content: '';
+}
+
+@media print {
+  table {
+    font-size: 10px;
+  }
+  table > th,
+  table > td{
+    padding: 2px;
+  }
 }

@@ -8,7 +8,9 @@
         </div>
         <div class="form-group">
           <label>Recipe</label>
-          <textarea class="form-control" name="recipe" rows="3" value="{{item.recipe}}"></textarea>
+          {{> render component = 'textEditor' id='jobItemEditorEdit' 
+            initialHtml=state$initialHTML}}
+          <!-- <textarea class="form-control" name="recipe" rows="3" value="{{item.recipe}}"></textarea> -->
         </div>
         <div class="form-group">
           <label>
@@ -22,10 +24,10 @@
                 <tr>
                   <th>Code</th>
                   <th>Description</th>
-                  <th>Unit used</th>
-                  <th>Unit Price</th>
+                  <th>Portion used</th>
+                  <th>Price per portion</th>
                   <th>Quantity</th>
-                  <!-- <th>Action</th> -->
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>

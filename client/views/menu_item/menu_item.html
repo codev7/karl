@@ -1,8 +1,12 @@
 <template name="menuItem">
   <a href="/menuItem/{{_id}}">
     <div class="col-md-1 menu-item">
-      <div class="menu-image ">
-        <img src="/images/farmer's.jpg" class="col-md-12 thumbnail">
+      <div class="menu-image">
+      {{#if image}}
+        <img src="{{image}}" class="img-thumbnail img-responsive menu-item-image">
+      {{else}}
+        <img src="/images/no-image.jpeg" class="img-thumbnail img-responsive menu-item-image" alt="Menu Item Image">
+      {{/if}}
       </div>
       <div class="row">
         <div class="col-md-8">

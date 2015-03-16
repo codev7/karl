@@ -8,10 +8,10 @@ Meteor.methods({
       logger.error("Description field not found");
       throw new Meteor.Error(404, "Description field not found");
     }
-    var exist = Ingredients.findOne(info.code);
+    var exist = Ingredients.findOne({"code": info.code});
     if(exist) {
       logger.error("Duplicate entry");
-      throw new Meteor.Error(404, "Duplicate entry, change name and try again");
+      throw new Meteor.Error(404, "Duplicate entry, change code and try again");
     }
     var suppliers = [];
     if(info.suppliers) {
@@ -22,14 +22,13 @@ Meteor.methods({
       }
     }
     var doc = {
-      "_id": info.code,
+      "code": info.code,
       "description": info.description,
       "suppliers": suppliers,
-      "unitOrdered": info.unitOrdered,
-      "costPerUnit": info.costPerUnit,
+      "portionOrdered": info.portionOrdered,
+      "costPerPortion": info.costPerPortion,
+      "portionUsed": info.portionUsed,
       "unitSize": parseFloat(info.unitSize),
-      "unit": info.unit,
-      "portionUsed": info.portionUsed
     }
     var id = Ingredients.insert(doc);
     logger.info("New ingredient inserted ", id);
@@ -47,14 +46,11 @@ Meteor.methods({
       throw new Meteor.Error(404, "Item not found");
     }
     var updateDoc = {};
-    // if(info.code) {
-    //   var checkItems = Ingredients.findOne(info.code);
-    //   if(checkItems) {
-    //     logger.error("Code exists already");
-    //     throw new Meteor.Error(404, "Existing code");
-    //   }
-    //   updateDoc._id = info.code;
-    // }
+    if(info.code) {
+      if(item.code != info.code) {
+        updateDoc.code = info.code;
+      }
+    }
     if(info.description) {
       if(item.description != info.description) {
         updateDoc.description = info.description;
@@ -65,9 +61,9 @@ Meteor.methods({
         updateDoc.suppliers = info.suppliers;
       }
     }
-    if(info.unitOrdered) {
-      if(item.unitOrdered != info.unitOrdered) {
-        updateDoc.unitOrdered = info.unitOrdered;
+    if(info.portionOrdered) {
+      if(item.portionOrdered != info.portionOrdered) {
+        updateDoc.portionOrdered = info.portionOrdered;
       }
     }
     if(info.unitSize) {
@@ -75,9 +71,9 @@ Meteor.methods({
         updateDoc.unitSize = parseFloat(info.unitSize);
       }
     }
-    if(info.costPerUnit) {
-      if(item.costPerUnit != info.costPerUnit) {
-        updateDoc.costPerUnit = parseFloat(info.costPerUnit);
+    if(info.costPerPortion) {
+      if(item.costPerPortion != info.costPerPortion) {
+        updateDoc.costPerPortion = parseFloat(info.costPerPortion);
       }
     }
     if(info.portionUsed) {
@@ -85,19 +81,8 @@ Meteor.methods({
         updateDoc.portionUsed = info.portionUsed;
       }
     }
-    if(info.unit) {
-      if(item.unit != info.unit) {
-        updateDoc.unit = info.unit;
-      }
-    }
     Ingredients.update({'_id': id}, {$set: updateDoc});
-    var loggerDoc = {
-      "_id": id
-    }
-    if(info.code) {
-      loggerDoc.codeUpdated = info.code;
-    }
-    logger.info("Ingredient details updated: ", loggerDoc);
+    logger.info("Ingredient details updated: ", id);
   },
 
   deleteIngredient: function(id) {
@@ -109,6 +94,26 @@ Meteor.methods({
     if(!item) {
       logger.error("Item not found");
       throw new Meteor.Error(404, "Item not found");
+    }
+    var existInPreps = JobItems.findOne(
+      {"type": "Prep", "ingredients": {$elemMatch: {"_id": id}}},
+      {fields: {"ingredients": {$elemMatch: {"_id": id}}}}
+    );
+    if(existInPreps) {
+      if(existInPreps.ingredients.length > 0) {
+        logger.error("Item found in Prep jobs, can't delete");
+        throw new Meteor.Error(404, "Item is in use on prep jobs, cannot be deleted."); 
+      }
+    }
+    var existInMenuItems = MenuItems.findOne(
+      {"ingredients": {$elemMatch: {"_id": id}}},
+      {fields: {"ingredients": {$elemMatch: {"_id": id}}}}
+    );
+    if(existInMenuItems) {
+      if(existInMenuItems.ingredients.length > 0) {
+        logger.error("Item found in Menu Items, can't delete");
+        throw new Meteor.Error(404, "Item is in use on menu items, cannot be deleted."); 
+      }
     }
     Ingredients.remove(id);
     logger.info("Ingredient removed", id);

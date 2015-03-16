@@ -24,7 +24,7 @@ Template.editJobItem.events({
     var type = $(event.target).find('[name=type]').val();;
     var portions = $(event.target).find('[name=portions]').val();;
     var activeTime = $(event.target).find('[name=activeTime]').val();
-    var recipe = $(event.target).find('[name=recipe]').val();
+    var recipe = FlowComponents.child('jobItemEditorEdit').getState('content');
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
     var ings = $(event.target).find("[name=ing_qty]").get();
 
@@ -33,21 +33,24 @@ Template.editJobItem.events({
     info.type = type.trim();
     info.portions = parseInt(portions.trim());
     info.activeTime = parseInt(activeTime.trim());
-    info.recipe = recipe.trim();
+    info.recipe = recipe;
     info.shelfLife = parseInt(shelfLife.trim());
+    info.ingredients = [];
 
     var ing_doc = [];
     var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid) {
+      if(dataid && ingredientIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
-        var info = {
-          "id": dataid,
-          "quantity": quantity
+        if(quantity > 0) {
+          var info = {
+            "_id": dataid,
+            "quantity": quantity
+          }
+          ing_doc.push(info);
+          ingredientIds.push(dataid);
         }
-        ing_doc.push(info);
-        ingredientIds.push(dataid);
       }
     });
 
@@ -55,14 +58,7 @@ Template.editJobItem.events({
       info.ingredients = ing_doc;
       info.ingredientIds = ingredientIds;
     }
-    Meteor.call("editJobItem", id, info, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      } else {
-        Router.go("jobItemsMaster");
-      }
-    });
+    FlowComponents.callAction('submit', id, info);
   },
 
   'click #showIngredientsList': function(event) {

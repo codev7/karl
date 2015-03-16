@@ -1,20 +1,26 @@
-<template name="menuStep2Submit">
+<template name="submitMenuItem">
   <form>
     <div class="row">
       <div class="col-md-8">
         <div class="form-group">
-          <h3>{{item.name}}</h3>
-          <p>{{item.tag}}</p>
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" placeholder="Enter Name for the menu">
+        </div>
+        <div class="form-group">
+          <label>Tag</label>
+          <input type="text" name="tag" class="form-control" placeholder="Add tags separated by ' , ' (comma)">
         </div>
         <div class="form-group">
           <label>Instructions</label>
-          <textarea class="form-control" name="instructions" rows="3" value="{{item.instructions}}"></textarea>
+          {{> render component = 'textEditor' id='menuItemEditorSubmit' 
+            initialHtml=state$initialHTML}}
+          <!-- <textarea class="form-control" name="instructions" rows="3"></textarea> -->
         </div>
         <div class="form-group">
           <label>
             Prep items used
             <button class="btn btn-xs" id="showJobItemsList">Select Preps</button>
-            <button class="btn btn-xs" id="addNewJobItem">Add New Prep</button>
+            <!-- <button class="btn btn-xs" id="addNewJobItem">Add New Prep</button> -->
           </label>
           <div>
             <table class="table table-hover thumbnail">
@@ -39,7 +45,7 @@
           <label>
             Ingredients used
             <button class="btn btn-xs" id="showIngredientsList">Select Ingredients</button>
-            <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button>
+            <!-- <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button> -->
           </label>
           <div>
             <table class="table table-hover thumbnail">
@@ -63,30 +69,24 @@
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label>Sale price ($)</label>
-          <input type="text" name="salesPrice" class="form-control" placeholder="Sale price" value="$ {{item.salesPrice}}" readonly>
+          <label>Sale price</label>
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <input type="text" class="form-control" name="salesPrice" placeholder="Sale price">     
+          </div>
         </div>
         <div class="form-group">
-          <label>Prep item cost</label>
-          <input type="text" class="form-control" placeholder="Prep item cost" readonly>
-        </div>
-        <div class="form-group">
-          <label>Ingredient cost</label>
-          <input type="text" class="form-control" placeholder="Ingredient cost" readonly value="$ {{item.totalIngCost}}">
-        </div>
-        <div class="form-group">
-          <label>Tax (10%)</label>
-          <input type="text" class="form-control" placeholder="Tax" readonly value="$ {{item.tax}}">
-        </div>
-        <div class="form-group">
-          <label>Contribution</label>
-          <input type="text" class="form-control" placeholder="Contribution" readonly value="{{item.contribution}}">
+          <label>Image</label><br>
+          <button type="button" class="btn btn-sm" id="uploadMenuItem">Upload Image</button>
+          <div>
+            <img id="uploadedImageUrl" src="" class="img-thumbnail img-responsive menu-item-image hide">
+          </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <button type="submit" class="btn btn-primary finishMenu">Done</button> 
+        <button type="submit" class="btn btn-primary">Save</button> 
       </div>
     </div>
   </form>
