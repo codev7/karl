@@ -68,9 +68,14 @@ select {
   font-size: 18px;
 }
 
-.right {
+.left {
   /*background-color: #FFCCCC;*/
   float: left;
+}
+
+.right {
+  /*background-color: #FFCCCC;*/
+  float: right;
 }
 
 .main-header-title {
@@ -355,11 +360,26 @@ select {
 }
 
 @media print {
-  table {
-    font-size: 10px;
+  h3 {
+    font-size: 18px;
   }
+
+  table {
+    font-size: 11px;
+  }
+
+  table > tr,
   table > th,
   table > td{
+    padding: 1px;
+  }
+
+  .panel-body {
+    font-size: 11px;
     padding: 2px;
+  }
+
+  .form-inline, .form-control, .menu-tag {
+    font-size: 11px;
   }
 }
