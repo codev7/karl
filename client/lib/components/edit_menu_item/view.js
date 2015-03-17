@@ -68,12 +68,24 @@ Template.editMenuItem.events({
     var image = $("#uploadedImageUrl").attr("src");
     var info = {
       "name": name,
-      "tag": tag,
       "instructions": instructions,
       "salesPrice": parseFloat(salesPrice),
       "jobItems": [],
       "ingredients": [],
       "image": image
+    }
+
+    if(tag) {
+      var tags = [];
+      tag = tag.trim().split(",");
+      if(tag.length > 0) {
+        tag.forEach(function(item) {
+          var doc = item.trim();
+          if(doc) {
+            tags.push(doc);
+          }
+        });
+      }
     }
 
     var prep_doc = [];
@@ -109,13 +121,10 @@ Template.editMenuItem.events({
         }
       }
     });
-
-    if(prep_doc.length > 0) {
-      info.jobItems = prep_doc;
-    } 
-    if(ing_doc.length > 0) {
-      info.ingredients = ing_doc;
-    }
+    
+    info.jobItems = prep_doc;
+    info.ingredients = ing_doc;
+    info.tag = tags;
     FlowComponents.callAction('submit', id, info);
   },
 

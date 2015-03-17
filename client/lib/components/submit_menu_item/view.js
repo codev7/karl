@@ -72,8 +72,8 @@ Template.submitMenuItem.events({
       }
     });
 
+    var tags = [];
     if(tag) {
-      var tags = [];
       tag = tag.trim().split(",");
       if(tag.length > 0) {
         tag.forEach(function(item) {
@@ -89,21 +89,12 @@ Template.submitMenuItem.events({
     }
     var info = {
       "name": name,
-      "tag": tag,
       "instructions": instructions,
       "salesPrice": parseFloat(salesPrice),
-      "image": image
-    }
-
-    if(ing_doc.length > 0) {
-      info.ingredients = ing_doc;
-    } else {
-      info.ingredients = [];
-    }
-    if(prep_doc.length > 0) {
-      info.prepItems = prep_doc;
-    } else {
-      info.prepItems = [];
+      "image": image,
+      "ingredients": ing_doc,
+      "prepItems": prep_doc,
+      "tag": tags
     }
     FlowComponents.callAction('submit', info);
   },
