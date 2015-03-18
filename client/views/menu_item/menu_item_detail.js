@@ -45,6 +45,8 @@ Template.menuItemDetail.helpers({
         totalCost = 0;
       }
       item.contribution = parseFloat(contribution);
+      item.totalPrepCost = Math.round(item.totalPrepCost * 100)/100;
+      item.totalIngCost = Math.round(item.totalIngCost * 100)/100;
       item.contribution = Math.round(item.contribution * 100)/100;
       return item;
     }
