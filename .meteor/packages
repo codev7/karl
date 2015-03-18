@@ -12,4 +12,5 @@ npm-container
 anti:gagarin
 meteorhacks:flow-components
 meteorhacks:search-source
+meteorhacks:fast-render
 
