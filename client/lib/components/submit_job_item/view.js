@@ -22,18 +22,6 @@ Template.submitJobItem.events({
     $("#addIngredientModal").modal('show');
   },
 
-  // 'click .removeIng': function(event) {
-  //   event.preventDefault();
-  //   var menuId = Session.get("thisMenuItem");
-  //   var ingId = $(event.target).attr("data-id");
-  //   Meteor.call("removeIngredients", menuId, ingId, function(err) {
-  //     if(err) {
-  //       console.log(err);
-  //       return alert(err.reason);
-  //     } 
-  //   });
-  // },
-
   'submit form': function(event) {
     event.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim();
@@ -54,6 +42,7 @@ Template.submitJobItem.events({
     } else {
       shelfLife = parseInt(shelfLife);
     }
+    console.log(recipe);
 
     var info = {
       "name": name,
