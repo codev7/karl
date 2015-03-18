@@ -14,4 +14,8 @@ meteorhacks:flow-components
 meteorhacks:search-source
 meteorhacks:fast-render
 meteorhacks:subs-manager
+accounts-ui
+accounts-google
+accounts-password
+service-configuration
 
