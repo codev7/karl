@@ -21,6 +21,12 @@ Meteor.methods({
         suppliers.push(info.suppliers);
       }
     }
+    if(!info.costPerPortion) {
+      info.costPerPortion = 0;
+    }
+    if(!info.unitSize) {
+      info.unitSize = 0;
+    }
     var doc = {
       "code": info.code,
       "description": info.description,
