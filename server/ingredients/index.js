@@ -1,13 +1,17 @@
 Meteor.methods({
   createIngredients: function(info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!info.code) {
       logger.error("Code field not found");
       throw new Meteor.Error(404, "Code field not found");
     }
-    if(!info.description) {
-      logger.error("Description field not found");
-      throw new Meteor.Error(404, "Description field not found");
-    }
+    // if(!info.description) {
+    //   logger.error("Description field not found");
+    //   throw new Meteor.Error(404, "Description field not found");
+    // }
     var exist = Ingredients.findOne({"code": info.code});
     if(exist) {
       logger.error("Duplicate entry");
@@ -42,6 +46,10 @@ Meteor.methods({
   },
 
   editIngredient: function(id, info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!id) {
       logger.error("Id field not found");
       throw new Meteor.Error(404, "Id field not found");
@@ -92,6 +100,10 @@ Meteor.methods({
   },
 
   deleteIngredient: function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!id) {
       logger.error("Id field not found");
       throw new Meteor.Error(404, "Id field not found");

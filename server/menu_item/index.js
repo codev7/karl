@@ -1,5 +1,9 @@
 Meteor.methods({
   createMenuItem: function(info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!info.name) {
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
@@ -25,6 +29,10 @@ Meteor.methods({
   },
 
   editMenuItem: function(id, info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!id) {
       logger.error("Menu item should provide a id");
       throw new Meteor.Error(404, "Menu item should provide a id");
@@ -100,6 +108,10 @@ Meteor.methods({
   },
 
   deleteMenuItem: function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!id) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -115,7 +127,10 @@ Meteor.methods({
   },
 
   addIngredients: function(menuId, ingredients) {
-    // console.log("-------", arguments);
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -155,6 +170,10 @@ Meteor.methods({
   },
 
   removeIngredients: function(menuId, ingredient) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -185,6 +204,10 @@ Meteor.methods({
   },
 
   addJobItems: function(menuId, jobItems) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");

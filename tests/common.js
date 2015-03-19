@@ -1,3 +1,6 @@
+server = meteor({flavor: "fiber"});
+client = browser({flavor: "fiber", location: server});
+
 insertJob = function() {
   var jobInfo = {
     "name": "job 1",

@@ -1,5 +1,9 @@
 Meteor.methods({
   'createJobItem': function(info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!info.name) {
       logger.error("Name field not found");
       throw new Meteor.Error(404, "Name field not found");
@@ -37,6 +41,10 @@ Meteor.methods({
   },
 
   'editJobItem': function(id, info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!id) {
       logger.error("JobItem id field not found");
       throw new Meteor.Error(404, "JobItem id field not found");
@@ -100,6 +108,10 @@ Meteor.methods({
   },
 
   'deleteJobItem': function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!id) {
       logger.error("JobItem id field not found");
       throw new Meteor.Error(404, "JobItem id field not found");
@@ -124,6 +136,10 @@ Meteor.methods({
   },
 
   removeIngredientsFromJob: function(id, ingredient) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
     if(!id) {
       logger.error("Job item should provide an id");
       throw new Meteor.Error(404, "Job item should provide an id");
