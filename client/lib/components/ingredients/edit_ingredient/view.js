@@ -25,12 +25,6 @@ Template.editIngredientItem.events({
       "portionUsed": portionUsed,
       "unitSize": unitSize,
     }
-    Meteor.call("editIngredient", id, info, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      }
-      $("#editIngredientModal").modal("hide");
-    });
+    FlowComponents.callAction('submit', id, info);
   }
 });

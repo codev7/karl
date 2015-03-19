@@ -7,7 +7,6 @@ component.action.submit = function(info) {
       console.log(err);
       return alert(err.reason);
     }
-    $(event.target).find("[type=text]").val("");
     $("#addIngredientModal").modal("hide");
   });
 };

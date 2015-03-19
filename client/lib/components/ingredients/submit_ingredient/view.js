@@ -29,5 +29,6 @@ Template.submitIngredient.events({
       info.unitSize = parseFloat(unitSize);
     }
     FlowComponents.callAction('submit', info);
+    $(event.target).find("[type=text]").val("");
   }
 });

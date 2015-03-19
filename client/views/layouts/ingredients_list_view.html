@@ -8,9 +8,16 @@
       {{> render component = 'ingredientsList'}}
     </div>
   </div> 
-  <!-- EDIT INGREDIENT MODAL-->
-  <div class="modal fade" id="editIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    {{> editIngredientItem}}
+
+  <!-- ADD INGREDIENT-->
+  <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'submitIngredient'}}
   </div>
-  <!-- /EDIT INGREDIENT MODAL--> 
+  <!-- /ADD INGREDIENT -->
+
+   <!-- EDIT INGREDIENT-->
+  <div class="modal fade" id="editIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'editIngredientItem'}}
+  </div>
+  <!-- /EDIT INGREDIENT -->
 </template>
