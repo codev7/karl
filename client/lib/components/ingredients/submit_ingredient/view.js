@@ -1,4 +1,4 @@
-Template.submitIngredientItem.events({
+Template.submitIngredient.events({
   'submit form': function(event) {
     event.preventDefault();
     var code = $(event.target).find('[name=code]').val().trim();
@@ -28,14 +28,6 @@ Template.submitIngredientItem.events({
     } else {
       info.unitSize = parseFloat(unitSize);
     }
-
-    Meteor.call("createIngredients", info, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      }
-      $(event.target).find("[type=text]").val("");
-      $("#addIngredientModal").modal("hide");
-    });
+    FlowComponents.callAction('submit', info);
   }
 });

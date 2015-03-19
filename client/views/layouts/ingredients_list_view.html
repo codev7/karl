@@ -5,12 +5,12 @@
   </div>
   <div class="row">
     <div class="col-xs-10 col-sm-10">
-      {{> ingredientsList}}
+      {{> render component = 'ingredientsList'}}
     </div>
   </div> 
-    <!-- EDIT INGREDIENT-->
+  <!-- EDIT INGREDIENT MODAL-->
   <div class="modal fade" id="editIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     {{> editIngredientItem}}
   </div>
-  <!-- /EDIT INGREDIENT --> 
+  <!-- /EDIT INGREDIENT MODAL--> 
 </template>
