@@ -137,128 +137,193 @@ describe("Testing ingredients related methods", function() {
         expect(check._id).to.be.equal(result);
       });
     });
-
   });
 
-  // describe("editIngredient method", function() {
-  //   it("update supplier", function() {
-  //     var info = {
-  //       "code": "VV Eggs",
-  //       "description": "Eggs box",
-  //       "suppliers": "Villa",
-  //       "portionOrdered": "box",
-  //       "unitSize": 180,
-  //       "costPerPortion": 60,
-  //       "portionUsed": 1
-  //     }
+  describe("editIngredient method", function() {
+    describe("Without logged in user", function() {
+      it("update supplier", function() {
+        var userErr = client.logout();
+        var loggedInUser = client.execute(function() {
+          return Meteor.user();
+        });
+        expect(loggedInUser).to.be.equal(null);
 
-  //     var ingredientId = server.execute(function(info) {
-  //       var id = Ingredients.insert(info);
-  //       return id;
-  //     }, [info]);
-  //     expect(ingredientId).not.to.be.equal(null);
+        var info = {
+          "code": "VV Eggs",
+          "description": "Eggs box",
+          "suppliers": "Villa",
+          "portionOrdered": "box",
+          "unitSize": 180,
+          "costPerPortion": 60,
+          "portionUsed": 1
+        }
 
-  //     var updateDoc = {
-  //       "suppliers": ["Villa", "Bella"]
-  //     }
+        var ingredientId = server.execute(function(info) {
+          var id = Ingredients.insert(info);
+          return id;
+        }, [info]);
+        expect(ingredientId).not.to.be.equal(null);
 
-  //     var update = client.promise(function(done, error, id, info) {
-  //       Meteor.call("editIngredient", id, info, function(err) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done();
-  //         }
-  //       });
-  //     }, [ingredientId, updateDoc]);
-  //     expect(update).to.be.equal(null);
+        var updateDoc = {
+          "suppliers": ["Villa", "Bella"]
+        }
+        var update = client.promise(function(done, error, id, info) {
+          Meteor.call("editIngredient", id, info, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [ingredientId, updateDoc]);
+        // console.log(update);
+        expect(update.error).to.be.equal(401);
+      });
+    });
 
-  //     var check = server.execute(function(id) {
-  //       var doc = Ingredients.findOne(id);
-  //       return doc;
-  //     }, [ingredientId]);
-  //     // console.log(check);
-  //     expect(check.suppliers.length).to.be.equal(2);
-  //   });
+    describe("With logged in user", function() {
+      it("update supplier", function() {
+        var username = 'user' + Math.random();
+        var userErr = client.signUp({username: username, password: username});
+        var loggedInUser = client.execute(function() {
+          return Meteor.user();
+        });
+        expect(loggedInUser).to.be.not.equal(null);
+        var loggedInUserId = loggedInUser._id;
 
-  //   it("update description", function() {
-  //     var info = {
-  //       "code": "VV Eggs",
-  //       "description": "Eggs box",
-  //       "suppliers": "Villa",
-  //       "portionOrdered": "box",
-  //       "unitSize": 180,
-  //       "costPerPortion": 60,
-  //       "portionUsed": 1
-  //     }
+        var info = {
+          "code": "VV Eggs",
+          "description": "Eggs box",
+          "suppliers": "Villa",
+          "portionOrdered": "box",
+          "unitSize": 180,
+          "costPerPortion": 60,
+          "portionUsed": 1
+        }
 
-  //     var ingredientId = server.execute(function(info) {
-  //       var id = Ingredients.insert(info);
-  //       return id;
-  //     }, [info]);
-  //     expect(ingredientId).not.to.be.equal(null);
+        var ingredientId = server.execute(function(info) {
+          var id = Ingredients.insert(info);
+          return id;
+        }, [info]);
+        expect(ingredientId).not.to.be.equal(null);
 
-  //     var updateDoc = {
-  //       "description": "Egg Boxes"
-  //     }
+        var updateDoc = {
+          "suppliers": ["Villa", "Bella"]
+        }
+        var update = client.promise(function(done, error, id, info) {
+          Meteor.call("editIngredient", id, info, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [ingredientId, updateDoc]);
+        expect(update).to.be.equal(null);
 
-  //     var update = client.promise(function(done, error, id, info) {
-  //       Meteor.call("editIngredient", id, info, function(err) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done();
-  //         }
-  //       });
-  //     }, [ingredientId, updateDoc]);
-  //     expect(update).to.be.equal(null);
+        var check = server.execute(function(id) {
+          var doc = Ingredients.findOne(id);
+          return doc;
+        }, [ingredientId]);
+        // console.log(check);
+        expect(check.suppliers.length).to.be.equal(2);
+      });
 
-  //     var check = server.execute(function(id) {
-  //       var doc = Ingredients.findOne(id);
-  //       return doc;
-  //     }, [ingredientId]);
-  //     expect(check.description).to.be.equal(updateDoc.description);
-  //   });
+      it("update description", function() {
+        var username = 'user' + Math.random();
+        var userErr = client.signUp({username: username, password: username});
+        var loggedInUser = client.execute(function() {
+          return Meteor.user();
+        });
+        expect(loggedInUser).to.be.not.equal(null);
+        var loggedInUserId = loggedInUser._id;
 
-  //   it("update code", function() {
-  //     var info = {
-  //       "code": "VV Eggs",
-  //       "description": "Eggs box",
-  //       "suppliers": "Villa",
-  //       "portionOrdered": "box",
-  //       "unitSize": 180,
-  //       "costPerPortion": 60,
-  //       "portionUsed": 1
-  //     }
+        var info = {
+          "code": "VV Eggs",
+          "description": "Eggs box",
+          "suppliers": "Villa",
+          "portionOrdered": "box",
+          "unitSize": 180,
+          "costPerPortion": 60,
+          "portionUsed": 1
+        }
 
-  //     var ingredientId = server.execute(function(info) {
-  //       var id = Ingredients.insert(info);
-  //       return id;
-  //     }, [info]);
-  //     expect(ingredientId).not.to.be.equal(null);
+        var ingredientId = server.execute(function(info) {
+          var id = Ingredients.insert(info);
+          return id;
+        }, [info]);
+        expect(ingredientId).not.to.be.equal(null);
 
-  //     var updateDoc = {
-  //       "code": "VVV Egg Boxes"
-  //     }
+        var updateDoc = {
+          "description": "Egg Boxes"
+        }
 
-  //     var update = client.promise(function(done, error, id, info) {
-  //       Meteor.call("editIngredient", id, info, function(err) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done();
-  //         }
-  //       });
-  //     }, [ingredientId, updateDoc]);
-  //     expect(update).to.be.equal(null);
+        var update = client.promise(function(done, error, id, info) {
+          Meteor.call("editIngredient", id, info, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [ingredientId, updateDoc]);
+        expect(update).to.be.equal(null);
 
-  //     var check = server.execute(function(id) {
-  //       var doc = Ingredients.findOne(id);
-  //       return doc;
-  //     }, [ingredientId]);
-  //     expect(check.code).to.be.equal(updateDoc.code);
-  //   });
-  // });
+        var check = server.execute(function(id) {
+          var doc = Ingredients.findOne(id);
+          return doc;
+        }, [ingredientId]);
+        expect(check.description).to.be.equal(updateDoc.description);
+      });
+
+      it("update code", function() {
+        var username = 'user' + Math.random();
+        var userErr = client.signUp({username: username, password: username});
+        var loggedInUser = client.execute(function() {
+          return Meteor.user();
+        });
+        expect(loggedInUser).to.be.not.equal(null);
+        var loggedInUserId = loggedInUser._id;
+        
+        var info = {
+          "code": "VV Eggs",
+          "description": "Eggs box",
+          "suppliers": "Villa",
+          "portionOrdered": "box",
+          "unitSize": 180,
+          "costPerPortion": 60,
+          "portionUsed": 1
+        }
+
+        var ingredientId = server.execute(function(info) {
+          var id = Ingredients.insert(info);
+          return id;
+        }, [info]);
+        expect(ingredientId).not.to.be.equal(null);
+
+        var updateDoc = {
+          "code": "VVV Egg Boxes"
+        }
+
+        var update = client.promise(function(done, error, id, info) {
+          Meteor.call("editIngredient", id, info, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [ingredientId, updateDoc]);
+        expect(update).to.be.equal(null);
+
+        var check = server.execute(function(id) {
+          var doc = Ingredients.findOne(id);
+          return doc;
+        }, [ingredientId]);
+        expect(check.code).to.be.equal(updateDoc.code);
+      });
+    });
+  });
 
   // describe("deleteIngredient method", function() {
   //   it("remove", function() {
