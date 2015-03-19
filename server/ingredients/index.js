@@ -8,10 +8,10 @@ Meteor.methods({
       logger.error("Code field not found");
       throw new Meteor.Error(404, "Code field not found");
     }
-    // if(!info.description) {
-    //   logger.error("Description field not found");
-    //   throw new Meteor.Error(404, "Description field not found");
-    // }
+    if(!info.description) {
+      logger.error("Description field not found");
+      throw new Meteor.Error(404, "Description field not found");
+    }
     var exist = Ingredients.findOne({"code": info.code});
     if(exist) {
       logger.error("Duplicate entry");
@@ -67,7 +67,9 @@ Meteor.methods({
     }
     if(info.description) {
       if(item.description != info.description) {
-        updateDoc.description = info.description;
+        if(info.description != null) {
+          updateDoc.description = info.description;
+        }
       }
     }
     if(info.suppliers) {

@@ -284,7 +284,7 @@ describe("Testing ingredients related methods", function() {
         });
         expect(loggedInUser).to.be.not.equal(null);
         var loggedInUserId = loggedInUser._id;
-        
+
         var info = {
           "code": "VV Eggs",
           "description": "Eggs box",
@@ -325,40 +325,88 @@ describe("Testing ingredients related methods", function() {
     });
   });
 
-  // describe("deleteIngredient method", function() {
-  //   it("remove", function() {
-  //     var info = {
-  //       "_id": "VV Eggs" + Math.random(),
-  //       "description": "Eggs box",
-  //       "suppliers": "Villa",
-  //       "portionOrdered": "box",
-  //       "unitSize": 180,
-  //       "costPerPortion": 60,
-  //       "portionUsed": 1
-  //     }
+  describe("deleteIngredient method", function() {
+    describe("Without logged in user", function() {
+      it("remove", function() {
+        var userErr = client.logout();
+        var loggedInUser = client.execute(function() {
+          return Meteor.user();
+        });
+        expect(loggedInUser).to.be.equal(null);
 
-  //     var ingredientId = server.execute(function(info) {
-  //       var id = Ingredients.insert(info);
-  //       return id;
-  //     }, [info]);
-  //     expect(ingredientId).not.to.be.equal(null);
+        var info = {
+          "_id": "VV Eggs" + Math.random(),
+          "description": "Eggs box",
+          "suppliers": "Villa",
+          "portionOrdered": "box",
+          "unitSize": 180,
+          "costPerPortion": 60,
+          "portionUsed": 1
+        }
 
-  //     var deleteItem = client.promise(function(done, error, id) {
-  //       Meteor.call("deleteIngredient", id, function(err) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done();
-  //         }
-  //       });
-  //     }, [ingredientId]);
-  //     expect(deleteItem).to.be.equal(null);
+        var ingredientId = server.execute(function(info) {
+          var id = Ingredients.insert(info);
+          return id;
+        }, [info]);
+        expect(ingredientId).not.to.be.equal(null);
 
-  //     var check = server.execute(function(id) {
-  //       var doc = Ingredients.findOne(id);
-  //       return doc;
-  //     }, [info._id]);
-  //     expect(check).to.be.equal(undefined);
-  //   });
-  // });
+        var deleteItem = client.promise(function(done, error, id) {
+          Meteor.call("deleteIngredient", id, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [ingredientId]);
+        expect(deleteItem.error).to.be.equal(401);
+        // console.log(deleteItem);
+      });
+    });
+
+    describe("With logged in user", function() {
+      it("remove", function() {
+        var username = 'user' + Math.random();
+        var userErr = client.signUp({username: username, password: username});
+        var loggedInUser = client.execute(function() {
+          return Meteor.user();
+        });
+        expect(loggedInUser).to.be.not.equal(null);
+        var loggedInUserId = loggedInUser._id;
+        var info = {
+          "_id": "VV Eggs" + Math.random(),
+          "description": "Eggs box",
+          "suppliers": "Villa",
+          "portionOrdered": "box",
+          "unitSize": 180,
+          "costPerPortion": 60,
+          "portionUsed": 1
+        }
+
+        var ingredientId = server.execute(function(info) {
+          var id = Ingredients.insert(info);
+          return id;
+        }, [info]);
+        expect(ingredientId).not.to.be.equal(null);
+
+        var deleteItem = client.promise(function(done, error, id) {
+          Meteor.call("deleteIngredient", id, function(err) {
+            if(err) {
+              done(err);
+            } else {
+              done();
+            }
+          });
+        }, [ingredientId]);
+        expect(deleteItem).to.be.equal(null);
+
+        var check = server.execute(function(id) {
+          var doc = Ingredients.findOne(id);
+          return doc;
+        }, [info._id]);
+        expect(check).to.be.equal(undefined);
+      });
+    });
+
+  });
 });
