@@ -4,6 +4,12 @@ Meteor.methods({
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to create menu items");
+      throw new Meteor.Error(404, "User not permitted to create menu");
+    }
     if(!info.name) {
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
@@ -21,7 +27,9 @@ Meteor.methods({
       "jobItems": info.prepItems,
       "salesPrice": parseFloat(info.salesPrice),
       "staus": "active",
-      "image": info.image
+      "image": info.image,
+      "createdOn": Date.now(),
+      "createdBy": userId
     };
     var id = MenuItems.insert(doc);
     logger.info("Menu items added ", id);
@@ -32,6 +40,12 @@ Meteor.methods({
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to edit menu item");
+      throw new Meteor.Error(404, "User not permitted to edit menu");
     }
     if(!id) {
       logger.error("Menu item should provide a id");
@@ -100,17 +114,26 @@ Meteor.methods({
     }
 
     if(Object.keys(updateDoc).length > 0) {
+      updateDoc['editedBy'] = userId;
+      updateDoc['editedOn'] = Date.now();
       query['$set'] = updateDoc;
+      
+      MenuItems.update({"_id": id}, query);
+      logger.info("Menu item updated ", id);
+      return;
     }
-    MenuItems.update({"_id": id}, query);
-    logger.info("Menu item updated ", id);
-    return;
   },
 
   deleteMenuItem: function(id) {
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to delete menu item");
+      throw new Meteor.Error(404, "User not permitted to delete menu");
     }
     if(!id) {
       logger.error("Menu item should provide an id");
@@ -121,8 +144,8 @@ Meteor.methods({
       logger.error("Menu item does not exist");
       throw new Meteor.Error(404, "Menu item does not exist");
     }
+    //should not remove in case if menu item is used in a menu
     var result = MenuItems.remove(id);
-    // var result = MenuItems.update({"_id": id}, {$set: {"status": false}});
     return result;
   },
 
@@ -130,6 +153,12 @@ Meteor.methods({
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add ingredients to menu item");
+      throw new Meteor.Error(404, "User not permitted to add ingredients to menu");
     }
     if(!menuId) {
       logger.error("Menu item should provide an id");
@@ -174,6 +203,12 @@ Meteor.methods({
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to remove ingredients from menu item");
+      throw new Meteor.Error(404, "User not permitted to remove ingredients from menu");
+    }
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -207,6 +242,12 @@ Meteor.methods({
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add job items");
+      throw new Meteor.Error(404, "User not permitted to add jobs");
     }
     if(!menuId) {
       logger.error("Menu item should provide an id");

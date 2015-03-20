@@ -4,6 +4,12 @@ Meteor.methods({
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to create job items");
+      throw new Meteor.Error(404, "User not permitted to create jobs");
+    }
     if(!info.name) {
       logger.error("Name field not found");
       throw new Meteor.Error(404, "Name field not found");
@@ -27,7 +33,7 @@ Meteor.methods({
       "activeTime": activeTime,
       "shelfLife": shelfLife,
       "createdOn": Date.now(),
-      "createdBy": null, //add logged in users id
+      "createdBy": userId,
       "ingredients": []
     }
     if(info.ingredients) {
@@ -44,6 +50,12 @@ Meteor.methods({
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to edit job item");
+      throw new Meteor.Error(404, "User not permitted to edit job");
     }
     if(!id) {
       logger.error("JobItem id field not found");
@@ -101,16 +113,24 @@ Meteor.methods({
       updateDoc.ingredients = info.ingredients;
     }
     if(Object.keys(updateDoc).length > 0) {
+      updateDoc['editedOn'] = Date.now();
+      updateDoc['editedBy'] = userId;
       query["$set"] = updateDoc;
+      logger.info("Job Item updated", {"JobItemId": id});
+      return JobItems.update({'_id': id}, query);
     }
-    logger.info("Job Item updated", {"JobItemId": id});
-    return JobItems.update({'_id': id}, query);
   },
 
   'deleteJobItem': function(id) {
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to delete job item");
+      throw new Meteor.Error(404, "User not permitted to delete job");
     }
     if(!id) {
       logger.error("JobItem id field not found");
@@ -139,6 +159,12 @@ Meteor.methods({
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to delete job item");
+      throw new Meteor.Error(404, "User not permitted to delete job");
     }
     if(!id) {
       logger.error("Job item should provide an id");

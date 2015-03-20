@@ -12,3 +12,12 @@ isManagerOrAdmin = function(id) {
   }
   return permitted;
 }
+
+isAdmin = function(id) {
+  if(id) {
+    var user = Meteor.users.findOne(id);
+    if(user) {
+      return user.isAdmin;
+    }
+  }
+}

@@ -1,6 +1,4 @@
 Accounts.onCreateUser(function(options, user){
-  console.log("..user", user);
-  console.log("options...", options)
   user.profile = options.profile || {};
   if(options.profile) {
     if(!options.profile.email) {
@@ -20,4 +18,59 @@ Accounts.onCreateUser(function(options, user){
     user.isWorker = true;
   }
   return user;
+});
+
+Meteor.methods({
+  changeUserPermission: function(user, type) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to promote users");
+      throw new Meteor.Error(404, "User not permitted to promote users");
+    }
+    if(!user) {
+      logger.error('No user has found');
+      throw new Meteor.Error(401, "User not found");
+    }
+    if(!type) {
+      logger.error('Type has not found');
+      throw new Meteor.Error(401, "Type has not found");
+    }
+    var userDoc = Meteor.users.findOne(user);
+    if(!userDoc) {
+      logger.error('User does not exist');
+      throw new Meteor.Error(401, "User does not exist");
+    }
+    var query = {
+      '$set': {}
+    };
+    if(type == "admin") {
+      query['$set'] = {
+        'isAdmin': true,
+        'isManager': false,
+        'isWorker': false
+      }
+    } else if(type == "manager") {
+      query['$set'] = {
+        'isManager': true,
+        'isAdmin': false,
+        'isWorker': false
+      }
+    } else if(type == "worker") {
+      query['$set'] = {
+        'isWorker': true,
+        'isAdmin': false,
+        'isManager': false
+      }
+    } else {
+      logger.error('Un-expected type');
+      throw new Meteor.Error(401, "Un-expected type");
+    }
+    Meteor.users.update({'_id': user}, query);
+    logger.info("User permission updated", {'id': user, 'query': query});
+  }
 });
