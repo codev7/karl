@@ -48,6 +48,13 @@ Meteor.methods({
     var query = {
       '$set': {}
     };
+    var adminCount = Meteor.users.find({"isAdmin": true}).count();
+    if(adminCount <= 1) {
+      if(type == "manager" || type == "worker") {
+        logger.error("Can't change type, system needs atleast one admin");
+        throw new Meteor.Error(401, "Can't change type, system needs atleast one admin");
+      }
+    }
     if(type == "admin") {
       query['$set'] = {
         'isAdmin': true,
