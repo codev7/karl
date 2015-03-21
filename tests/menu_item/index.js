@@ -1,16 +1,34 @@
 var server = meteor({flavor: "fiber"});
 var client = browser({flavor: "fiber", location: server});
 
+createNewMenuItem = function() {
+   var info = {
+    "tag": ["kids"],
+    "instructions": "Cook",
+    "prepItems": [],
+    "ingredients": [{"_id": 2, "quantity": 100}],
+    "jobItems": [{"_id": 1, "quantity": 1}],
+    "salesPrice": 30,
+    "name": "Test menu"
+  }
+  return MenuItems.insert(info);  
+}
+
 describe("Testing menu related methods", function() {
   describe("createMenuItem method", function() {
-    it("without name", function() {
+    it("Without logged in user", function() {
+      var userErr = client.logout();
+      var loggedInUser = client.execute(function() {
+        return Meteor.user();
+      });
       var info = {
         "tag": "kids",
         "instructions": "Cook",
         "prepItems": [],
         "shelfLife": 20,
         "ingredients": [],
-        "salesPrice": 30
+        "salesPrice": 30,
+        "name": "New menu"
       }
       var result = client.promise(function(done, error, info) {
         Meteor.call("createMenuItem", info, function(err, id) {
@@ -21,127 +39,1155 @@ describe("Testing menu related methods", function() {
           }
         });
       }, [info]);
-      expect(result.error).to.be.equal(404);
+      // console.log(result);
+      expect(result.error).to.be.equal(401);
     });
 
-    it("check insert", function() {
-      var info = {
-        "name": "Sa ndwit ch" + Math.random(),
-        "tag": "kids",
-        "instructions": "Cook",
-        "prepItems": [],
-        "shelfLife": 20,
-        "ingredients": [],
-        "salesPrice": 30
-      }
-      var result = client.promise(function(done, error, info) {
-        Meteor.call("createMenuItem", info, function(err, id) {
-          if(err) {
-            done(err);
-          } else {
-            done(id);
-          }
-        });
-      }, [info]);
-      expect(result).not.to.be.equal(null);
+    describe("With logged in user", function() {
+      describe("With Admin user", function() {
+        it("Without name", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
 
-      var check = server.execute(function(id) {
-        return MenuItems.findOne(id);
-      }, [result]);
-      // console.log(check);
-      expect(check._id).to.be.equal(result);
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+            return;
+          }, [loggedInUserId]);
+
+          var info = {
+            "tag": "kids",
+            "instructions": "Cook",
+            "prepItems": [],
+            "shelfLife": 20,
+            "ingredients": [],
+            "salesPrice": 30
+          }
+          var result = client.promise(function(done, error, info) {
+            Meteor.call("createMenuItem", info, function(err, id) {
+              if(err) {
+                done(err);
+              } else {
+                done(id);
+              }
+            });
+          }, [info]);
+          // console.log(result);
+          expect(result.error).to.be.equal(404);
+        });
+        
+        it("With duplicated name", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
+
+          var menuItem = server.execute(createNewMenuItem);
+          expect(menuItem).not.to.be.equal(null);
+
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+            return;
+          }, [loggedInUserId]);
+
+          var info = {
+            "tag": "kids",
+            "instructions": "Cook",
+            "prepItems": [],
+            "shelfLife": 20,
+            "ingredients": [],
+            "salesPrice": 30,
+            "name": "Test menu"
+          }
+          var result = client.promise(function(done, error, info) {
+            Meteor.call("createMenuItem", info, function(err, id) {
+              if(err) {
+                done(err);
+              } else {
+                done(id);
+              }
+            });
+          }, [info]);
+          // console.log(result);
+          expect(result.error).to.be.equal(404);
+        });
+      });
+
+      describe("With Manager user", function() {
+        it("Without name", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
+
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+            return;
+          }, [loggedInUserId]);
+
+          var info = {
+            "tag": "kids",
+            "instructions": "Cook",
+            "prepItems": [],
+            "shelfLife": 20,
+            "ingredients": [],
+            "salesPrice": 30
+          }
+          var result = client.promise(function(done, error, info) {
+            Meteor.call("createMenuItem", info, function(err, id) {
+              if(err) {
+                done(err);
+              } else {
+                done(id);
+              }
+            });
+          }, [info]);
+          // console.log(result);
+          expect(result.error).to.be.equal(404);
+        });
+        
+        it("With duplicated name", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
+
+          var menuItem = server.execute(createNewMenuItem);
+          expect(menuItem).not.to.be.equal(null);
+
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+            return;
+          }, [loggedInUserId]);
+
+          var info = {
+            "tag": "kids",
+            "instructions": "Cook",
+            "prepItems": [],
+            "shelfLife": 20,
+            "ingredients": [],
+            "salesPrice": 30,
+            "name": "Test menu"
+          }
+          var result = client.promise(function(done, error, info) {
+            Meteor.call("createMenuItem", info, function(err, id) {
+              if(err) {
+                done(err);
+              } else {
+                done(id);
+              }
+            });
+          }, [info]);
+          // console.log(result);
+          expect(result.error).to.be.equal(404);
+        });
+      });
     });
   });
 
-  // describe("editMenuItem method", function() {
-  //   it("update ingredients", function() {
-  //     var info = {
-  //       "name": "Burger" + Math.random(),
-  //       "tag": "Kids menu",
-  //       "jobItems": [{"id": 1, "quantity": 10}],
-  //       "shelfLife": 123,
-  //       "instructions": "Heat before serve",
-  //       "ingredients": [{"id": "ing1", "quantity": 10}],
-  //       "salesPrice": 60
-  //     }
-  //     var id = server.execute(function(info) {
-  //       return MenuItems.insert(info);
-  //     }, [info]);
-  //     expect(id).not.to.be.equal(null);
+  describe("editMenuItem method", function() {
+    it("Without logged in user", function() {
+      var userErr = client.logout();
+      var loggedInUser = client.execute(function() {
+        return Meteor.user();
+      });
 
-  //     var check_1 = server.execute(function(id) {
-  //       return MenuItems.findOne(id);
-  //     }, [id]);
-  //     console.log("........1", check_1.ingredients)
+      var menuItem = server.execute(createNewMenuItem);
+      expect(menuItem).not.to.be.equal(null);
 
-  //     var toUpdate = {
-  //       "name": "Chicken Burger",
-  //       "instructions": "Put in oven before serve",
-  //       "ingredients": [{"id": "ing2", "quantity": 100}, {"id": "ing1", "quantity": 90}],
-  //       "ingredientIds": ['ing2', 'ing1']
-  //     }
-  //     var result = client.promise(function(done, error, id, info) {
-  //       Meteor.call("editMenuItem", id, info, function(err) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done();
-  //         }
-  //       });
-  //     }, [id, toUpdate]);
-  //     expect(result).to.be.equal(null);
+      var info = {
+        "tag": "kids",
+        "instructions": "Cook",
+        "prepItems": [],
+        "shelfLife": 20,
+        "ingredients": [],
+        "salesPrice": 30,
+        "name": "New menu"
+      }
+      var result = client.promise(function(done, error, id, info) {
+        Meteor.call("editMenuItem",id, info, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [menuItem, info]);
+      // console.log(result);
+      expect(result.error).to.be.equal(401);
+    });
 
-  //     var check = server.execute(function(id) {
-  //       return MenuItems.findOne(id);
-  //     }, [id]);
-  //     console.log(".........2", check.ingredients)
-  //     expect(check.name).to.be.equal(toUpdate.name);
-  //   });
+    describe("With logged in user", function() {
+      describe("With Admin user", function() {
+        it("edit name, salesPrice", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
 
-  //   // it("update jobItems", function() {
-  //   //   var info = {
-  //   //     "name": "Burger" + Math.random(),
-  //   //     "tag": "Kids menu",
-  //   //     "jobItems": [{"id": 1, "quantity": 10}],
-  //   //     "shelfLife": 123,
-  //   //     "instructions": "Heat before serve",
-  //   //     "ingredients": [{"id": "ing1", "quantity": 10}],
-  //   //     "salesPrice": 60
-  //   //   }
-  //   //   var id = server.execute(function(info) {
-  //   //     return MenuItems.insert(info);
-  //   //   }, [info]);
-  //   //   expect(id).not.to.be.equal(null);
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+            return;
+          }, [loggedInUserId]);
 
-  //   //   var check_1 = server.execute(function(id) {
-  //   //     return MenuItems.findOne(id);
-  //   //   }, [id]);
-  //   //   console.log(check_1)
 
-  //   //   var toUpdate = {
-  //   //     "name": "Chicken Burger",
-  //   //     "instructions": "Put in oven before serve",
-  //   //     "jobItems": [{"id": 2, "quantity": 1}, {"id": 3, "quantity": 1}, {"id": 1, "quantity": 23}],
-  //   //     "jobItemsIds": [2, 3, 1],
-  //   //   }
-  //   //   var result = client.promise(function(done, error, id, info) {
-  //   //     Meteor.call("editMenuItem", id, info, function(err) {
-  //   //       if(err) {
-  //   //         done(err);
-  //   //       } else {
-  //   //         done();
-  //   //       }
-  //   //     });
-  //   //   }, [id, toUpdate]);
-  //   //   expect(result).to.be.equal(null);
+          var menuItem = server.execute(createNewMenuItem);
+          expect(menuItem).not.to.be.equal(null);
 
-  //   //   var check = server.execute(function(id) {
-  //   //     return MenuItems.findOne(id);
-  //   //   }, [id]);
-  //   //   console.log(check)
-  //   //   expect(check.name).to.be.equal(toUpdate.name);
-  //   // });
-  // });
+          var info = {
+            "tag": "kids",
+            "instructions": "Cook",
+            "prepItems": [],
+            "shelfLife": 10,
+            "ingredients": [],
+            "salesPrice": 100,
+            "name": "New menu"
+          }
+          var result = client.promise(function(done, error, id, info) {
+            Meteor.call("editMenuItem",id, info, function(err) {
+              if(err) {
+                done(err);
+              } else {
+                done();
+              }
+            });
+          }, [menuItem, info]);
+          // console.log(result);
+          expect(result).to.be.equal(null);
+
+          var check = server.execute(function(id) {
+            return MenuItems.findOne(id);
+          }, [menuItem]);
+          // console.log(check);
+          expect(check.name).to.be.equal(info.name);
+          expect(check.salesPrice).to.be.equal(info.salesPrice);
+        });
+
+        it("edit tag", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
+
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+            return;
+          }, [loggedInUserId]);
+
+
+          var menuItem = server.execute(createNewMenuItem);
+          expect(menuItem).not.to.be.equal(null);
+
+          var info = {
+            "tag": ["kids", "main"]
+          }
+          var result = client.promise(function(done, error, id, info) {
+            Meteor.call("editMenuItem",id, info, function(err) {
+              if(err) {
+                done(err);
+              } else {
+                done();
+              }
+            });
+          }, [menuItem, info]);
+          // console.log(result);
+          expect(result).to.be.equal(null);
+
+          var check = server.execute(function(id) {
+            return MenuItems.findOne(id);
+          }, [menuItem]);
+          // console.log(check);
+          expect(check.tag.length).to.be.equal(info.tag.length);
+        });
+    
+        describe("edit ingredients", function() {
+          it("add new ingredient", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 2, "quantity": 100}, {"_id": 1, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(info.ingredients.length);
+          });
+
+          it("remove ingredient", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 1, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(info.ingredients.length);
+          });
+
+          it("add duplicated ingredient", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 2, "quantity": 90}, {"_id": 2, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(1);
+          });
+
+          it("change quantity", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 2, "quantity": 90}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(info.ingredients.length);
+          });
+        });
+
+        describe("edit job items", function() {
+          it("add new prep item", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 2, "quantity": 100}, {"_id": 1, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(info.jobItems.length);
+          });
+
+          it("remove existing job item", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 2, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(info.jobItems.length);
+          });
+
+          it("duplicated job item", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 1, "quantity": 10}, {"_id": 1, "quantity": 100}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(1);
+          });
+
+          it("change quantity", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isAdmin": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 1, "quantity": 100}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(1);
+          });
+        });
+      });
+
+      describe("With Manager user", function() {
+        it("edit name, salesPrice", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
+
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+            return;
+          }, [loggedInUserId]);
+
+
+          var menuItem = server.execute(createNewMenuItem);
+          expect(menuItem).not.to.be.equal(null);
+
+          var info = {
+            "tag": "kids",
+            "instructions": "Cook",
+            "prepItems": [],
+            "shelfLife": 10,
+            "ingredients": [],
+            "salesPrice": 100,
+            "name": "New menu"
+          }
+          var result = client.promise(function(done, error, id, info) {
+            Meteor.call("editMenuItem",id, info, function(err) {
+              if(err) {
+                done(err);
+              } else {
+                done();
+              }
+            });
+          }, [menuItem, info]);
+          // console.log(result);
+          expect(result).to.be.equal(null);
+
+          var check = server.execute(function(id) {
+            return MenuItems.findOne(id);
+          }, [menuItem]);
+          // console.log(check);
+          expect(check.name).to.be.equal(info.name);
+          expect(check.salesPrice).to.be.equal(info.salesPrice);
+        });
+
+        it("edit tag", function() {
+          var username = 'user' + Math.random();
+          var userErr = client.signUp({
+            'username': username, 
+            'password': username
+          });
+          var loggedInUser = client.execute(function() {
+            return Meteor.user();
+          });
+          expect(loggedInUser).to.be.not.equal(null);
+          var loggedInUserId = loggedInUser._id;
+          // console.log(loggedInUserId);
+
+          var promote = server.execute(function(userId) {
+            Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+            return;
+          }, [loggedInUserId]);
+
+
+          var menuItem = server.execute(createNewMenuItem);
+          expect(menuItem).not.to.be.equal(null);
+
+          var info = {
+            "tag": ["kids", "main"]
+          }
+          var result = client.promise(function(done, error, id, info) {
+            Meteor.call("editMenuItem",id, info, function(err) {
+              if(err) {
+                done(err);
+              } else {
+                done();
+              }
+            });
+          }, [menuItem, info]);
+          // console.log(result);
+          expect(result).to.be.equal(null);
+
+          var check = server.execute(function(id) {
+            return MenuItems.findOne(id);
+          }, [menuItem]);
+          // console.log(check);
+          expect(check.tag.length).to.be.equal(info.tag.length);
+        });
+    
+        describe("edit ingredients", function() {
+          it("add new ingredient", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 2, "quantity": 100}, {"_id": 1, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(info.ingredients.length);
+          });
+
+          it("remove ingredient", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 1, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(info.ingredients.length);
+          });
+
+          it("add duplicated ingredient", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 2, "quantity": 90}, {"_id": 2, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(1);
+          });
+
+          it("change quantity", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "ingredients": [{"_id": 2, "quantity": 90}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.ingredients.length).to.be.equal(info.ingredients.length);
+          });
+        });
+
+        describe("edit job items", function() {
+          it("add new prep item", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 2, "quantity": 100}, {"_id": 1, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(info.jobItems.length);
+          });
+
+          it("remove existing job item", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 2, "quantity": 10}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(info.jobItems.length);
+          });
+
+          it("duplicated job item", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 1, "quantity": 10}, {"_id": 1, "quantity": 100}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(1);
+          });
+
+          it("change quantity", function() {
+            var username = 'user' + Math.random();
+            var userErr = client.signUp({
+              'username': username, 
+              'password': username
+            });
+            var loggedInUser = client.execute(function() {
+              return Meteor.user();
+            });
+            expect(loggedInUser).to.be.not.equal(null);
+            var loggedInUserId = loggedInUser._id;
+            // console.log(loggedInUserId);
+
+            var promote = server.execute(function(userId) {
+              Meteor.users.update({'_id': userId}, {$set: {"isManager": true}});
+              return;
+            }, [loggedInUserId]);
+
+
+            var menuItem = server.execute(createNewMenuItem);
+            expect(menuItem).not.to.be.equal(null);
+
+            var info = {
+              "jobItems": [{"_id": 1, "quantity": 100}]
+            }
+            var result = client.promise(function(done, error, id, info) {
+              Meteor.call("editMenuItem",id, info, function(err) {
+                if(err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              });
+            }, [menuItem, info]);
+            // console.log(result);
+            expect(result).to.be.equal(null);
+
+            var check = server.execute(function(id) {
+              return MenuItems.findOne(id);
+            }, [menuItem]);
+            // console.log(check);
+            expect(check.jobItems.length).to.be.equal(1);
+          });
+        });
+      });
+    });
+  });
+
+  describe("deleteMenuItem method", function() {
+    it("check", function() {
+      var info = {
+        "name": "Burger" + Math.random(),
+        "tag": "Kids menu",
+        "prepItems": ["1", "3"],
+        "shelfLife": 123,
+        "instructions": "Heat before serve",
+        "ingredients": [{"id": 1, "quantity": '10g'}, {"id": 2, "quantity": '10g'}],
+        "salesPrice": 60
+      }
+      var menuItem = server.execute(function(info) {
+        return MenuItems.insert(info);
+      }, [info]);
+      expect(menuItem).to.be.not.equal(null);
+
+      var result = client.promise(function(done, error, id) {
+        Meteor.call("deleteMenuItem", id, function(err) {
+          if(err) {
+            done(err);
+          } else {
+            done();
+          }
+        });
+      }, [menuItem]);
+      expect(result).to.be.equal(null);
+
+      var check = server.execute(function(id) {
+        return MenuItems.findOne(id);
+      }, [menuItem]);
+      expect(check).to.be.equal(undefined);
+    });
+  });
 
   // describe("addIngredients method", function() {
   //   it("without menu item", function() {
@@ -365,40 +1411,6 @@ describe("Testing menu related methods", function() {
   //       }, [menuItem]);
   //       expect(check.ingredients.length).to.be.equal(0);
   //     });
-  //   });
-  // });
-
-  // describe("deleteMenuItem method", function() {
-  //   it("check", function() {
-  //     var info = {
-  //       "name": "Burger" + Math.random(),
-  //       "tag": "Kids menu",
-  //       "prepItems": ["1", "3"],
-  //       "shelfLife": 123,
-  //       "instructions": "Heat before serve",
-  //       "ingredients": [{"id": 1, "quantity": '10g'}, {"id": 2, "quantity": '10g'}],
-  //       "salesPrice": 60
-  //     }
-  //     var menuItem = server.execute(function(info) {
-  //       return MenuItems.insert(info);
-  //     }, [info]);
-  //     expect(menuItem).to.be.not.equal(null);
-
-  //     var result = client.promise(function(done, error, id) {
-  //       Meteor.call("deleteMenuItem", id, function(err) {
-  //         if(err) {
-  //           done(err);
-  //         } else {
-  //           done();
-  //         }
-  //       });
-  //     }, [menuItem]);
-  //     expect(result).to.be.equal(null);
-
-  //     var check = server.execute(function(id) {
-  //       return MenuItems.findOne(id);
-  //     }, [menuItem]);
-  //     expect(check).to.be.equal(undefined);
   //   });
   // });
 

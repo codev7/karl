@@ -33,3 +33,9 @@ Template.nav.events({
     Router.go("salesMaster");
   }
 });
+
+Template.nav.helpers({
+  'isAdmin': function() {
+    return isAdmin();
+  }
+});

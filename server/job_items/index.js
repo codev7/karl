@@ -1,5 +1,15 @@
 Meteor.methods({
   'createJobItem': function(info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to create job items");
+      throw new Meteor.Error(404, "User not permitted to create jobs");
+    }
     if(!info.name) {
       logger.error("Name field not found");
       throw new Meteor.Error(404, "Name field not found");
@@ -23,13 +33,23 @@ Meteor.methods({
       "activeTime": activeTime,
       "shelfLife": shelfLife,
       "createdOn": Date.now(),
-      "createdBy": null, //add logged in users id
-      "ingredients": []
+      "createdBy": userId,
+      "ingredients": [],
+      "wagePerHour": 0 
     }
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
-        doc.ingredients = info.ingredients;
+        var ingIds = [];
+        info.ingredients.forEach(function(item) {
+          if(ingIds.indexOf(item._id) < 0) {
+            ingIds.push(item._id);
+            doc.ingredients.push(item);
+          }
+        });
       }
+    }
+    if(info.wagePerHour) {
+      doc.wagePerHour = info.wagePerHour;
     }
     var id = JobItems.insert(doc);
     logger.info("Job Item inserted", {"jobId": id, 'type': info.type});
@@ -37,6 +57,16 @@ Meteor.methods({
   },
 
   'editJobItem': function(id, info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to edit job item");
+      throw new Meteor.Error(404, "User not permitted to edit job");
+    }
     if(!id) {
       logger.error("JobItem id field not found");
       throw new Meteor.Error(404, "JobItem id field not found");
@@ -50,8 +80,6 @@ Meteor.methods({
       logger.error("No editing fields found");
       throw new Meteor.Error(404, "No editing fields found");
     }
-    JobItems.update({'_id': id}, {$set: {"ingredients": []}});
-
     var query = {
       $set: {}
     }
@@ -72,6 +100,12 @@ Meteor.methods({
         updateDoc.activeTime = activeTime;
       }
     }
+    if(info.wagePerHour) {
+      var wagePerHour = parseFloat(info.wagePerHour);
+      if(wagePerHour != job.wagePerHour) {
+        updateDoc.wagePerHour = wagePerHour;
+      }
+    }
     if(info.portions) {
       var portions = parseFloat(info.portions);
       if(portions != job.portions) {
@@ -89,17 +123,38 @@ Meteor.methods({
         updateDoc.recipe = info.recipe;
       }
     }
-    if(info.ingredients.length > 0) {
-      updateDoc.ingredients = info.ingredients;
+    updateDoc.ingredients = [];
+    if(info.ingredients) {
+      if(info.ingredients.length > 0) {
+        var ingIds = [];
+        info.ingredients.forEach(function(item) {
+          if(ingIds.indexOf(item._id) < 0) {
+            ingIds.push(item._id);
+            updateDoc.ingredients.push(item);
+          }
+        });
+      }
     }
     if(Object.keys(updateDoc).length > 0) {
+      updateDoc['editedOn'] = Date.now();
+      updateDoc['editedBy'] = userId;
       query["$set"] = updateDoc;
+      logger.info("Job Item updated", {"JobItemId": id});
+      return JobItems.update({'_id': id}, query);
     }
-    logger.info("Job Item updated", {"JobItemId": id});
-    return JobItems.update({'_id': id}, query);
   },
 
   'deleteJobItem': function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to delete job item");
+      throw new Meteor.Error(404, "User not permitted to delete job");
+    }
     if(!id) {
       logger.error("JobItem id field not found");
       throw new Meteor.Error(404, "JobItem id field not found");
@@ -121,9 +176,20 @@ Meteor.methods({
     }
     logger.info("Job Item removed", {"id": id});
     JobItems.remove({'_id': id});
+    return;
   },
 
   removeIngredientsFromJob: function(id, ingredient) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to delete job item");
+      throw new Meteor.Error(404, "User not permitted to delete job");
+    }
     if(!id) {
       logger.error("Job item should provide an id");
       throw new Meteor.Error(404, "Job item should provide an id");

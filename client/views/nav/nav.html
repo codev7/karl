@@ -6,12 +6,17 @@
     <!-- <li><a href="/menuItems" id="menu">Menu Master List</a></li> -->
     <!-- <li><a href="" id="menuSalesCaliberation">Menu Sales Caliberation</a></li> -->
     <!-- <li><a href="/jobItemsList" id="jobItemsList">Job Master List</a></li> -->
+    {{#if currentUser}}
     <li><a href="/menuItems" >Menu</a></li>
     <li><a href="/jobItems">Jobs</a></li>
     <li><a href="/ingredients" id="ingredients">Ingredients</a></li>
+    {{#if isAdmin}}
     <li><a href="" id="adminPanel">Admin</a></li>
+    {{/if}}
+    {{/if}}
     <!-- <li><a href="/menus">Menus Master</a></li> -->
     <!-- <li><a href="#" id="jobsPanel">Jobs</a></li> -->
     <!-- <li><a href="#" id="salesMaster">Sales Master</a></li> -->
+    <li><a href="#">{{> loginButtons}}</a></li>
   </ul>
 </template>

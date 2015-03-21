@@ -3,6 +3,7 @@ Template.jobItemDetail.helpers({
     var id = Session.get("thisJobItem");
     var item = getPrepItem(id);
     if(item) {
+      // console.log(item);
       return item;
     }
   }

@@ -1,5 +1,15 @@
 Meteor.methods({
   createMenuItem: function(info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to create menu items");
+      throw new Meteor.Error(404, "User not permitted to create menu");
+    }
     if(!info.name) {
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
@@ -17,7 +27,9 @@ Meteor.methods({
       "jobItems": info.prepItems,
       "salesPrice": parseFloat(info.salesPrice),
       "staus": "active",
-      "image": info.image
+      "image": info.image,
+      "createdOn": Date.now(),
+      "createdBy": userId
     };
     var id = MenuItems.insert(doc);
     logger.info("Menu items added ", id);
@@ -25,6 +37,16 @@ Meteor.methods({
   },
 
   editMenuItem: function(id, info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to edit menu item");
+      throw new Meteor.Error(404, "User not permitted to edit menu");
+    }
     if(!id) {
       logger.error("Menu item should provide a id");
       throw new Meteor.Error(404, "Menu item should provide a id");
@@ -33,25 +55,6 @@ Meteor.methods({
     if(!item) {
       logger.error("Menu item should exist");
       throw new Meteor.Error(404, "Menu item should exist");
-    }
-    MenuItems.update({'_id': id}, {$set: {"ingredients": [], "jobItems": []}});
-
-    // var jobItemsIds = [];
-    // if(item.jobItems && item.jobItems.length > 0) {
-    //   item.jobItems.forEach(function(doc) {
-    //     jobItemsIds.push(doc.id);
-    //   });
-    // }
-
-    // var ingredientIds = [];
-    // if(item.ingredients && item.ingredients.length > 0) {
-    //   item.ingredients.forEach(function(doc) {
-    //     ingredientIds.push(doc.id);
-    //   });
-    // }
-    if(Object.keys(info).length < 0) {
-      logger.error("Menu item should provide fields to be updated");
-      throw new Meteor.Error(404, "Menu item should provide fields to be updated");
     }
     var query = {
       $set: {}
@@ -77,14 +80,28 @@ Meteor.methods({
         updateDoc.instructions = info.instructions;
       }
     }
+    updateDoc.ingredients = [];
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
-        updateDoc.ingredients = info.ingredients;
+        var ingIds = [];
+        info.ingredients.forEach(function(item) {
+          if(ingIds.indexOf(item._id) < 0) {
+            ingIds.push(item._id);
+            updateDoc.ingredients.push(item);
+          }
+        });
       }
     }
+    updateDoc.jobItems = [];
     if(info.jobItems) {
       if(info.jobItems.length > 0) {
-        updateDoc.jobItems = info.jobItems;
+        var jobIds = [];
+        info.jobItems.forEach(function(item) {
+          if(jobIds.indexOf(item._id) < 0) {
+            jobIds.push(item._id);
+            updateDoc.jobItems.push(item);
+          }
+        });
       }
     }
     if(info.image) {
@@ -92,14 +109,27 @@ Meteor.methods({
     }
 
     if(Object.keys(updateDoc).length > 0) {
+      updateDoc['editedBy'] = userId;
+      updateDoc['editedOn'] = Date.now();
       query['$set'] = updateDoc;
+      
+      MenuItems.update({"_id": id}, query);
+      logger.info("Menu item updated ", id);
+      return;
     }
-    MenuItems.update({"_id": id}, query);
-    logger.info("Menu item updated ", id);
-    return;
   },
 
   deleteMenuItem: function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to delete menu item");
+      throw new Meteor.Error(404, "User not permitted to delete menu");
+    }
     if(!id) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -109,13 +139,22 @@ Meteor.methods({
       logger.error("Menu item does not exist");
       throw new Meteor.Error(404, "Menu item does not exist");
     }
+    //should not remove in case if menu item is used in a menu
     var result = MenuItems.remove(id);
-    // var result = MenuItems.update({"_id": id}, {$set: {"status": false}});
     return result;
   },
 
   addIngredients: function(menuId, ingredients) {
-    // console.log("-------", arguments);
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add ingredients to menu item");
+      throw new Meteor.Error(404, "User not permitted to add ingredients to menu");
+    }
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -155,6 +194,16 @@ Meteor.methods({
   },
 
   removeIngredients: function(menuId, ingredient) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to remove ingredients from menu item");
+      throw new Meteor.Error(404, "User not permitted to remove ingredients from menu");
+    }
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");
@@ -185,6 +234,16 @@ Meteor.methods({
   },
 
   addJobItems: function(menuId, jobItems) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add job items");
+      throw new Meteor.Error(404, "User not permitted to add jobs");
+    }
     if(!menuId) {
       logger.error("Menu item should provide an id");
       throw new Meteor.Error(404, "Menu item should provide an id");

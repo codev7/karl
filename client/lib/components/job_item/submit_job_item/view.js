@@ -29,6 +29,7 @@ Template.submitJobItem.events({
     var portions = $(event.target).find('[name=portions]').val().trim();
     var activeTime = $(event.target).find('[name=activeTime]').val().trim();
     var shelfLife = $(event.target).find('[name=shelfLife]').val().trim();
+    var avgWagePerHour = $(event.target).find('[name=avgWagePerHour]').val().trim();
     var ing = $(event.target).find("[name=ing_qty]").get();
     var recipe = FlowComponents.child('jobItemEditorSubmit').getState('content');
 
@@ -42,7 +43,11 @@ Template.submitJobItem.events({
     } else {
       shelfLife = parseInt(shelfLife);
     }
-    console.log(recipe);
+    if(!avgWagePerHour) {
+      avgWagePerHour = 0;
+    } else {
+      avgWagePerHour = parseFloat(avgWagePerHour);
+    }
 
     var info = {
       "name": name,
@@ -51,7 +56,8 @@ Template.submitJobItem.events({
       "activeTime": activeTime,
       "shelfLife": shelfLife,
       "ing": [],
-      "recipe": recipe     
+      "recipe": recipe,
+      "wagePerHour": avgWagePerHour    
     }
     var ing_doc = [];
     var ingIds = [];

@@ -1,0 +1,21 @@
+<template name="userDetailed">
+  <tr class="info">
+    <td>{{username}}</td>
+    <td>{{item.type}}</td>
+    <td>{{item.email}}</td>
+    <td>
+      {{#if isAdmin}}
+      <button class="btn btn-xs changeUserPermission" data-type="manager">Manager</button>
+      <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+      {{/if}}
+      {{#if isManager}}
+      <button class="btn btn-xs changeUserPermission" data-type="admin">Admin</button>
+      <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+      {{/if}}
+      {{#if isWorker}}
+      <button class="btn btn-xs changeUserPermission" data-type="admin">Admin</button>
+      <button class="btn btn-xs changeUserPermission" data-type="manager">Manager</button>
+      {{/if}}
+    </td>
+  </tr>
+</template>

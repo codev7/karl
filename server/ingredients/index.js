@@ -1,5 +1,15 @@
 Meteor.methods({
   createIngredients: function(info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to create ingredients");
+      throw new Meteor.Error(404, "User not permitted to create ingredients");
+    }
     if(!info.code) {
       logger.error("Code field not found");
       throw new Meteor.Error(404, "Code field not found");
@@ -35,6 +45,8 @@ Meteor.methods({
       "costPerPortion": info.costPerPortion,
       "portionUsed": info.portionUsed,
       "unitSize": parseFloat(info.unitSize),
+      "createdOn": Date.now(),
+      "createdBy": userId
     }
     var id = Ingredients.insert(doc);
     logger.info("New ingredient inserted ", id);
@@ -42,6 +54,16 @@ Meteor.methods({
   },
 
   editIngredient: function(id, info) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to edit ingredients");
+      throw new Meteor.Error(404, "User not permitted to edit ingredients");
+    }
     if(!id) {
       logger.error("Id field not found");
       throw new Meteor.Error(404, "Id field not found");
@@ -59,7 +81,9 @@ Meteor.methods({
     }
     if(info.description) {
       if(item.description != info.description) {
-        updateDoc.description = info.description;
+        if(info.description != null) {
+          updateDoc.description = info.description;
+        }
       }
     }
     if(info.suppliers) {
@@ -87,11 +111,25 @@ Meteor.methods({
         updateDoc.portionUsed = info.portionUsed;
       }
     }
-    Ingredients.update({'_id': id}, {$set: updateDoc});
-    logger.info("Ingredient details updated: ", id);
+    if(Object.keys(updateDoc).length > 0) {
+      updateDoc['editedOn'] = Date.now();
+      updateDoc['editedBy'] = userId;
+      Ingredients.update({'_id': id}, {$set: updateDoc});
+      logger.info("Ingredient details updated: ", id);
+    }
   },
 
   deleteIngredient: function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to delete ingredients");
+      throw new Meteor.Error(404, "User not permitted to delete ingredients");
+    }
     if(!id) {
       logger.error("Id field not found");
       throw new Meteor.Error(404, "Id field not found");
