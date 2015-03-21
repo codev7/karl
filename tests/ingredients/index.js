@@ -38,6 +38,10 @@ createNewIngredient = function() {
 describe("Testing ingredients related methods", function() {
   describe("createIngredients method", function() {
     it("Without logged in user", function() {
+      var userErr = client.logout();
+      var loggedInUser = client.execute(function() {
+        return Meteor.user();
+      });
       var result = client.promise(createIngredients);
       expect(result.error).to.be.equal(401);
     });

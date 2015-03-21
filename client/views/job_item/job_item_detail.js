@@ -3,6 +3,9 @@ Template.jobItemDetail.helpers({
     var id = Session.get("thisJobItem");
     var item = getPrepItem(id);
     if(item) {
+      if(!item.labourCost) {
+        item.labourCost = 0;
+      }
       return item;
     }
   }

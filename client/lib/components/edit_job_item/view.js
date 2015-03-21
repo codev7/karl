@@ -28,6 +28,7 @@ Template.editJobItem.events({
     var recipe = FlowComponents.child('jobItemEditorEdit').getState('content');
     var shelfLife = $(event.target).find('[name=shelfLife]').val();
     var ings = $(event.target).find("[name=ing_qty]").get();
+    var avgWagePerHour = $(event.target).find('[name=avgWagePerHour]').val().trim();
 
     var info = {};
     info.name = name.trim();
@@ -37,6 +38,12 @@ Template.editJobItem.events({
     info.recipe = recipe;
     info.shelfLife = parseInt(shelfLife.trim());
     info.ingredients = [];
+
+    if(!avgWagePerHour) {
+      info.avgWagePerHour = 0;
+    } else {
+      info.avgWagePerHour = parseFloat(avgWagePerHour);
+    }
 
     var ing_doc = [];
     var ingredientIds = [];

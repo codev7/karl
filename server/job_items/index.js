@@ -34,12 +34,22 @@ Meteor.methods({
       "shelfLife": shelfLife,
       "createdOn": Date.now(),
       "createdBy": userId,
-      "ingredients": []
+      "ingredients": [],
+      "wagePerHour": 0 
     }
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
-        doc.ingredients = info.ingredients;
+        var ingIds = [];
+        info.ingredients.forEach(function(item) {
+          if(ingIds.indexOf(item._id) < 0) {
+            ingIds.push(item._id);
+            doc.ingredients.push(item);
+          }
+        });
       }
+    }
+    if(info.wagePerHour) {
+      doc.wagePerHour = info.wagePerHour;
     }
     var id = JobItems.insert(doc);
     logger.info("Job Item inserted", {"jobId": id, 'type': info.type});
@@ -92,6 +102,12 @@ Meteor.methods({
         updateDoc.activeTime = activeTime;
       }
     }
+    if(info.wagePerHour) {
+      var wagePerHour = parseFloat(info.wagePerHour);
+      if(wagePerHour != job.wagePerHour) {
+        updateDoc.wagePerHour = wagePerHour;
+      }
+    }
     if(info.portions) {
       var portions = parseFloat(info.portions);
       if(portions != job.portions) {
@@ -109,8 +125,10 @@ Meteor.methods({
         updateDoc.recipe = info.recipe;
       }
     }
-    if(info.ingredients.length > 0) {
-      updateDoc.ingredients = info.ingredients;
+    if(info.ingredients) {
+      if(info.ingredients.length > 0) {
+        updateDoc.ingredients = info.ingredients;
+      }
     }
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
@@ -153,6 +171,7 @@ Meteor.methods({
     }
     logger.info("Job Item removed", {"id": id});
     JobItems.remove({'_id': id});
+    return;
   },
 
   removeIngredientsFromJob: function(id, ingredient) {
