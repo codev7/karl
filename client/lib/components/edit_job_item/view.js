@@ -40,11 +40,10 @@ Template.editJobItem.events({
     info.ingredients = [];
 
     if(!avgWagePerHour) {
-      info.avgWagePerHour = 0;
+      info.wagePerHour = 0;
     } else {
-      info.avgWagePerHour = parseFloat(avgWagePerHour);
+      info.wagePerHour = parseFloat(avgWagePerHour);
     }
-
     var ing_doc = [];
     var ingredientIds = [];
     ings.forEach(function(item) {
