@@ -80,8 +80,6 @@ Meteor.methods({
       logger.error("No editing fields found");
       throw new Meteor.Error(404, "No editing fields found");
     }
-    JobItems.update({'_id': id}, {$set: {"ingredients": []}});
-
     var query = {
       $set: {}
     }
@@ -125,9 +123,16 @@ Meteor.methods({
         updateDoc.recipe = info.recipe;
       }
     }
+    updateDoc.ingredients = [];
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
-        updateDoc.ingredients = info.ingredients;
+        var ingIds = [];
+        info.ingredients.forEach(function(item) {
+          if(ingIds.indexOf(item._id) < 0) {
+            ingIds.push(item._id);
+            updateDoc.ingredients.push(item);
+          }
+        });
       }
     }
     if(Object.keys(updateDoc).length > 0) {

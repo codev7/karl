@@ -56,25 +56,6 @@ Meteor.methods({
       logger.error("Menu item should exist");
       throw new Meteor.Error(404, "Menu item should exist");
     }
-    MenuItems.update({'_id': id}, {$set: {"ingredients": [], "jobItems": []}});
-
-    // var jobItemsIds = [];
-    // if(item.jobItems && item.jobItems.length > 0) {
-    //   item.jobItems.forEach(function(doc) {
-    //     jobItemsIds.push(doc.id);
-    //   });
-    // }
-
-    // var ingredientIds = [];
-    // if(item.ingredients && item.ingredients.length > 0) {
-    //   item.ingredients.forEach(function(doc) {
-    //     ingredientIds.push(doc.id);
-    //   });
-    // }
-    if(Object.keys(info).length < 0) {
-      logger.error("Menu item should provide fields to be updated");
-      throw new Meteor.Error(404, "Menu item should provide fields to be updated");
-    }
     var query = {
       $set: {}
     }
@@ -99,14 +80,28 @@ Meteor.methods({
         updateDoc.instructions = info.instructions;
       }
     }
+    updateDoc.ingredients = [];
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
-        updateDoc.ingredients = info.ingredients;
+        var ingIds = [];
+        info.ingredients.forEach(function(item) {
+          if(ingIds.indexOf(item._id) < 0) {
+            ingIds.push(item._id);
+            updateDoc.ingredients.push(item);
+          }
+        });
       }
     }
+    updateDoc.jobItems = [];
     if(info.jobItems) {
       if(info.jobItems.length > 0) {
-        updateDoc.jobItems = info.jobItems;
+        var jobIds = [];
+        info.jobItems.forEach(function(item) {
+          if(jobIds.indexOf(item._id) < 0) {
+            jobIds.push(item._id);
+            updateDoc.jobItems.push(item);
+          }
+        });
       }
     }
     if(info.image) {
