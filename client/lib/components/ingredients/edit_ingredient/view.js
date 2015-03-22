@@ -19,11 +19,25 @@ Template.editIngredientItem.events({
     var info = {
       "code": code,
       "description": desc,
-      "suppliers": [supplier],
       "portionOrdered": portionOrdered,
-      "costPerPortion": costPerPortion,
       "portionUsed": portionUsed,
-      "unitSize": unitSize,
+      "suppliers": []
+    }
+
+    if(!costPerPortion || typeof(parseFloat(costPerPortion)) != "number") {
+      info.costPerPortion =  0;
+    } else {
+      info.costPerPortion = parseFloat(costPerPortion);
+    }
+
+    if(!unitSize || typeof(parseFloat(unitSize)) != "number") {
+      info.unitSize =  0;
+    } else {
+      info.unitSize = parseFloat(unitSize);
+    }
+
+    if(supplier.length) {
+      info.suppliers.push(supplier);
     }
     FlowComponents.callAction('submit', id, info);
   }

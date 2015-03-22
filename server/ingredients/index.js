@@ -87,9 +87,7 @@ Meteor.methods({
       }
     }
     if(info.suppliers) {
-      if(info.suppliers.length > 0) {
-        updateDoc.suppliers = info.suppliers;
-      }
+      updateDoc.suppliers = info.suppliers;
     }
     if(info.portionOrdered) {
       if(item.portionOrdered != info.portionOrdered) {
@@ -111,6 +109,7 @@ Meteor.methods({
         updateDoc.portionUsed = info.portionUsed;
       }
     }
+    console.log(updateDoc);
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
       updateDoc['editedBy'] = userId;
