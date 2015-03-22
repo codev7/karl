@@ -18,7 +18,7 @@ component.action.submit = function(id, info) {
       console.log(err);
       return alert(err.reason);
     } else {
-      Router.go("jobItemsMaster");
+      Router.go("jobItemDetailed", {"_id": id});
     }
   });
 };
