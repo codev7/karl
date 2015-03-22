@@ -31,6 +31,16 @@ Template.nav.events({
   'click #salesMaster': function(event) {
     event.preventDefault();
     Router.go("salesMaster");
+  },
+
+  'click #signInButton': function(event) {
+    event.preventDefault();
+    Router.go("signIn");
+  },
+
+  'click #signOutButton': function(event) {
+    event.preventDefault();
+    Meteor.logout();
   }
 });
 
