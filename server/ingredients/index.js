@@ -87,9 +87,7 @@ Meteor.methods({
       }
     }
     if(info.suppliers) {
-      if(info.suppliers.length > 0) {
-        updateDoc.suppliers = info.suppliers;
-      }
+      updateDoc.suppliers = info.suppliers;
     }
     if(info.portionOrdered) {
       if(item.portionOrdered != info.portionOrdered) {

@@ -12,9 +12,9 @@ Template.submitIngredient.events({
     var info = {
       "code": code,
       "description": desc,
-      "suppliers": [supplier],
       "portionOrdered": portionOrdered,
       "portionUsed": portionUsed,
+      "suppliers": []
     }
 
     if(!costPerPortion || typeof(parseFloat(costPerPortion)) != "number") {
@@ -28,7 +28,10 @@ Template.submitIngredient.events({
     } else {
       info.unitSize = parseFloat(unitSize);
     }
-    FlowComponents.callAction('submit', info);
-    $(event.target).find("[type=text]").val("");
+
+    if(supplier.length) {
+      info.suppliers.push(supplier);
+    }
+    FlowComponents.callAction('submit', event, info);
   }
 });
