@@ -109,7 +109,6 @@ Meteor.methods({
         updateDoc.portionUsed = info.portionUsed;
       }
     }
-    console.log(updateDoc);
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
       updateDoc['editedBy'] = userId;
