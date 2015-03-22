@@ -32,6 +32,10 @@ Meteor.methods({
       logger.error("User not permitted to promote users");
       throw new Meteor.Error(404, "User not permitted to promote users");
     }
+    if(userId == user) {
+      logger.error("Admin user cannot change your own permission");
+      throw new Meteor.Error(404, "Admin user cannot change your own permission");
+    }
     if(!user) {
       logger.error('No user has found');
       throw new Meteor.Error(401, "User not found");
@@ -49,7 +53,7 @@ Meteor.methods({
       '$set': {}
     };
     var adminCount = Meteor.users.find({"isAdmin": true}).count();
-    if(adminCount <= 1) {
+    if(adminCount < 1) {
       if(type == "manager" || type == "worker") {
         logger.error("Can't change type, system needs atleast one admin");
         throw new Meteor.Error(401, "Can't change type, system needs atleast one admin");

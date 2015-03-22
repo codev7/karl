@@ -47,5 +47,9 @@ Template.nav.events({
 Template.nav.helpers({
   'isAdmin': function() {
     return isAdmin();
+  },
+
+  'isPermitted': function() {
+    return isManagerOrAdmin(Meteor.userId());
   }
 });
