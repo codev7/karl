@@ -1,5 +1,4 @@
 var component = FlowComponents.define('submitJobItem', function(props) {
-  // this.onRendered(this.renderTextEditor);
 });
 
 component.state.initialHTML = function() {
@@ -14,7 +13,7 @@ component.action.submit = function(info) {
     } else {
       Session.set("selectedIngredients", null);
       Session.set("selectedJobItems", null);
-      Router.go("jobItemsMaster");
+      Router.go("jobItemDetailed", {"_id": id});
     }
   });
 };

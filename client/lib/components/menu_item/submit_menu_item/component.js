@@ -1,5 +1,4 @@
 var component = FlowComponents.define('submitMenuItem', function(props) {
-  // this.onRendered(this.renderTextEditor);
 });
 
 component.state.initialHTML = function() {
@@ -14,6 +13,6 @@ component.action.submit = function(info) {
     }
     Session.set("selectedIngredients", null);
     Session.set("selectedJobItems", null);
-    Router.go("menuItemsMaster");
+    Router.go("menuItemDetail", {"_id": id});
   });
 };
