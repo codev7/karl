@@ -18,7 +18,7 @@ component.action.submit = function(id, info) {
       console.log(err);
       return alert(err.reason);
     } else {
-      Router.go("menuItemsMaster");
+      Router.go("menuItemDetail", {"_id": id});
     }
   });
 };
