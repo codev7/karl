@@ -65,12 +65,14 @@ Template.submitJobItem.events({
       var dataid = $(item).attr("data-id");
       if(dataid && ingIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
-        var info = {
-          "_id": dataid,
-          "quantity": quantity
+        if(quantity > 0) {
+          var info = {
+            "_id": dataid,
+            "quantity": quantity
+          }
+          ing_doc.push(info);
+          ingIds.push(dataid);
         }
-        ing_doc.push(info);
-        ingIds.push(dataid);
       }
     });
 
