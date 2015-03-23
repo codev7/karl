@@ -16,6 +16,12 @@ Template.editIngredientItem.events({
     var portionUsed = $(event.target).find('[name=portionUsed]').val().trim();
     var unitSize = $(event.target).find('[name=unitSize]').val().trim();
 
+    if(!code) {
+      return alert("Code must have a value");
+    }
+    if(!desc) {
+      return alert("Description should have a value");
+    }
     var info = {
       "code": code,
       "description": desc,

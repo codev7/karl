@@ -66,6 +66,15 @@ Template.editMenuItem.events({
     var ings = $(event.target).find("[name=ing_qty]").get();
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = $("#uploadedImageUrl").attr("src");
+
+    if(!name) {
+      return alert("Add a unique name for the menu");
+    }
+    if(instructions) {
+      if($('.ql-editor').text() === "Add instructions here" || $('.ql-editor').text() === "") {
+        instructions = ""
+      }
+    }
     var info = {
       "name": name,
       "instructions": instructions,

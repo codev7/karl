@@ -8,6 +8,8 @@ component.state.initialHTML = function() {
   if(item) {
     if(item.recipe) {
       return item.recipe;
+    } else {
+      return "Add recipe here";
     }
   }
 };

@@ -1,5 +1,4 @@
 var component = FlowComponents.define('editMenuItem', function(props) {
-  // this.onRendered(this.renderTextEditor);
 });
 
 component.state.initialHTML = function() {
@@ -8,6 +7,8 @@ component.state.initialHTML = function() {
   if(item) {
     if(item.instructions) {
       return item.instructions;
+    } else {
+      return "Add instructions here"
     }
   }
 };

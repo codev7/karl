@@ -31,11 +31,22 @@ Template.editJobItem.events({
     var avgWagePerHour = $(event.target).find('[name=avgWagePerHour]').val().trim();
 
     var info = {};
+    if(recipe) {
+      if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
+        recipe = ""
+      }
+    }
+    if(!name) {
+      return alert("Name should have a value");
+    }
+    if(!activeTime) {
+      return alert("Should have an active time for the job");
+    }
+    info.recipe = recipe;
     info.name = name.trim();
-    info.type = type.trim();
+    info.type = type;
     info.portions = parseInt(portions.trim());
     info.activeTime = parseInt(activeTime.trim());
-    info.recipe = recipe;
     info.shelfLife = parseInt(shelfLife.trim());
     info.ingredients = [];
 
