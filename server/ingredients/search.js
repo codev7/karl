@@ -1,5 +1,5 @@
 SearchSource.defineSource('ingredients', function(searchText, options) {
-  var optionFileds = {sort: {'code': 1}, limit: 10};
+  var optionFileds = {sort: {'code': 1}, limit: 50};
   var docs = [];
   if(searchText) {
     var regExp = buildRegExp(searchText);
