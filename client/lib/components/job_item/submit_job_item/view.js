@@ -33,6 +33,18 @@ Template.submitJobItem.events({
     var ing = $(event.target).find("[name=ing_qty]").get();
     var recipe = FlowComponents.child('jobItemEditorSubmit').getState('content');
 
+    if(!name) {
+      return alert("Name should have a value");
+    } 
+    if(!activeTime) {
+      return alert("Should have an active time for the job");
+    }
+    
+    if(recipe) {
+      if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
+        recipe = ""
+      }
+    }
     if(!portions) {
       portions = 0;
     } else {

@@ -123,6 +123,11 @@ Meteor.methods({
         updateDoc.recipe = info.recipe;
       }
     }
+    if(info.type) {
+      if(info.type != job.type) {
+        updateDoc.type = info.type;
+      }
+    }
     updateDoc.ingredients = [];
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
