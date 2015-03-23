@@ -9,6 +9,12 @@ Template.submitIngredient.events({
     var portionUsed = $(event.target).find('[name=portionUsed]').val().trim();
     var unitSize = $(event.target).find('[name=unitSize]').val().trim();
 
+    if(!code) {
+      return alert("You need to add a code");
+    }
+    if(!desc) {
+      return alert("You need to a description");
+    }
     var info = {
       "code": code,
       "description": desc,

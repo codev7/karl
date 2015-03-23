@@ -7,8 +7,11 @@ Template.menuItemDetail.helpers({
       item.totalPrepCost = 0;
       item.contribution = 0;
       item.tax = 0;
+      item.ingsListView = false;
+      item.jobsListView = false;
       if(item.ingredients) {
         if(item.ingredients.length > 0) {
+          item.ingsListView = true;
           item.ingredients.forEach(function(doc) {
             var ing = getIngredientItem(doc._id);
             if(ing) {
@@ -20,6 +23,7 @@ Template.menuItemDetail.helpers({
       }
       if(item.jobItems) {
         if(item.jobItems.length > 0) {
+          item.jobsListView = true;
           item.jobItems.forEach(function(doc) {
             var jobitem = getPrepItem(doc._id);
             if(jobitem) {

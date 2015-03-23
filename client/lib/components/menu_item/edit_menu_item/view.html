@@ -10,13 +10,6 @@
           <label>Tag</label>
           <input type="text" name="tag" class="form-control" placeholder="tag" value="{{item.tag}}">
         </div>
-       <!--  <div class="form-group">
-          <label>Shelf Life</label>
-          <div class="input-group">
-            <input type="text" name="shelfLife" class="form-control" placeholder="shelfLife" value="{{item.itemShelfLife}}">
-            <div class="input-group-addon">Days</div>
-          </div>
-        </div>-->
         <div class="form-group">
           <label>Instructions</label>
             {{> render component = 'textEditor' id='menuItemEditorEdit' 
@@ -86,7 +79,7 @@
           <label>Sale price</label>
           <div class="input-group">
             <div class="input-group-addon">$</div>
-            <input type="text" name="salesPrice" class="form-control" placeholder="Sale price" value="{{item.salesPrice}}">
+            <input type="number" name="salesPrice" class="form-control" placeholder="Sale price" value="{{item.salesPrice}}">
           </div>
         </div>
         <!-- <div class="form-group">

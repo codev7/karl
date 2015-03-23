@@ -42,18 +42,29 @@ Template.submitMenuItem.events({
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
 
+    if(!name) {
+      return alert("Add a unique name for the menu");
+    }
+    if(instructions) {
+      if($('.ql-editor').text() === "Add instructions here" || $('.ql-editor').text() === "") {
+        instructions = ""
+      }
+    }
+
     var ing_doc = [];
     var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
       if(dataid && ingredientIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
-        var info = {
-          "_id": dataid,
-          "quantity": quantity
+        if(quantity > 0) {
+          var info = {
+            "_id": dataid,
+            "quantity": quantity
+          }
+          ing_doc.push(info);
+          ingredientIds.push(dataid);
         }
-        ing_doc.push(info);
-        ingredientIds.push(dataid);
       }
     });
 
@@ -63,12 +74,14 @@ Template.submitMenuItem.events({
       var dataid = $(item).attr("data-id");
       if(dataid && jobItemsIds.indexOf(dataid) < 0) {
         var quantity = $(item).val();
-        var info = {
-          "_id": dataid,
-          "quantity": quantity
+        if(quantity > 0) {
+          var info = {
+            "_id": dataid,
+            "quantity": quantity
+          }
+          prep_doc.push(info);
+          jobItemsIds.push(dataid);
         }
-        prep_doc.push(info);
-        jobItemsIds.push(dataid);
       }
     });
 
@@ -77,9 +90,8 @@ Template.submitMenuItem.events({
       tag = tag.trim().split(",");
       if(tag.length > 0) {
         tag.forEach(function(item) {
-          var doc = item.trim();
-          if(doc) {
-            tags.push(doc);
+          if(item.trim()) {
+            tags.push(item.trim());
           }
         });
       }
