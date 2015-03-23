@@ -1,4 +1,7 @@
 <template name="ingredientsList">
+  <br>
+  <input name="searchIngs" type="text" id="searchIngBox" class="form-control" placeholder="Search from Code, description or supplier"/>
+  <br>
   <table class="table table-condensed">
     <thead>
       <tr>
@@ -13,7 +16,7 @@
       </tr>
     </thead>
    <tbody>
-      {{#each ingredientsList}}
+      {{#each getIngredients}}
         {{> ingredientItemDetailed}}
       {{/each}}
     </tbody>

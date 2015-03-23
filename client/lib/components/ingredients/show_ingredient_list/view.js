@@ -4,7 +4,7 @@ var options = {
 };
 var fields = ['code', 'description'];
 
-IngredientsSearch = new SearchSource('ingredients', fields, options);
+var IngredientsSearch = new SearchSource('ingredients', fields, options);
 
 Template.showIngredientsList.helpers({
   getIngredients: function() {
