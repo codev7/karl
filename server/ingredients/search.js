@@ -1,25 +1,32 @@
 SearchSource.defineSource('ingredients', function(searchText, options) {
-  var optionFileds = {sort: {'code': 1}, limit: 50};
+  var optionFileds = {sort: {'code': 1}};
   var docs = [];
+  var selector = {};
+  if(options) {
+    if(options.endingAt) {
+      selector = {
+        $or: [
+          {'code': {$gt: options.endingAt}},
+          {'code': {$lte: options.endingAt}}
+        ]
+      }
+    }
+    if(options.limit) {
+      optionFileds['limit'] = options.limit;
+    }
+  } else {
+    optionFileds['limit'] = 10;
+  }
   if(searchText) {
     var regExp = buildRegExp(searchText);
-    var selector = {$or: [
+    selector = {$or: [
       {'code': regExp},
       {'suppliers': regExp},
       {'description': regExp}
     ]};
-    // console.log(".......", options);
-    // if(options.endingAt) {
-    //   if(options.sort > 0) {
-    //     selector['code'] = {$gt: options.endingAt};
-    //   } else {
-    //     selector['code'] = {$lt: options.endingAt};
-    //   }
-    // }
-    // console.log(".....selector", selector);
     docs = Ingredients.find(selector, optionFileds).fetch();
   } else {
-    docs = Ingredients.find({}, optionFileds).fetch();
+    docs = Ingredients.find(selector, optionFileds).fetch();
   }
   return docs;
 });

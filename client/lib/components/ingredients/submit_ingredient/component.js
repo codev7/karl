@@ -10,5 +10,7 @@ component.action.submit = function(event, info) {
       $(event.target).find("[type=text]").val("");
     }
     $("#addIngredientModal").modal("hide");
+    IngredientsListSearch.cleanHistory();
+    IngredientsListSearch.search("", {"limit": 10});
   });
 };

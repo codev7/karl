@@ -4,16 +4,17 @@ var options = {
 };
 var fields = ['code', 'description'];
 
-var IngredientsListSearch = new SearchSource('ingredients', fields, options);
+IngredientsListSearch = new SearchSource('ingredients', fields, options);
 
 Template.ingredientsList.helpers({
   getIngredients: function() {
-    return IngredientsListSearch.getData({
+    var data = IngredientsListSearch.getData({
       transform: function(matchText, regExp) {
         return matchText.replace(regExp, "<b>$&</b>")
       },
       sort: {'code': 1}
     });
+    return data;
   },
   
   isLoading: function() {
@@ -24,16 +25,29 @@ Template.ingredientsList.helpers({
 Template.ingredientsList.events({
   "keyup #searchIngBox": _.throttle(function(e) {
     var text = $(e.target).val().trim();
-    IngredientsListSearch.search(text);
+    IngredientsListSearch.search(text, {"limit": 10});
   }, 200),
 
-  'scroll #list': function(event) {
-    console.log("--------");
-  }
+  'click #loadMoreIngs': _.throttle(function(e) {
+    e.preventDefault();
+    if(IngredientsListSearch.history) {
+      if(IngredientsListSearch.history['']) {
+        var dataHistory = IngredientsListSearch.history[''].data;
+        console.log(dataHistory);
+        if(dataHistory.length >= 9) {
+          IngredientsListSearch.cleanHistory();
+          var count = dataHistory.length;
+          var lastItem = dataHistory[count - 1]['code'];
+          var text = $("#searchIngBox").val().trim();
+          IngredientsListSearch.search(text, {"limit": count + 10, "endingAt": lastItem});
+        }
+      }
+    }
+  }, 200)
 });
 
 
 Template.ingredientsList.rendered = function() {
   IngredientsListSearch.cleanHistory();
-  IngredientsListSearch.search("");
+  IngredientsListSearch.search("", {"limit": 10});
 }

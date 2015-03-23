@@ -1,7 +1,6 @@
 <template name="ingredientsList">
   <br>
   <input name="searchIngs" type="text" id="searchIngBox" class="form-control" placeholder="Search from Code, description or supplier"/>
-  <br>
   <table class="table table-condensed">
     <thead>
       <tr>
@@ -21,4 +20,11 @@
       {{/each}}
     </tbody>
   </table>
+  <div class="row">
+    <!-- <div class="col-md-4"></div> -->
+    <div class="list-group">
+      <a href="#" id="loadMoreIngs" class="list-group-item list-group-item-success center-text">Load More</a>
+    </div>
+    <!-- <div class="col-md-4"></div> -->
+  </div>
 </template>
