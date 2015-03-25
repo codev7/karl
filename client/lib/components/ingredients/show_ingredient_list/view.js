@@ -52,9 +52,8 @@ Template.showIngredientsList.events({
   },
 
   'click #addNewIng': function(event) {
-    console.log("-------");
+    event.preventDefault();
     $("#addIngredientModal").modal('show');
-    // $("")
   }
 });
 

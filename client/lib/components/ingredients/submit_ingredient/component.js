@@ -10,7 +10,6 @@ component.action.submit = function(event, info) {
       IngredientsListSearch.cleanHistory(); 
       IngredientsListSearch.search("", {"limit": 10});
     }
-    console.log($(event.target).find("[type=text]"));
     $(event.target).find("[type=text]").val("");
     $("#addIngredientModal").modal("hide");
   });
