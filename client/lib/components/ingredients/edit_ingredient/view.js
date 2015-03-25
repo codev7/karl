@@ -34,6 +34,7 @@ Template.editIngredientItem.events({
       info.costPerPortion =  0;
     } else {
       info.costPerPortion = parseFloat(costPerPortion);
+      info.costPerPortion = Math.round(info.costPerPortion * 100)/100;
     }
 
     if(!unitSize || typeof(parseFloat(unitSize)) != "number") {

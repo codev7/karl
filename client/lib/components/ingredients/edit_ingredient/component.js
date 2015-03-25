@@ -6,6 +6,10 @@ component.action.submit = function(id, info) {
     if(err) {
       console.log(err);
       return alert(err.reason);
+    } else {
+      $(event.target).find("[type=text]").val("");
+      IngredientsListSearch.cleanHistory();
+      IngredientsListSearch.search("", {"limit": 10});
     }
     $("#editIngredientModal").modal("hide");
   });

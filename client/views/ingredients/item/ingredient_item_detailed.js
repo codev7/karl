@@ -13,7 +13,8 @@ Template.ingredientItemDetailed.events({
           console.log(err);
           return alert(err.reason);
         }
-        $(event.target).closest('tr').remove();
+        IngredientsListSearch.cleanHistory();
+        IngredientsListSearch.search("", {"limit": 10});
       });
     }
   }

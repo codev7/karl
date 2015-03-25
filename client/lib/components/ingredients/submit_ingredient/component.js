@@ -8,9 +8,9 @@ component.action.submit = function(event, info) {
       return alert(err.reason);
     } else {
       $(event.target).find("[type=text]").val("");
+      IngredientsListSearch.cleanHistory(); 
+      IngredientsListSearch.search("", {"limit": 10});
     }
     $("#addIngredientModal").modal("hide");
-    IngredientsListSearch.cleanHistory();
-    IngredientsListSearch.search("", {"limit": 10});
   });
 };
