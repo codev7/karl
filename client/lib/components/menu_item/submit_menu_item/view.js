@@ -96,17 +96,23 @@ Template.submitMenuItem.events({
         });
       }
     }
-    if(!salesPrice) {
-      salesPrice = 0;
-    }
     var info = {
       "name": name,
       "instructions": instructions,
-      "salesPrice": parseFloat(salesPrice),
       "image": image,
       "ingredients": ing_doc,
       "prepItems": prep_doc,
       "tag": tags
+    }
+    salesPrice = parseFloat(salesPrice);
+    if(!salesPrice || typeof(salesPrice) != "number") {
+      info.salesPrice =  0;
+    } else {
+      if(salesPrice === NaN) {
+        info.salesPrice = 0;
+      } else {
+        info.salesPrice = Math.round(salesPrice * 100)/100;
+      }
     }
     FlowComponents.callAction('submit', info);
   },

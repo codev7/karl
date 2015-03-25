@@ -70,9 +70,9 @@ Meteor.methods({
         updateDoc.tag = info.tag;
       }
     }
-    if(info.salesPrice) {
+    if(info.salesPrice || (info.salesPrice >= 0)) {
       if(info.salesPrice != item.salesPrice) {
-        updateDoc.salesPrice = info.salesPrice;
+        updateDoc['salesPrice'] = info.salesPrice;
       }
     }
     if(info.instructions) {
@@ -112,7 +112,7 @@ Meteor.methods({
       updateDoc['editedBy'] = userId;
       updateDoc['editedOn'] = Date.now();
       query['$set'] = updateDoc;
-      
+
       MenuItems.update({"_id": id}, query);
       logger.info("Menu item updated ", id);
       return;
