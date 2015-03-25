@@ -47,13 +47,27 @@ Template.editJobItem.events({
     info.type = type;
     info.portions = parseInt(portions.trim());
     info.activeTime = parseInt(activeTime.trim());
-    info.shelfLife = parseInt(shelfLife.trim());
     info.ingredients = [];
 
-    if(!avgWagePerHour) {
-      info.wagePerHour = 0;
+    avgWagePerHour = parseFloat(avgWagePerHour);
+    if(!avgWagePerHour || typeof(avgWagePerHour) != "number") {
+      info.wagePerHour =  0;
     } else {
-      info.wagePerHour = parseFloat(avgWagePerHour);
+      if(avgWagePerHour === NaN) {
+        info.wagePerHour = 0;
+      } else {
+        info.wagePerHour = Math.round(avgWagePerHour * 100)/100;
+      }
+    }
+    shelfLife = parseFloat(shelfLife)
+    if(!shelfLife || typeof(shelfLife) != "number") {
+      info.shelfLife =  0;
+    } else {
+      if(shelfLife === NaN) {
+        info.shelfLife = 0;
+      } else {
+        info.shelfLife = Math.round(shelfLife * 100)/100;
+      }
     }
     var ing_doc = [];
     var ingredientIds = [];
@@ -71,7 +85,6 @@ Template.editJobItem.events({
         }
       }
     });
-
     if(ing_doc.length > 0 && ingredientIds.length > 0) {
       info.ingredients = ing_doc;
       info.ingredientIds = ingredientIds;

@@ -24,7 +24,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "Duplicate entry, change name and try again");
     }
     var activeTime = parseInt(info.activeTime) * 60; //seconds
-    var shelfLife = parseInt(info.shelfLife); //days
+    var shelfLife = parseFloat(info.shelfLife); //days
     var doc = {
       "name": info.name,
       "type": info.type,
@@ -94,26 +94,26 @@ Meteor.methods({
         }
       }
     }
-    if(info.activeTime) {
+    if(info.activeTime || (info.activeTime >= 0)) {
       var activeTime = parseInt(info.activeTime) * 60;
       if(activeTime != job.activeTime) {
         updateDoc.activeTime = activeTime;
       }
     }
-    if(info.wagePerHour) {
+    if(info.wagePerHour || (info.wagePerHour >= 0)) {
       var wagePerHour = parseFloat(info.wagePerHour);
       if(wagePerHour != job.wagePerHour) {
         updateDoc.wagePerHour = wagePerHour;
       }
     }
-    if(info.portions) {
+    if(info.portions || (info.portions >= 0)) {
       var portions = parseFloat(info.portions);
       if(portions != job.portions) {
         updateDoc.portions = portions;
       }
     }
-    if(info.shelfLife) {
-      var shelfLife = parseInt(info.shelfLife);
+    if(info.shelfLife || (info.shelfLife >= 0)) {
+      var shelfLife = parseFloat(info.shelfLife);
       if(shelfLife != job.shelfLife) {
         updateDoc.shelfLife = shelfLife;
       }

@@ -1,9 +1,9 @@
 Template.jobItemDetail.helpers({
   item: function() {
     var id = Session.get("thisJobItem");
-    var item = getPrepItem(id);
-    item.ingsListView = false;
+    var item = getPrepItem(id)
     if(item) {
+      item.ingsListView = false;
       if(item.ingredients.length > 0) {
         item.ingsListView = true;
       }

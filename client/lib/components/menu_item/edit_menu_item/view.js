@@ -78,12 +78,20 @@ Template.editMenuItem.events({
     var info = {
       "name": name,
       "instructions": instructions,
-      "salesPrice": parseFloat(salesPrice),
       "jobItems": [],
       "ingredients": [],
       "image": image
     }
-
+    salesPrice = parseFloat(salesPrice);
+    if(!salesPrice || typeof(salesPrice) != "number") {
+      info.salesPrice =  0;
+    } else {
+      if(salesPrice === NaN) {
+        info.salesPrice = 0;
+      } else {
+        info.salesPrice = Math.round(salesPrice * 100)/100;
+      }
+    }
     if(tag) {
       var tags = [];
       tag = tag.trim().split(",");

@@ -15,7 +15,7 @@
           <label>
             Ingredients used
             <button class="btn btn-xs" id="showIngredientsList">Select Ingredients</button>
-            <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button>
+            <!-- <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button> -->
           </label>
           <div>
             <table class="table table-hover thumbnail">
@@ -64,7 +64,7 @@
         <div class="form-group">
           <label>Shelf Life</label>
           <div class="input-group">
-             <input type="number" name="shelfLife" class="form-control" placeholder="Shelf Life" value="{{item.shelfLife}}">
+             <input type="text" name="shelfLife" class="form-control" placeholder="Shelf Life" value="{{item.shelfLife}}">
             <span class="input-group-addon">Days</span>
           </div>
         </div>
@@ -72,7 +72,7 @@
           <label>Labours' Average Wage (per hour)</label>
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <input type="number" name="avgWagePerHour" class="form-control" placeholder="Average Wage of a Worker per Hour" value="{{item.wagePerHour}}">
+            <input type="text" name="avgWagePerHour" class="form-control" placeholder="Average Wage of a Worker per Hour" value="{{item.wagePerHour}}">
           </div>   
         </div>
       </div>

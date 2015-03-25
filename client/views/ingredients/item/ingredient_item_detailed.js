@@ -2,7 +2,6 @@ Template.ingredientItemDetailed.events({
   'click .editIngredient': function(event) {
     event.preventDefault();
     Session.set("thisIngredient", this);
-    // $("#editIngredientModal").modal("show");
   },
 
   'click .deleteIngredient': function(event) {
@@ -14,6 +13,8 @@ Template.ingredientItemDetailed.events({
           console.log(err);
           return alert(err.reason);
         }
+        IngredientsListSearch.cleanHistory();
+        IngredientsListSearch.search("", {"limit": 10});
       });
     }
   }
