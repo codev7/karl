@@ -7,10 +7,11 @@ component.action.submit = function(event, info) {
       console.log(err);
       return alert(err.reason);
     } else {
-      $(event.target).find("[type=text]").val("");
       IngredientsListSearch.cleanHistory(); 
       IngredientsListSearch.search("", {"limit": 10});
     }
+    console.log($(event.target).find("[type=text]"));
+    $(event.target).find("[type=text]").val("");
     $("#addIngredientModal").modal("hide");
   });
 };

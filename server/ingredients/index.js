@@ -99,7 +99,7 @@ Meteor.methods({
         updateDoc.unitSize = parseFloat(info.unitSize);
       }
     }
-    if(info.costPerPortion) {
+    if(info.costPerPortion || (info.costPerPortion >= 0)) {
       if(item.costPerPortion != info.costPerPortion) {
         updateDoc.costPerPortion = parseFloat(info.costPerPortion);
       }

@@ -46,6 +46,6 @@ Template.editIngredientItem.events({
     if(supplier.length) {
       info.suppliers.push(supplier);
     }
-    FlowComponents.callAction('submit', id, info);
+    FlowComponents.callAction('submit', id, info, event);
   }
 });
