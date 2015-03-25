@@ -24,7 +24,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "Duplicate entry, change name and try again");
     }
     var activeTime = parseInt(info.activeTime) * 60; //seconds
-    var shelfLife = parseInt(info.shelfLife); //days
+    var shelfLife = parseFloat(info.shelfLife); //days
     var doc = {
       "name": info.name,
       "type": info.type,
@@ -113,7 +113,7 @@ Meteor.methods({
       }
     }
     if(info.shelfLife) {
-      var shelfLife = parseInt(info.shelfLife);
+      var shelfLife = parseFloat(info.shelfLife);
       if(shelfLife != job.shelfLife) {
         updateDoc.shelfLife = shelfLife;
       }

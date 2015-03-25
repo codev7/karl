@@ -47,13 +47,22 @@ Template.editJobItem.events({
     info.type = type;
     info.portions = parseInt(portions.trim());
     info.activeTime = parseInt(activeTime.trim());
-    info.shelfLife = parseInt(shelfLife.trim());
     info.ingredients = [];
 
-    if(!avgWagePerHour) {
-      info.wagePerHour = 0;
+    if(!avgWagePerHour || typeof(parseFloat(avgWagePerHour)) != "number") {
+      info.wagePerHour =  0;
     } else {
       info.wagePerHour = parseFloat(avgWagePerHour);
+      info.wagePerHour = Math.round(info.wagePerHour * 100)/100;
+    }
+    shelfLife = parseFloat(shelfLife)
+    if(!shelfLife || typeof(shelfLife) != "number") {
+      info.shelfLife =  0;
+    } else {
+      if(shelfLife === NaN) {
+        info.shelfLife = 0;
+      }
+      info.shelfLife = Math.round(shelfLife * 100)/100;
     }
     var ing_doc = [];
     var ingredientIds = [];

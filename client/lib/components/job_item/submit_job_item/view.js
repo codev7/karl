@@ -40,37 +40,43 @@ Template.submitJobItem.events({
       return alert("Should have an active time for the job");
     }
     
-    if(recipe) {
-      if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
-        recipe = ""
-      }
-    }
-    if(!portions) {
-      portions = 0;
-    } else {
-      portions = parseInt(portions);
-    }
-    if(!shelfLife) {
-      shelfLife = 0;
-    } else {
-      shelfLife = parseInt(shelfLife);
-    }
-    if(!avgWagePerHour) {
-      avgWagePerHour = 0;
-    } else {
-      avgWagePerHour = parseFloat(avgWagePerHour);
-    }
-
     var info = {
       "name": name,
       "type": type,
       "portions": portions,
       "activeTime": activeTime,
-      "shelfLife": shelfLife,
+      "shelfLife": 0,
       "ing": [],
       "recipe": recipe,
-      "wagePerHour": avgWagePerHour    
+      "wagePerHour": 0    
     }
+    if(recipe) {
+      if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
+        info.recipe = ""
+      }
+    }
+    if(!portions) {
+      info.portions = 0;
+    } else {
+      info.portions = parseInt(portions);
+    }
+
+    if(!avgWagePerHour || typeof(parseFloat(avgWagePerHour)) != "number") {
+      info.wagePerHour =  0;
+    } else {
+      info.wagePerHour = parseFloat(avgWagePerHour);
+      info.wagePerHour = Math.round(info.wagePerHour * 100)/100;
+    }
+    shelfLife = parseFloat(shelfLife)
+    if(!shelfLife || typeof(shelfLife) != "number") {
+      info.shelfLife =  0;
+    } else {
+      if(shelfLife === NaN) {
+        info.shelfLife = 0;
+      }
+      info.shelfLife = Math.round(shelfLife * 100)/100;
+    }
+
     var ing_doc = [];
     var ingIds = [];
     ing.forEach(function(item) {
