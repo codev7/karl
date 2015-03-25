@@ -49,6 +49,12 @@ Template.showIngredientsList.events({
     $("#searchText-box").val("");
     IngredientsSearch.search("");
     $("#ingredientsListModal").modal("hide");
+  },
+
+  'click #addNewIng': function(event) {
+    console.log("-------");
+    $("#addIngredientModal").modal('show');
+    // $("")
   }
 });
 
