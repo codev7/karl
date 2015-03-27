@@ -1,6 +1,6 @@
 <template name="ingredientItemDetailed">
   <tr class="info">
-    <td><a href="#editIngredientModal" data-toggle="modal" class="editIngredient">{{{state$code}}}</a></td>
+    <td><a href="#editIngredientModal" data-id="{{state$id}}" data-toggle="modal" class="editIngredient">{{{state$code}}}</a></td>
     <td>{{{state$description}}}</td>
     <td>{{{state$suppliers}}}</td>
     <td>{{state$portionOrdered}}</td>

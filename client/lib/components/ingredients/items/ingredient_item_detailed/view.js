@@ -2,7 +2,7 @@ Template.ingredientItemDetailed.events({
   'click .editIngredient': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
-    Session.set("thisIngredient", id);
+    Session.set("thisIngredientId", id);
   },
 
   'click .deleteIngredient': function(event) {

@@ -14,7 +14,6 @@ component.state.unitSize = function() {
   return this.ingredient.unitSize;
 };
 
-
 component.state.description = function() {
   return this.ingredient.description;
 };
