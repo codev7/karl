@@ -24,5 +24,5 @@ component.state.portionUsed = function() {
 component.state.cost = function() {
   var cost = this.ingredient.costPerPortionUsed * this.ingredient.quantity;
   cost = Math.round(cost * 100)/100;
-  return cost
+  return cost;
 }
