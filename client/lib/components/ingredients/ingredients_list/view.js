@@ -3,6 +3,7 @@ var options = {
   localSearch: true
 };
 var fields = ['code', 'description'];
+var itemCount = 0;
 
 IngredientsListSearch = new SearchSource('ingredients', fields, options);
 
@@ -14,6 +15,12 @@ Template.ingredientsList.helpers({
       },
       sort: {'code': 1}
     });
+    if(IngredientsListSearch.getStatus().loaded) {
+      if(itemCount == data.length) {
+        $("#loadMoreIngs").hide();
+      }
+    }
+    itemCount = data.length;
     return data;
   },
   
@@ -33,7 +40,6 @@ Template.ingredientsList.events({
     if(IngredientsListSearch.history) {
       if(IngredientsListSearch.history['']) {
         var dataHistory = IngredientsListSearch.history[''].data;
-        console.log(dataHistory);
         if(dataHistory.length >= 9) {
           IngredientsListSearch.cleanHistory();
           var count = dataHistory.length;
