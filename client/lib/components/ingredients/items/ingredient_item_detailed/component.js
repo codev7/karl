@@ -2,6 +2,10 @@ var component = FlowComponents.define('ingredientItemDetailed', function(props) 
   this.ingredient = props.ingredient;
 });
 
+component.state.id = function() {
+  return this.ingredient._id;
+};
+
 component.state.code = function() {
   return this.ingredient.code;
 };

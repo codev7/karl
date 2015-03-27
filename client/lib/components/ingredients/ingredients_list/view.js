@@ -56,4 +56,5 @@ Template.ingredientsList.events({
 Template.ingredientsList.rendered = function() {
   IngredientsListSearch.cleanHistory();
   IngredientsListSearch.search("", {"limit": 10});
+  $("#loadMoreIngs").show();
 }

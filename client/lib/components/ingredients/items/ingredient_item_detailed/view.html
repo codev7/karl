@@ -7,6 +7,6 @@
     <td>$ {{state$costPerPortion}}</td>
     <td>{{state$portionUsed}}</td>
     <td><p data-toggle="tooltip" data-placement="top" title="How many {{state$portionUsed}}s in a {{state$portionOrdered}}">{{state$unitSize}}</p></td>
-    <td><button class="btn btn-xs deleteIngredient">Remove</button></td>
+    <td><button class="btn btn-xs deleteIngredient" data-id="{{state$id}}">Remove</button></td>
   </tr>
 </template>
