@@ -38,7 +38,7 @@
             </thead>
             <tbody>
               {{#each item.ingredients}}
-                {{> ingredientItemView}}
+                {{> render component='ingredientItemView' ingredient=this}}
               {{/each}}
             </tbody>
           </table>
