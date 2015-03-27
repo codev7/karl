@@ -35,10 +35,10 @@
               </thead>
               <tbody>
                 {{#each item.jobItems}}
-                  {{> jobItemEdit}}
+                  {{> render component='jobItemEdit' jobitem=this}}
                 {{/each}}
                 {{#each jobItemsList}}
-                  {{> jobItemEdit}}
+                  {{> render component='jobItemEdit' jobitem=this}}
                 {{/each}}
               </tbody>
             </table>

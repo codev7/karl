@@ -1,7 +1,8 @@
-var component = FlowComponents.define('jobItemDetailed', function(props) {
+var component = FlowComponents.define('jobItemEdit', function(props) {
   this.jobitem = props.jobitem;
   var item = getPrepItem(this.jobitem._id);
   this.jobitem = item;
+  this.jobitem.quantity = props.jobitem.quantity;
 });
 
 component.state.id = function() {
@@ -12,22 +13,14 @@ component.state.name = function() {
   return this.jobitem.name;
 }
 
-component.state.activeTime = function() {
-  return this.jobitem.activeTime;
-}
-
 component.state.type = function() {
   return this.jobitem.type;
 }
 
-component.state.shelfLife = function() {
-  return this.jobitem.shelfLife;
-}
-
-component.state.portions = function() {
-  return this.jobitem.portions;
-}
-
-component.state.cost = function() {
+component.state.prepCostPerPortion = function() {
   return this.jobitem.prepCostPerPortion;
+}
+
+component.state.quantity = function() {
+  return this.jobitem.quantity;
 }
