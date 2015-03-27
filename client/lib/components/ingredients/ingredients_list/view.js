@@ -3,7 +3,6 @@ var options = {
   localSearch: true
 };
 var fields = ['code', 'description'];
-var itemCount = 0;
 
 IngredientsListSearch = new SearchSource('ingredients', fields, options);
 
@@ -15,12 +14,6 @@ Template.ingredientsList.helpers({
       },
       sort: {'code': 1}
     });
-    if(IngredientsListSearch.getStatus().loaded) {
-      if(itemCount == data.length) {
-        $("#loadMoreIngs").hide();
-      }
-    }
-    itemCount = data.length;
     return data;
   },
   
@@ -56,5 +49,4 @@ Template.ingredientsList.events({
 Template.ingredientsList.rendered = function() {
   IngredientsListSearch.cleanHistory();
   IngredientsListSearch.search("", {"limit": 10});
-  $("#loadMoreIngs").show();
 }

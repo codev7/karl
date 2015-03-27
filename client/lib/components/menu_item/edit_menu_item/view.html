@@ -64,10 +64,10 @@
             </thead>
             <tbody>
               {{#each item.ingredients}}
-                {{> ingredientItemEdit}}
+                {{> render component='ingredientItemEdit' ingredient=this}}
               {{/each}}
               {{#each ingredientsList}}
-                {{> ingredientItemEdit}}
+                {{>  render component='ingredientItemEdit' ingredient=this}}
               {{/each}}
             </tbody>
           </table>

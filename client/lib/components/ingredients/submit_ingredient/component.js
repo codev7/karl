@@ -8,7 +8,6 @@ component.action.submit = function(event, info) {
       return alert(err.reason);
     } else {
       IngredientsListSearch.cleanHistory(); 
-      $("#loadMoreIngs").show();
       IngredientsListSearch.search("", {"limit": 10});
     }
     $(event.target).find("[type=text]").val("");
