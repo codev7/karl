@@ -1,5 +1,4 @@
 var component = FlowComponents.define('editJobItem', function(props) {
-  // this.onRendered(this.renderTextEditor);
 });
 
 component.state.initialHTML = function() {

@@ -29,4 +29,3 @@ component.state.costPerPortionUsed = function() {
   }
   return costPerPortionUsed;
 }
-
