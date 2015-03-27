@@ -1,7 +1,9 @@
 <template name="layout">
-  <div class="container-fluid">
-    {{> header}}
-    <div class="row">
+  <div id="wrapper">
+    {{> navLeft}}
+    <div id="page-wrapper" class="gray-bg">
+      {{> navTop}}
+      {{> headingAndBreadcrumbs}}
       {{> yield}}
     </div>
   </div>
