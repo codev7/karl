@@ -33,7 +33,6 @@ Template.ingredientsList.events({
     if(IngredientsListSearch.history) {
       if(IngredientsListSearch.history['']) {
         var dataHistory = IngredientsListSearch.history[''].data;
-        console.log(dataHistory);
         if(dataHistory.length >= 9) {
           IngredientsListSearch.cleanHistory();
           var count = dataHistory.length;

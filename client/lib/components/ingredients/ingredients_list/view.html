@@ -16,7 +16,7 @@
     </thead>
    <tbody>
       {{#each getIngredients}}
-        {{> ingredientItemDetailed}}
+        {{> render component = 'ingredientItemDetailed' ingredient=this}}
       {{/each}}
     </tbody>
   </table>

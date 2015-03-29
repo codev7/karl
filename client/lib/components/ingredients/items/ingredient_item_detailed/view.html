@@ -1,0 +1,12 @@
+<template name="ingredientItemDetailed">
+  <tr class="info">
+    <td><a href="#editIngredientModal" data-id="{{state$id}}" data-toggle="modal" class="editIngredient">{{{state$code}}}</a></td>
+    <td>{{{state$description}}}</td>
+    <td>{{{state$suppliers}}}</td>
+    <td>{{state$portionOrdered}}</td>
+    <td>$ {{state$costPerPortion}}</td>
+    <td>{{state$portionUsed}}</td>
+    <td><p data-toggle="tooltip" data-placement="top" title="How many {{state$portionUsed}}s in a {{state$portionOrdered}}">{{state$unitSize}}</p></td>
+    <td><button class="btn btn-xs deleteIngredient" data-id="{{state$id}}">Remove</button></td>
+  </tr>
+</template>
