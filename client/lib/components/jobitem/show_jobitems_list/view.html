@@ -19,7 +19,7 @@
               </thead>
              <tbody>
                 {{#each jobItemsList}}
-                  {{> jobItemListed}}
+                  {{> render component='jobItemListed' jobitem=this}}
                 {{/each}}
               </tbody>
             </table>

@@ -42,7 +42,7 @@
             </thead>
             <tbody>
               {{#each item.jobItems}}
-                {{> jobItemView}}
+                {{> render component='jobItemView' jobitem=this}}
               {{/each}}
             </tbody>
           </table>
