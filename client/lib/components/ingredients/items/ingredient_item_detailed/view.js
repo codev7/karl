@@ -1,9 +1,7 @@
 Template.ingredientItemDetailed.events({
   'click .editIngredient': function(event) {
     event.preventDefault();
-    console.log("..........", $(".editIngredient"))
     var id = $(event.target).attr("data-id");
-    console.log(id);
     Session.set("thisIngredientId", id);
   },
 
