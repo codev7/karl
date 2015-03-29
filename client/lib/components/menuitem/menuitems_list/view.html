@@ -1,7 +1,7 @@
 <template name="menuItemsList">
   <div class="row">
     {{#each items}}
-      {{> menuItem}}
+      {{> render component='menuItem' menuitem=this}}
     {{/each}}
   </div>
 </template>

@@ -1,20 +1,20 @@
 <template name="menuItem">
-  <a href="/menuItem/{{_id}}">
+  <a href="/menuItem/{{state$id}}">
     <div class="col-md-1 col-sm-2 col-xs-1 menu-item">
       <div class="menu-image">
       {{#if image}}
-        <img src="{{image}}" class="img-responsive menu-item-image">
+        <img src="{{state$image}}" class="img-responsive menu-item-image">
       {{else}}
         <img src="/images/no-image.jpeg" class="img-responsive menu-item-image" alt="Menu Item Image">
       {{/if}}
       </div>
       <div class="row pad-top-4">
         <div class="col-md-8">
-           <p class="menu-name">{{name}}</p>
-            <p class="tag-line">{{tag}}</p>
+           <p class="menu-name">{{state$name}}</p>
+            <p class="tag-line">{{state$tag}}</p>
         </div>
         <div class="col-md-4">
-          <button class="btn btn-xs removeMenuItem" data-id="{{_id}}">Remove</button>
+          <button class="btn btn-xs removeMenuItem" data-id="{{state$id}}">Remove</button>
         </div>
       </div>
     </div>
