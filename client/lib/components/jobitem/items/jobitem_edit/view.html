@@ -1,0 +1,9 @@
+<template name="jobItemEdit">
+  <tr>
+    <td>{{state$name}}</td>
+    <td>{{state$type}}</td>
+    <td>$ {{state$costPerPortion}}</td>
+    <td><input type="text" name="prep_qty" class="prepQty" data-id="{{state$id}}" value="{{state$quantity}}"/></td>
+    <td><button class="btn btn-xs removePrep" data-id="{{state$id}}">X</button></td>
+  </tr>
+</template>

@@ -1,6 +1,10 @@
 Template.editIngredientItem.helpers({
   'item': function() {
-    return Session.get("thisIngredient")
+    var id = Session.get("thisIngredientId");
+    if(id) {
+      var ing = Ingredients.findOne(id);
+      return ing;
+    }
   }
 });
 

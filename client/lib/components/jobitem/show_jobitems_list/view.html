@@ -1,32 +1,25 @@
-<template name="showIngredientsList">
+<template name="showJobItemsList">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 130%">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Select Ingredients</h4>
+        <h4 class="modal-title" id="myModalLabel">Select Prep Items</h4>
       </div>
-      <br>
-      <div class="col-md-6">
-        <input type="text" class="form-control" id="searchText-box" placeholder="Search from Code or Description">
-      </div>
-      <button class="btn btn-xs" id="addNewIng">Add New Ingredient</button>
-      <br>
       <form class="form-horizontal" role="form" style="padding: 10px 20px">
         <div class="modal-body">
           <div class="row">
             <table class="table table-condensed">
               <thead>
                 <tr>
-                  <th>Supplier's Code</th>
-                  <th>Description</th>
-                  <th>Portion used</th>
-                  <th>Cost per Portion Used ($)</th>
+                  <th>Name</th>
+                  <th>Active Time</th>
+                  <th>Cost per Portion ($)</th>
                   <th>Action</th>
                 </tr>
               </thead>
              <tbody>
-                {{#each getIngredients}}
-                  {{> render component='ingredientItemListed' ingredient=this}}
+                {{#each jobItemsList}}
+                  {{> render component='jobItemListed' jobitem=this}}
                 {{/each}}
               </tbody>
             </table>
@@ -34,7 +27,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary setIngListSession">Add To List</button>
+          <button type="submit" class="btn btn-primary">Add To List</button>
         </div>
       </form>
     </div>

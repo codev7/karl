@@ -1,0 +1,20 @@
+<template name="jobItemsList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Active Time (mins)</th>
+        <th>Type</th>
+        <th>Shelf Life (Days)</th>
+        <th>Portions</th>
+        <th>Cost per Portion ($)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+   <tbody>
+      {{#each jobItemsList}}
+        {{> render component='jobItemDetailed' jobitem=this}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
