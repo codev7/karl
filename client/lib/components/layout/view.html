@@ -1,0 +1,10 @@
+<template name="layout">
+  <div id="wrapper">
+    {{> render component='navLeft'}}
+    <div id="page-wrapper" class="gray-bg">
+      {{> render component='navTop'}}
+      {{> render component='heading' name=state$name}}
+      {{> yield}}
+    </div>
+  </div>
+</template>
