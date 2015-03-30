@@ -1,30 +1,34 @@
 <template name="ingredientsList">
-  <br>
-  <input name="searchIngs" type="text" id="searchIngBox" class="form-control" placeholder="Search from Code, description or supplier"/>
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Supplier's Code</th>
-        <th>Description</th>
-        <th>Supplier</th>
-        <th>Portion Ordered (b)</th>
-        <th>Cost per Portion (b) ($)</th>
-        <th>Portion used (a)</th>
-        <th>How many (a)'s in a (b)</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-   <tbody>
-      {{#each getIngredients}}
-        {{> render component = 'ingredientItemDetailed' ingredient=this}}
-      {{/each}}
-    </tbody>
-  </table>
-  <div class="row">
-    <!-- <div class="col-md-4"></div> -->
-    <div class="list-group">
+  <div class="ibox-content">
+    <div class="row">
+      <div class="col-sm-12">
+        <input type="text" name="searchIngs"  id="searchIngBox" class="form-control col-sm-8" placeholder="Search from Code, description or supplier">
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Supplier's Code </th>
+            <th>Description </th>
+            <th>Supplier </th>
+            <th>Portion Ordered (b) </th>
+            <th>Cost per Portion (b) ($)</th>
+            <th>Portion used (a)</th>
+            <th>How many (a)'s in a (b)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each getIngredients}}
+            {{> render component = 'ingredientItemDetailed' ingredient=this}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+     <div class="list-group">
       <a href="#" id="loadMoreIngs" class="list-group-item list-group-item-success center-text">Load More</a>
     </div>
-    <!-- <div class="col-md-4"></div> -->
   </div>
 </template>

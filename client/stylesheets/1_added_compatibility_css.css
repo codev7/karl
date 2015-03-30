@@ -76,9 +76,10 @@
 }
 
 .row {
-  width: 100%;
-  /*position: relative;*/
-  /*float: /left;*/
+  /*width: 100%;*/
+  padding: 0px  !important;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
 .btn {
@@ -140,3 +141,13 @@
   color: #ccc;
   content: "/\00a0";
 }
+
+.container {
+  margin-left: 0px !important;
+}
+
+.navbar-static-top {
+  height: 50px !important;
+}
+
+

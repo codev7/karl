@@ -1,10 +1,26 @@
 <template name="layout">
   <div id="wrapper">
-    {{> render component='navLeft'}}
     <div id="page-wrapper" class="gray-bg">
-      {{> render component='navTop'}}
-      {{> render component='heading' name=state$name}}
+      <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation">
+          <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+              <i class="fa fa-reorder"></i>
+            </button>
+            <a href="/" class="navbar-brand">Hero Chef</a>
+          </div>
+          {{> navTop}}
+        </nav>
+      </div>
       {{> yield}}
+      <div class="footer">
+        <div class="pull-right">
+          10GB of <strong>250GB</strong> Free.
+        </div>
+        <div>
+          <strong>Copyright</strong> Example Company © 2014-2015
+        </div>
+      </div>
     </div>
   </div>
 </template>
