@@ -1,12 +1,13 @@
 <template name="menuItemsListView">
- <div class="row center-page-title">
-  Menus
-  <a class="btn btn-xs" id="submitMenuItem" href="#">+</a>
- </div>
- <div class="row margin-left20">Filter: Main Menu / Kids Menu</div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      {{> menuItemsList}}
+  <div class="wrapper wrapper-content">
+    <div class="row">
+      <div class="col-lg-10 animated fadeInRight">
+        <div class="row">
+          <div class="col-lg-10">
+            {{> render component='menuItemsList'}}
+          </div>
+        </div>
+      </div>
     </div>
-  </div>  
+  </div>
 </template>

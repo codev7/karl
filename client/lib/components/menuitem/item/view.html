@@ -1,5 +1,5 @@
 <template name="menuItem">
-  <a href="/menuItem/{{state$id}}">
+ <!--  <a href="/menuItem/{{state$id}}">
     <div class="col-md-1 col-sm-2 col-xs-1 menu-item">
       <div class="menu-image">
       {{#if image}}
@@ -18,5 +18,24 @@
         </div>
       </div>
     </div>
-  </a>
+  </a> -->
+  <div class="file-box">
+    <div class="file">
+      <a href="/menuItem/{{state$id}}">
+        <span class="corner"></span>
+        <div class="image">
+          {{#if image}}
+          <img alt="image" class="img-responsive" src="{{state$image}}">
+          {{else}}
+          <img alt="image" class="img-responsive" src="/images/no-image.jpeg">
+          {{/if}}
+        </div>
+        <div class="file-name">
+          {{state$name}}
+          <br/>
+          <small>{{state$tag}}</small>
+        </div>
+      </a>
+    </div>
+  </div>
 </template>
