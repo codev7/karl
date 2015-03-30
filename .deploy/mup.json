@@ -3,7 +3,7 @@
   "servers": [
     {
       "host": "162.243.202.130",
-      "username": "tom@cloudninja.com.au",
+      "username": "root",
       "pem": "key.pem"
       // or pem file (ssh based authentication)
       //"pem": "~/.ssh/id_rsa"
@@ -11,16 +11,16 @@
   ],
 
   // Install MongoDB in the server, does not destroy local MongoDB on future setup
-  "setupMongo": true,
+  "setupMongo": false,
 
   // WARNING: Node.js is required! Only skip if you already have Node.js installed on server.
-  "setupNode": true,
+  "setupNode": false,
 
   // WARNING: If nodeVersion omitted will setup 0.10.33 by default. Do not use v, only version number.
-  "nodeVersion": "0.10.33",
+  "nodeVersion": "0.10.36",
 
   // Install PhantomJS in the server
-  "setupPhantom": true,
+  "setupPhantom": false,
 
   // Application name (No spaces)
   "appName": "herochef",
@@ -31,7 +31,7 @@
   // Configure environment
   "env": {
     "ROOT_URL": "http://herochef.com.au/",
-    "MONGO_URL": "mongodb://cloudninja:Bertaroo1@c144.capital.3.mongolayer.com:10144,c144.capital.2.mongolayer.com:10144/herochef",
+    "MONGO_URL": "mongodb://cloudninja:Bertaroo1@c144.capital.3.mongolayer.com:10144,c144.capital.2.mongolayer.com:10144/herochef"
     // "MONGO_OPLOG_URL": ""
   },
 
