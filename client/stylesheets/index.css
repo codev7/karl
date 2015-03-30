@@ -14,10 +14,6 @@ select {
   position: relative;
 }*/
 
-.row {
-  padding: 0 10px;
-}
-
 .pad-top-4 {
   padding-top: 4px;
 }
@@ -32,6 +28,10 @@ select {
 
 .left {
   /*background-color: #B2F0FF;*/
+}
+
+.margin-right-10 {
+  margin-left: 10px;
 }
 
 .text-align-left {
