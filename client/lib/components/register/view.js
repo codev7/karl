@@ -22,5 +22,22 @@ Template.register.events({
     } else {
       return alert("Agree to our Terms and Conditions to proceed");
     }
+  },
+
+  'click #registerWithGoogle': function(event) {
+    event.preventDefault();
+    console.log(".......");
+    var options = {
+      requestPermissions: {
+        google: ['email']
+      },
+      passwordSignupFields: 'USERNAME_AND_EMAIL'
+    }
+    Meteor.loginWithGoogle(options, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    });
   }
 });

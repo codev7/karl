@@ -16,8 +16,15 @@ Template.signIn.events({
   'click #signInWithGoogle': function(event) {
     event.preventDefault();
     console.log(".......");
-    Meteor.loginWithGoogle([options], function() {
-      
+    var options = {
+      requestPermissions: ['email'],
+      loginStyle: "popup"
+    }
+    Meteor.loginWithGoogle(options, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
     });
   }
 });
