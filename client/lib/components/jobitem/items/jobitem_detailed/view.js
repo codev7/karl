@@ -11,5 +11,11 @@ Template.jobItemDetailed.events({
         }
       });
     }
+  },
+
+  'click .viewDetail': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Router.go("jobItemDetailed", {_id: id});
   }
 });

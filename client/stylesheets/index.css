@@ -302,10 +302,10 @@ select {
 }
 
 .non-edit {
-  border: none;
+  border: none !important;
   background: none;
   margin-bottom: 0;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 /*STAR*/
