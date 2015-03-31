@@ -1,4 +1,4 @@
-var component = FlowComponents.define('layout', function(props) {
+var component = FlowComponents.define('applicationLayout', function(props) {
   this.route = Router.current().route.getName();
   console.log(this);
 });
