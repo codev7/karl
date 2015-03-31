@@ -1,123 +1,112 @@
 <template name="menuItemDetail">
-  <div class="row">
-    <div class="col-md-8 col-sm-8 col-lg-8">
-      <div class="form-group">
-        <h3>{{item.name}}</h3>
-        <p class="menu-tag">{{item.tag}}</p>
-      </div>
-    </div>
-    <!-- <div class="col-md-4">
-      <div class="form-group">
-        <h3>This item is a star!</h3>
-        <span id="star-five"></span>
-        <p>Excellent work.</p>
-      </div>
-    </div> -->
-  </div>
-  <div class="row">
-    <div class="col-md-8 col-sm-8 col-lg-8">
-      {{#if item.instructions}}
-      <div class="form-group">
-        <label>Instructions</label>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            {{{item.instructions}}}
+  <div class="ibox-content">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <h3>{{item.name}}</h3>
+          <p class="menu-tag">{{item.tag}}</p>
+        </div>
+        {{#if item.instructions}}
+        <div class="form-group">
+          <label>Instructions</label>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              {{{item.instructions}}}
+            </div>
           </div>
         </div>
-      </div>
-      {{/if}}
-      {{#if item.jobsListView}}
-      <div class="form-group">
-        <label>
-          Prep items used
-        </label>
-        <div>
-          <table class="table table-hover thumbnail">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Cost ($)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each item.jobItems}}
-                {{> render component='jobItemView' jobitem=this}}
-              {{/each}}
-            </tbody>
-          </table>
+        {{/if}}
+        {{#if item.jobsListView}}
+        <div class="form-group">
+          <label>
+            Prep items used
+          </label>
+          <div>
+            <table class="table table-hover thumbnail col-md-7">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Cost ($)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each item.jobItems}}
+                  {{> render component='jobItemView' jobitem=this}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      {{/if}}
-      {{#if item.ingsListView}}
-      <div class="form-group">
-        <label>
-          Ingredients used
-        </label>
-        <div>
-          <table class="table table-hover thumbnail">
-            <thead>
-              <tr>
-                <th>Supplier's Code</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Unit</th>
-                <th>Cost ($)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each item.ingredients}}
-                {{> render component='ingredientItemView' ingredient=this}}
-              {{/each}}
-            </tbody>
-          </table>
+        {{/if}}
+        {{#if item.ingsListView}}
+        <div class="form-group">
+          <label>
+            Ingredients used
+          </label>
+          <div>
+            <table class="table table-hover thumbnail">
+              <thead>
+                <tr>
+                  <th>Supplier's Code</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit</th>
+                  <th>Cost ($)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each item.ingredients}}
+                  {{> render component='ingredientItemView' ingredient=this}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
         </div>
+        {{/if}}
       </div>
-      {{/if}}
-    </div>
-    <div class="col-md-4 col-sm-4 col-lg-4 form-inline">
-      <div class="form-group">
-        <label>Sale price: </label>
-        <p class="form-control non-edit">$ {{item.salesPrice}}</p>
-        <!-- <input type="text" name="salesPrice" class="form-control" placeholder="Sale price" value="{{item.salesPrice}}"> -->
+      <div class="col-md-3 form-inline">
+        <div class="form-group">
+          <label>Sale price: </label>
+          <p class="form-control non-edit">$ {{item.salesPrice}}</p>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Prep item cost :</label>
+          <p class="form-control non-edit">$ {{item.totalPrepCost}}</p>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Ingredient cost :</label>
+          <p class="form-control non-edit">$ {{item.totalIngCost}}</p>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Tax (10%): </label>
+          <p class="form-control non-edit">$ {{item.tax}}</p>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Contribution: </label>
+          <p class="form-control non-edit">$ {{item.contribution}}</p>
+        </div>
+        <br>
+        <div class="form-group">
+          {{#if item.image}}
+          <div class="form-group">
+            <label>Image</label><br>
+            <div class="image">
+              <img src="{{item.image}}" class="img-responsive menu-item-image">
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        <br>
       </div>
-      <br>
-      <div class="form-group">
-        <label>Prep item cost :</label>
-        <p class="form-control non-edit">$ {{item.totalPrepCost}}</p>
-        <!-- <input type="text" class="form-control" placeholder="Prep item cost" readonly> -->
+      <div class="col-md-12">
+        <button type="button" class="btn btn-primary editMenuItemBtn hidden-print" data-id="{{item._id}}">Edit</button>
+        <button type="button" class="btn btn-primary printMenuItemBtn hidden-print">Print</button>
       </div>
-      <br>
-      <div class="form-group">
-        <label>Ingredient cost :</label>
-        <p class="form-control non-edit">$ {{item.totalIngCost}}</p>
-        <!-- <input type="text" class="form-control" placeholder="Ingredient cost" readonly> -->
-      </div>
-      <br>
-      <div class="form-group">
-        <label>Tax (10%): </label>
-        <p class="form-control non-edit">$ {{item.tax}}</p>
-        <!-- <input type="text" class="form-control" placeholder="Tax" readonly> -->
-      </div>
-      <br>
-      <div class="form-group">
-        <label>Contribution: </label>
-        <p class="form-control non-edit">$ {{item.contribution}}</p>
-        <!-- <input type="text" class="form-control" placeholder="Contribution" readonly> -->
-      </div>
-      <br>
-      {{#if item.image}}
-      <div class="form-group">
-        <label>Image</label><br>
-        <img src="{{item.image}}" class="img-responsive menu-item-image">
-      </div>
-      {{/if}}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <button type="button" class="btn btn-primary editMenuItemBtn hidden-print" data-id="{{item._id}}">Edit</button>
-      <button type="button" class="btn btn-primary printMenuItemBtn hidden-print">Print</button>
     </div>
   </div>
 </template>

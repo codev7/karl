@@ -282,7 +282,7 @@ select {
 
 .menu-item-image {
   width: 260px;
-  height: 180px;
+  height: 180px !important;
 }
 
 .height180 {
