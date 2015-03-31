@@ -2,6 +2,7 @@ Template.userDetailed.helpers({
   item: function() {
     var doc = {};
     doc.email = this.emails[0].address;
+    doc.username = this.username;
     doc.type = getUserType(this._id);
     return doc;
   }

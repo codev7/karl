@@ -1,17 +1,22 @@
 <template name="usersList">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Type</th>
-        <th>Email Address</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-   <tbody>
-      {{#each users}}
-        {{> userDetailed}}
-      {{/each}}
-    </tbody>
-  </table>
+  <div class="ibox-content">
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Type </th>
+            <th>Email Address </th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each users}}
+          {{> userDetailed}}
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
