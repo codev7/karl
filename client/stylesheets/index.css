@@ -43,6 +43,10 @@ select {
   padding-top: 4px;
 }
 
+.pad-right-4 {
+  padding-right: 4px;
+}
+
 .jobitem > a, .workeritem > a {
   color: #fff;
 }
@@ -450,9 +454,9 @@ select {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-  background-color: #18a689;
-  border-color: #18a689;
-  color: #FFFFFF;
+  background-color: #18a689 !important;
+  border-color: #18a689 !important;
+  color: #FFFFFF !important;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -751,7 +755,7 @@ fieldset[disabled] .btn-white.active {
 }
 .btn-outline {
   color: inherit;
-  background-color: transparent;
+  background-color: transparent !important;
   transition: all .5s;
 }
 .btn-rounded {
