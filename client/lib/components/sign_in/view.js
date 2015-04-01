@@ -30,5 +30,5 @@ Template.signIn.events({
 });
 
 Template.signIn.rendered = function() {
-  // $(".at-form").addClass()
+  $("#at-google").attr("data-toggle", "modal");
 }
