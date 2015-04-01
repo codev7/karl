@@ -143,8 +143,11 @@ body {
   z-index: 9999 !important;
 }
 
-#loadMoreIngs {
-  z-index: 1;
+.table-striped {
+  margin-bottom: 70px !important;
 }
 
+.ql-container {
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
 

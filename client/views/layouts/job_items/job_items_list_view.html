@@ -6,7 +6,9 @@
           <div class="ibox float-e-margins">
             <div class="ibox-title">
               <h5>Jobs </h5>
-              <a href="/jobItem/submit" class="btn btn-xs btn-primary margin-right-10">+</a>
+              <a type="button" href="/jobItem/submit" class="btn btn-xs btn-primary margin-right-10" data-id="{{state$id}}">
+                <i class="fa fa-plus"></i>
+              </a>
             </div>
             {{> render component='jobItemsList'}}
           </div>

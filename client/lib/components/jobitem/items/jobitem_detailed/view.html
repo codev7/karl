@@ -6,6 +6,14 @@
     <td>{{state$shelfLife}} days</td>
     <td>{{state$portions}}</td>
     <td>$ {{state$cost}}</td>
-    <td><button class="btn btn-sm btn-primary deleteJobItem" data-id="{{state$id}}">Remove</button></td>
+    <td>
+      <div class="btn-group">
+        <button data-toggle="dropdown" class="btn btn-warning btn-sm dropdown-toggle" aria-expanded="false"><i class="fa fa-cog pad-right-4"></i>Settings <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a class="viewDetail" data-id="{{state$id}}" data-toggle="modal">Edit</a></li>
+          <li><a href="#" class="deleteJobItem" data-id="{{state$id}}">Delete</a></li>
+        </ul>
+      </div>
+    </td>
   </tr>
 </template>
