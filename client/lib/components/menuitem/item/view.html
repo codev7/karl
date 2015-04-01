@@ -19,23 +19,28 @@
       </div>
     </div>
   </a> -->
-  <div class="file-box">
-    <div class="file">
-      <a href="/menuItem/{{state$id}}">
-        <span class="corner"></span>
-          <div class="image">
+  <div class="col-md-3">
+    <div class="ibox float-e-margins">
+
+
+
+          <div class="ibox-content no-padding border-left-right">
           {{#if state$image}}
-            <img alt="image" class="img-responsive menu-item-image" src="{{state$image}}">
+            <img alt="image" class="img-responsive" src="{{state$image}}">
           {{else}}
             <img alt="image" class="img-responsive" src="/images/no-image.jpeg">
           {{/if}}
           </div>
-        <div class="file-name">
-          {{state$name}}
-          <br/>
-          <small>{{state$tag}}</small>
+        <div class="ibox-content profile-content">
+            <a href="/menuItem/{{state$id}}">
+                <h4>{{state$name}}</h4>
+
+            </a>
+            <h6>{{state$tag}}</h6>
         </div>
-      </a>
+
+
     </div>
   </div>
 </template>
+
