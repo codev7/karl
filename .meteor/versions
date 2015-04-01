@@ -82,5 +82,6 @@ underscore@1.0.3
 url@1.0.4
 useraccounts:bootstrap@1.8.1
 useraccounts:core@1.8.1
+useraccounts:polymer@1.8.1
 webapp@1.2.0
 webapp-hashing@1.0.3

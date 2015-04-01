@@ -28,3 +28,7 @@ Template.signIn.events({
     });
   }
 });
+
+Template.signIn.rendered = function() {
+  // $(".at-form").addClass()
+}
