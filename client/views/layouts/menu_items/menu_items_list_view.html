@@ -1,19 +1,23 @@
 <template name="menuItemsListView">
-  <div class="wrapper wrapper-content">
-    <div class="container">
+  <div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
       <div class="row">
         <div class="col-lg-12">
-          <div class="ibox float-e-margins">
-            <div class="ibox-title hidden-print">
-              <h5>Menus</h5>
-              <a href="/menuItem/submit" class="btn btn-xs btn-primary margin-right-10">
-                <i class="fa fa-plus"></i>
-              </a>
+          <div class="row wrapper gray-bg page-heading">
+            <div class="col-sm-9">
+              <h2>Menus <a href="/menuItem/submit" class="btn btn-xs btn-primary margin-right-10">+</a>
+              </h2>
+              <ol class="breadcrumb">
+                <li>All</li>
+                <li>Main Menu</li>
+                <li>Catering Menu</li>
+                <li>Add another menu category</li>
+              </ol>
             </div>
-            {{> render component='menuItemsList'}}
           </div>
+          {{> render component='menuItemsList'}}
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
