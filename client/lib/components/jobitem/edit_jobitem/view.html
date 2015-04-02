@@ -5,7 +5,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Name</label>
           <div class="col-sm-8">
-            <input type="text" name="name" class="form-control" placeholder="Enter Name for the job" value="{{item.name}}">
+            <input type="text" name="name" class="form-control" placeholder="Enter Name for the job" value="{{state$name}}">
           </div>
         </div>    
         <div class="form-group">
@@ -36,7 +36,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each item.ingredients}}
+                {{#each state$ingredients}}
                   {{> render component='ingredientItemEdit' ingredient=this}}
                 {{/each}}
                 {{#each ingredientsList}}
@@ -50,9 +50,13 @@
           <label class="col-sm-3 control-label">Type</label>
           <div class="col-sm-8">
             <select name="type" class="form-control">
-              <option value="{{item.type}}" selected="selected">{{item.type}}</option>
-              <option value="Prep">Prep</option>
-              <option value="Service">Service</option>
+              {{#each jobTypes}}
+                {{#if state$isMyType type}}
+                  <option value="{{type}}" selected="selected">{{type}}</option>
+                {{else}}
+                  <option value="{{type}}">{{type}}</option>
+                {{/if}}
+              {{/each}}
             </select>
           </div>
         </div> 
@@ -60,7 +64,7 @@
           <label class="col-sm-3 control-label">Active Time</label>
           <div class="col-sm-8">
             <div class="input-group m-b">
-              <input type="number" name="activeTime" class="form-control" placeholder="Active Time" value="{{secondsToMinutes item.activeTime}}">
+              <input type="number" name="activeTime" class="form-control" placeholder="Active Time" value="{{secondsToMinutes state$activeTime}}">
               <span class="input-group-addon">mins</span> 
             </div>
           </div>
@@ -68,14 +72,14 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Portions</label>
           <div class="col-sm-8">
-            <input type="number" name="portions" class="form-control" placeholder="No. of Portions" value="{{item.portions}}">
+            <input type="number" name="portions" class="form-control" placeholder="No. of Portions" value="{{state$portions}}">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-3 control-label">Shelf Life</label>
           <div class="col-sm-8">
             <div class="input-group m-b">
-              <input type="text" name="shelfLife" class="form-control" placeholder="Shelf Life" value="{{item.shelfLife}}">
+              <input type="text" name="shelfLife" class="form-control" placeholder="Shelf Life" value="{{state$shelfLife}}">
               <span class="input-group-addon">Days</span> 
             </div>
           </div>
@@ -85,7 +89,7 @@
           <div class="col-sm-8">
             <div class="input-group m-b">
               <span class="input-group-addon">$</span>
-              <input type="text" name="avgWagePerHour" class="form-control" placeholder="Average Wage of a Worker per Hour" value="{{item.wagePerHour}}">
+              <input type="text" name="avgWagePerHour" class="form-control" placeholder="Average Wage of a Worker per Hour" value="{{state$wagePerHour}}">
               <span class="input-group-addon">/ hour</span>
             </div>
           </div>   
