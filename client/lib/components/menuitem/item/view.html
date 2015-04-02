@@ -1,35 +1,15 @@
 <template name="menuItem">
- <!--  <a href="/menuItem/{{state$id}}">
-    <div class="col-md-1 col-sm-2 col-xs-1 menu-item">
-      <div class="menu-image">
-      {{#if image}}
-        <img src="{{state$image}}" class="img-responsive menu-item-image">
-      {{else}}
-        <img src="/images/no-image.jpeg" class="img-responsive menu-item-image" alt="Menu Item Image">
-      {{/if}}
-      </div>
-      <div class="row pad-top-4">
-        <div class="col-md-8">
-           <p class="menu-name">{{state$name}}</p>
-            <p class="tag-line">{{state$tag}}</p>
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-xs removeMenuItem" data-id="{{state$id}}">Remove</button>
-        </div>
-      </div>
-    </div>
-  </a> -->
   <div class="file-box">
     <div class="file">
       <a href="/menuItem/{{state$id}}">
         <span class="corner"></span>
-          <div class="image">
-          {{#if state$image}}
-            <img alt="image" class="img-responsive menu-item-image" src="{{state$image}}">
-          {{else}}
-            <img alt="image" class="img-responsive" src="/images/no-image.jpeg">
-          {{/if}}
-          </div>
+        <div class="image">
+        {{#if state$image}}
+          <img alt="image" class="img-responsive menu-item-image" src="{{state$image}}">
+        {{else}}
+          <img alt="image" class="img-responsive menu-item-image" src="/images/no-image.jpeg">
+        {{/if}}
+        </div>
         <div class="file-name">
           {{state$name}}
           <br/>

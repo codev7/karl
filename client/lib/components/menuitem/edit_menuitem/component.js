@@ -1,4 +1,11 @@
 var component = FlowComponents.define('editMenuItem', function(props) {
+  var id = Router.current().params._id;
+  if(id) {
+    var item = MenuItems.findOne(id);
+    if(item) {
+      this.item = item;
+    }
+  }
 });
 
 component.state.initialHTML = function() {
@@ -12,6 +19,34 @@ component.state.initialHTML = function() {
     }
   }
 };
+
+component.state.id = function() {
+  return this.item._id;
+}
+
+component.state.name = function() {
+  return this.item.name;
+}
+
+component.state.tag = function() {
+  return this.item.tag;
+}
+
+component.state.jobItems = function() {
+  return this.item.jobItems;
+}
+
+component.state.ingredients = function() {
+  return this.item.ingredients;
+}
+
+component.state.salePrice = function() {
+  return this.item.salesPrice;
+}
+
+component.state.image = function() {
+  return this.item.image;
+}
 
 component.action.submit = function(id, info) {
   Meteor.call("editMenuItem", id, info, function(err) {

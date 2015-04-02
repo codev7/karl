@@ -831,3 +831,7 @@ button.dim:active:before {
   top: 7px;
   font-size: 50px;
 }
+
+.uploadedImageDiv {
+  padding: 0px !important;
+}

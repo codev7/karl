@@ -1,18 +1,4 @@
 Template.editMenuItem.helpers({
-  item: function() {
-    var id = Session.get("thisMenuItem");
-    if(id) {
-      var item = MenuItems.findOne(id);
-      if(item) {
-        if(item.salesPrice) {
-          item.tax = parseFloat(item.salesPrice * 10)/100;
-          item.tax = Math.round(item.tax * 100)/100;
-        }
-        return item;
-      }
-    }
-  },
-
   jobItemsList: function() {
     var jobItems = Session.get("selectedJobItems");
     if(jobItems) {

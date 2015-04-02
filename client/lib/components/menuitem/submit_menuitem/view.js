@@ -119,11 +119,11 @@ Template.submitMenuItem.events({
 
   'click #uploadMenuItem': function(event) {
     event.preventDefault();
-    $(".uploadedImageDiv").removeClass("hide");
-    filepicker.pickAndStore({mimetype:"image/*"},{},
+    filepicker.pickAndStore({mimetype:"image/*"}, {},
       function(InkBlobs){
         var doc = (InkBlobs);
         if(doc) {
+          $(".uploadedImageDiv").removeClass("hide");
           $("#uploadedImageUrl").attr("src", doc[0].url);
         }
     });
