@@ -7,12 +7,7 @@
             <div class="col-sm-9">
               <h2>Menus <a href="/menuItem/submit" class="btn btn-xs btn-primary margin-right-10">+</a>
               </h2>
-              <ol class="breadcrumb">
-                <li>All</li>
-                <li>Main Menu</li>
-                <li>Catering Menu</li>
-                <li>Add another menu category</li>
-              </ol>
+              {{> render  component='breadcrumbs'}}
             </div>
           </div>
           {{> render component='menuItemsList'}}
