@@ -1,30 +1,7 @@
-var options = {
-  keepHistory: 1000 * 60 * 5,
-  localSearch: true
-};
-var fields = ['code', 'description'];
-
-var IngredientsSearch = new SearchSource('ingredients', fields, options);
-
-Template.showIngredientsList.helpers({
-  getIngredients: function() {
-    return IngredientsSearch.getData({
-      transform: function(matchText, regExp) {
-        return matchText.replace(regExp, "<b>$&</b>")
-      },
-      sort: {'code': 1}
-    });
-  },
-  
-  isLoading: function() {
-    return IngredientsSearch.getStatus().loading;
-  }
-});
-
 Template.showIngredientsList.events({
   "keyup #searchText-box": _.throttle(function(e) {
     var text = $(e.target).val().trim();
-    IngredientsSearch.search(text);
+    FlowComponents.callAction('keyup', text);
   }, 200),
 
   'submit form': function(event) {
@@ -47,8 +24,8 @@ Template.showIngredientsList.events({
     } 
     $(event.target).find('[type=checkbox]').attr('checked', false);
     $("#searchText-box").val("");
-    IngredientsSearch.search("");
     $("#ingredientsListModal").modal("hide");
+    FlowComponents.callAction('submit');
   },
 
   'click #addNewIng': function(event) {
@@ -57,6 +34,3 @@ Template.showIngredientsList.events({
   }
 });
 
-Template.showIngredientsList.rendered = function() {
-  IngredientsSearch.search("");
-}

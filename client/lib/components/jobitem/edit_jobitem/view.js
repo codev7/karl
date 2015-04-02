@@ -1,10 +1,4 @@
 Template.editJobItem.helpers({
-  item: function() {
-    var id = Session.get("thisJobItem");
-    var item = JobItems.findOne(id);
-    return item;
-  },
-
   ingredientsList: function() {
     var ing = Session.get("selectedIngredients");
     if(ing) {
@@ -14,6 +8,10 @@ Template.editJobItem.helpers({
         return ingredientsList;
       }
     }
+  },
+
+  jobTypes: function() {
+    return JobTypes.find().fetch();
   }
 });
 

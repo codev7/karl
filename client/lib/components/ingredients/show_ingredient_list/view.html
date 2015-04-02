@@ -25,7 +25,7 @@
                 </tr>
               </thead>
              <tbody>
-                {{#each getIngredients}}
+                {{#each state$getIngredients}}
                   {{> render component='ingredientItemListed' ingredient=this}}
                 {{/each}}
               </tbody>

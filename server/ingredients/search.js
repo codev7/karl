@@ -4,26 +4,27 @@ SearchSource.defineSource('ingredients', function(searchText, options) {
   var selector = {};
   if(options) {
     if(options.endingAt) {
-      selector = {
-        $or: [
-          {'code': {$gt: options.endingAt}},
-          {'code': {$lte: options.endingAt}}
-        ]
-      }
+      selector['$or'] = [
+        {'code': {$gt: options.endingAt}},
+        {'code': {$lte: options.endingAt}}
+      ]
     }
     if(options.limit) {
       optionFileds['limit'] = options.limit;
+    }
+    if(options.ids) {
+      selector['_id'] = {$nin: options.ids}
     }
   } else {
     optionFileds['limit'] = 10;
   }
   if(searchText) {
     var regExp = buildRegExp(searchText);
-    selector = {$or: [
+    selector['$or'] = [
       {'code': regExp},
       {'suppliers': regExp},
       {'description': regExp}
-    ]};
+    ];
     docs = Ingredients.find(selector, optionFileds).fetch();
   } else {
     docs = Ingredients.find(selector, optionFileds).fetch();
