@@ -8,7 +8,7 @@ var component = FlowComponents.define('showJobItemsList', function(props) {
   };
   var fields = ['name'];
 
-  this.JobItemsSearch = new SearchSource('jobItems', fields, options);
+  this.JobItemsSearch = new SearchSource('jobItemsSearch', fields, options);
 
   if(props.name) {
     if(props.name == "editMenu") {
