@@ -6,7 +6,7 @@ var component = FlowComponents.define('jobItemsList', function(props) {
   };
   var fields = ['name'];
 
-  this.JobItemsSearch = new SearchSource('jobItems', fields, options);
+  this.JobItemsSearch = new SearchSource('jobItemsSearch', fields, options);
 });
 
 component.action.keyup = function(text) {

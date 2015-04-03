@@ -1,4 +1,4 @@
-SearchSource.defineSource('jobItems', function(searchText, options) {
+SearchSource.defineSource('jobItemsSearch', function(searchText, options) {
   var optionFileds = {sort: {'name': 1}};
   var docs = [];
   var selector = {};
