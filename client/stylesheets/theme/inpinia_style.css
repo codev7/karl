@@ -3512,7 +3512,7 @@ table.table-mail tr td {
   margin-right: 15px;
 }
 .m-r-md {
-  margin-right: 20px;
+  margin-right: 20px !important;
 }
 .m-r-lg {
   margin-right: 30px;

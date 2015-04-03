@@ -155,3 +155,7 @@ body {
   max-height: 100% !important;
 }
 
+.wrapper-content {
+  width: 110% !important;
+}
+
