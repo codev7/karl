@@ -91,11 +91,25 @@
           <div class="col-sm-8">
             <button type="button" class="btn btn-sm btn-info" id="uploadMenuItem">Upload Image</button><br>
             <div>
-            {{#if item.image}}
-              <img id="uploadedImageUrl" src="{{state$image}}" class="img-responsive menu-item-image">
-            {{else}}
-              <img id="uploadedImageUrl" src="" class="img-thumbnail img-responsive menu-item-image hide">
-            {{/if}}
+              {{#if state$image}}
+              <div class="file col-sm-3 uploadedImageDiv">
+                <a href="#">
+                  <span class="corner"></span>
+                  <div class="image">
+                    <img id="uploadedImageUrl" src="{{state$image}}" class="img-responsive menu-item-image">
+                  </div>
+                </a>
+              </div>
+              {{else}}
+                <div class="file col-sm-3 uploadedNewImageDiv hide">
+                <a href="#">
+                  <span class="corner"></span>
+                  <div class="image">
+                    <img id="uploadedImageUrl" src="" class="img-responsive menu-item-image">
+                  </div>
+                </a>
+              </div>
+              {{/if}}
             </div>
           </div>
         </div>
