@@ -12,9 +12,9 @@ SearchSource.defineSource('jobItems', function(searchText, options) {
     if(options.limit) {
       optionFileds['limit'] = options.limit;
     }
-    // if(options.ids) {
-    //   selector['_id'] = {$nin: options.ids}
-    // }
+    if(options.ids) {
+      selector['_id'] = {$nin: options.ids}
+    }
   } else {
     optionFileds['limit'] = 10;
   }

@@ -5,10 +5,16 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">Select Prep Items</h4>
       </div>
+      <br>
+      <div class="col-md-6">
+        <input type="text" class="form-control" id="searchText-box" placeholder="Search from Name">
+      </div>
+      <!-- <button class="btn btn-sm btn-primary" id="addNewIng">Add New Ingredient</button> -->
+      <br>
       <form class="form-horizontal" role="form" style="padding: 10px 20px">
         <div class="modal-body">
           <div class="row">
-            <table class="table table-condensed">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -18,7 +24,7 @@
                 </tr>
               </thead>
              <tbody>
-                {{#each jobItemsList}}
+                {{#each state$getJobItemsa}}
                   {{> render component='jobItemListed' jobitem=this}}
                 {{/each}}
               </tbody>
