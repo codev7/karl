@@ -1,9 +1,9 @@
 <template name="jobItemsList">
   <div class="ibox-content">
     <div class="row">
-      <!-- <div class="col-sm-12">
-        <input type="text" name="searchIngs"  id="searchIngBox" class="form-control col-sm-8" placeholder="Search from Code, description or supplier">
-      </div> -->
+      <div class="col-sm-12">
+        <input type="text" name="searchJobItems"  id="searchJobItemsBox" class="form-control col-sm-8" placeholder="Search from Name">
+      </div>
     </div>
     <br>
     <div class="table-responsive">
@@ -20,14 +20,14 @@
           </tr>
         </thead>
         <tbody>
-          {{#each jobItemsList}}
+          {{#each state$getJobItems}}
             {{> render component='jobItemDetailed' jobitem=this}}
           {{/each}}
         </tbody>
       </table>
     </div>
-     <!-- <div class="list-group">
-      <a href="#" id="loadMoreIngs" class="list-group-item list-group-item-success center-text">Load More</a>
-    </div> -->
+     <p>
+      <a  href="#" class="btn btn-block btn-outline btn-primary" id="loadMoreJobItems">Load More</a>
+    </p>
   </div>
 </template>
