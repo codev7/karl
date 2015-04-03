@@ -1,22 +1,20 @@
 <template name="menuItem">
-  <a href="/menuItem/{{state$id}}">
-    <div class="col-md-1 col-sm-2 col-xs-1 menu-item">
-      <div class="menu-image">
-      {{#if image}}
-        <img src="{{state$image}}" class="img-responsive menu-item-image">
-      {{else}}
-        <img src="/images/no-image.jpeg" class="img-responsive menu-item-image" alt="Menu Item Image">
-      {{/if}}
+  <div class="col-md-3">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content no-padding border-left-right">
+        {{#if state$image}}
+        <img alt="image" class="img-responsive menu-item-image" src="{{state$image}}">
+        {{else}}
+        <img alt="image" class="img-responsive menu-item-image" src="/images/no-image.jpeg">
+        {{/if}}
       </div>
-      <div class="row pad-top-4">
-        <div class="col-md-8">
-           <p class="menu-name">{{state$name}}</p>
-            <p class="tag-line">{{state$tag}}</p>
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-xs removeMenuItem" data-id="{{state$id}}">Remove</button>
-        </div>
+      <div class="ibox-content profile-content">
+        <a href="/menuItem/{{state$id}}">
+          <h4>{{state$name}}</h4>
+        </a>
+        <h6>{{state$tag}}</h6>
       </div>
     </div>
-  </a>
+  </div>
 </template>
+

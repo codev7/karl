@@ -1,11 +1,19 @@
 <template name="jobItemDetailed">
-   <tr class="info">
-    <td><a href="/jobItem/{{state$id}}">{{state$name}}</a></td>
+  <tr>
+    <td><a href="#" data-id="{{state$id}}" data-toggle="modal" class="viewDetail">{{state$name}}</a></td>
     <td>{{secondsToMinutes state$activeTime}} mins</td>
     <td>{{state$type}}</td>
     <td>{{state$shelfLife}} days</td>
     <td>{{state$portions}}</td>
     <td>$ {{state$cost}}</td>
-    <td><button class="btn btn-xs deleteJobItem">Remove</button></td>
+    <td>
+      <div class="btn-group">
+        <button data-toggle="dropdown" class="btn btn-warning btn-sm dropdown-toggle" aria-expanded="false"><i class="fa fa-cog pad-right-4"></i>Settings <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a class="viewDetail" data-id="{{state$id}}" data-toggle="modal">Edit</a></li>
+          <li><a href="#" class="deleteJobItem" data-id="{{state$id}}">Delete</a></li>
+        </ul>
+      </div>
+    </td>
   </tr>
 </template>

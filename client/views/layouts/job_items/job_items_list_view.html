@@ -1,11 +1,19 @@
 <template name="jobItemsListView">
-  <div class="row center-page-title">
-    Jobs
-    <a class="btn btn-xs" data-toggle="modal" id="submitJobItem" href="#">+</a>
-  </div>
-    <div class="row">
-    <div class="col-xs-10 col-sm-10">
-      {{> render component='jobItemsList'}}
+  <div class="wrapper wrapper-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Jobs </h5>
+              <a type="button" href="/jobItem/submit" class="btn btn-xs btn-primary margin-right-10" data-id="{{state$id}}">
+                <i class="fa fa-plus"></i>
+              </a>
+            </div>
+            {{> render component='jobItemsList'}}
+          </div>
+        </div>
+      </div>
     </div>
-  </div>  
+  </div>
 </template>

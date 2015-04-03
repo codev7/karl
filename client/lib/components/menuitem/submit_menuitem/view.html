@@ -1,28 +1,34 @@
 <template name="submitMenuItem">
-  <form>
+  <div class="ibox-content">
     <div class="row">
-      <div class="col-md-8">
+      <form method="get" class="form-horizontal">
         <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name" class="form-control" placeholder="Enter Name for the menu">
-        </div>
+          <label class="col-sm-3 control-label">Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="name" class="form-control" placeholder="Enter Name for the menu">
+          </div>
+        </div>  
         <div class="form-group">
-          <label>Tag</label>
-          <input type="text" name="tag" class="form-control" placeholder="Add tags separated by ' , ' (comma)">
-        </div>
+          <label class="col-sm-3 control-label">Tag</label>
+          <div class="col-sm-8">
+            <input type="text" name="tag" class="form-control" placeholder="Add tags separated by ' , ' (comma)">
+          </div>
+        </div>  
         <div class="form-group">
-          <label>Instructions</label>
+          <label class="col-sm-3 control-label">Instructions</label>
+          <div class="col-sm-8">
           {{> render component = 'textEditor' id='menuItemEditorSubmit' 
             initialHtml=state$initialHTML}}
-          <!-- <textarea class="form-control" name="instructions" rows="3"></textarea> -->
+          </div>
         </div>
         <div class="form-group">
-          <label>
-            Prep items used
-            <button class="btn btn-xs" id="showJobItemsList">Select Preps</button>
-            <!-- <button class="btn btn-xs" id="addNewJobItem">Add New Prep</button> -->
+          <label class="col-sm-3 control-label">Prep items used
+            <a id="showJobItemsList" class="btn btn-xs btn-primary margin-right-10">
+              <i class="fa fa-plus"></i>
+            </a>
+            <!-- <button class="btn btn-xs btn-info" id="showJobItemsList">+</button> -->
           </label>
-          <div>
+          <div class="col-sm-8">
             <table class="table table-hover thumbnail">
               <thead>
                 <tr>
@@ -42,12 +48,12 @@
           </div>
         </div>
         <div class="form-group">
-          <label>
-            Ingredients used
-            <button class="btn btn-xs" id="showIngredientsList">Select Ingredients</button>
-            <!-- <button class="btn btn-xs" id="addNewIngredient">Add New Ingredient</button> -->
+          <label class="col-sm-3 control-label">Ingredients used
+          <a id="showIngredientsList" class="btn btn-xs btn-primary margin-right-10">
+            <i class="fa fa-plus"></i>
+          </a>
           </label>
-          <div>
+          <div class="col-sm-8">
             <table class="table table-hover thumbnail">
               <thead>
                 <tr>
@@ -66,28 +72,41 @@
             </table>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
         <div class="form-group">
-          <label>Sale price</label>
-          <div class="input-group">
-            <div class="input-group-addon">$</div>
-            <input type="text" class="form-control" name="salesPrice" placeholder="Sale price">     
+          <label class="col-sm-3 control-label">Sale price</label>
+          <div class="col-sm-8">
+            <div class="input-group m-b">
+              <div class="input-group-addon">$</div>
+              <input type="text" class="form-control" name="salesPrice" placeholder="Sale price">     
+            </div>
+          </div>
+        </div> 
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Image</label>
+          <div class="col-sm-8">
+            <button type="button" class="btn btn-sm btn-info" id="uploadMenuItem">Upload Image</button><br>
+            <div class="file col-sm-3 uploadedImageDiv hide">
+              <a href="#">
+                <span class="corner"></span>
+                <div class="image">
+                  <img id="uploadedImageUrl" src="" class="img-responsive menu-item-image">
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label>Image</label><br>
-          <button type="button" class="btn btn-sm" id="uploadMenuItem">Upload Image</button>
-          <div>
-            <img id="uploadedImageUrl" src="" class="img-responsive menu-item-image hide">
-          </div>
+        <div class="col-md-12">
+          <button class="btn btn-white" type="button">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save changes</button>
         </div>
-      </div>
+      </form>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <button type="submit" class="btn btn-primary">Save</button> 
-      </div>
-    </div>
-  </form>
+    <br>
+  </div>
+
+   <!-- JOB ITEMS LIST-->
+  <div class="modal fade" id="jobItemListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='showJobItemsList' name="submitMenuItem"}}
+  </div>
+  <!-- /JOB ITEMS LIST -->
 </template>

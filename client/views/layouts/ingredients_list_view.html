@@ -1,11 +1,25 @@
 <template name="ingredientsListView">
-  <div class="row center-page-title">
-    Ingredients
-    <a class="btn btn-xs" data-toggle="modal" href="#addIngredientModal">+</a>
-  </div>
-  <div class="row">
-    <div class="col-xs-10 col-sm-10">
-      {{> render component = 'ingredientsList'}}
+  <div class="wrapper wrapper-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Ingredients </h5>
+              <a class="btn btn-xs btn-primary margin-right-10" data-toggle="modal" data-target="#addIngredientModal">
+                <i class="fa fa-plus"></i>
+              </a>
+            </div>
+            {{> render component='ingredientsList'}}
+          </div>
+        </div>
+      </div>
     </div>
-  </div> 
+  </div>
+
+  <!-- ADD INGREDIENT-->
+  <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'submitIngredient'}}
+  </div>
+  <!-- /ADD INGREDIENT -->
 </template>

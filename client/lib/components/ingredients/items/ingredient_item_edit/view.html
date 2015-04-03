@@ -5,6 +5,10 @@
     <td>{{state$portionUsed}}</td>
     <td>$ {{state$costPerPortionUsed}}</td>
     <td><input name="ing_qty" data-id="{{state$id}}" value="{{state$quantity}}"/></td>
-    <td><button class="btn btn-xs removeIng" data-id="{{state$id}}">X</button></td>
+    <td>
+      <button type="button" class="btn btn-outline btn-xs btn-danger removeIng" data-id="{{state$id}}">
+        <i class="fa fa-times"></i>
+      </button>
+    </td>
   </tr>
 </template>

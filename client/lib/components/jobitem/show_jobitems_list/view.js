@@ -26,6 +26,11 @@ Template.showJobItemsList.helpers({
 
 var selectedJobItems = [];
 Template.showJobItemsList.events({
+  'keyup #searchText-box': function(event) {
+    var text = $(event.target).val().trim();
+    FlowComponents.callAction('keyup', text);
+  },
+
   'submit form': function(event) {
     event.preventDefault();
     var prep_items = $(event.target).find("[name=selectedPrep]").get();
@@ -37,11 +42,16 @@ Template.showJobItemsList.events({
         prep_items_doc.push(dataid);
       }
     });
+    var alreadySelected = Session.get("selectedJobItems");
+    if(alreadySelected && alreadySelected.length > 0) {
+      prep_items_doc = prep_items_doc.concat(alreadySelected);  
+    } 
     if(prep_items_doc.length > 0) {
       Session.set("selectedJobItems", prep_items_doc);
-    } else {
-      Session.set("selectedJobItems", null);
-    }
+    } 
+    $(event.target).find('[type=checkbox]').attr('checked', false);
+    $("#searchText-box").val("");
     $("#jobItemListModal").modal("hide");
+    FlowComponents.callAction('submit');
   }
 });

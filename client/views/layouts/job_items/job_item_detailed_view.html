@@ -1,8 +1,16 @@
 <template name="jobItemDetailedView">
-<div class="row center-page-title hidden-print">Job Detailed</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-12">
-    {{> render component='jobItemDetail'}}
-  </div>
-</div>  
+  <div class="wrapper wrapper-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title hidden-print">
+              <h5>Job Detailed </h5>
+            </div>
+            {{> render component='jobItemDetail'}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
 </template>

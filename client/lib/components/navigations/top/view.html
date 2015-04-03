@@ -1,0 +1,46 @@
+<template name="navTop">
+  <!-- TOP NAV -->
+  <div class="navbar-collapse collapse" id="navbar">
+    <ul class="nav navbar-nav">
+      {{#if currentUser}}
+        {{#if isPermitted}}
+        <li class="dropdown">
+          <a aria-expanded="false" role="button" href="/ingredients" class="dropdown-toggle" data-toggle="dropdown">Ingredients
+          </a>
+        </li>
+        <li class="dropdown">
+          <a aria-expanded="false" role="button" href="/jobItems" class="dropdown-toggle" data-toggle="dropdown">Jobs</a>
+        </li>
+        <li class="dropdown">
+          <a aria-expanded="false" role="button" href="/menuItems" class="dropdown-toggle" data-toggle="dropdown">Menus</a>
+          <!-- <ul role="menu" class="dropdown-menu">
+            <li><a href="/menuItem/submit">New Menu</a></li>
+          </ul> -->
+        </li>
+        {{/if}}
+        {{#if isAdmin}}
+        <li class="dropdown">
+          <a aria-expanded="false" role="button" href="/admin" class="dropdown-toggle" data-toggle="dropdown">Admin</a>
+        </li>
+        {{/if}}
+      {{/if}}
+    </ul>
+    <ul class="nav navbar-top-links navbar-right">
+      {{#if currentUser}}
+      <li class="dropdown">
+        <a aria-expanded="false" role="button" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.username}} </a>
+        <ul role="menu" class="dropdown-menu">
+          <li><a id="signOutButton">Sign Out</a></li>
+        </ul>
+      </li>
+      {{else}}
+      <li>
+        <a href="" id="signInButton">
+          <i class="fa fa-sign-in"></i> Log In
+        </a>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+  <!-- /TOP NAV -->
+</template>

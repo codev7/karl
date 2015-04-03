@@ -1,16 +1,3 @@
-// Template.jobItemEdit.helpers({
-//   item: function() {
-//     if(this) {
-//       if(this._id) {
-//         var item = getPrepItem(this._id);
-//         if(item) {
-//           return item;
-//         }
-//       } 
-//     }
-//   }
-// });
-
 Template.jobItemEdit.events({
   'click .removePrep': function(event) {
     event.preventDefault();
@@ -25,7 +12,7 @@ Template.jobItemEdit.events({
         }
       }
     }
-    var item = $(event.target).parent().parent();
+    var item = $(event.target).closest("tr");
     $(item).remove();
   }
 });

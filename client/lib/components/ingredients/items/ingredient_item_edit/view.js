@@ -26,7 +26,7 @@ Template.ingredientItemEdit.events({
         }
       }
     }
-    var item = $(event.target).parent().parent();
+    var item = $(event.target).closest('tr');
     $(item).remove();
   }
 });

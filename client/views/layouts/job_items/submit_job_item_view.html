@@ -1,10 +1,28 @@
 <template name="submitJobItemView">
-  <div class="row center-page-title">
-    Submit Job
-  </div>
-  <div class="row">
-    <div class="col-xs-10 col-sm-10">
-      {{> render component = 'submitJobItem'}}
+  <div class="wrapper wrapper-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Submit Job </h5>
+            </div>
+            {{> render component='submitJobItem'}}
+          </div>
+        </div>
+      </div>
     </div>
-  </div>  
+  </div> 
+
+  <!-- INGREDIENTS LIST-->
+  <div class="modal fade" id="ingredientsListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'showIngredientsList' name="submitJob"}}
+  </div>
+  <!-- /INGREDIENTS LIST -->
+
+  <!-- ADD INGREDIENT-->
+  <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'submitIngredient'}}
+  </div>
+  <!-- /ADD INGREDIENT -->
 </template>
