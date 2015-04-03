@@ -5,7 +5,7 @@
       <div class="jumbotron">
         <h1>Welcome to Hero Chef.</h1>
         <p>
-          Thanks for coming {{name}}. Kitchen's are complicated workplaces. Hero Chef aims to make
+          Thanks for coming {{#if  currentUser}} {{name}} {{/if}}. Kitchen's are complicated workplaces. Hero Chef aims to make
           running a busy kitchen easy. Taking a lot of the manual tasks and making them quick, easy and
           accurate.
         </p>
@@ -14,7 +14,13 @@
           how much to prep, rostering and much more.
         </p>
         <p>All ideas are welcome! -Tom</p>
+        {{#if currentUser}}
+        {{else}}
+          <a href="/signIn" class="btn btn-primary btn-rounded">Sign In</a> Or 
+          <a href="/register" class="btn btn-primary btn-rounded">Register</a>
+        {{/if}}
       </div>
+      {{#if currentUser}}
       <div class="row">
         <div class="col-lg-3">
           <div class="widget style1 red-bg">
@@ -69,6 +75,7 @@
           </div>
         </div>
       </div>
+      {{/if}}
     </div>
   </div>
   <div class="footer">
