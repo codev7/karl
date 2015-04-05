@@ -7,6 +7,10 @@ body {
   margin: 0px;
 }
 
+.tag {
+  min-height: 13px !important;
+}
+
 .navbar-default .landing_link a {
   background: #1cc09f;
   color: white;
@@ -102,7 +106,7 @@ body {
 
 .breadcrumb {
   background-color: #ffffff;
-  padding: 0;
+  padding: 0 !important;
   margin-bottom: 0;
 }
 
