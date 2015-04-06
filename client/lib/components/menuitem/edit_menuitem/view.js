@@ -26,9 +26,9 @@ Template.editMenuItem.helpers({
 
   statusList: function() {
     var list = [
-      {'status': 'Active'},
-      {'status': 'Ideas'},
-      {'status': 'Archived'}
+      {'status': 'Active', 'value': 'active'},
+      {'status': 'Ideas', 'value': 'ideas'},
+      {'status': 'Archived', 'value': 'archived'}
     ]
     return list;
   }

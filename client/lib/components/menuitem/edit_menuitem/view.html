@@ -28,9 +28,9 @@
             <select name="status" class="form-control">
               {{#each statusList}}
                 {{#if state$isMyStatus status}}
-                  <option value="{{status}}" selected="selected">{{status}}</option>
+                  <option value="{{value}}" selected="selected">{{status}}</option>
                 {{else}}
-                  <option value="{{status}}">{{status}}</option>
+                  <option value="{{value}}">{{status}}</option>
                 {{/if}}
               {{/each}}
             </select>

@@ -1,4 +1,4 @@
-Meteor.publish("menuList", function(categoryId) {
+Meteor.publish("menuList", function(categoryId, status) {
   var menuCursor = [];
   var query = {};
   if(categoryId && categoryId != "all") {
@@ -7,6 +7,10 @@ Meteor.publish("menuList", function(categoryId) {
       query.category = categoryId;
     }
   }
+  if(status && status != "all" ) {
+    query.status = status;
+  }
+  console.log(query);
   menuCursor = MenuItems.find(query, {fields: {"name": 1, "category": 1, "image": 1, "salesPrice": 1}});
   return menuCursor;
 });
