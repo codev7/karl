@@ -14,6 +14,10 @@ Meteor.methods({
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
     }
+    if(!info.category) {
+      logger.error("Menu item should have a category");
+      throw new Meteor.Error(404, "Menu item should have a category");
+    }
     var exist = MenuItems.findOne({"name": info.name});
     if(exist) {
       logger.error("Duplicate entry");
@@ -21,7 +25,7 @@ Meteor.methods({
     }
     var doc = {
       "name": info.name,
-      "tag": info.tag,
+      "category": info.category,
       "instructions": info.instructions,
       "ingredients": info.ingredients,
       "jobItems": info.prepItems,
@@ -65,9 +69,9 @@ Meteor.methods({
         updateDoc.name = info.name;
       }
     }
-    if(info.tag) {
-      if(info.tag != item.tag) {
-        updateDoc.tag = info.tag;
+    if(info.category) {
+      if(info.category != item.category) {
+        updateDoc.category = info.category;
       }
     }
     if(info.salesPrice || (info.salesPrice >= 0)) {

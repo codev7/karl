@@ -14,6 +14,6 @@ component.state.image = function() {
   return this.menuitem.image;
 }
 
-component.state.tag = function() {
-  return this.menuitem.tag;
+component.state.category = function() {
+  return this.menuitem.category;
 }

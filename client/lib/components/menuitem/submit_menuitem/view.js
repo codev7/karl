@@ -35,7 +35,7 @@ Template.submitMenuItem.events({
   'submit form': function(e, instance) {
     e.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim(); 
-    var tag = $(event.target).find('[name=tag]').val().trim(); 
+    var category = $(event.target).find('[name=category]').val().trim(); 
     var instructions = FlowComponents.child('menuItemEditorSubmit').getState('content');
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = $("#uploadedImageUrl").attr("src");
@@ -84,25 +84,13 @@ Template.submitMenuItem.events({
         }
       }
     });
-
-    var tags = [];
-    if(tag) {
-      tag = tag.trim().split(",");
-      if(tag.length > 0) {
-        tag.forEach(function(item) {
-          if(item.trim()) {
-            tags.push(item.trim());
-          }
-        });
-      }
-    }
     var info = {
       "name": name,
       "instructions": instructions,
       "image": image,
       "ingredients": ing_doc,
       "prepItems": prep_doc,
-      "tag": tags
+      "category": category
     }
     salesPrice = parseFloat(salesPrice);
     if(!salesPrice || typeof(salesPrice) != "number") {

@@ -46,7 +46,7 @@ Template.editMenuItem.events({
     event.preventDefault();
     var id = Session.get("thisMenuItem");
     var name = $(event.target).find('[name=name]').val().trim(); 
-    var tag = $(event.target).find('[name=tag]').val().trim(); 
+    var category = $(event.target).find('[name=category]').val().trim(); 
     var instructions = FlowComponents.child('menuItemEditorEdit').getState('content'); 
     var preps = $(event.target).find("[name=prep_qty]").get();;
     var ings = $(event.target).find("[name=ing_qty]").get();
@@ -78,19 +78,7 @@ Template.editMenuItem.events({
         info.salesPrice = Math.round(salesPrice * 100)/100;
       }
     }
-    if(tag) {
-      var tags = [];
-      tag = tag.trim().split(",");
-      if(tag.length > 0) {
-        tag.forEach(function(item) {
-          var doc = item.trim();
-          if(doc) {
-            tags.push(doc);
-          }
-        });
-      }
-    }
-
+  
     var prep_doc = [];
     var jobItemsIds = [];
     preps.forEach(function(item) {
@@ -127,7 +115,7 @@ Template.editMenuItem.events({
     
     info.jobItems = prep_doc;
     info.ingredients = ing_doc;
-    info.tag = tags;
+    info.category = category;
     FlowComponents.callAction('submit', id, info);
   },
 

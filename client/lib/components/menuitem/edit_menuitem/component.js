@@ -28,8 +28,8 @@ component.state.name = function() {
   return this.item.name;
 }
 
-component.state.tag = function() {
-  return this.item.tag;
+component.state.category = function() {
+  return this.item.category;
 }
 
 component.state.jobItems = function() {
