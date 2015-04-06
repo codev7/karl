@@ -835,3 +835,22 @@ button.dim:active:before {
 .uploadedImageDiv {
   padding: 0px !important;
 }
+
+.editor {
+  min-height: 300px !important;
+}
+
+.ql-line > img {
+  width: 200px;
+  height: 150px;
+}
+
+.panel > .panel-body > div > img,
+.ibox-content > div > img {
+  width: 300px !important;
+  max-height: 195px !important;
+}
+
+img {
+  max-width: 262px !important;
+}
