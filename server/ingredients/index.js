@@ -159,5 +159,9 @@ Meteor.methods({
     }
     Ingredients.remove(id);
     logger.info("Ingredient removed", id);
+  },
+
+  ingredientsCount: function() {
+    return Ingredients.find().count();
   }
 });

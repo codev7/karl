@@ -223,4 +223,8 @@ Meteor.methods({
     JobItems.update({'_id': id}, query);
     logger.info("Ingredients removed from job item", id);
   },
+
+  jobItemsCount: function() {
+    return JobItems.find().count();
+  }
 });

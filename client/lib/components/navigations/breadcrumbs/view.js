@@ -1,6 +1,38 @@
 Template.breadcrumbs.helpers({
   categoriesList: function() {
     return Categories.find().fetch();
+  },
+
+  statusList: function() {
+    var status = [
+      {"status": "All", "value": 'all'},
+      {"status": "Active", "value": "active"},
+      {"status": "Ideas", "value": "ideas"},
+      {"status": "Archived", "value": "archived"}
+    ];
+    return status;
+  },
+
+  isMyCategory: function(id) {
+    var category = Session.get("category");
+    if(id == "all" && category == "all") {
+      return true;
+    } else if(category == id) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  isMyStatus: function(id) {
+    var status = Session.get("status");
+    if(id == "all" && status == "all") {
+      return true;
+    } else if(status == id) {
+      return true;
+    } else {
+      return false;
+    }
   }
 });
 

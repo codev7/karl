@@ -10,17 +10,44 @@ Template.home.helpers({
   },
 
   menusCount: function() {
-    var count = MenuItems.find().count();
+    var count = 0;
+    Meteor.call("menuItemsCount", function(err, result) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        console.log(result);
+        count = result;
+      }
+    });
     return count;
   },
 
   jobsCount: function() {
-    var count = JobItems.find().count();
+    var count = 0;
+    Meteor.call("jobItemsCount", function(err, result) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        console.log(result);
+        count = result;
+      }
+    });
     return count;
   },
 
   ingCount: function() {
-    var count = Ingredients.find().count();
+    var count = 0;
+    Meteor.call("ingredientsCount", function(err, result) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        console.log(result);
+        count = result;
+      }
+    });
     return count;
   }
 });
