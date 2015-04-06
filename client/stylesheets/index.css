@@ -850,7 +850,3 @@ button.dim:active:before {
   width: 300px !important;
   max-height: 195px !important;
 }
-
-img {
-  max-width: 262px !important;
-}

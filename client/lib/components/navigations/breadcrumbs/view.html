@@ -2,10 +2,10 @@
   <div class="row navbar-btn">
     <div class="pull-left col-md-6">
       <div class="btn-group">
-        <button type="button" class="btn btn-white">All</button>
-        <button type="button" class="btn btn-white">Main Menu</button>
-        <button type="button" class="btn btn-primary">Catering</button>
-        <button type="button" class="btn btn-white">Kids Menu</button>
+        <button type="button" class="btn btn-white categorizedMenus" data-id="all">All</button>
+        {{#each categoriesList}}
+        <button type="button" class="btn btn-white categorizedMenus" data-id="{{_id}}">{{name}}</button>
+        {{/each}}
         <a data-toggle="modal" data-target="#addCategoryModal" class="btn btn-white">+</a>
       </div>
     </div>

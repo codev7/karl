@@ -19,6 +19,10 @@ Template.editMenuItem.helpers({
       }
     }
   },
+
+  categoriesList: function() {
+    return Categories.find().fetch();
+  }
 });
 
 Template.editMenuItem.events({

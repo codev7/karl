@@ -1,5 +1,13 @@
-Meteor.publish("menuList", function() {
-  var menuCursor = MenuItems.find({}, {fields: {"name": 1, "tag": 1, "image": 1, "salesPrice": 1}});
+Meteor.publish("menuList", function(categoryId) {
+  var menuCursor = [];
+  if(categoryId == 'all') {
+    menuCursor = MenuItems.find({}, {fields: {"name": 1, "category": 1, "image": 1, "salesPrice": 1}});
+  } else {
+    var category = Categories.findOne(categoryId);
+    if(category) {
+      menuCursor = MenuItems.find({'category': categoryId}, {fields: {"name": 1, "category": 1, "image": 1, "salesPrice": 1}})
+    }
+  }
   return menuCursor;
 });
 
@@ -15,6 +23,6 @@ Meteor.publish("menuItems", function(ids) {
   return cursor;
 });
 
-Meteor.publish("AllCategories", function() {
+Meteor.publish("allCategories", function() {
   return Categories.find();
 });

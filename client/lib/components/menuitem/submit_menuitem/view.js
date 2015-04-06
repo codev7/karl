@@ -19,6 +19,10 @@ Template.submitMenuItem.helpers({
       }
     }
   },
+
+  categoriesList: function() {
+    return Categories.find().fetch();
+  }
 });
 
 Template.submitMenuItem.events({

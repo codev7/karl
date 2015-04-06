@@ -28,8 +28,14 @@ component.state.name = function() {
   return this.item.name;
 }
 
-component.state.category = function() {
-  return this.item.category;
+component.state.isMyCategory = function(categoryId) {
+  if(categoryId) {
+    if(categoryId == this.item.category) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 component.state.jobItems = function() {

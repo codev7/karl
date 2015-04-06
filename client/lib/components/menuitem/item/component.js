@@ -15,5 +15,10 @@ component.state.image = function() {
 }
 
 component.state.category = function() {
-  return this.menuitem.category;
+  if(this.menuitem.category) {
+    var category = Categories.findOne(this.menuitem.category);
+    if(category) {
+      return category.name;      
+    }
+  }
 }
