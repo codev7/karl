@@ -14,3 +14,7 @@ Meteor.publish("menuItems", function(ids) {
   cursor.push(items);
   return cursor;
 });
+
+Meteor.publish("AllCategories", function() {
+  return Categories.find();
+});
