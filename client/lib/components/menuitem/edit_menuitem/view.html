@@ -21,7 +21,21 @@
               {{/each}}        
             </select>
           </div>
-        </div>  
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Status</label>
+          <div class="col-sm-8">
+            <select name="status" class="form-control">
+              {{#each statusList}}
+                {{#if state$isMyStatus status}}
+                  <option value="{{status}}" selected="selected">{{status}}</option>
+                {{else}}
+                  <option value="{{status}}">{{status}}</option>
+                {{/if}}
+              {{/each}}
+            </select>
+          </div>
+        </div>   
         <div class="form-group">
           <label class="col-sm-3 control-label">Instructions</label>
           <div class="col-sm-8">

@@ -38,6 +38,16 @@ component.state.isMyCategory = function(categoryId) {
   }
 }
 
+component.state.isMyStatus = function(status) {
+  if(status) {
+    if(status == this.item.status) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 component.state.jobItems = function() {
   return this.item.jobItems;
 }

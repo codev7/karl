@@ -30,11 +30,15 @@ Meteor.methods({
       "ingredients": info.ingredients,
       "jobItems": info.prepItems,
       "salesPrice": parseFloat(info.salesPrice),
-      "staus": "active",
       "image": info.image,
       "createdOn": Date.now(),
       "createdBy": userId
     };
+    if(info.status) {
+      doc.status = info.status
+    } else {
+      doc.status = "active"
+    }
     var id = MenuItems.insert(doc);
     logger.info("Menu items added ", id);
     return id;
@@ -74,6 +78,11 @@ Meteor.methods({
         updateDoc.category = info.category;
       }
     }
+    if(info.status) {
+      if(info.status != item.status) {
+        updateDoc.status = info.status;
+      }
+    }
     if(info.salesPrice || (info.salesPrice >= 0)) {
       if(info.salesPrice != item.salesPrice) {
         updateDoc['salesPrice'] = info.salesPrice;
@@ -111,7 +120,6 @@ Meteor.methods({
     if(info.image) {
       updateDoc.image = info.image;
     }
-
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedBy'] = userId;
       updateDoc['editedOn'] = Date.now();

@@ -22,6 +22,15 @@ Template.editMenuItem.helpers({
 
   categoriesList: function() {
     return Categories.find().fetch();
+  },
+
+  statusList: function() {
+    var list = [
+      {'status': 'Active'},
+      {'status': 'Ideas'},
+      {'status': 'Archived'}
+    ]
+    return list;
   }
 });
 
@@ -51,6 +60,7 @@ Template.editMenuItem.events({
     var id = Session.get("thisMenuItem");
     var name = $(event.target).find('[name=name]').val().trim(); 
     var category = $(event.target).find('[name=category]').val().trim(); 
+    var status = $(event.target).find('[name=status]').val().trim(); 
     var instructions = FlowComponents.child('menuItemEditorEdit').getState('content'); 
     var preps = $(event.target).find("[name=prep_qty]").get();;
     var ings = $(event.target).find("[name=ing_qty]").get();
@@ -70,7 +80,8 @@ Template.editMenuItem.events({
       "instructions": instructions,
       "jobItems": [],
       "ingredients": [],
-      "image": image
+      "image": image,
+      "status": status
     }
     salesPrice = parseFloat(salesPrice);
     if(!salesPrice || typeof(salesPrice) != "number") {

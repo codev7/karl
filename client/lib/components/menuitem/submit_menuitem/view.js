@@ -40,6 +40,7 @@ Template.submitMenuItem.events({
     e.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim(); 
     var category = $(event.target).find('[name=category]').val().trim(); 
+    var status = $(event.target).find('[name=status]').val().trim(); 
     var instructions = FlowComponents.child('menuItemEditorSubmit').getState('content');
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = $("#uploadedImageUrl").attr("src");
@@ -94,7 +95,8 @@ Template.submitMenuItem.events({
       "image": image,
       "ingredients": ing_doc,
       "prepItems": prep_doc,
-      "category": category
+      "category": category,
+      "status": status
     }
     salesPrice = parseFloat(salesPrice);
     if(!salesPrice || typeof(salesPrice) != "number") {

@@ -1,13 +1,13 @@
 Meteor.publish("menuList", function(categoryId) {
   var menuCursor = [];
-  if(categoryId == 'all') {
-    menuCursor = MenuItems.find({}, {fields: {"name": 1, "category": 1, "image": 1, "salesPrice": 1}});
-  } else {
-    var category = Categories.findOne(categoryId);
-    if(category) {
-      menuCursor = MenuItems.find({'category': categoryId}, {fields: {"name": 1, "category": 1, "image": 1, "salesPrice": 1}})
+  var query = {};
+  if(categoryId && categoryId != "all") {
+    var doc = Categories.findOne(categoryId);
+    if(doc) {
+      query.category = categoryId;
     }
   }
+  menuCursor = MenuItems.find(query, {fields: {"name": 1, "category": 1, "image": 1, "salesPrice": 1}});
   return menuCursor;
 });
 
