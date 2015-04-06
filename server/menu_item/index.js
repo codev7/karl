@@ -318,5 +318,9 @@ Meteor.methods({
       throw new Meteor.Error(404, "Category name should be unique");
     }
     return Categories.insert({"name": name});
+  },
+
+  menuItemsCount: function() {
+    return MenuItems.find().count();
   }
 });
