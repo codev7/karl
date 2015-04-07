@@ -1,50 +1,50 @@
 <template name="navTop">
-    <!-- TOP NAV -->
-    <div class="navbar-collapse collapse" id="navbar">
-        <ul class="nav navbar-nav">
-            {{#if currentUser}}
-                {{#if isPermitted}}
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="/menuItems/all/all" class="dropdown-toggle"
-                           data-toggle="dropdown">Menus</a>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="/jobItems" class="dropdown-toggle"
-                           data-toggle="dropdown">Jobs</a>
-                    </li>
-                    <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="/ingredients" class="dropdown-toggle"
-                           data-toggle="dropdown">Ingredients
-                        </a>
-                        <!-- <ul role="menu" class="dropdown-menu">
-                          <li><a href="/menuItem/submit">New Menu</a></li>
-                        </ul> -->
-                    </li>
+  <!-- TOP NAV -->
+  <div class="navbar-collapse collapse" id="navbar">
+    <ul class="nav navbar-nav">
+      {{#if currentUser}}
+        {{#if isPermitted}}
+          <li class="dropdown">
+            <a aria-expanded="false" role="button" href="/menuItems/all/all" class="dropdown-toggle" data-toggle="dropdown">Menus</a>
+          </li>
+          <li class="dropdown">
+            <a aria-expanded="false" role="button" href="/jobItems" class="dropdown-toggle" data-toggle="dropdown">Jobs</a>
+          </li>
+          <li class="dropdown">
+            <a aria-expanded="false" role="button" href="/ingredients" class="dropdown-toggle" data-toggle="dropdown">Ingredients
+            </a>
+            <!-- <ul role="menu" class="dropdown-menu">
+              <li><a href="/menuItem/submit">New Menu</a></li>
+            </ul> -->
+          </li>
+        {{/if}}
+      {{/if}}
+    </ul>
+    <ul class="nav navbar-top-links navbar-right">
+      {{#if currentUser}}
+        <li class="dropdown">
+          <div class="feed-element top-nav-profile-image">
+            <img alt="image" class="img-circle" src="https://lh4.googleusercontent.com/-cIARw7_KD7A/AAAAAAAAAAI/AAAAAAAACJ8/1PwYay9zgTE/photo.jpg">
+            <a aria-expanded="false" role="button" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.username}} </a>
+            <ul role="menu" class="dropdown-menu">
+              <li>
+                {{#if isAdmin}}
+                <a aria-expanded="false" role="button" href="/admin" class="dropdown-toggle" data-toggle="dropdown">Users</a>
                 {{/if}}
-            {{/if}}
-        </ul>
-        <ul class="nav navbar-top-links navbar-right">
-            {{#if currentUser}}
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" class="dropdown-toggle"
-                       data-toggle="dropdown">{{currentUser.username}} </a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li>{{#if isAdmin}}
-                            <a aria-expanded="false" role="button" href="/admin" class="dropdown-toggle"
-                               data-toggle="dropdown">Users</a>
-                        {{/if}}</li>
-                        <li role="presentation" class="divider"></li>
-                        <li><a id="signOutButton">Sign Out</a></li>
-                    </ul>
-                </li>
-            {{else}}
-                <li>
-                    <a href="" id="signInButton">
-                        <i class="fa fa-sign-in"></i> Log In
-                    </a>
-                </li>
-            {{/if}}
-        </ul>
-    </div>
-    <!-- /TOP NAV -->
+              </li>
+              <li role="presentation" class="divider"></li>
+              <li><a id="signOutButton">Sign Out</a></li>
+            </ul> 
+          </div>
+        </li>
+      {{else}}
+        <li>
+          <a href="" id="signInButton">
+            <i class="fa fa-sign-in"></i> Log In
+          </a>
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+  <!-- /TOP NAV -->
 </template>
