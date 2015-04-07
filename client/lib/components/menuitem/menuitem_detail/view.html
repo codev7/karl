@@ -139,10 +139,11 @@
       </div>
     </div>
     <br>
-    <div class="col-md-12 m-t-lg">
+    <div class="col-md-12 m-t-lg m-b-lg">
       <button type="button" class="btn btn-primary editMenuItemBtn hidden-print" data-id="{{item._id}}">Edit
       </button>
       <button type="button" class="btn btn-primary printMenuItemBtn hidden-print">Print</button>
     </div>
+    {{> render component='commentsPanel'}}
   </div>
 </template>

@@ -850,3 +850,8 @@ button.dim:active:before {
   width: 300px !important;
   max-height: 195px !important;
 }
+
+.top-nav-profile-image {
+  margin-top: 9px !important; 
+  padding-bottom: 4px !important;
+}

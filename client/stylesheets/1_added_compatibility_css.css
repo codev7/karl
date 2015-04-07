@@ -167,3 +167,16 @@ body {
   width: 100%;
   height: 315px !important;
 }
+
+.chat-users {
+  height: 530px !important;
+}
+
+.chat-submit {
+  border-right: 1px solid #cccccc !important;
+}
+
+.middle-box {
+  top: 0 !important;
+  color: #aaa;
+}
