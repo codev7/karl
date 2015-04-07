@@ -1,0 +1,20 @@
+<template name="commentsPanel">
+  <div class="col-md-12">
+    <div class="ibox chat-view">
+      <div class="ibox-title">
+        <small class="pull-right text-muted">Last message:  Mon Jan 26 2015 - 18:39:23</small>Comments
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-md-9 ">
+            <div class="chat-discussion">
+              {{> render component="comment"}}
+            </div>
+            {{> render component="submitComment"}}
+          </div>
+          {{> render component="chatUsersList"}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
