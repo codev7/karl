@@ -1,12 +1,10 @@
 <template name="comment">
   <div class="chat-message">
-    <img class="message-avatar" src="/images/user-image.jpeg" alt="">
+    <img class="message-avatar" src="{{state$profilePicture}}" alt="">
     <div class="message">
-      <a class="message-author" href="#"> Michael Smith </a>
-      <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span>
-      <span class="message-content">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-      </span>
+      <a class="message-author" href="#">{{state$name}}</a>
+      <span class="message-date">{{state$createdOn}}</span>
+      <span class="message-content">{{state$text}}</span>
     </div>
   </div>
 </template>

@@ -2,19 +2,9 @@
    <div class="col-md-3">
     <div class="chat-users">
       <div class="users-list">
-        <div class="chat-user">
-          <img class="chat-avatar" src="/images/user-image.jpeg" alt="">
-          <div class="chat-user-name">
-            <a href="#">Karl Jordan</a>
-          </div>
-        </div>
-        <div class="chat-user">
-          <span class="pull-right label label-primary">Online</span>
-          <img class="chat-avatar" src="/images/user-image.jpeg" alt="">
-          <div class="chat-user-name">
-            <a href="#">Janet Smith</a>
-          </div>
-        </div>
+        {{#each usersList}}
+          {{> render component="chatUser" user=this}}
+        {{/each}}
       </div>
     </div>
   </div>
