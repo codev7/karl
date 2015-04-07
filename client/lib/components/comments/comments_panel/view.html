@@ -10,7 +10,7 @@
           <div class="col-md-9 ">
             <div class="chat-discussion">
               {{#if state$commentsExist}}
-                {{#each commentsList}}
+                {{#each state$commentsList}}
                   {{> render component="comment" comment=this}}
                 {{/each}}
               {{else}}
