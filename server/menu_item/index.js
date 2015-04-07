@@ -14,6 +14,10 @@ Meteor.methods({
       logger.error("Menu item should have a name");
       throw new Meteor.Error(404, "Menu item should have a name");
     }
+    if(!info.category) {
+      logger.error("Menu item should have a category");
+      throw new Meteor.Error(404, "Menu item should have a category");
+    }
     var exist = MenuItems.findOne({"name": info.name});
     if(exist) {
       logger.error("Duplicate entry");
@@ -21,16 +25,20 @@ Meteor.methods({
     }
     var doc = {
       "name": info.name,
-      "tag": info.tag,
+      "category": info.category,
       "instructions": info.instructions,
       "ingredients": info.ingredients,
       "jobItems": info.prepItems,
       "salesPrice": parseFloat(info.salesPrice),
-      "staus": "active",
       "image": info.image,
       "createdOn": Date.now(),
       "createdBy": userId
     };
+    if(info.status) {
+      doc.status = info.status
+    } else {
+      doc.status = "active"
+    }
     var id = MenuItems.insert(doc);
     logger.info("Menu items added ", id);
     return id;
@@ -65,9 +73,14 @@ Meteor.methods({
         updateDoc.name = info.name;
       }
     }
-    if(info.tag) {
-      if(info.tag != item.tag) {
-        updateDoc.tag = info.tag;
+    if(info.category) {
+      if(info.category != item.category) {
+        updateDoc.category = info.category;
+      }
+    }
+    if(info.status) {
+      if(info.status != item.status) {
+        updateDoc.status = info.status;
       }
     }
     if(info.salesPrice || (info.salesPrice >= 0)) {
@@ -107,7 +120,6 @@ Meteor.methods({
     if(info.image) {
       updateDoc.image = info.image;
     }
-
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedBy'] = userId;
       updateDoc['editedOn'] = Date.now();
@@ -283,5 +295,32 @@ Meteor.methods({
       logger.info("Job Items updated for menu item", menuId);
     }
     return;
+  },
+
+  'createCategory': function(name) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add job items");
+      throw new Meteor.Error(404, "User not permitted to add jobs");
+    }
+    if(!name) {
+      logger.error("Category should have a name");
+      return new Meteor.Error(404, "Category should have a name");
+    }
+    var exist = Categories.findOne({"name": name});
+    if(exist) {
+      logger.error('Category name should be unique', exist);
+      throw new Meteor.Error(404, "Category name should be unique");
+    }
+    return Categories.insert({"name": name});
+  },
+
+  menuItemsCount: function() {
+    return MenuItems.find().count();
   }
 });

@@ -1,5 +1,16 @@
-Meteor.publish("menuList", function() {
-  var menuCursor = MenuItems.find({}, {fields: {"name": 1, "tag": 1, "image": 1, "salesPrice": 1}});
+Meteor.publish("menuList", function(categoryId, status) {
+  var menuCursor = [];
+  var query = {};
+  if(categoryId && categoryId != "all") {
+    var doc = Categories.findOne(categoryId);
+    if(doc) {
+      query.category = categoryId;
+    }
+  }
+  if(status && status != "all" ) {
+    query.status = status;
+  }
+  menuCursor = MenuItems.find(query, {fields: {"name": 1, "category": 1, "image": 1, "salesPrice": 1}});
   return menuCursor;
 });
 
@@ -13,4 +24,8 @@ Meteor.publish("menuItems", function(ids) {
   var items = MenuItems.find({"_id": {$in: ids}});
   cursor.push(items);
   return cursor;
+});
+
+Meteor.publish("allCategories", function() {
+  return Categories.find();
 });
