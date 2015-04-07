@@ -180,3 +180,27 @@ body {
   top: 0 !important;
   color: #aaa;
 }
+
+
+.chat-discussion .chat-message:nth-child(2n) .message-avatar {
+  margin-left: 0px !important;
+}
+
+.chat-discussion .chat-message:nth-child(2n) .message {
+  text-align: none !important;
+  margin-right: 0px !important;
+}
+
+.chat-discussion .chat-message .message {
+  text-align: left !important;
+  margin-left: 55px !important;
+}
+
+.chat-discussion .chat-message .message-date {
+  float: right !important;
+}
+
+.chat-discussion .chat-message .message-avatar {
+  float: left !important;
+  margin-right: !important;
+}
