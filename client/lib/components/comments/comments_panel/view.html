@@ -7,7 +7,7 @@
       </div>
       <div class="ibox-content">
         <div class="row">
-          <div class="col-md-9 ">
+          <div class="col-md-12">
             <div class="chat-discussion">
               {{#if state$commentsExist}}
                 {{#each state$commentsList}}
@@ -21,7 +21,7 @@
             </div>
             {{> render component="submitComment"}}
           </div>
-          {{> render component="chatUsersList"}}
+          <!-- {{> render component="chatUsersList"}} -->
         </div>
       </div>
     </div>
