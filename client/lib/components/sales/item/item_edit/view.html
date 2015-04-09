@@ -1,0 +1,19 @@
+<template name="editSalesItem">
+  <tr>
+    <form>
+      <td>
+        <input type="text" name="menuItem" class="form-control saleItem" placeholder="Enter name of the menu"/>
+        <div class="">
+          <select class="form-control js-example-basic-single">
+            {{#each state$getMenuItems}}
+              <option>{{{name}}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </td>
+      <td class="col-sm-3">
+        <input type="number" name="qty" class="form-control saleQty" placeholder="Enter quantity sold"/>
+      </td>
+    </form>
+  </tr>
+</template>

@@ -1,0 +1,29 @@
+<template name="submitSales">
+  <div class="ibox-content">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Date</label>
+          <div class="col-sm-8">
+            <input type="text" name="date" id="salesMenuDate" class="form-control" placeholder="Enter Date" value="{{state$todaysDate}}">
+          </div>
+        </div>
+      </div>   
+    </div>
+    <br>
+    <div class="table-responsive salesMenuTable">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Menu Item</th>
+            <th>Quantity </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{> render component='editSalesItem'}}
+          {{> render component='salesList' list="newlySubmitted" date=state$todaysDate}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

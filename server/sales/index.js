@@ -14,6 +14,11 @@ Meteor.methods({
       logger.error("Date field does not exist");
       throw new Meteor.Error(404, "Date field does not exist");
     }
+    var exist = Sales.findOne({"date": date, "menuItem": menuId});
+    if(exist) {
+      logger.error("Menu item already added");
+      throw new Meteor.Error(404, "Menu item already added");
+    }
     var menuItem = MenuItems.findOne(menuId);
     if(!menuItem) {
       logger.error("Menu item does not exist");
