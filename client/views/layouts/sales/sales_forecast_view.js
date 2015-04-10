@@ -36,6 +36,7 @@ Template.salesForecastView.events({
     var date = Router.current().params.date;
     var forecast = SalesForecast.find({"date": new Date(date)}).fetch();
     var menuDoc = [];
+    $(".generateJobs").hide();
     forecast.forEach(function(item) {
       var doc = {"id": item.menuItem, "quantity": item.quantity};
       menuDoc.push(doc);
@@ -44,6 +45,7 @@ Template.salesForecastView.events({
       Meteor.call("generateJobs", menuDoc, date, function(err, result) {
         if(err) {
           console.log(err);
+          $(".generateJobs").show();
           return alert(err);
         } else {
           console.log("......result.", result);
