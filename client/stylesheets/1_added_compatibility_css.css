@@ -200,3 +200,7 @@ body {
   float: left !important;
   margin-right: !important;
 }
+
+.daysCount-div {
+  top: -9px !important;
+}

@@ -6,6 +6,7 @@ Meteor.publish("salesOnDate", function(date) {
 });
 
 Meteor.publish("salesOnDateRange", function(range) {
+  console.log(range);
   var todayInMiliSecs = new Date().getTime();
   var dateRange = parseInt(range) * 24 * 60 * 60 * 1000;
   console.log("............", dateRange);
@@ -18,8 +19,9 @@ Meteor.publish("salesOnDateRange", function(range) {
   console.log("........historyDate.....", historyDate, today);
 
   var pipeline = [
-    {$group: {"menu": "$menuItem", "soldAtPrice": "$soldAtPrice", "totalQty": {$sum: "$quantity"}}}
+    {$group: {_id: "$menuItem","totalQty": {$sum: "$quantity"}}}
   ]
   var sales = Sales.aggregate(pipeline);
+  console.log("---------", sales)
   return sales;
 });
