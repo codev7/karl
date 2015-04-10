@@ -2,9 +2,10 @@ var subs = new SubsManager();
 
 var component = FlowComponents.define("salesItemsListed", function(props) {
   this.menu = props.menu;
-  console.log(this.menu);
   var menuItem = MenuItems.findOne(this.menu.menuItem);
-  this.menu.name = menuItem.name;
+  if(menuItem) {
+    this.menu.name = menuItem.name;
+  }
 });
 
 component.state.name = function() {

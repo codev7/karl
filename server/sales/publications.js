@@ -8,6 +8,7 @@ Meteor.publish("salesOnDate", function(date) {
 Meteor.publish("salesOnDateRange", function(range) {
   var todayInMiliSecs = new Date().getTime();
   var dateRange = parseInt(range) * 24 * 60 * 60 * 1000;
+  console.log("............", dateRange);
   var calcMiliSecs = todayInMiliSecs + dateRange;
 
 

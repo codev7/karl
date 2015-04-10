@@ -5,11 +5,14 @@
         <div class="col-lg-12">
           <div class="ibox float-e-margins">
             <div class="ibox-title">
-              <h5>Sales </h5>
+              <h5 class="col-md-3">Sales on {{date}}</h5>
+              <button class="btn btn-warning btn-xs previousDay">Prev</button>
+              <button class="btn btn-warning btn-xs today">Today</button>
+              <button class="btn btn-warning btn-xs nextDay">Next</button>
               <a type="button" href="/sales/submit" class="btn btn-xs btn-primary margin-right-10">
                 <i class="fa fa-plus"></i>
               </a>
-              {{date}}
+              <a type="button" href="/sales/ranged" class="btn btn-xs btn-primary margin-right-10">View Ranged Data</a>
             </div>
             <div class="table-responsive salesMenuTable">
               <table class="table table-striped">
