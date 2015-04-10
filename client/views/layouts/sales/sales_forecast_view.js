@@ -34,8 +34,26 @@ Template.salesForecastView.events({
 
   'click .generateJobs': function(event) {
     var date = Router.current().params.date;
-    console.log("-----------", date);
-    var forecast = SalesForecast.find({"date": date}).fetch();
-    console.log(".........", forecast);
+    var forecast = SalesForecast.find({"date": new Date(date)}).fetch();
+    var menuDoc = [];
+    forecast.forEach(function(item) {
+      var doc = {"id": item.menuItem, "quantity": item.quantity};
+      menuDoc.push(doc);
+    });
+    if(menuDoc.length > 0) {
+      Meteor.call("generateJobs", menuDoc, date, function(err, result) {
+        if(err) {
+          console.log(err);
+          return alert(err);
+        } else {
+          console.log("......result.", result);
+        }
+      });
+    }
+  },
+
+  'click .viewGeneratedJobs': function(event) {
+    event.preventDefault();
+    Router.go("jobs");
   }
 });

@@ -1,14 +1,12 @@
 Meteor.methods({
   generateJobs: function(menuInfo, date) {
-    console.log(menuInfo, date);
     var jobIds = [];
     if(Object.keys(menuInfo).length > 0) {
       menuInfo.forEach(function(menu) {
         var menuItem = MenuItems.findOne(menu.id);
-
         if(Object.keys(menuItem.jobItems).length > 0) { 
           menuItem.jobItems.forEach(function(jobItem) {
-            var item = JobItems.findOne(jobItem.id);
+            var item = JobItems.findOne(jobItem._id);
             var quantity = jobItem.quantity * menu.quantity;
             var timeTaken = (item.activeTime/item.portions) * quantity;
             var today = new Date(date).toISOString().slice(0,10).replace(/-/g,"-");
@@ -42,6 +40,7 @@ Meteor.methods({
         }
       });
     }
+    console.log(jobIds);
     return jobIds;
   },
 
