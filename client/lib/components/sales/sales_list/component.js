@@ -1,11 +1,11 @@
 var subs = new SubsManager();
 
 var component = FlowComponents.define("salesList", function(props) {
+  this.set("view", props.list);
   if(props.list == "listOnRange") {
     this.renderedListOnRange();
-    this.set("range", props.range);
   } else {
-    // subs.subscribe("salesOnDate", props.date);
+    subs.subscribe("salesOnDate", props.date);
     this.set("date", props.date);
   }
 });
@@ -15,14 +15,26 @@ component.state.salesMenusList = function() {
   if(this.get("date")) {
     sales = Sales.find({"date": this.get("date")}).fetch();
   } else {
-    var range = this.get("range");
-    
-    sales = MenuItems.find().fetch();
-    console.log(sales);
+    sales = this.get("list")
   }
   return sales;
 }
 
+component.state.isRanged = function() {
+  if(this.get("view") == "listOnRange") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 component.prototype.renderedListOnRange = function() {
-  // subs.subscribe("salesOnDateRange", parseInt(Session.get("daysRangeCount")));
+  var self = this;
+  Meteor.call("getRangedData",  parseInt(Session.get("daysRangeCount")), function(err, doc) {
+    if(err) {
+      console.log(err);
+    } else {
+      self.set("list", doc);
+    }
+  });
 }

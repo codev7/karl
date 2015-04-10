@@ -12,7 +12,7 @@
               <a type="button" href="/sales/submit" class="btn btn-xs btn-primary margin-right-10">
                 <i class="fa fa-plus"></i>
               </a>
-              <!-- <a type="button" href="/sales/ranged" class="btn btn-xs btn-primary margin-right-10">View Ranged Data</a> -->
+              <a type="button" href="/sales/ranged" class="btn btn-xs btn-primary margin-right-10">View Ranged Data</a>
             </div>
             <div class="table-responsive salesMenuTable">
               <table class="table table-striped">
@@ -23,7 +23,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{> render component='salesList' list="listOnDate" date=date}}
+                  {{> render component='salesList' list="listOnDate" date=isoDate}}
                 </tbody>
               </table>
             </div>

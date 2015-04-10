@@ -3,6 +3,14 @@ Template.salesRangedListedView.events({
     event.preventDefault();
     var count = $(".daysCount").val();
     Session.set("daysRangeCount", count);
+    Meteor.call("getRangedData",  parseInt(count), function(err, doc) {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log(doc);
+        return doc;
+      }
+    });
   }
 });
 
