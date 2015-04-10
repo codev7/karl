@@ -7,7 +7,6 @@ Template.salesRangedListedView.events({
       if(err) {
         console.log(err);
       } else {
-        console.log(doc);
         return doc;
       }
     });
