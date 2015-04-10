@@ -1,4 +1,6 @@
 var component = FlowComponents.define("editSalesItem", function(props) {
+  this.set("name", props.name);
+
   this.onRendered(this.onMenuListRendered);
   var options = {
     keepHistory: 1000 * 60 * 5,
@@ -25,4 +27,41 @@ component.state.getMenuItems = function() {
 
 component.prototype.onMenuListRendered = function() {
   this.MenuItemsSearch.search("");
+}
+
+component.action.submit = function(date, menuItemId, qty) {
+  var name = this.get("name");
+  if(name == "actualSales") {
+    Meteor.call("createSalesMenus", new Date(date), menuItemId, qty, function(err, id) {
+      if(err) {
+        if(err.reason == "Menu item already added") {
+          alert("Menu item already added");
+          $(".saleItem").focus();
+        } else {
+          console.log(err);
+          return alert(err.reason);
+        }
+      } else {
+        $('.saleItem').val("");
+        $(".saleItem").focus();
+        $(".saleQty").val("");
+      }
+    });
+  } else if(name == "salesForecast") {
+    Meteor.call("createSalesForecast", new Date(date), menuItemId, qty, function(err, id) {
+      if(err) {
+        if(err.reason == "Menu item already added") {
+          alert("Menu item already added");
+          $(".saleItem").focus();
+        } else {
+          console.log(err);
+          return alert(err.reason);
+        }
+      } else {
+        $('.saleItem').val("");
+        $(".saleItem").focus();
+        $(".saleQty").val("");
+      }
+    });
+  }
 }

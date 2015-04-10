@@ -1,19 +1,15 @@
-<template name="salesRangedListedView">
+<template name="salesForecastView">
   <div class="wrapper wrapper-content">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="ibox float-e-margins">
             <div class="ibox-title">
-              <h5 class="">Sales of last days</h5>
-              <div class="col-md-3">
-                <a type="button" href="/sales/forecast/submit" class="btn btn-xs btn-primary margin-right-10">+</a>
-              </div>
-              <div class="input-group col-md-3 margin-right-10 daysCount-div">
-                <input type="number" class="form-control daysCount" name="daysCount" value="1"> 
-                <span class="input-group-btn"> 
-                  <button type="button" class="btn btn-primary btnGo">Go!</button> 
-                </span>
+              <h5 class="col-md-3">Sales ForeCast {{date}}</h5>
+              <div class="margin-right-10">
+                <button class="btn btn-warning btn-xs previousDay">Prev</button>
+                <button class="btn btn-warning btn-xs today">Today</button>
+                <button class="btn btn-warning btn-xs nextDay">Next</button>
               </div>
             </div>
             <div class="table-responsive salesMenuTable">
@@ -25,9 +21,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{> render component='salesList' list="listOnRange" range=range}}
+                  {{> render component='editSalesItem' name="salesForecast"}}
+                  {{> render component='salesList' list="newlySubmitted" date=todaysIsoDate name="salesForecast"}}
                 </tbody>
               </table>
+              <button class="btn btn-primary generateJobs">Generate Jobs</button>
             </div>
           </div>
         </div>

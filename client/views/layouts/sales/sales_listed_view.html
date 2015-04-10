@@ -8,11 +8,11 @@
               <h5 class="col-md-3">Sales on {{date}}</h5>
               <button class="btn btn-warning btn-xs previousDay">Prev</button>
               <button class="btn btn-warning btn-xs today">Today</button>
-              <button class="btn btn-warning btn-xs nextDay">Next</button>
+              <!-- <button class="btn btn-warning btn-xs nextDay">Next</button> -->
               <!-- <a type="button" href="/sales/submit" class="btn btn-xs btn-primary margin-right-10"> -->
                 <!-- <i class="fa fa-plus"></i> -->
               <!-- </a> -->
-              <a type="button" href="/sales/ranged" class="btn btn-xs btn-primary margin-right-10">View Ranged Data</a>
+              <a type="button" href="#" class="btn btn-xs btn-primary margin-right-10 salesForecast">Create Sales Forecast</a>
             </div>
             <div class="table-responsive salesMenuTable">
               <table class="table table-striped">
@@ -23,8 +23,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{> render component='editSalesItem'}}
-                  {{> render component='salesList' list="listOnDate" date=isoDate}}
+                  {{> render component='editSalesItem' name="actualSales"}}
+                  {{> render component='salesList' list="listOnDate" date=isoDate name="actualSales"}}
                 </tbody>
               </table>
             </div>

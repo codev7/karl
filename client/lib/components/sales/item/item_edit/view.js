@@ -20,21 +20,7 @@ Template.editSalesItem.events({
       if(menuItem) {
         var menuItemId = menuItem._id;
         if(qty > 0) {
-          Meteor.call("createSalesMenus", new Date(date), menuItemId, qty, function(err, id) {
-            if(err) {
-              if(err.reason == "Menu item already added") {
-                alert("Menu item already added");
-                $(".saleItem").focus();
-              } else {
-                console.log(err);
-                return alert(err.reason);
-              }
-            } else {
-              $('.saleItem').val("");
-              $(".saleItem").focus();
-              $(".saleQty").val("");
-            }
-          });
+          FlowComponents.callAction("submit", date, menuItemId, qty);
         }
       }
     }
