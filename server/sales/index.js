@@ -111,7 +111,8 @@ Meteor.methods({
             _id: "$menuItem",
             quantity: { $sum: "$quantity"}
           }
-        }
+        },
+        { $sort: { quantity: -1 }}
       ]
       var sales = Sales.aggregate(pipe, {cursor: { batchSize: 0 }});
 
