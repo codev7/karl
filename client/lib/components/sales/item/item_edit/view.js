@@ -13,14 +13,14 @@ Template.editSalesItem.events({
     if(event.keyCode == 10 || event.keyCode == 13) {
       event.preventDefault();
       var menuName = $(".saleItem").val();
-      var qty = $(".saleQty").val();
+      var qty = parseInt($(".saleQty").val());
       var date = $("#salesMenuDate").val();
 
       var menuItem = MenuItems.findOne({"name": menuName});
       if(menuItem) {
         var menuItemId = menuItem._id;
         if(qty > 0) {
-          Meteor.call("createSalesMenus", date, menuItemId, qty, function(err, id) {
+          Meteor.call("createSalesMenus", new Date(date), menuItemId, qty, function(err, id) {
             if(err) {
               if(err.reason == "Menu item already added") {
                 alert("Menu item already added");
