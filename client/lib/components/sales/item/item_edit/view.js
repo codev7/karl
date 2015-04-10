@@ -14,7 +14,7 @@ Template.editSalesItem.events({
       event.preventDefault();
       var menuName = $(".saleItem").val();
       var qty = parseInt($(".saleQty").val());
-      var date = $("#salesMenuDate").val();
+      var date = Router.current().params.date;
 
       var menuItem = MenuItems.findOne({"name": menuName});
       if(menuItem) {

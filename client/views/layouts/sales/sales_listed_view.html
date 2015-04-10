@@ -9,9 +9,9 @@
               <button class="btn btn-warning btn-xs previousDay">Prev</button>
               <button class="btn btn-warning btn-xs today">Today</button>
               <button class="btn btn-warning btn-xs nextDay">Next</button>
-              <a type="button" href="/sales/submit" class="btn btn-xs btn-primary margin-right-10">
-                <i class="fa fa-plus"></i>
-              </a>
+              <!-- <a type="button" href="/sales/submit" class="btn btn-xs btn-primary margin-right-10"> -->
+                <!-- <i class="fa fa-plus"></i> -->
+              <!-- </a> -->
               <a type="button" href="/sales/ranged" class="btn btn-xs btn-primary margin-right-10">View Ranged Data</a>
             </div>
             <div class="table-responsive salesMenuTable">
@@ -23,6 +23,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {{> render component='editSalesItem'}}
                   {{> render component='salesList' list="listOnDate" date=isoDate}}
                 </tbody>
               </table>
