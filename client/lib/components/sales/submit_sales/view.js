@@ -2,7 +2,6 @@ Template.submitSales.events({
   'click .createSalesMenu': function(event) {
     event.preventDefault();
     var date = $("#salesMenuDate").val();
-    console.log(".......", date);
     Meteor.call("createSalesMenu", new Date(date), function(err, id) {
       if(err) {
         console.log(err);
