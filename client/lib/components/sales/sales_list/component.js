@@ -1,7 +1,6 @@
 var subs = new SubsManager();
 
 var component = FlowComponents.define("salesList", function(props) {
-  console.log(props)
   if(props.list == "listOnRange") {
     subs.subscribe("salesOnDateRange", parseInt(Session.get("daysRangeCount")));
   } else {

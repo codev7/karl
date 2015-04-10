@@ -1,18 +1,12 @@
 Template.editSalesItem.events({
   'keyup .saleItem': _.throttle(function(event) {
-    if(event.keyCode == 10 || event.keyCode == 13) {
-      event.preventDefault();
-      console.log("............................................");
-      $(".saleQty").focus();
-    } else {
-      $(event.target).next().removeClass("hide");
-      var text = $(event.target).val().trim();
-      FlowComponents.callAction('keyup', text);
-    }
+    $(event.target).next().removeClass("hide");
+    var text = $(event.target).val().trim();
+    FlowComponents.callAction('keyup', text);
   }, 200),
 
   'blur .saleItem': function(event) {
-    // $(event.target).next().addClass("hide");
+    $(event.target).next().addClass("hide");
   },
 
   'keypress .saleQty': function(event) {
