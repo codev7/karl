@@ -18,7 +18,7 @@ component.action.keyup = function(text) {
 component.state.getMenuItems = function() {
   var doc = this.MenuItemsSearch.getData({
     transform: function(matchText, regExp) {
-      return matchText.replace(regExp, "<b>$&</b>")
+      return matchText;
     },
     sort: {'name': 1}
   });
@@ -36,14 +36,14 @@ component.action.submit = function(date, menuItemId, qty) {
       if(err) {
         if(err.reason == "Menu item already added") {
           alert("Menu item already added");
-          $(".saleItem").focus();
+          $(".custom-combobox-input").focus();
         } else {
           console.log(err);
           return alert(err.reason);
         }
       } else {
-        $('.saleItem').val("");
-        $(".saleItem").focus();
+        $('.custom-combobox-input').val("");
+        $(".custom-combobox-input").focus();
         $(".saleQty").val("");
       }
     });
@@ -52,14 +52,14 @@ component.action.submit = function(date, menuItemId, qty) {
       if(err) {
         if(err.reason == "Menu item already added") {
           alert("Menu item already added");
-          $(".saleItem").focus();
+          $(".custom-combobox-input").focus();
         } else {
           console.log(err);
           return alert(err.reason);
         }
       } else {
-        $('.saleItem').val("");
-        $(".saleItem").focus();
+        $('.custom-combobox-input').val("");
+        $(".custom-combobox-input").focus();
         $(".saleQty").val("");
       }
     });

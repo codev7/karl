@@ -1,9 +1,8 @@
 <template name="editSalesItem">
   <tr>
     <td>
-      <input type="text" name="menuItem" class="form-control saleItem" placeholder="Enter name of the menu"/>
-      <div class="hide select-div">
-        <select class="form-control" multiple="">
+      <div class="ui-widget">
+        <select id="combobox">
           {{#each state$getMenuItems}}
             <option>{{{name}}}</option>
           {{/each}}
