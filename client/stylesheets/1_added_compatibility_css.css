@@ -204,3 +204,16 @@ body {
 .daysCount-div {
   top: -9px !important;
 }
+
+.custom-combobox-input {
+  background: #fff !important;
+  box-sizing: border-box !important;
+  font-weight: normal !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 14px !important;
+}
+
+#ui-id-1 {
+  font-family: inherit !important;
+  font-size: 14px !important;
+}
