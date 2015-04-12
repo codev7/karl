@@ -30,12 +30,6 @@
         </thead>
         <tbody>
           {{> render component='salesList' list="listOnDate"  name="actualSales" date=isoDate}}
-          <tr>
-            <td><h4>Total</h4></td>
-            <td><h4>{{state$totalItemCount}}</h4></td>
-            <td><h4>$ {{state$totalRevenue}}</h4></td>
-            <td></td>
-          </tr>
         </tbody>
       </table>
     </div>
