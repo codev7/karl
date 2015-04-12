@@ -35,7 +35,7 @@ component.action.submit = function(date, menuItemId, qty) {
     Meteor.call("createSalesMenus", new Date(date), menuItemId, qty, function(err, id) {
       if(err) {
         if(err.reason == "Menu item already added") {
-          alert("Menu item already added");
+          alert("Menu item has already been added");
           $(".custom-combobox-input").focus();
         } else {
           console.log(err);

@@ -6,7 +6,7 @@
       <button class="btn btn-warning btn-xs today">Today</button>
     </div>
     <div class="table-responsive salesMenuTable">
-      <table class="table table-striped">
+      <table class="table table-striped margin-bottom-30">
         <thead>
           <tr>
             <th>Menu Item</th>
@@ -15,8 +15,27 @@
         </thead>
         <tbody>
           {{> render component='editSalesItem' name="actualSales"}}
-          <br>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive salesMenuTable">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Menu Item</th>
+            <th>Quantity </th>
+            <th>Revenue</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
           {{> render component='salesList' list="listOnDate"  name="actualSales" date=isoDate}}
+          <tr>
+            <td><h4>Total</h4></td>
+            <td><h4>{{state$totalItemCount}}</h4></td>
+            <td><h4>$ {{state$totalRevenue}}</h4></td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
     </div>

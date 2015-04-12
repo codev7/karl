@@ -19,6 +19,10 @@ Template.editSalesItem.events({
         if(qty > 0) {
           FlowComponents.callAction("submit", date, menuItemId, qty);
         }
+      } else {
+        alert("Menu Items does not exist");
+        $(".custom-combobox-input").focus();
+        return;
       }
     }
   }
@@ -153,14 +157,13 @@ Template.editSalesItem.rendered = function() {
     }
   });
  
-  $(function() {
-    $("#combobox").combobox();
-    $("#toggle").click(function() {
-      $("#combobox").toggle();
-    });
+  $("#combobox").combobox();
+  $("#toggle").click(function() {
+    $("#combobox").toggle();
   });
-
-  $(".custom-combobox-input").addClass("form-control").attr("placeholder", "Type and select menu item");
-  $("#ui-id-1").addClass("list-group");
-  $(".ui-menu-item").addClass("list-group-item");
+  $(".custom-combobox-input")
+    .addClass("form-control")
+    .attr("placeholder", "Type and select menu item, then press tab to change focus");
+  // $("#ui-id-1").addClass("list-group");
+  // $(".ui-menu-item").addClass("list-group-item");
 }
