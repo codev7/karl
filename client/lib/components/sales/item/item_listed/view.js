@@ -17,6 +17,10 @@ Template.salesItemsListed.events({
     $(event.target).tooltip();
   },
 
+  'blur .editSalesQty': function(event) {
+    $(event.target).tooltip("hide");
+  },
+
   'keypress .editSalesQty': function(event) {
     if(event.keyCode == 10 || event.keyCode == 13) {
       event.preventDefault();
