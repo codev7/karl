@@ -13,15 +13,16 @@ Template.salesItemsListed.events({
     }
   },
 
+  'focus .editSalesQty': function(event) {
+    $(event.target).tooltip();
+  },
+
   'keypress .editSalesQty': function(event) {
     if(event.keyCode == 10 || event.keyCode == 13) {
       event.preventDefault();
-      // console.log(target);
       var id = $(event.target).attr("data-id");
       var menuId = $(event.target).attr("data-menuId");
       var target = $(event.currentTarget)[0];
-      // console.log(target);
-      console.log(id, menuId);
       var qty = $(event.target).val().trim();
       if(parseInt(qty) == NaN) {
         qty = 0;
