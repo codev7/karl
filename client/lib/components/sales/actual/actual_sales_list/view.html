@@ -1,0 +1,25 @@
+<template name="actualSalesList">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h5 class="col-md-3">Sales on {{date}}</h5>
+      <button class="btn btn-warning btn-xs previousDay">Prev</button>
+      <button class="btn btn-warning btn-xs today">Today</button>
+      <button class="btn btn-warning btn-xs nextDay">Next</button>
+    </div>
+    <div class="table-responsive salesMenuTable">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Menu Item</th>
+            <th>Quantity </th>
+            <th>Revenue</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{> render component='salesList' list="listOnDate"  name="actualSales" date=isoDate}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

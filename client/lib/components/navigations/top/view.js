@@ -16,6 +16,11 @@ Template.navTop.helpers({
       }
     } 
     return image;
+  },
+
+  today: function() {
+    var date = moment(new Date()).format("YYYY-MM-DD");
+    return date;
   }
 });
 

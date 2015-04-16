@@ -1,0 +1,20 @@
+<template name="jobsList">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Job</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Active Time (mins)</th>
+        <th>Created on</th>
+        <th>Shelf Life</th>
+        <th>Portions</th>
+      </tr>
+    </thead>
+   <tbody>
+      {{#each jobs}}
+        {{> jobDetailed}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>

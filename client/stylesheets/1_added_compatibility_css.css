@@ -200,3 +200,34 @@ body {
   float: left !important;
   margin-right: !important;
 }
+
+.daysCount-div {
+  top: -9px !important;
+}
+
+.custom-combobox-input {
+  background: #fff !important;
+  box-sizing: border-box !important;
+  font-weight: normal !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 14px !important;
+}
+
+#ui-id-1 {
+  font-family: inherit !important;
+  font-size: 14px !important;
+}
+
+.ui-widget {
+  font-family: inherit !important;
+  font-size: 14px !important;
+}
+
+.ui-menu-item {
+  font-family: inherit !important;
+  font-size: 14px !important;
+}
+
+.margin-bottom-30 {
+  margin-bottom: 30px !important;
+}
