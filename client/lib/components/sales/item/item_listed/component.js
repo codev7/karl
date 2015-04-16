@@ -38,8 +38,8 @@ component.action.keyup = function(id, menuId, qty, event) {
       console.log(err);
       return alert(err.reason);
     } else {
-      self.find(event.target).focus();
-      // target.parent().parent().next().find("input").focus();
+      // self.find(event.target).focus();
+      $(event.target).parent().parent().next().find("input").focus();
     }
   });
 }
