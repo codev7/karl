@@ -43,6 +43,7 @@ component.prototype.renderedListOnRange = function() {
   Meteor.call("getRangedData",  parseInt(Session.get("daysRangeCount")), function(err, doc) {
     if(err) {
       console.log(err);
+      return alert(err.reason);
     } else {
       self.set("list", doc);
     }
