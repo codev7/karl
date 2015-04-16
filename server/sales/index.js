@@ -1,5 +1,5 @@
 Meteor.methods({
-  'createSalesMenus': function(date, menuId, quantity) {
+  'createSalesMenus': function(date) {
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
@@ -14,31 +14,28 @@ Meteor.methods({
       logger.error("Date field does not exist");
       throw new Meteor.Error(404, "Date field does not exist");
     }
-    var exist = Sales.findOne({"date": date, "menuItem": menuId});
-    if(exist) {
-      logger.error("Menu item already added");
-      throw new Meteor.Error(404, "Menu item already added");
-    }
-    var menuItem = MenuItems.findOne(menuId);
-    if(!menuItem) {
-      logger.error("Menu item does not exist");
-      throw new Meteor.Error(404, "Menu item does not exist");
-    }
-    var doc = {
-      "date": date,
-      "menuItem": menuId,
-      "quantity": quantity,
-      "soldAtPrice": menuItem.salesPrice,
-      "createdOn": new Date(),
-      "createdBy": userId
-    }
-    var id = Sales.insert(doc);
-    logger.info("New sales entry created", {"id": id});
+    var existingMenuItems = MenuItems.find({"status": "active"}).fetch();
+    var existingSalesCount = Sales.find({"date": new Date(date)}).count();
+    existingMenuItems.forEach(function(menuItem) {
+      var exist = Sales.findOne({"menuItem": menuItem._id, "date": new Date(date)});
+      if(!exist) {
+        var doc = {
+          "date": new Date(date),
+          "menuItem": menuItem._id,
+          "quantity": 0,
+          "soldAtPrice": menuItem.salesPrice,
+          "createdOn": new Date(),
+          "createdBy": userId
+        }
+        var id = Sales.insert(doc)
+        logger.info("New sales entry created", {"id": id});
+      }
+    });
     return;
-
   },
 
   'editSalesMenuQuantity': function(id, menuId, quantity) {
+    this.unblock();
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
@@ -48,20 +45,20 @@ Meteor.methods({
     if(!permitted) {
       logger.error("User not permitted to create ingredients");
       throw new Meteor.Error(404, "User not permitted to create ingredients");
-    }
-    if(!date) {
-      logger.error("Date field does not exist");
-      throw new Meteor.Error(404, "Date field does not exist");
     }
     var salesMenu = Sales.findOne({"_id": id, "menuItem": menuId});
     if(!salesMenu) {
       logger.error("Sales Menu does not exist");
       throw new Meteor.Error(404, "Sales Menu does not exist");
     }
-    var id = Sales.update({"_id": id}, {$set: {"quantity": quantity}});
+    var quantity = parseInt(quantity);
+    if(!quantity || quantity < 0) {
+      quantity = 0;
+    } else if(quantity === NaN) {
+      quantity = 0;
+    }
     logger.info("Sales entry updated", {"id": id});
-    return;
-
+    return Sales.update({"_id": id}, {$set: {"quantity": quantity}});
   },
 
   'deleteSalesMenu': function(id) {
