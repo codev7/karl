@@ -4,14 +4,7 @@ var component = FlowComponents.define("salesList", function(props) {
   this.set("view", props.list);
   this.set("name", props.name);
   if(props.name == "actualSales") {
-    if(props.list == "listOnRange") {
-      this.renderedListOnRange();
-    } else {
-      subs.subscribe("salesOnDate", props.date);
-      this.set("date", props.date);
-    }
-  } else if(props.name == "salesForecast") {
-    subs.subscribe("salesForecastOnDate", props.date);
+    subs.subscribe("salesOnDate", new Date(props.date));
     this.set("date", props.date);
   }
 });
@@ -19,14 +12,11 @@ var component = FlowComponents.define("salesList", function(props) {
 component.state.salesMenusList = function() {
   var sales = null;
   if(this.get("name") == "actualSales") {
-    if(this.get("date")) {
-      sales = Sales.find({"date": this.get("date")}).fetch();
-    } else {
-      sales = this.get("list")
-    }
-  } else if(this.get("name") == "salesForecast") {
-    sales = SalesForecast.find({"date": this.get("date")}).fetch();
-  }
+    var date = this.get("date");
+    if(date) {
+      sales = Sales.find({"date": new Date(date)}).fetch();
+    } 
+  } 
   return sales;
 }
 
