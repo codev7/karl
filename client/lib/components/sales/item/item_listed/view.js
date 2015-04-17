@@ -13,18 +13,6 @@ Template.salesItemsListed.events({
     }
   },
 
-  'focus .editSalesQty': function(event) {
-    $('.editSalesQty').tooltip({
-      selector: "[data-toggle=tooltip]",
-      container: "body",
-      delay: { "show": 10, "hide": 100 }
-    });
-  },
-
-  'blur .editSalesQty': function(event) {
-    $('.editSalesQty').tooltip("hide");
-  },
-
   'keypress .editSalesQty': function(event) {
     if(event.keyCode == 10 || event.keyCode == 13) {
       event.preventDefault();
@@ -39,3 +27,7 @@ Template.salesItemsListed.events({
     }
   }
 });
+
+Template.salesItemsListed.rendered = function() {
+ 
+}

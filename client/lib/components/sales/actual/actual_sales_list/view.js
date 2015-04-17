@@ -26,3 +26,10 @@ Template.actualSalesList.events({
     Router.go("actualSales", {"date": tomorrow});
   }
 });
+
+Template.actualSalesList.rendered = function() {
+  $('.salesMenuTable').tooltip({
+    selector: "[data-toggle=tooltip]",
+    container: "body"
+  });
+}
