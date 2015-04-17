@@ -1,7 +1,4 @@
-var subs = new SubsManager();
-
 var component = FlowComponents.define("salesItemsListed", function(props) {
-  console.log("....................", props)
   this.menu = props.menu;
   var menuItem = MenuItems.findOne(this.menu.menuItem);
   if(menuItem) {

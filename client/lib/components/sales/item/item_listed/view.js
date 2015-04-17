@@ -14,11 +14,15 @@ Template.salesItemsListed.events({
   },
 
   'focus .editSalesQty': function(event) {
-    $(event.target).tooltip();
+    $('.editSalesQty').tooltip({
+      selector: "[data-toggle=tooltip]",
+      container: "body",
+      delay: { "show": 10, "hide": 100 }
+    });
   },
 
   'blur .editSalesQty': function(event) {
-    $(event.target).tooltip("hide");
+    $('.editSalesQty').tooltip("hide");
   },
 
   'keypress .editSalesQty': function(event) {
