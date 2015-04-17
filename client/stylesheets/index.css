@@ -856,7 +856,3 @@ button.dim:active:before {
   padding-bottom: 4px !important;
 }
 
-.input-number {
-  text-align: right !important;
-  width: 50% !important;
-}
