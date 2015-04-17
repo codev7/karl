@@ -28,7 +28,7 @@ Template.actualSalesList.events({
 });
 
 Template.actualSalesList.rendered = function() {
-  $('.salesMenuTable').tooltip({
+  $('.sales-menu-table').tooltip({
     selector: "[data-toggle=tooltip]",
     container: "body"
   });
