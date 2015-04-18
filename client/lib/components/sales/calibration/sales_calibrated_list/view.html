@@ -1,0 +1,53 @@
+<template name="salesCalibratedList">
+  <div class="ibox-content">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-inline">
+          <div class="form-group">
+            <label>Past</label>
+          </div>
+          <div class="form-group">
+            <input type="number" id="daysRange" placeholder="Enter no. of days" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Days</label>
+          </div>
+          <button class="btn btn-primary btnGo" type="button">Go</button>
+        </div>
+      </div>
+    </div>
+    <div class="mail-attachment m-t-md">
+      {{#if state$ifListExist}}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Menu Item</th>
+              <th>Quantity sold in past days</th>
+              <th class="text-right">Revenue Gained</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each state$calibratedList}}
+              {{> render component='salesItemsListedCali' menu=this}}
+            {{/each}}
+            <tr>
+              <td><h4>Total</h4></td>
+              <td class="col-md-2">
+                <span class="text-right"><h4>{{state$totalItemCount}}</h4></span>
+              </td>
+              <td class="col-md-2">
+                <span class="text-right"><h4>$ {{state$totalRevenue}}</h4></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+      {{else}}
+        <div class="">
+          No Data Exist in this range
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
