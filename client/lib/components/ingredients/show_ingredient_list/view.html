@@ -5,14 +5,9 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">Select Ingredients</h4>
       </div>
-      <br>
-      <div class="col-md-6">
-        <input type="text" class="form-control" id="searchText-box" placeholder="Search from Code or Description">
-      </div>
-      <button class="btn btn-sm btn-primary" id="addNewIng">Add New Ingredient</button>
-      <br>
       <form class="form-horizontal" role="form" style="padding: 10px 20px">
         <div class="modal-body">
+            <input type="text" class="form-control input-lg" id="searchText-box" placeholder="Search for ingredient.."><br>
           <div class="row">
             <table class="table table-striped">
               <thead>
@@ -29,7 +24,9 @@
                   {{> render component='ingredientItemListed' ingredient=this}}
                 {{/each}}
               </tbody>
+
             </table>
+              <div class="alert alert-warning">If your ingredient is not in the list, <a id="addNewIng" class="alert-link">click here</a> to add it. Once you save it, it will appear next time you search.</div>
           </div>
         </div>
         <div class="modal-footer">
