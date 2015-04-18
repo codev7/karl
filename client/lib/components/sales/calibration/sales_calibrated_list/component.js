@@ -28,24 +28,16 @@ component.state.calibratedList = function() {
 }
 
 component.prototype.renderCaliberatedList = function() {
-  var self = this;
-  var totalCount = 0;
-  var totalCountedRevenue = 0;
-  Meteor.call("calibratedSales", 0, function(err, result) {
-    if(err) {
-      console.log(err);
-      return alert(err.reason);
-    } else {
-      self.set("list", result);
-      result.forEach(function(item) {
-        totalCount += item.quantity;
-        var menuItem = MenuItems.findOne(item._id);
-        totalCountedRevenue += item.quantity * menuItem.salesPrice;
-      });
-      self.set("menuItemsCount", totalCount);
-      self.set("menuItemsRevenue", totalCountedRevenue);
-    }
-  });
+  this.set("list", []);
+}
+
+component.state.ifListExist = function() {
+  var count = this.get("list");
+  if(count.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 component.state.totalItemCount = function() {
