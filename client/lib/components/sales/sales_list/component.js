@@ -14,7 +14,7 @@ component.state.salesMenusList = function() {
   if(this.get("name") == "actualSales") {
     var date = this.get("date");
     if(date) {
-      sales = Sales.find({"date": new Date(date)}).fetch();
+      sales = Sales.find({"date": new Date(date)});
     } 
   } 
   return sales;
