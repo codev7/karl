@@ -15,7 +15,9 @@ component.action.click = function(range) {
       result.forEach(function(item) {
         totalCount += item.quantity;
         var menuItem = MenuItems.findOne(item._id);
-        totalCountedRevenue += item.quantity * menuItem.salesPrice;
+        if(menuItem) {
+          totalCountedRevenue += item.quantity * menuItem.salesPrice;
+        }
       });
       self.set("menuItemsCount", totalCount);
       self.set("menuItemsRevenue", totalCountedRevenue);

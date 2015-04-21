@@ -31,7 +31,9 @@ Meteor.methods({
             {_id: sale._id}, 
             {fields: {name: 1, salesPrice: 1, category: 1, status: 1}}
           )
-          sale['name'] = doc.name;
+          if(doc) {
+            sale['name'] = doc.name;
+          }
         });
         return sales;
       } else {
