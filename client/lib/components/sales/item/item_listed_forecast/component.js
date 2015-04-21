@@ -5,12 +5,9 @@ var component = FlowComponents.define("itemListedForecast", function(props) {
 });
 
 component.action.keyup = function(id, revenue, event) {
-  var forecast = Forecast.findOne({"menuItems": {$elemMatch: {"_id": id}}});
+  var forecast = Forecast.findOne(id);
   if(forecast) {
-    Forecast.update(
-      {"menuItems": {$elemMatch: {"_id": id}}},
-      {$set: { "menuItems.$.expectedRevenue": parseFloat(revenue)}}
-    );
+    Forecast.update({"_id": id}, {$set: {"expectedRevenue": parseFloat(revenue)}});
   }
   $(event.target).parent().parent().next().find("input").focus();
   return;
@@ -41,7 +38,11 @@ component.state.portionsToBeSold = function() {
     portions = Math.round(portions)
   }
   if(portions == portions) {
-    return portions;
+    if(portions == Infinity) {
+      return 0;
+    } else {
+      return portions;
+    }
   } else {
     return 0;
   }

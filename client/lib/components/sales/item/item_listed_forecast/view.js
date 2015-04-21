@@ -4,7 +4,6 @@ Template.itemListedForecast.events({
       event.preventDefault();
       var id = $(event.target).attr("data-id");
       var expectedRevenue = $(event.target).val().trim();
-      console.log($(event.target));
       FlowComponents.callAction("keyup", id, expectedRevenue, event);
     }
   }

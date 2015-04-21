@@ -4,49 +4,49 @@ var component = FlowComponents.define("salesForecastList", function(props) {
 
 component.state.forecastList = function() {
   var forecast = null;
-  forecast = Forecast.findOne();
+  forecast = Forecast.find();
   if(forecast) {
-    return forecast.menuItems;
+    return forecast;
   }
 }
 
 component.prototype.createForecastOnRendered = function() {
-  var existingForecast = Forecast.findOne();
   var menuItems = MenuItems.find({"status": "active"}).fetch();
-  if(!existingForecast) {
-    var doc = {
-      "createdOn": new Date().getTime(),
-      "menuItems": [],
-      "menuItemIds": []
-    }
-    menuItems.forEach(function(item) {
-      var menu = {
-        "name": item.name,
-        "_id": item._id,
-        "expectedRevenue": 0
-      }
-      doc['menuItemIds'].push(item._id);
-      doc["menuItems"].push(menu);
-    });
-    return Forecast.insert(doc);
-  } else {
-    if(menuItems.length != existingForecast.menuItemIds.length) {
+  menuItems.forEach(function(menu) {
+    var forecastExist = Forecast.findOne(menu._id);
+    if(!forecastExist) {
       var doc = {
-        "menuItems": [],
-        "menuItemIds": []
-      };
-      Forecast.update({"_id": existingForecast._id}, {$set: doc});
-      menuItems.forEach(function(item) {
-        var menu = {
-          "name": item.name,
-          "_id": item._id,
-          "expectedRevenue": 0
-        }
-        doc['menuItemIds'].push(item._id);
-        doc["menuItems"].push(menu);
-      });
-      Forecast.update({"_id": existingForecast._id}, {$set: doc});
+        "_id": menu._id,
+        "name": menu.name,
+        "expectedRevenue": 0,
+        "createdOn": new Date().getTime()
+      }
+      Forecast.insert(doc);
     }
-    return;
-  }
+  });
+}
+
+component.state.totals = function() {
+  var expectedTotalRevenue = 0;
+  var expectedTotalPortions = 0;
+
+  var forecasts = Forecast.find().fetch();
+  forecasts.forEach(function(item) {
+    expectedTotalRevenue += item.expectedRevenue;
+    var menuItem = MenuItems.findOne(item._id);
+    var portions = parseFloat(item.expectedRevenue / menuItem.salesPrice);
+    if(!portions && portions < 0) {
+      portions = 0;
+    } else {
+      portions = Math.round(portions)
+    }
+    if(portions == portions) {
+      if(portions == Infinity) {
+        expectedTotalPortions += 0;
+      } else {
+        expectedTotalPortions += portions;
+      }
+    }
+  });
+  return {"expectedTotalPortions": expectedTotalPortions, "expectedTotalRevenue": expectedTotalRevenue};
 }
