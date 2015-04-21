@@ -1,8 +1,16 @@
 <template name="jobsView">
-  <div class="row center-page-title">Jobs</div>
-  <div class="row">
-    <div class="col-xs-10 col-sm-10">
-      {{> jobsList}}
+  <div class="wrapper wrapper-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>Jobs to be completed</h5>
+            </div>
+            {{> render component='jobsList'}}
+          </div>
+        </div>
+      </div>
     </div>
-  </div> 
+  </div>
 </template>
