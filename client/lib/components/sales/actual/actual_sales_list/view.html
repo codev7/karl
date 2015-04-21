@@ -17,7 +17,16 @@
             </tr>
           </thead>
           <tbody>
-            {{> render component='salesList' list="listOnDate"  name="actualSales" date=date}}
+            {{#each state$salesMenusList}}
+              {{> render component="salesItemsListed" menu=this}}
+            {{/each}}
+            <tr>
+              <td><h4>Total</h4></td>
+              <td class="col-md-2">
+                <span class="text-right"><h4>{{state$totals.totalItemCount}}</h4></span>
+              </td>
+              <td class="col-md-2 text-right"><h4>$ {{state$totals.totalRevenue}}</h4></td>
+            </tr>
           </tbody>
         </table>
       </div>
