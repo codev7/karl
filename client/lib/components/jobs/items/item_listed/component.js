@@ -14,6 +14,10 @@ component.state.status = function() {
   return this.job.status;
 }
 
+component.state.id = function() {
+  return this.job._id;
+}
+
 component.state.activeTime = function() {
   var time = this.job.activeTime;
   time = parseInt(time/60);
