@@ -4,10 +4,10 @@ var component = FlowComponents.define("itemListedForecast", function(props) {
   this.menu.salesPrice = menu.salesPrice;
 });
 
-component.action.keyup = function(id, revenue, event) {
+component.action.keyup = function(id, portions, event) {
   var forecast = Forecast.findOne(id);
   if(forecast) {
-    Forecast.update({"_id": id}, {$set: {"expectedRevenue": parseFloat(revenue)}});
+    Forecast.update({"_id": id}, {$set: {"expectedPortions": parseInt(portions)}});
   }
   $(event.target).parent().parent().next().find("input").focus();
   return;
@@ -25,23 +25,23 @@ component.state.id = function() {
   return this.menu._id;
 }
 
-component.state.expectedRevenue = function() {
-  return this.menu.expectedRevenue;
+component.state.portionsToBeSold = function() {
+  return this.menu.expectedPortions;
 }
 
-component.state.portionsToBeSold = function() {
-  var expectedRevenue = this.menu.expectedRevenue;
-  var portions = parseFloat(expectedRevenue / this.menu.salesPrice);
-  if(!portions && portions < 0) {
-    portions = 0;
+component.state.expectedRevenue = function() {
+  var expectedPortions = this.menu.expectedPortions;
+  var revenue = parseFloat(expectedPortions * this.menu.salesPrice);
+  if(!revenue && revenue < 0) {
+    revenue = 0;
   } else {
-    portions = Math.round(portions)
+    revenue = Math.round(revenue * 100)/100;
   }
-  if(portions == portions) {
-    if(portions == Infinity) {
+  if(revenue == revenue) {
+    if(revenue == Infinity) {
       return 0;
     } else {
-      return portions;
+      return revenue;
     }
   } else {
     return 0;

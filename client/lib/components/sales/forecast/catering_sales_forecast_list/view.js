@@ -1,4 +1,4 @@
-Template.salesForecastList.events({
+Template.cateringSalesForecastList.events({
   'click .generateJobs': function(event) {
     var forecast = Forecast.find().fetch();
     var menuInfo = [];

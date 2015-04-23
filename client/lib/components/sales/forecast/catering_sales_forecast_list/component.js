@@ -1,4 +1,4 @@
-var component = FlowComponents.define("salesForecastList", function(props) {
+var component = FlowComponents.define("cateringSalesForecastList", function(props) {
   this.createForecastOnRendered();
 });
 
@@ -18,7 +18,7 @@ component.prototype.createForecastOnRendered = function() {
       var doc = {
         "_id": menu._id,
         "name": menu.name,
-        "expectedRevenue": 0,
+        "expectedPortions": 0,
         "createdOn": new Date().getTime()
       }
       Forecast.insert(doc);
@@ -32,21 +32,24 @@ component.state.totals = function() {
 
   var forecasts = Forecast.find().fetch();
   forecasts.forEach(function(item) {
-    expectedTotalRevenue += item.expectedRevenue;
+    expectedTotalPortions += item.expectedPortions;
     var menuItem = MenuItems.findOne(item._id);
-    var portions = parseFloat(item.expectedRevenue / menuItem.salesPrice);
-    if(!portions && portions < 0) {
-      portions = 0;
+    var revenue = parseFloat(item.expectedPortions * menuItem.salesPrice);
+    if(!revenue && revenue < 0) {
+      revenue = 0;
     } else {
-      portions = Math.round(portions)
+      revenue = Math.round(revenue * 100)/100;
     }
-    if(portions == portions) {
-      if(portions == Infinity) {
-        expectedTotalPortions += 0;
+    if(revenue == revenue) {
+      if(revenue == Infinity) {
+        expectedTotalRevenue += 0;
       } else {
-        expectedTotalPortions += portions;
+        expectedTotalRevenue += revenue;
       }
     }
   });
-  return {"expectedTotalPortions": expectedTotalPortions, "expectedTotalRevenue": expectedTotalRevenue};
+  return {
+    "expectedTotalPortions": expectedTotalPortions, 
+    "expectedTotalRevenue": expectedTotalRevenue
+  };
 }
