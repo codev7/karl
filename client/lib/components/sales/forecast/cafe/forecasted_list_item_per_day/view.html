@@ -1,0 +1,26 @@
+<template name="forecastedListItemPerDay">
+  <tr>
+    <td>{{state$day}}</td>
+    <td>$ {{state$revenue}}</td>
+    <td class="col-md-2 text-right">
+      {{#if state$isNullForecastOptions}}
+        <select name="forecastOptions">
+          {{#each state$forecastOptions}}
+          <option>{{this}}</option>
+          {{/each}}
+        </select>
+      {{else}}
+        No Options for this day
+      {{/if}}
+    </td>
+   <!--  <td class="col-md-2">
+      {{#each state$categories}}
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="">{{name}}
+        </label>
+      </div>
+      {{/each}}
+    </td> -->
+  </tr>
+</template>

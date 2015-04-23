@@ -1,0 +1,26 @@
+<template name="weeklyForecastList">
+  <div class="ibox-content">
+    <div class="table-responsive">
+      <table class="table table-striped sales-menu-table">
+        <thead>
+          <tr>
+            <th>Menu Item</th>
+            <th class="col-md-2 text-right">Expected Revenue ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each state$week}}
+            {{> render component="cafeSalesForecastPerDay" day=this}}
+          {{/each}}
+          <tr>
+            <td><h4>Total</h4></td>
+            <td>
+              <span class="text-right"><h4>$ {{state$totals.expectedTotalRevenue}}</h4></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-primary btn-sm generateSalesForecast">Generate Sales Forecast</button>
+    </div>
+  </div>
+</template>

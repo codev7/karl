@@ -1,4 +1,4 @@
-var component = FlowComponents.define("cafeSalesForecastList", function(props) {
+var component = FlowComponents.define("weeklyForecastList", function(props) {
 });
 
 component.state.week = function() {

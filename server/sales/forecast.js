@@ -11,31 +11,19 @@ Meteor.methods({
       throw new Meteor.Error(404, "User not permitted to create ingredients");
     }
 
-    var pipe = [
-      // { $match: {"revenueGained": { $gte: revenue }}},
+    var pipe = [ 
       { $group: {
-          _id: "$date",
-          revenueGained: { $sum: { $multiply: [ "$soldAtPrice", "$quantity" ] }},
-        }
-      },
-      { $project: {
-          "gain": {
-            "$cond":[
-              {"$gte": ["$revenueGained", revenue]},
-              revenue,
-              ["nadee"]
-
-            ] 
-            // "$cond": [
-              // {"$eq": [ "$revenueGained", 1000 ]}, 100, 50 
-            // ]
+          _id: "$date", 
+          "revenueGained": {
+            "$sum": {
+              "$multiply": ["$soldAtPrice", "$quantity"]
+            }
           }
         }
-      }
-      // { $sort: { revenueGained: -1 }},
-      // { $limit : 10 }
+      },
+      { $match: {revenueGained: revenue}},
+      { $sort: { "_id": -1 }}
     ]
-    console.log("....................", JSON.stringify(pipe));
     var sales = Sales.aggregate(pipe, {cursor: { batchSize: 0 }});
     console.log("...........", sales);
     return sales;
