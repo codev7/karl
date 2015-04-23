@@ -4,7 +4,7 @@ var component = FlowComponents.define("cateringSalesForecastList", function(prop
 
 component.state.forecastList = function() {
   var forecast = null;
-  forecast = Forecast.find();
+  forecast = ForecastCatering.find();
   if(forecast) {
     return forecast;
   }
@@ -13,7 +13,7 @@ component.state.forecastList = function() {
 component.prototype.createForecastOnRendered = function() {
   var menuItems = MenuItems.find({"status": "active"}).fetch();
   menuItems.forEach(function(menu) {
-    var forecastExist = Forecast.findOne(menu._id);
+    var forecastExist = ForecastCatering.findOne(menu._id);
     if(!forecastExist) {
       var doc = {
         "_id": menu._id,
@@ -21,7 +21,7 @@ component.prototype.createForecastOnRendered = function() {
         "expectedPortions": 0,
         "createdOn": new Date().getTime()
       }
-      Forecast.insert(doc);
+      ForecastCatering.insert(doc);
     }
   });
 }
@@ -30,7 +30,7 @@ component.state.totals = function() {
   var expectedTotalRevenue = 0;
   var expectedTotalPortions = 0;
 
-  var forecasts = Forecast.find().fetch();
+  var forecasts = ForecastCatering.find().fetch();
   forecasts.forEach(function(item) {
     expectedTotalPortions += item.expectedPortions;
     var menuItem = MenuItems.findOne(item._id);

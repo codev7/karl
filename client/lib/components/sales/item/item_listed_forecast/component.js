@@ -5,9 +5,9 @@ var component = FlowComponents.define("itemListedForecast", function(props) {
 });
 
 component.action.keyup = function(id, portions, event) {
-  var forecast = Forecast.findOne(id);
+  var forecast = ForecastCatering.findOne(id);
   if(forecast) {
-    Forecast.update({"_id": id}, {$set: {"expectedPortions": parseInt(portions)}});
+    ForecastCatering.update({"_id": id}, {$set: {"expectedPortions": parseInt(portions)}});
   }
   $(event.target).parent().parent().next().find("input").focus();
   return;
