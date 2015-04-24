@@ -7,9 +7,13 @@ component.state.name = function() {
   return this.menu.menuName;
 } 
 
-component.state.id = function() {
+component.state.menuItem = function() {
   return this.menu.menuItem;
 } 
+
+component.state.id = function() {
+  return this.menu._id;
+}
 
 component.state.quantity = function() {
   var qty = this.get("menuQuantity");

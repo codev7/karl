@@ -1,6 +1,7 @@
 var component = FlowComponents.define("forecastedListItemPerDay", function(props) {
+  this.set("changed", false);
   this.forecast = props.forecast;
-  console.log(".......this.forecast.......", this.forecast);
+  this.set("day", this.forecast._id);
   var date = this.forecast.relevantOnDates[0];
   this.loadListOfItems(date);
 });
@@ -38,11 +39,21 @@ component.state.forecastOptions = function() {
 
 
 component.action.change = function(date) {
+  this.set("changed", true);
   this.loadListOfItems(date);
 }
 
 component.state.listOfSalesItems = function() {
   var list = this.get("salesList");
+  if(!this.get("changed")) {
+    var forecast = ForecastCafe.findOne(this.get("day"));
+    if(forecast && forecast.selected) {
+      if(forecast.selected.length > 0) {
+        list = forecast.selected;
+      }
+    }
+  }
+
   if(list) {
     list.forEach(function(item) {
       var menu = MenuItems.findOne(item.menuItem);

@@ -22,29 +22,31 @@
       Menus List<button class="btn btn-xs m-l-md" disabled="disabled">+</button>
     </td>
     <td class="col-md-8">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Revenue</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each state$listOfSalesItems}}
-            {{>render component='forecastMenuItem' menu=this}}
-          {{/each}}
-         <!--  <tr>
-            <button class="btn btn-danger saveDailyForecast">Save</button>
-          </tr> -->
-          <!-- <tr>
-            <td>Total</td>
-            <td class="text-right">20</td>
-            <td class="text-right">$ 2000</td>
-          </tr> -->
-        </tbody>
-      </table>
+      <form data-day="{{state$day}}">   
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Revenue</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              {{#each state$listOfSalesItems}}
+                {{>render component='forecastMenuItem' menu=this name="state$day"}}
+              {{/each}}
+              <tr>
+                <button type="submit" class="btn btn-xs btn-danger saveDailyForecast" data-day="{{state$day}}">Save</button>
+              </tr>
+            <!-- <tr>
+              <td>Total</td>
+              <td class="text-right">20</td>
+              <td class="text-right">$ 2000</td>
+            </tr> -->
+          </tbody>
+        </table>
+      </form>
     </td>
     <td></td>
   </tr>

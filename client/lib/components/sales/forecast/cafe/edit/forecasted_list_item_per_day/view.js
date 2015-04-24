@@ -7,8 +7,28 @@ Template.forecastedListItemPerDay.events({
     }
   },
 
-  'click .saveDailyForecast': function(event) {
+  'submit form': function(event) {
     event.preventDefault();
-    var menuItems = $(".menuForecastQty").get();
+    var day = $(event.target).attr("data-day");
+    var forecast = ForecastCafe.findOne(day);
+    if(forecast) {
+      var doc = [];
+      var qunatities = $(event.target).find('[name=forecastQty]').get();
+      
+      qunatities.forEach(function(item) {
+        var value = $(item).val();
+        var id = $(item).attr("data-id");
+        var menuId = $(item).attr("data-menu");
+
+        var obj = {
+          "_id": id,
+          "quantity": parseInt(value),
+          "menuItem": menuId
+        }
+        doc.push(obj);
+      });
+      ForecastCafe.update({"_id": day}, {$set: {"selected": doc}});
+      return;
+    }
   }
 });

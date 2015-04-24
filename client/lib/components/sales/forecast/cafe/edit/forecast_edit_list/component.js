@@ -3,7 +3,6 @@ var component = FlowComponents.define("cafeSalesForecastEditList", function(prop
 
 component.state.forecastPerWeek = function() {
   var weekForecast = ForecastCafe.find();
-  console.log("...weekForecast.......", weekForecast.fetch());
   return weekForecast;
 }
 
