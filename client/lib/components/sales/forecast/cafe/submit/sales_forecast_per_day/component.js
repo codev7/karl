@@ -6,8 +6,8 @@ var component = FlowComponents.define("cafeSalesForecastPerDay", function(props)
 });
 
 component.state.day = function() {
-  this.set("day", this.day);
-  return this.day;
+  this.set("day", this.day._id);
+  return this.day._id;
 }
 
 component.state.categories = function() {
@@ -16,7 +16,7 @@ component.state.categories = function() {
 
 component.state.expectedRevenue = function() {
   var day = this.get("day");
-  var cafeForecast = ForecastCafe.findOne({"day": day});
+  var cafeForecast = ForecastCafe.findOne({"_id": day});
   if(cafeForecast) {
     return cafeForecast.revenue;
   } else {

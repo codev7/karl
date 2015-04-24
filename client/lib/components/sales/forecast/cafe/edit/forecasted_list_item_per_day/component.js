@@ -1,5 +1,6 @@
 var component = FlowComponents.define("forecastedListItemPerDay", function(props) {
   this.forecast = props.forecast;
+  console.log(".......this.forecast.......", this.forecast);
   var date = this.forecast.relevantOnDates[0];
   this.loadListOfItems(date);
 });

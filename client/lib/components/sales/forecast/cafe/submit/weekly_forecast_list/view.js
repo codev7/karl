@@ -5,7 +5,7 @@ Template.weeklyForecastList.events({
     var revenues = [];
     expectedRevenue.forEach(function(item) {
       var doc = {
-        "day": $(item).attr("data-day"),
+        "day": $(item).attr("data-id"),
         "revenue": parseFloat($(item).val())
       }
       revenues.push(doc);
@@ -27,7 +27,7 @@ Template.weeklyForecastList.events({
                   doc.relevantOnDates.push(ref._id);
                 });
               }
-              ForecastCafe.upsert({"_id": item.day}, {$set: doc});
+              ForecastCafe.update({"_id": item.day}, {$set: doc});
             }
           });
         }
