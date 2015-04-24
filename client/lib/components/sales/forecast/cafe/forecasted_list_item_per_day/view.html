@@ -1,26 +1,51 @@
 <template name="forecastedListItemPerDay">
   <tr>
-    <td>{{state$day}}</td>
-    <td>$ {{state$revenue}}</td>
-    <td class="col-md-2 text-right">
+    <td class="col-md-4 text-navy">{{state$day}}</td>
+    <td class="col-md-4">
       {{#if state$isNullForecastOptions}}
-        <select name="forecastOptions">
+        <select name="forecastOptions" class="forecastOption">
           {{#each state$forecastOptions}}
-          <option>{{this}}</option>
+          <option value="{{item}}">Option {{option}}</option>
           {{/each}}
         </select>
       {{else}}
         No Options for this day
       {{/if}}
     </td>
-   <!--  <td class="col-md-2">
-      {{#each state$categories}}
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" value="">{{name}}
-        </label>
-      </div>
-      {{/each}}
-    </td> -->
+    <td class="col-md-4 text-navy">$ {{state$revenue}}</td>
+  </tr>
+
+  <br><br><br>
+
+  <tr>
+    <td class="col-md-2">
+      Menus List<button class="btn btn-xs m-l-md" disabled="disabled">+</button>
+    </td>
+    <td class="col-md-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Revenue</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each state$listOfSalesItems}}
+            {{>render component='forecastMenuItem' menu=this}}
+          {{/each}}
+         <!--  <tr>
+            <button class="btn btn-danger saveDailyForecast">Save</button>
+          </tr> -->
+          <!-- <tr>
+            <td>Total</td>
+            <td class="text-right">20</td>
+            <td class="text-right">$ 2000</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </td>
+    <td></td>
   </tr>
 </template>
