@@ -2,50 +2,55 @@ var component = FlowComponents.define("salesCalibratedList", function(props) {
   this.renderCaliberatedList();
 });
 
-component.action.click = function(range) {
-  var self = this;
-  var totalCount = 0;
-  var totalCountedRevenue = 0;
-  Meteor.call("calibratedSales", range, function(err, result) {
-    if(err) {
-      console.log(err);
-      return alert(err.reason);
-    } else {
-      self.set("list", result);
-      result.forEach(function(item) {
-        totalCount += item.quantity;
-        var menuItem = MenuItems.findOne(item._id);
-        if(menuItem) {
-          totalCountedRevenue += item.quantity * menuItem.salesPrice;
-        }
-      });
-      self.set("menuItemsCount", totalCount);
-      self.set("menuItemsRevenue", totalCountedRevenue);
-    }
-  });
-}
-
-component.state.calibratedList = function() {
-  return this.get("list");
-}
-
-component.prototype.renderCaliberatedList = function() {
-  this.set("list", []);
-}
-
-component.state.ifListExist = function() {
-  var count = this.get("list");
-  if(count.length > 0) {
-    return true;
+component.state.dateRange = function() {
+  var range = this.get("range");
+  if(range) {
+    return range;
   } else {
-    return false;
+    return 0;
   }
 }
 
-component.state.totalItemCount = function() {
-  return this.get("menuItemsCount");
+component.state.totalRevenue = function() {
+  var revenue = this.get("revenue");
+  if(revenue) {
+    return revenue;
+  } else {
+    return 0;
+  }
 }
 
-component.state.totalRevenue = function() {
-  return this.get("menuItemsRevenue");
+component.state.itemsList = function() {
+  var list = this.get("list");
+  if(list) {
+    return list;
+  }
+}
+
+component.prototype.renderCaliberatedList = function() {
+  var list = SalesCalibration.findOne();
+  if(list) {
+    this.set("list", list.menus);
+    this.set("range", list.range);
+    this.set("revenue", list.revenue);
+  } else {
+    var menuItems = MenuItems.find({"status": "active"}).fetch();
+    var items = [];
+    if(menuItems.length > 0) {
+      menuItems.forEach(function(item) {
+        var obj = {
+          "_id": item._id,
+          "qty": 0
+        }
+        items.push(obj);
+      });
+    }
+    this.set("list", items);
+    this.set("range", 0);
+    this.set("revenue", 0);
+  }
+}
+
+component.action.keyup = function(value) {
+  this.set("range", value);
 }

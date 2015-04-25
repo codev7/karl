@@ -11,3 +11,10 @@ Meteor.publish("salesForecastOnDate", function(date) {
   cursors.push(salesCursor);
   return cursors;
 });
+
+
+Meteor.publish("salesCalibration", function(date) {
+  var cursors = [];
+  cursors.push(SalesCalibration.find());
+  return cursors;
+});
