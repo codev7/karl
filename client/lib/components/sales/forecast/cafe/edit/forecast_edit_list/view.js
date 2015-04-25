@@ -7,19 +7,20 @@ Template.cafeSalesForecastEditList.events({
       if(day.selected && day.selected.length > 0) {
         var selected = day.selected;
         selected.forEach(function(doc) {
-          if(menuIds.indexOf(doc.menuItem) >= 0) {
-            var index = menuIds.indexOf(doc.menuItem);
+
+          if(menuIds.indexOf(doc._id) >= 0) {
+            var index = menuIds.indexOf(doc._id);
             var item = menus[index];
             item.quantity += doc.quantity;
           } else {
             var obj = {
-              "id": doc.menuItem,
+              "id": doc._id,
               "quantity": doc.quantity
             }
             menus.push(obj);
           }
-          if(menuIds.indexOf(doc.menuItem) < 0) {
-            menuIds.push(doc.menuItem);
+          if(menuIds.indexOf(doc._id) < 0) {
+            menuIds.push(doc._id);
           }
         });
       } 

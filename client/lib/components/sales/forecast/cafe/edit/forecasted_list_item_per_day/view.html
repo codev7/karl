@@ -1,17 +1,6 @@
 <template name="forecastedListItemPerDay">
   <tr>
     <td class="col-md-4 text-navy">{{state$day}}</td>
-    <td class="col-md-4">
-      {{#if state$isNullForecastOptions}}
-        <select name="forecastOptions" class="forecastOption">
-          {{#each state$forecastOptions}}
-          <option value="{{item}}">Option {{option}}</option>
-          {{/each}}
-        </select>
-      {{else}}
-        No Options for this day
-      {{/if}}
-    </td>
     <td class="col-md-4 text-navy">$ {{state$revenue}}</td>
   </tr>
 

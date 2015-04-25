@@ -2,13 +2,13 @@ var component = FlowComponents.define("weeklyForecastList", function(props) {
   var doc = ForecastCafe.find().fetch();
   if(doc.length <= 0) {
     weeklyItems = [
-      {'_id': 'Monday', 'revenue': 0, 'relevantOnDates': []}, 
-      {'_id' :'Tuesday', 'revenue': 0, 'relevantOnDates': []},
-      {'_id': 'Wednesday', 'revenue': 0, 'relevantOnDates': []},
-      {'_id': 'Thursday', 'revenue': 0, 'relevantOnDates': []},
-      {'_id': 'Friday', 'revenue': 0, 'relevantOnDates': []},
-      {'_id': 'Saturday', 'revenue': 0, 'relevantOnDates': []},
-      {'_id': 'Sunday', 'revenue': 0, 'relevantOnDates': []},
+      {'_id': 'Monday', 'revenue': 0, 'menus': []}, 
+      {'_id' :'Tuesday', 'revenue': 0, 'menus': []},
+      {'_id': 'Wednesday', 'revenue': 0, 'menus': []},
+      {'_id': 'Thursday', 'revenue': 0, 'menus': []},
+      {'_id': 'Friday', 'revenue': 0, 'menus': []},
+      {'_id': 'Saturday', 'revenue': 0, 'menus': []},
+      {'_id': 'Sunday', 'revenue': 0, 'menus': []},
     ] 
     weeklyItems.forEach(function(day) {
       ForecastCafe.insert(day);

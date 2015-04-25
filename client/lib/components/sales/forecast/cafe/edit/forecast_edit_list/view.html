@@ -5,7 +5,6 @@
         <thead>
           <tr>
             <th class="col-md-4">Menu Item</th>
-            <th class="col-md-4">Options</th>
             <th class="col-md-4">Expected Revenue ($)</th>
           </tr>
         </thead>
@@ -15,8 +14,7 @@
           {{/each}}
           <tr>
             <td><h4>Total</h4></td>
-            <td class="text-right text-warning">$ {{state$expectedTotalRevenue}}</td>
-            <td></td>
+            <td class="text-warning">$ {{state$expectedTotalRevenue}}</td>
           </tr>
         </tbody>
       </table>

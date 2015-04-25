@@ -1,12 +1,4 @@
 Template.forecastedListItemPerDay.events({
-  'change .forecastOption': function(event) {
-    event.preventDefault();
-    var date = $(event.target).val();
-    if(date) {
-      FlowComponents.callAction("change", date);
-    }
-  },
-
   'submit form': function(event) {
     event.preventDefault();
     var day = $(event.target).attr("data-day");
@@ -18,12 +10,10 @@ Template.forecastedListItemPerDay.events({
       qunatities.forEach(function(item) {
         var value = $(item).val();
         var id = $(item).attr("data-id");
-        var menuId = $(item).attr("data-menu");
 
         var obj = {
-          "_id": id,
           "quantity": parseInt(value),
-          "menuItem": menuId
+          "_id": id
         }
         doc.push(obj);
       });

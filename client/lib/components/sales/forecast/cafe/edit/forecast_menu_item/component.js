@@ -4,11 +4,8 @@ var component = FlowComponents.define("forecastMenuItem", function(props) {
 });
 
 component.state.name = function() {
-  return this.menu.menuName;
-} 
-
-component.state.menuItem = function() {
-  return this.menu.menuItem;
+  var menu = MenuItems.findOne(this.menu._id);
+  return menu.name;
 } 
 
 component.state.id = function() {
@@ -22,7 +19,7 @@ component.state.quantity = function() {
 
 component.state.itemRevenue = function() {
   var qty = this.get("menuQuantity");
-  var menu = MenuItems.findOne(this.menu.menuItem);
+  var menu = MenuItems.findOne(this.menu._id);
   var revenue = 0;
   if(menu) {
     revenue = qty * menu.salesPrice;
