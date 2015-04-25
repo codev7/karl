@@ -11,21 +11,24 @@ Meteor.methods({
       throw new Meteor.Error(404, "User not permitted to create ingredients");
     }
 
-    var pipe = [ 
-      { $group: {
-          _id: "$date", 
-          "revenueGained": {
-            "$sum": {
-              "$multiply": ["$soldAtPrice", "$quantity"]
-            }
-          }
-        }
-      },
-      { $match: {revenueGained: revenue}},
-      { $sort: { "_id": -1 }}
-    ]
-    var sales = Sales.aggregate(pipe, {cursor: { batchSize: 0 }});
-    return sales;
+    var calibratedSales = SalesCalibration.findOne();
+    if(!calibratedSales) {
+      logger.error("You should add calibrated data first");
+      throw new Meteor.Error(404, "You should add calibrated data first");
+    }
+
+    var menus = calibratedSales.menus;
+    var result = [];
+    menus.forEach(function(menu) {
+      var quantity = menu.avg * revenue;
+      var obj = {
+        "_id": menu._id,
+        "quantity": quantity
+      }
+      result.push(obj);
+    })
+    logger.info("Forecasted menu items");
+    return result;
   },
 
   'forecastedSales': function(date) {

@@ -10,24 +10,17 @@ Template.weeklyForecastList.events({
       }
       revenues.push(doc);
     });
+    console.log(revenues);
     if(revenues.length > 0) {
       revenues.forEach(function(item) {
         if(item.revenue > 0) {
-          var doc = {
-            "revenue": item.revenue,
-            "relevantOnDates": []
-          }
           Meteor.call("generateForecastForDay", item.revenue, function(err, result) {
             if(err) {
               console.log(err);
               return alert(err.reason);
             } else {
-              if(result.length > 0) {
-                result.forEach(function(ref) {
-                  doc.relevantOnDates.push(ref._id);
-                });
-              }
-              ForecastCafe.update({"_id": item.day}, {$set: doc});
+              console.log("....item " + item.day + ".....", result);
+              ForcastCafe.insert({"_id": item.day});
             }
           });
         }

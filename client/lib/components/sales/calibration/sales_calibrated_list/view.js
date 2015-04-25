@@ -12,9 +12,12 @@ Template.salesCalibratedList.events({
     var items = [];
     if(menus.length > 0) {
       menus.forEach(function(item) {
+        var qty = parseFloat($(item).val());
+        var avg = qty/parseFloat(totalRevenue);
         var obj = {
           "_id": $(item).attr("data-id"),
-          "qty": parseFloat($(item).val())
+          "qty": qty,
+          "avg": avg
         }
         items.push(obj);
       });
