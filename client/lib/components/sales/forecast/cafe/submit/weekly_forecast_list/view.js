@@ -20,7 +20,12 @@ Template.weeklyForecastList.events({
           Meteor.call("generateForecastForDay", item.revenue, function(err, result) {
             if(err) {
               console.log(err);
-              return alert(err.reason);
+              if(err.reason == "You should add calibrated data first") {
+                alert(err.reason);
+                Router.go("salesCalibration");
+              } else {
+                return alert(err.reason);
+              }
             } else {
               doc.menus = result;
               ForecastCafe.update({"_id": item.day}, {$set: doc});
