@@ -1,6 +1,7 @@
 var subs = new SubsManager();
 
 var component = FlowComponents.define("dailyForecastList", function(props) {
+  this.set("list", []);
 });
 
 component.state.week = function() {
@@ -45,11 +46,12 @@ component.state.week = function() {
     });
   }
   var thisWeek = ForecastCafe.find(query);
+  this.set("list", thisWeek.fetch());
   return thisWeek;
 }
 
 component.state.expectedTotalRevenue = function() {
-  var forecastPerWeek = ForecastCafe.find().fetch();
+  var forecastPerWeek = this.get("list");
   var total = 0;
   if(forecastPerWeek.length > 0) {
     forecastPerWeek.forEach(function(item) {
