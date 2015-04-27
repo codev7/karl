@@ -1,16 +1,16 @@
-<template name="weeklyForecastListView">
+<template name="weeklySalesForecastMenusListView">
   <div class="wrapper wrapper-content">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="ibox float-e-margins">
             <div class="ibox-title">
-              <h5 class="col-md-5">Cafe Sales Forecast for [ {{week}} ]</h5>
+              <h5 class="col-md-5">Cafe Sales Forecast Edit [ {{week}} ]</h5>
               <button class="btn btn-warning btn-xs previousWeek">Prev Week</button>
               <button class="btn btn-warning btn-xs thisWeek">This Week</button>
               <button class="btn btn-warning btn-xs nextWeek">Next Week</button>
             </div>
-           {{> render component="weekForecastView"}}
+           {{> render component="weeklyForecastedMenus"}}
           </div>
         </div>
       </div>
