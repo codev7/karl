@@ -1,7 +1,7 @@
 Template.forecastedMenuItem.events({
   'click .removeSalesMenu': function(event) {
     event.preventDefault();
-    FlowComponents.callAction("keyup", 0);
+    FlowComponents.callAction("keyup", -1);
   },
 
   'keypress .menuForecastQty': function(event) {
