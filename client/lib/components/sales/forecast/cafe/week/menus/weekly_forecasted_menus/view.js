@@ -11,11 +11,11 @@ Template.weeklyForecastedMenus.events({
           if(menuIds.indexOf(doc._id) >= 0) {
             var index = menuIds.indexOf(doc._id);
             var item = menus[index];
-            item.quantity += doc.quantity;
+            item.quantity += parseInt(doc.quantity);
           } else {
             var obj = {
               "id": doc._id,
-              "quantity": doc.quantity
+              "quantity": parseInt(doc.quantity)
             }
             menus.push(obj);
           }
