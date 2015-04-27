@@ -1,4 +1,4 @@
-<template name="weeklyForecastList">
+<template name="weekForecastView">
   <div class="ibox-content">
     <div class="table-responsive">
       <table class="table table-striped sales-menu-table">
@@ -9,15 +9,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each state$week}}
-            {{> render component="cafeSalesForecastPerDay" day=this}}
-          {{/each}}
-          <tr>
-            <td><h4>Total</h4></td>
-            <td>
-              <span class="text-right"><h4>$ {{state$expectedTotalRevenue}}</h4></span>
-            </td>
-          </tr>
+          {{> render component='dailyForecastList'}}
         </tbody>
       </table>
       <button class="btn btn-primary btn-sm generateSalesForecast">Generate Sales Forecast</button>

@@ -5,9 +5,12 @@
         <div class="col-lg-12">
           <div class="ibox float-e-margins">
             <div class="ibox-title">
-              <h5 class="col-md-3">Cafe Sales Forecast</h5>
+              <h5 class="col-md-5">Cafe Sales Forecast for [ {{week}} ]</h5>
+                <button class="btn btn-warning btn-xs previousWeek">Prev Week</button>
+                <button class="btn btn-warning btn-xs thisWeek">This Week</button>
+                <button class="btn btn-warning btn-xs nextWeek">Next Week</button>
             </div>
-           {{> render component="weeklyForecastList"}}
+           {{> render component="weekForecastView"}}
           </div>
         </div>
       </div>

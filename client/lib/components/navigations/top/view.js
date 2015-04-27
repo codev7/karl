@@ -21,6 +21,11 @@ Template.navTop.helpers({
   today: function() {
     var date = moment(new Date()).format("YYYY-MM-DD");
     return date;
+  },
+
+  week: function() {
+    var week = moment().format("w");
+    return week;
   }
 });
 
