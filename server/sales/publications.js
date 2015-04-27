@@ -24,8 +24,8 @@ Meteor.publish("forecastPerWeek", function(firstDate, lastDate) {
   var lastDate = lastDate;
   var cursors = [];
   var query = {"date": {$gte: firstDate, $lte: lastDate}};
-  var forecast = ForecastCafe.find(query);
+  var forecast = ForecastCafe.find(query, {sort: {"date": 1}});
   cursors.push(forecast);
-  logger.info("Forecast per week publication", firstDate, lastDate);
+  logger.info("Forecast per week publication");
   return cursors;
 });

@@ -18,3 +18,18 @@ component.state.revenue = function() {
 component.state.listOfSalesItems = function() {
   return this.forecast.menus;
 }
+
+component.state.totals = function() {
+  var list = this.forecast.menus;
+  var totals = {
+    "portions": 0,
+    "revenue": 0
+  }
+  list.forEach(function(item) {
+    totals.portions += parseFloat(item.quantity);
+    var menuItem = MenuItems.findOne(item._id);
+    var revenue = parseFloat(item.quantity) * menuItem.salesPrice;
+    totals.revenue += revenue;
+  });
+  return totals;
+}

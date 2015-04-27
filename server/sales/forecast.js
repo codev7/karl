@@ -16,22 +16,24 @@ Meteor.methods({
       logger.error("You should add calibrated data first");
       throw new Meteor.Error(404, "You should add calibrated data first");
     }
-
-    var menus = calibratedSales.menus;
-    var result = [];
-    menus.forEach(function(menu) {
-      var quantity = menu.avg * revenue;
-      if(quantity > 0) {
-        var obj = {
-          "_id": menu._id,
-          "quantity": quantity
+    var exist = ForecastCafe.findOne({"_id": id});
+    if(exist.menus.length <= 0) {
+      var menus = calibratedSales.menus;
+      var result = [];
+      menus.forEach(function(menu) {
+        var quantity = menu.avg * revenue;
+        if(quantity > 0) {
+          var obj = {
+            "_id": menu._id,
+            "quantity": quantity
+          }
+          result.push(obj);
         }
-        result.push(obj);
-      }
-    });
-    ForecastCafe.update({"_id": id}, {$set: {"menus": result}});
-    logger.info("Forecasted menu items");
-    return;
+      });
+      ForecastCafe.update({"_id": id}, {$set: {"menus": result}});
+      logger.info("Forecasted menu items");
+      return;
+    }
   },
 
   'forecastedSales': function(date) {
@@ -73,8 +75,7 @@ Meteor.methods({
     var doc = {
       "date": new Date(date).getTime(),
       "expectedRevenue": 0,
-      "menus": [],
-      "selected": []
+      "menus": []
     }
     var exist = ForecastCafe.findOne({"date": new Date(date).getTime()});
     if(!exist) {
@@ -116,7 +117,6 @@ Meteor.methods({
   },
 
   'updateForcastedMenus': function(id, menuId, quantity) {
-    console.log("-------args--------", id, menuId, quantity)
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
@@ -153,14 +153,12 @@ Meteor.methods({
         }
       } 
     } else {
-      console.log("------------------3");
       var query = {
         $addToSet: {}
       }
       query['$addToSet']['menus'] = {"_id": menuId, "quantity": quantity}
       ForecastCafe.update({"_id": id}, query);
     }
-    console.log(ForecastCafe.findOne(id));
     logger.info("Forecasted menu update");
   }
 });

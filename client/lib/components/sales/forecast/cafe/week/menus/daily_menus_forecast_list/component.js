@@ -18,3 +18,12 @@ component.state.forecastPerWeek = function() {
   var weekForecast = ForecastCafe.find(query);
   return weekForecast;
 }
+
+component.state.expectedTotalRevenue = function() {
+  var total = 0;
+  var forecast = ForecastCafe.find().fetch();
+  forecast.forEach(function(item) {
+    total += parseFloat(item.expectedRevenue);
+  });
+  return total;
+}
