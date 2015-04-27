@@ -20,5 +20,15 @@ Template.forecastedListItemPerDay.events({
       ForecastCafe.update({"_id": day}, {$set: {"selected": doc}});
       return;
     }
+  },
+
+  'click .addMenuItem': function(event) {
+    event.preventDefault();
+    var day = $(event.target).attr("data-id");
+    var forecastOfDay = ForecastCafe.findOne(day);
+    Session.set("menuAddForForecast", day);
+    console.log("-------------", forecastOfDay);
+    $("#showMenusList").modal();
+
   }
 });

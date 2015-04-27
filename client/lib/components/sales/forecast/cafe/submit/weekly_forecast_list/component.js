@@ -14,6 +14,7 @@ var component = FlowComponents.define("weeklyForecastList", function(props) {
       ForecastCafe.insert(day);
     });
   } 
+  this.onRendered(this.onPageRender);
 });
 
 component.state.week = function() {
@@ -30,4 +31,13 @@ component.state.expectedTotalRevenue = function() {
     });
   }
   return total;
+}
+
+component.prototype.onPageRender = function() {
+  var doc = ForecastCafe.find().fetch();
+  if(doc.length > 0) {
+    doc.forEach(function(item) {
+      ForecastCafe.update({"_id": item._id}, {$set: {"menus": [], "selected": []}});
+    });
+  } 
 }
