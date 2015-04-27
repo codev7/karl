@@ -16,8 +16,8 @@ Meteor.methods({
       logger.error("You should add calibrated data first");
       throw new Meteor.Error(404, "You should add calibrated data first");
     }
-    var exist = ForecastCafe.findOne({"_id": id});
-    if(exist.menus.length <= 0) {
+    var exist = ForecastCafe.findOne({"_id": id, "expectedRevenue": revenue});
+    if(!exist || exist.menus.length <= 0) {
       var menus = calibratedSales.menus;
       var result = [];
       menus.forEach(function(menu) {
@@ -25,15 +25,15 @@ Meteor.methods({
         if(quantity > 0) {
           var obj = {
             "_id": menu._id,
-            "quantity": quantity
+            "quantity": Math.round(quantity)
           }
           result.push(obj);
         }
       });
       ForecastCafe.update({"_id": id}, {$set: {"menus": result}});
-      logger.info("Forecasted menu items");
-      return;
     }
+    logger.info("Forecasted menu items");
+    return;
   },
 
   'forecastedSales': function(date) {

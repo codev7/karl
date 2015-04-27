@@ -1,6 +1,7 @@
 var component = FlowComponents.define("forecastedMenuItem", function(props) {
   this.menu = props.menu;
   this.id = props.id;
+  var qty = Math.round(this.menu.quantity);
   this.set("menuQuantity", this.menu.quantity);
   var menuItem = MenuItems.findOne(this.menu._id);
   if(menuItem) {
@@ -19,6 +20,7 @@ component.state.quantity = function() {
 
 component.state.itemRevenue = function() {
   var revenue = this.get("menuQuantity") * this.menu.salesPrice;
+  revenue = Math.round(revenue);
   return revenue;
 }
 
@@ -31,6 +33,7 @@ component.action.keyup = function(qty) {
       }
     });
   }
+  var qty = Math.round(qty);
   this.set("menuQuantity", qty);
 
 }
