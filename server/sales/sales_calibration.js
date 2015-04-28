@@ -31,7 +31,9 @@ Meteor.methods({
             {_id: sale._id}, 
             {fields: {name: 1, salesPrice: 1, category: 1, status: 1}}
           )
-          sale['name'] = doc.name;
+          if(doc) {
+            sale['name'] = doc.name;
+          }
         });
         return sales;
       } else {
@@ -40,5 +42,63 @@ Meteor.methods({
     } else {
       return [];
     }
+  },
+
+  'createSalesCalibration': function(range, revenue, menus) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to create ingredients");
+      throw new Meteor.Error(404, "User not permitted to create ingredients");
+    }
+    if(!range) {
+      logger.error('Range should exist');
+      throw new Meteor.Error(404, "Range should exist");
+    }
+    if(!revenue) {
+      logger.error('Revenue should exist');
+      throw new Meteor.Error(404, "Revenue should exist");
+    }
+    var doc = {
+      "range": range,
+      "revenue": parseFloat(revenue),
+      "menus": menus
+    }
+    var id = SalesCalibration.insert(doc);
+    logger.info("Sales Calibration inserted", id);
+    return id;
+  },
+
+  'updateSalesCalibration': function(id, range, revenue, menus) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to create ingredients");
+      throw new Meteor.Error(404, "User not permitted to create ingredients");
+    }
+    if(!range) {
+      logger.error('Range should exist');
+      throw new Meteor.Error(404, "Range should exist");
+    }
+    if(!revenue) {
+      logger.error('Revenue should exist');
+      throw new Meteor.Error(404, "Revenue should exist");
+    }
+    var doc = {
+      "range": range,
+      "revenue": parseFloat(revenue),
+      "menus": menus
+    }
+    SalesCalibration.update({"_id": id}, {$set: doc});
+    logger.info("Sales Calibration updated", id);
+    return id;
   }
 });
