@@ -1,0 +1,15 @@
+<template name="schedulingShiftsList">
+  <div class="table-responsive">
+    <table class="table">
+      {{#if state$shiftsCount}}
+        {{#each state$shiftsList}}
+          {{> render component='schedulingShift' shift=this}}   
+        {{/each}}
+      {{else}}
+      <div class="center-pad20">
+        <a href="#submitShiftModal" data-toggle="modal">Click here to create Shifts</a>
+      </div>
+      {{/if}}
+    </table>
+  </div>
+</template>

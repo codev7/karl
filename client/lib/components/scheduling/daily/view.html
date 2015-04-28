@@ -1,0 +1,35 @@
+<template name="dailyShiftScheduling">
+  <div class="col-xs-2 col-sm-2">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Draggable Jobs</h5>
+      </div>
+      <div class="ibox-content">
+        <div id="external-events">
+          <p>Drag a job and drop into shifts to assign.</p>
+          {{> render component='schedulingJobsList'}}     
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-10 col-sm-10">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Shifts</h5>
+        <a href="#submitShiftModal" class="btn btn-xs btn-primary m-l-md" data-toggle="modal">+</a>
+      </div>
+      <div class="ibox-content">
+        <div id="external-events">
+          <p>Drag a job and drop into shifts to assign.</p>
+          {{> render component='schedulingShiftsList'}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT SHIFT -->
+  <div class="modal fade" id="submitShiftModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='submitShift'}}
+  </div>
+  <!-- /SUBMIT SHIFT -->
+</template>
