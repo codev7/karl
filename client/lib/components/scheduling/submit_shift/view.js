@@ -51,26 +51,20 @@ Template.submitShift.events({
   },
 
   'focus #shiftDate': function(event) {
-    $('#shiftDate').datetimepicker({
-      pickTime: false,
-
+    $('#shiftDate').datepicker({
+      format: 'yyyy-mm-dd',
+      todayBtn: "linked",
+      keyboardNavigation: false,
+      forceParse: false,
+      autoclose: true
     });
   },
 
   'focus .timepicker': function(event) {
     $(".timepicker").datetimepicker({
-      pickDate: false,
-      pickTime: true,
-      useMinutes: true,  
-      useCurrent: false
+      startView: 0,
+      autoclose: true,
+      format: "hh:ii"
     });
-  }
-});
-
-Template.submitShift.helpers({
-  'today': function() {
-    var today = new Date();
-    today = moment(today).format("YYYY-MM-DD");
-    return today;
   }
 });
