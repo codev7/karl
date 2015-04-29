@@ -4,6 +4,7 @@ Template.submitShift.events({
     var dateOfShift = $(event.target).find('[name=dateOfShift]').val();
     var startTime = $(event.target).find('[name=startTime]').val().trim();
     var endTime = $(event.target).find('[name=endTime]').val().trim();
+    console.log(startTime, endTime, dateOfShift);
 
     var start_hours = parseInt(startTime.slice(0, startTime.indexOf(":")).trim());
     var start_mins = parseInt(startTime.slice(startTime.indexOf(":") + 1, startTime.indexOf(" ")).trim());
@@ -52,23 +53,15 @@ Template.submitShift.events({
 
   'focus #shiftDate': function(event) {
     event.preventDefault();
-    $('#shiftDate').datepicker({
-      format: 'yyyy-mm-dd',
-      todayBtn: "linked",
-      keyboardNavigation: false,
-      forceParse: false,
-      autoclose: true
+    $('#shiftDate').datetimepicker({
+      format: "YYYY-MM-DD"
     });
   },
 
   'focus .timepicker': function(event) {
     event.preventDefault();
-    $(event.target).val("");
     $(".timepicker").datetimepicker({
-      format: "hh:ii",
-      startView: 0,
-      forceParse: false,
-      autoclose: true
+      format: "LT",
     });
   }
 });

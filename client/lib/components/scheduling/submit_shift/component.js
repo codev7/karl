@@ -9,12 +9,12 @@ component.state.today = function() {
 
 component.state.startTime = function() {
   var date = Router.current().params.date;
-  var time = moment(date).set("hours", 7).format("hh:mm");
-  return time;
+  var time = moment(date).set("hours", 8).format("h:mm");
+  return time + " AM";
 }
 
 component.state.endTime = function() {
   var date = Router.current().params.date;
-  var time = moment(date).set("hours", 5).format("hh:mm");
-  return time;
+  var time = moment(date).set("hours", 5).format("h:mm");
+  return time + " PM";
 }
