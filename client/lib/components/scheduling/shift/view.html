@@ -4,7 +4,7 @@
       <thead class="">
         <tr class="center-text">
           <th colspan="2">
-            <a href="" class="shift-profile" data-toggle="modal">{{state$name}}</a>
+            <a href="#shiftProfile" class="shift-profile" data-toggle="modal">{{state$name}}</a>
             <!-- <a href="#shiftProfile" data-toggle="modal">Edit</a> -->
           </th>
         </tr>
@@ -12,18 +12,18 @@
           <th colspan="2">
             <div class="shiftedWorkers dropdown">
               <select name="workers" class="shiftAssign" data-id="{{state$id}}">
-                {{#if assignedWorker}}
-                <option selected="selected" value="{{assignedWorker._id}}">{{assignedWorker.name}}</option>
+                {{#if state$assignedWorker}}
+                <option selected="selected" value="{{state$assignedWorker}}">{{state$assignedWorker}}</option>
                 {{else}}
                 <option selected="selected">Select a worker to assign</option>  
                 {{/if}}
-                {{#each workers}}
-                <option value="{{_id}}">{{name}}</option>  
+                {{#each state$workers}}
+                <option value="{{_id}}">{{username}}</option>  
                 {{/each}}
+                {{#if state$assignedWorker}}
+                  <option value="null">Remove</option>  
+                {{/if}}
               </select>
-              {{#if assignedWorker}}
-              <img class="removeAssignedShift" src="/images/cancel.png" height="15px" width="15px">
-              {{/if}}
             </div>
           </th>
         </tr>
@@ -32,8 +32,8 @@
       <tbody>
         <tr class="shift-div">
           <td class="time-panel">
-            {{#each timer120}}
-            <div class="time-divider-hour">{{this}}-</div>
+            {{#each state$timeLine}}
+            <div class="timeline-height">{{this}}-</div>
             {{/each}}
           </td>
           <td class="job-panel">

@@ -23,9 +23,3 @@ Template.dailyShiftScheduling.events({
     Router.go("dailyShiftScheduling", {"date": date});
   }
 });
-
-Template.dailyShiftScheduling.rendered = function() {
-  // $(".shiftedJobs").sortable({
-  //   connectWith: "#jobsList, .shiftedJobs"
-  // })
-}

@@ -1,4 +1,5 @@
-var component = FlowComponents.define("submitShift", function(props) {});
+var component = FlowComponents.define("submitShift", function(props) {
+});
 
 component.state.today = function() {
   var date = Router.current().params.date;
@@ -8,6 +9,12 @@ component.state.today = function() {
 
 component.state.startTime = function() {
   var date = Router.current().params.date;
-  var time = moment(date).set('hour', 7).format("hh:mm");
+  var time = moment(date).set("hours", 7).format("hh:mm");
+  return time;
+}
+
+component.state.endTime = function() {
+  var date = Router.current().params.date;
+  var time = moment(date).set("hours", 5).format("hh:mm");
   return time;
 }

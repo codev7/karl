@@ -22,3 +22,18 @@ Template.schedulingShift.rendered = function() {
     }
   });
 }
+
+Template.schedulingShift.events({
+  'change .shiftAssign': function(event) {
+    var workerId = $(event.target).val();
+    if(workerId == "null") {
+      workerId = null;
+    }
+    var shiftId = $(event.target).attr("data-id")
+    Meteor.call("assignWorker", workerId, shiftId, function(err) {
+      if(err) {
+        return alert(err.reason);
+      }
+    });
+  },
+});

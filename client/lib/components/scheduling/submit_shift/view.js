@@ -51,6 +51,7 @@ Template.submitShift.events({
   },
 
   'focus #shiftDate': function(event) {
+    event.preventDefault();
     $('#shiftDate').datepicker({
       format: 'yyyy-mm-dd',
       todayBtn: "linked",
@@ -61,6 +62,8 @@ Template.submitShift.events({
   },
 
   'focus .timepicker': function(event) {
+    event.preventDefault();
+    $(event.target).val("");
     $(".timepicker").datetimepicker({
       format: "hh:ii",
       startView: 0,

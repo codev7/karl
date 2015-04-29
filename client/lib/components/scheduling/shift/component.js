@@ -14,6 +14,15 @@ component.state.name = function() {
   return name;
 }
 
+component.state.assignedWorker = function() {
+  if(this.shift) {
+    var user = Meteor.users.findOne(this.shift.assignedTo);
+    if(user) {
+      return user.username;
+    }
+  }
+}
+
 component.state.id = function() {
   if(this.shift) {
     return this.shift._id;
@@ -35,4 +44,24 @@ component.state.jobsList = function() {
     var jobs = Jobs.find({"_id": {$in: this.shift.jobs}});
     return jobs;
   }
+}
+
+component.state.workers = function() {
+  var assigned = [];
+  assigned.push(this.shift.assignedTo);
+  var workers = null;
+  if(assigned) {
+    workers = Meteor.users.find({"_id": {$nin: assigned}, "isWorker": true});
+  } else {
+    workers = Meteor.users.find({"isWorker": true});
+  }
+  return workers;
+}
+
+component.state.timeLine = function() {
+  var line = [];
+  for(var i=1; i<=24; i++) {
+    line.push(i + ":00");
+  }
+  return line;
 }
