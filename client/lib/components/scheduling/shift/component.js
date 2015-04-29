@@ -1,6 +1,5 @@
 var component = FlowComponents.define("schedulingShift", function(props) {
   this.shift = props.shift;
-  console.log(this.shift);
 });
 
 component.state.name = function() {
@@ -13,4 +12,27 @@ component.state.name = function() {
     name = startTime + " - " + endTime + " Shift";
   }
   return name;
+}
+
+component.state.id = function() {
+  if(this.shift) {
+    return this.shift._id;
+  }
+}
+
+component.state.jobs = function() {
+  if(this.shift) {
+    if(this.shift.jobs.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.jobsList = function() {
+  if(this.shift) {
+    var jobs = Jobs.find({"_id": {$in: this.shift.jobs}});
+    return jobs;
+  }
 }

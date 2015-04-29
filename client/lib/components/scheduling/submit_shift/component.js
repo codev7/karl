@@ -1,6 +1,14 @@
 var component = FlowComponents.define("submitShift", function(props) {});
 
 component.state.today = function() {
-  var today = moment().format("YYYY-MM-DD");
-  return today;
+  var date = Router.current().params.date;
+  date = moment(date).format("YYYY-MM-DD");
+  return date;
+}
+
+component.state.startTime = function() {
+  var date = Router.current().params.date;
+  var time = moment(date).set('hour', 7).format("hh:mm");
+  console.log(date, time);
+  return time;
 }

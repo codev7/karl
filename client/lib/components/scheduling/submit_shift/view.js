@@ -4,6 +4,8 @@ Template.submitShift.events({
     var dateOfShift = $(event.target).find('[name=dateOfShift]').val();
     var startTime = $(event.target).find('[name=startTime]').val().trim();
     var endTime = $(event.target).find('[name=endTime]').val().trim();
+    console.log(startTime, typeof(startTime));
+    console.log("....", dateOfShift, startTime, endTime);
 
     var start_hours = parseInt(startTime.slice(0, startTime.indexOf(":")).trim());
     var start_mins = parseInt(startTime.slice(startTime.indexOf(":") + 1, startTime.indexOf(" ")).trim());
@@ -62,9 +64,10 @@ Template.submitShift.events({
 
   'focus .timepicker': function(event) {
     $(".timepicker").datetimepicker({
+      format: "hh:ii",
       startView: 0,
-      autoclose: true,
-      format: "hh:ii"
+      forceParse: false,
+      autoclose: true
     });
   }
 });

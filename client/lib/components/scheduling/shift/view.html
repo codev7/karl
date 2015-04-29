@@ -1,7 +1,7 @@
 <template name="schedulingShift">
   <td>
     <table class="table table-bordered">
-      <thead>
+      <thead class="">
         <tr class="center-text">
           <th colspan="2">
             <a href="" class="shift-profile" data-toggle="modal">{{state$name}}</a>
@@ -11,7 +11,7 @@
         <tr>
           <th colspan="2">
             <div class="shiftedWorkers dropdown">
-              <select name="workers" class="shiftAssign" data-id="{{_id}}">
+              <select name="workers" class="shiftAssign" data-id="{{state$id}}">
                 {{#if assignedWorker}}
                 <option selected="selected" value="{{assignedWorker._id}}">{{assignedWorker.name}}</option>
                 {{else}}
@@ -37,14 +37,14 @@
             {{/each}}
           </td>
           <td class="job-panel">
-            <div class="shift shiftedJobs" data-id="{{_id}}">
-              <!-- {{#if jobs}} -->
-                <!-- {{#each jobs}} -->
-                  {{> render component='schedulingJob'}}
-                <!-- {{/each}} -->
-              <!-- {{else}} -->
-                <!-- Drag Jobs here -->
-              <!-- {{/if}} -->
+            <div class="shift shiftedJobs" data-id="{{state$id}}">
+              {{#if state$jobs}}
+                {{#each state$jobsList}}
+                  {{> render component='schedulingJob' job=this}}
+                {{/each}}
+              {{else}}
+                Drag Jobs here
+              {{/if}}
             </div>
           </td>
         </tr>
