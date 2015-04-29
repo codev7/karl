@@ -1,6 +1,7 @@
-Template.submitShift.events({
+Template.shiftProfile.events({
   'submit form': function(event, instance) {
     event.preventDefault();
+    var shiftId = $(event.target).attr("data-id");
     var dateOfShift = $(event.target).find('[name=dateOfShift]').val();
     var startTime = $(event.target).find('[name=startTime]').val().trim();
     var endTime = $(event.target).find('[name=endTime]').val().trim();
@@ -36,17 +37,37 @@ Template.submitShift.events({
       return;
     } else {
       var info = {
+        "_id": shiftId,
         "shiftDate": dateOfShift,
         "startTime": dateObj_start,
         "endTime": dateObj_end
       }
-      Meteor.call("createShift", info, function(err, id) {
+      Meteor.call("editShift", info, function(err, id) {
         if(err) {
           return alert(err.reason);
         } else {
-          $("#submitShiftModal").modal("hide");
+          $("#shiftProfile").modal("hide");
         }
       });
+    }
+  },
+
+  'click .deleteShift': function(event, instance) {
+    var shiftId = $(event.target).attr("data-id");
+    var confirmDelete = confirm("Are you sure you want to delete this shift ?");
+    if(confirmDelete) {
+      if(shiftId) {
+        var shift = Shifts.findOne(shiftId);
+        if(shift) {
+          Meteor.call("deleteShift", shiftId, function(err) {
+            if(err) {
+              return alert(err.reason);
+            } else {
+              $("#shiftProfile").modal("hide");
+            }
+          });
+        }
+      }
     }
   },
 

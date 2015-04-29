@@ -36,4 +36,11 @@ Template.schedulingShift.events({
       }
     });
   },
+
+  'click .shift-profile': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Session.set("thisShift", id);
+    $("#shiftProfile").modal();
+  }
 });
