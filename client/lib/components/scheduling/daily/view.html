@@ -18,7 +18,7 @@
   <div class="col-xs-10 col-sm-10">
     <div class="ibox float-e-margins">
       <div class="ibox-title">
-        <h5>Shifts</h5>
+        <h5>Shifts on {{state$date}}</h5>
         <a href="#submitShiftModal" class="btn btn-xs btn-primary m-l-md" data-toggle="modal">
           <i class="fa fa-plus"></i>
         </a>
@@ -28,7 +28,6 @@
       </div>
       <div class="ibox-content">
         <div id="external-events">
-          <p>Drag a job and drop into shifts to assign.</p>
           {{> render component='schedulingShiftsList'}}
         </div>
       </div>
