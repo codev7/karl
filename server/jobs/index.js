@@ -10,7 +10,7 @@ Meteor.methods({
             var quantity = jobItem.quantity * menu.quantity;
             var timeTaken = (item.activeTime/item.portions) * quantity;
             var today = new Date(date).toISOString().slice(0,10).replace(/-/g,"-");
-            var todayJobExist = Jobs.findOne({"name": item.name, "createdOn": today});
+            var todayJobExist = Jobs.findOne({"name": item.name, "createdOn": today, "status": "draft"});
             if(todayJobExist) {
               var newActiveTime = todayJobExist.activeTime + timeTaken;
               var newPortions = todayJobExist.portions + quantity;

@@ -9,6 +9,5 @@ component.state.today = function() {
 component.state.startTime = function() {
   var date = Router.current().params.date;
   var time = moment(date).set('hour', 7).format("hh:mm");
-  console.log(date, time);
   return time;
 }

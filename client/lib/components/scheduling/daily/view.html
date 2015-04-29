@@ -3,9 +3,12 @@
     <div class="ibox float-e-margins">
       <div class="ibox-title">
         <h5>Draggable Jobs</h5>
+        <a href="#submitJobModal" class="btn btn-xs btn-primary m-l-xs" data-toggle="modal">
+          <i class="fa fa-plus"></i>
+        </a>
       </div>
       <div class="ibox-content">
-        <div id="external-events">
+        <div id="jobsList">
           <p>Drag a job and drop into shifts to assign.</p>
           {{> render component='schedulingJobsList'}}     
         </div>
@@ -37,4 +40,10 @@
     {{> render component='submitShift'}}
   </div>
   <!-- /SUBMIT SHIFT -->
+
+  <!-- SUBMIT JOB -->
+  <div class="modal fade" id="submitJobModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='submitJob'}}
+  </div>
+  <!-- /SUBMIT JOB -->
 </template>
