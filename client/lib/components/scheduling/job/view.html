@@ -1,8 +1,9 @@
 <template name="schedulingJob">
-  <div class="item jobitem {{state$status}}" data-id="{{state$id}}" data-title="job">
+<!--   <div class="item jobitem {{state$status}}" data-id="{{state$id}}" data-title="job">
     <a href="" class="job-profile" data-toggle="modal">{{state$name}}</a>
-    {{#if state$setStatusPermission}}
+    {{#if state$setStatusPermission}} -->
     <!-- <div class="set-job-status" data-id="{{state$id}}" data-toggle="tooltip" data-placement="top"  title="Change job state"></div> -->
-    {{/if}}
-  </div>
+    <!-- {{/if}}
+  </div> -->
+  <div class='external-event navy-bg {{state$status}}' data-id="{{state$id}}" data-title="job">{{state$name}}</div>
 </template>

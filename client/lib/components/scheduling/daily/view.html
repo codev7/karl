@@ -1,35 +1,33 @@
 <template name="dailyShiftScheduling">
-  <div class="col-xs-2 col-sm-2">
+  <div class="col-md-2">
     <div class="ibox float-e-margins">
       <div class="ibox-title">
-        <h5>Draggable Jobs</h5>
-        <!-- <a href="#submitJobModal" class="btn btn-xs btn-primary m-l-xs" data-toggle="modal"> -->
-          <!-- <i class="fa fa-plus"></i> -->
-        <!-- </a> -->
+        <h5>Draggable Events</h5>
       </div>
       <div class="ibox-content">
-        <div id="jobsList">
-          <p>Drag a job and drop into shifts to assign.</p>
-          {{> render component='schedulingJobsList'}}     
+        <div id='external-events'>
+          <p>Drag a event and drop into callendar.</p>
+          <button class="btn btn-danger addJob">+</button>
+          {{> render component='schedulingJobsList'}} 
         </div>
       </div>
     </div>
   </div>
-  <div class="col-xs-10 col-sm-10">
+  <div class="col-md-10">
     <div class="ibox float-e-margins">
       <div class="ibox-title">
-        <div class="col-md-5">
-          <a href="#submitShiftModal" class="btn btn-xs btn-primary m-l-md" data-toggle="modal">
+        <div class="col-md-4">
+          <a href="#submitShiftModal" class="btn btn-xs btn-primary left" data-toggle="modal">
             <i class="fa fa-plus"></i>
           </a>
         </div>
-        <div class="col-md-4">
-          <h3 id="shiftDate-title">{{state$date}}</h3>
+        <div class="col-md-4 center">
+          <h5>{{state$date}}</h5>
         </div>
-        <div class="col-md-3">
-          <button class="btn btn-warning btn-xs prevDay">Prev Day</button>
-          <button class="btn btn-warning btn-xs today">Today</button>
-          <button class="btn btn-warning btn-xs nextDay">Next Day</button>
+        <div class="col-md-4">
+          <button class="btn btn-xs btn-warning right nextDay m-r-xs">Next Day</button>
+          <button class="btn btn-xs btn-warning right prevDay m-r-xs">Prev Day</button>
+          <button class="btn btn-xs btn-warning right today m-r-xs">Today</button>
         </div>
       </div>
       <div class="ibox-content">
