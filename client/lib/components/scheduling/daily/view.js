@@ -62,33 +62,35 @@ Template.dailyShiftScheduling.rendered = function() {
           if(shift.jobs.length > 0) {
             shift.jobs.forEach(function(job) {
               var jobDoc = Jobs.findOne(job);
-              var activeTimeInMins = jobDoc.activeTime/(60);
-              var activeHours = parseInt(activeTimeInMins/60);
-              var activeMins = activeTimeInMins%(60);
+              if(jobDoc) {
+                var activeTimeInMins = jobDoc.activeTime/(60);
+                var activeHours = parseInt(activeTimeInMins/60);
+                var activeMins = activeTimeInMins%(60);
 
-              if(jobDoc.startAt) {
-                hourFix = moment(jobDoc.startAt).format("HH");
-                minFix = moment(jobDoc.startAt).format("mm");
-              }
-              var start = new Date(thisYear, thisMonth, thisDay, hourFix, minFix);
-              start = moment(start).format();
+                if(jobDoc.startAt) {
+                  hourFix = moment(jobDoc.startAt).format("HH");
+                  minFix = moment(jobDoc.startAt).format("mm");
+                }
+                var start = new Date(thisYear, thisMonth, thisDay, hourFix, minFix);
+                start = moment(start).format();
 
-              if(activeHours > 0) {
-                hourFix += activeHours;
-              }
-              if(activeMins > 0) {
-                minFix += parseInt(activeMins);
-              }
-              var end = new Date(thisYear, thisMonth, thisDay, activeHours, activeMins);
+                if(activeHours > 0) {
+                  hourFix += activeHours;
+                }
+                if(activeMins > 0) {
+                  minFix += parseInt(activeMins);
+                }
+                var end = new Date(thisYear, thisMonth, thisDay, activeHours, activeMins);
 
-              end = moment(end).format()
-              var eventObj = {
-                "title": jobDoc.name,
-                "id": jobDoc._id,
-                start: start,
-                end: end
-              };
-              events.push(eventObj);
+                end = moment(end).format()
+                var eventObj = {
+                  "title": jobDoc.name,
+                  "id": jobDoc._id,
+                  start: start,
+                  end: end
+                };
+                events.push(eventObj);
+              }
             });
           }
         });
