@@ -848,3 +848,7 @@ button.dim:active:before {
   padding-bottom: 4px !important;
 }
 
+.draggable-jobs {
+  padding: 0px !important;
+}
+

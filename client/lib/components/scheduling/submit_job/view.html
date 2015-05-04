@@ -17,20 +17,12 @@
               <label class="col-sm-4 control-label">Type</label>
               <div class="col-sm-6">
                 <div class="dropdown">
-                  <select name="type" class="btn btn-default dropdown-toggle">
+                  <select name="type" class="form-control m-b">
                     <option selected="selected">Type</option>
                     {{#each jobTypes}}
                     <option value="{{type}}">{{type}}</option>
                     {{/each}}
                   </select>
-                  <!-- <button class="btn btn-default dropdown-toggle" type="button" name="type" data-toggle="dropdown" aria-expanded="true">
-                    Type
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="type">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Prep</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Service</a></li>
-                  </ul> -->
                 </div>
               </div>
             </div>
@@ -43,29 +35,7 @@
             <div class="form-group">
               <label class="col-sm-4 control-label">Portions</label>
               <div class="col-sm-6">
-                <div class="dropdown">
-                  <select name="portions" class="btn btn-default dropdown-toggle">
-                    <option selected="selected">No. of portions</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                  <!-- <button class="btn btn-default dropdown-toggle" type="button" id="noOfPortions" data-toggle="dropdown" aria-expanded="true">
-                    No. of portions
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="noOfPortions">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">8</a></li>
-                  </ul> -->
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-4 control-label">Image</label>
-              <div class="col-sm-6">
-                <input type="file" >
+                <input type="text" name="portions" class="form-control" placeholder="No. of Portions">
               </div>
             </div>
             <div class="form-group">
@@ -78,21 +48,12 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-4 control-label">Ingredients Cost</label>
+              <label class="col-sm-4 control-label">Total Cost</label>
               <div class="col-sm-6">
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
                   <input type="number" name="ingCost" class="form-control">
                   <span class="input-group-addon">.00</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-4 control-label">Shelf Life</label>
-              <div class="col-sm-6">
-                <div class="input-group">
-                  <input type="number" name="shelfLife" class="form-control">
-                  <span class="input-group-addon">Days</span>
                 </div>
               </div>
             </div>

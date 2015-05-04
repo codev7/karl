@@ -3400,7 +3400,7 @@ var Grid = fc.Grid = RowRenderer.extend({
     }
     return '' +
       '<th class="fc-day-header ' + view.widgetHeaderClass + ' fc-' + dayIDs[date.day()] + '" data-id="' + cell.id + '">' +
-        name +
+        '<a class="editShiftProfile" data-toggle="modal" data-id="' + shiftId + '">' + name + '</a>'
       '</th>';
   },
 
@@ -6147,6 +6147,7 @@ TimeGrid.mixin({
 
   // Renders the given foreground event segments onto the grid
   renderFgSegs: function(segs) {
+    // debugger;
     segs = this.renderFgSegEls(segs); // returns a subset of the segs. segs that were actually rendered
 
     this.el.append(

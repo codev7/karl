@@ -45,6 +45,7 @@ Template.submitShift.events({
           return alert(err.reason);
         } else {
           $("#submitShiftModal").modal("hide");
+          $('#calendar').fullCalendar('render');
         }
       });
     }

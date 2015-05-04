@@ -7,7 +7,6 @@ Template.submitJob.events({
     var portions = $(event.target).find('[name=portions]').val();;
     var activeTime = $(event.target).find('[name=activeTime]').val();
     var ingCost = $(event.target).find('[name=ingCost]').val();
-    var shelfLife = $(event.target).find('[name=shelfLife]').val();
     
     if(!name || name.trim() == "") {
       alert("Please add title for your job");
@@ -21,7 +20,6 @@ Template.submitJob.events({
         "portions": portions,
         "activeTime": activeTime,
         "ingCost": ingCost,
-        "shelfLife": shelfLife
       }
       Meteor.call("createJob", info, function(err, id) {
         if(err) {

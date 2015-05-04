@@ -1,5 +1,4 @@
-var component = FlowComponents.define("dailyShiftScheduling", function(props) {
-  
+var component = FlowComponents.define("dailyShiftScheduling", function(props) { 
 });
 
 component.state.date = function() {

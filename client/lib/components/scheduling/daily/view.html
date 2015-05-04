@@ -1,13 +1,16 @@
 <template name="dailyShiftScheduling">
-  <div class="col-md-2">
+  <div class="col-md-2 draggable-jobs">
     <div class="ibox float-e-margins">
       <div class="ibox-title">
-        <h5>Draggable Events</h5>
+        <h5>Draggable Events
+          <a href="#submitJobModal" class="btn btn-xs btn-primary" data-toggle="modal">
+            <i class="fa fa-plus"></i>
+          </a>
+        </h5>
       </div>
       <div class="ibox-content">
         <div id='external-events'>
           <p>Drag a event and drop into callendar.</p>
-          <button class="btn btn-danger addJob">+</button>
           {{> render component='schedulingJobsList'}} 
         </div>
       </div>
