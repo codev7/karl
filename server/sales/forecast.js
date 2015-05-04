@@ -112,7 +112,7 @@ Meteor.methods({
       logger.error('Entry does not exist');
       throw new Meteor.Error(404, "Entry does not exist");
     }
-    ForecastCafe.update({"_id": id}, {$set: {"expectedRevenue": parseFloat(revenue)}});
+    ForecastCafe.update({"_id": id}, {$set: {"expectedRevenue": parseFloat(revenue), "menus": []}});
     logger.info("Forecast for cafe updated", id);
   },
 

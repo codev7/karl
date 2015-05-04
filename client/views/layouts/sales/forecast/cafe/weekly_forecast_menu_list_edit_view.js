@@ -25,5 +25,11 @@ Template.weeklySalesForecastMenusListView.events({
     event.preventDefault();
     var week = parseInt(Router.current().params.week) - 1;
     Router.go("weeklySalesForecastMenusList", {"week": week});
+  },
+
+  'click .goBack': function(event) {
+    event.preventDefault();
+    var week = Router.current().params.week;
+    Router.go("cafeSalesForecast", {"week": week});
   }
 });
