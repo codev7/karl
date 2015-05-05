@@ -65,16 +65,17 @@ Template.dailyShiftScheduling.rendered = function() {
           var thisDay = thisDate.getDate();
           var thisMonth = thisDate.getMonth();
           var thisYear = thisDate.getFullYear();
-          var hourFix = 0;
-          var minFix = 0;
 
           if(shift.jobs.length > 0) {
             shift.jobs.forEach(function(job) {
+              var hourFix = 0;
+              var minFix = 0;
+
               var jobDoc = Jobs.findOne(job);
               if(jobDoc) {
                 var activeTimeInMins = jobDoc.activeTime/(60);
                 var activeHours = parseInt(activeTimeInMins/60);
-                var activeMins = activeTimeInMins%(60);
+                var activeMins = parseInt(activeTimeInMins%(60));
 
                 if(jobDoc.startAt) {
                   hourFix = moment(jobDoc.startAt).format("HH");
@@ -82,16 +83,15 @@ Template.dailyShiftScheduling.rendered = function() {
                 }
                 var start = new Date(thisYear, thisMonth, thisDay, hourFix, minFix);
                 start = moment(start).format();
-
                 if(activeHours > 0) {
-                  hourFix += activeHours;
+                  hourFix = parseInt(hourFix) + activeHours;
                 }
                 if(activeMins > 0) {
                   minFix += parseInt(activeMins);
                 }
-                var end = new Date(thisYear, thisMonth, thisDay, activeHours, activeMins);
+                var end = new Date(thisYear, thisMonth, thisDay, hourFix, minFix);
+                end = moment(end).format();
 
-                end = moment(end).format()
                 var eventObj = {
                   "title": jobDoc.name,
                   "id": jobDoc._id,
@@ -99,6 +99,7 @@ Template.dailyShiftScheduling.rendered = function() {
                   start: start,
                   end: end
                 };
+
                 events.push(eventObj);
               }
             });
