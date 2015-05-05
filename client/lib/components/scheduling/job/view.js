@@ -7,5 +7,12 @@ Template.schedulingJob.events({
         return alert(err.reason);
       }
     }); 
+  },
+
+  'click .showJobProfile': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Session.set("thisJob", id);
+    $("#jobProfile").modal();
   }
 });

@@ -23,6 +23,10 @@
   background-color: #db5a3c !important;
 }
 
+#external-events > div > a {
+  color: #fff !important;
+}
+
 a, a:hover {
   text-decoration: none;
 }
@@ -852,3 +856,8 @@ button.dim:active:before {
   padding: 0px !important;
 }
 
+
+.control-p {
+  margin: 0px !important;
+  padding-top: 8px;
+}
