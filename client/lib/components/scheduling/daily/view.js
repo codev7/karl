@@ -28,6 +28,15 @@ Template.dailyShiftScheduling.events({
     var shiftId = $(event.target).attr("data-id");
     Session.set("thisShift", shiftId);
     $("#shiftProfile").modal();
+  },
+
+  'click .fc-title': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    var shiftId = $(event.target).attr("data-shift");
+    Session.set("thisJob", id);
+    Session.set("shiftId", shiftId);
+    $("#jobProfile").modal();
   }
 });
 
@@ -86,6 +95,7 @@ Template.dailyShiftScheduling.rendered = function() {
                 var eventObj = {
                   "title": jobDoc.name,
                   "id": jobDoc._id,
+                  "shift": shift ._id,
                   start: start,
                   end: end
                 };
@@ -135,9 +145,7 @@ Template.dailyShiftScheduling.rendered = function() {
             },
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar
-            eventStartEditable: function() {
-              debugger;
-            },
+            eventDurationEditable: false,
             drop: function(date, event, ui) {
               // debugger;
               var day = date.date() - 1;

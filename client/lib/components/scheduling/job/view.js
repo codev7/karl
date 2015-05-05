@@ -13,6 +13,7 @@ Template.schedulingJob.events({
     event.preventDefault();
     var id = $(event.target).attr("data-id");
     Session.set("thisJob", id);
+    Session.set("shiftId", null);
     $("#jobProfile").modal();
   }
 });

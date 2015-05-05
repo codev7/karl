@@ -227,7 +227,7 @@ Meteor.methods({
     return Jobs.update({'_id': id}, {$set: editFields});
   },
 
-  'deleteJob': function(id) {
+  'deleteJob': function(id, shiftId) {
     if(!id) {
       logger.error("Job id field not found");
       throw new Meteor.Error(404, "Job id field not found");
@@ -242,6 +242,13 @@ Meteor.methods({
       Jobs.remove({'_id': id});
     } else {
       if(job.status == "assigned") {
+        if(shiftId) {
+          var shift = Shifts.findOne(shiftId);
+          if(shift) {
+            Shifts.update({'_id': shiftId}, {$pull: {"jobs": id}});
+            logger.info("Removed job from shift");
+          }
+        }
         logger.info("Job set back to draft state - not deleted", {"jobId": id});
         Jobs.update({'_id': id}, {$set: {"status": "draft", "onshift": null}});
       } else {
