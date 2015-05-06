@@ -64,7 +64,6 @@ Meteor.methods({
   },
 
   'assignWorker': function(workerId, shiftId) {
-    console.log(workerId);
     if(!shiftId) {
       logger.error("Shift Id not found");
       throw new Meteor.Error(404, "Shift Id not found");
