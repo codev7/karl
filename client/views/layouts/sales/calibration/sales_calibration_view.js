@@ -1,7 +1,10 @@
 Template.salesCalibrationView.helpers({
-  'weekRange': function() {
+  'week': function() {
     var week = Router.current().params.week;
-    return week;
+    var monday = moment().day("Monday").week(week).format("YYYY-MM-DD");
+    var sunday = moment().day("Sunday").week(parseInt(week) + 1).format("YYYY-MM-DD");
+    var dateRange = monday + " - " + sunday;
+    return dateRange;
   }
 });
 
