@@ -58,6 +58,8 @@ Template.dailyShiftScheduling.rendered = function() {
   setTimeout(function() {
     var oneDay = 1000 * 3600 * 24;
     var shifts = Shifts.find({"shiftDate": routeDate});
+    var businessStartsAt = 8;
+    var businessEndsAt = 5;
     if(shifts) {
       Tracker.autorun(function() {
         var date = new Date(0);
@@ -78,6 +80,17 @@ Template.dailyShiftScheduling.rendered = function() {
           var thisDay = thisDate.getDate();
           var thisMonth = thisDate.getMonth();
           var thisYear = thisDate.getFullYear();
+
+          var startTime = parseInt(moment(shift.startTime).format("hh"));
+          var endTime = parseInt(moment(shift.endTime).format("hh"));
+          
+          if(businessStartsAt > startTime) {
+            businessStartsAt = startTime;
+          } 
+
+          if(businessEndsAt < endTime) {
+            businessEndsAt = endTime;
+          }
 
           if(shift.jobs.length > 0) {
             shift.jobs.forEach(function(job) {
@@ -156,6 +169,11 @@ Template.dailyShiftScheduling.rendered = function() {
                 type: "agenda",
                 duration: {days: shiftCount}
               }
+            },
+            businessHours: {
+              "start": businessStartsAt + ":00",
+              "end": (businessEndsAt + 12) + ":00",
+              "dow": [ 0, 1, 2, 3, 4, 5, 6 ]
             },
             allDaySlot: false,
             editable: true,
