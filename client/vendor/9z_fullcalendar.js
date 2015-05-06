@@ -3398,7 +3398,7 @@ var Grid = fc.Grid = RowRenderer.extend({
       endTime = moment(endTime).format("hh:mm A");
       name = startTime + " - " + endTime + " Shift";
 
-      var workers = Meteor.users.find().fetch();
+      var workers = Meteor.users.find({"isWorker": true}).fetch();
       var options = '<option selected="selected" value="">Select worker</option>';
       if(shift.assignedTo) {
         var assignedTo = Meteor.users.findOne(shift.assignedTo);
