@@ -3397,25 +3397,26 @@ var Grid = fc.Grid = RowRenderer.extend({
       startTime = moment(startTime).format("hh:mm A");
       endTime = moment(endTime).format("hh:mm A");
       name = startTime + " - " + endTime + " Shift";
+      var select = '';
 
-      var workers = Meteor.users.find({"isWorker": true}).fetch();
-      var options = '<option selected="selected" value="">Select worker</option>';
-      if(shift.assignedTo) {
-        var assignedTo = Meteor.users.findOne(shift.assignedTo);
-        options += '<option selected="selected" value=' + assignedTo._id + '>' + assignedTo.username + '</option>'
-      }
-      workers.forEach(function(worker) {
-        if(worker._id != shift.assignedTo) {
-          options += '<option value=' + worker._id + '>' + worker.username + '</option>'
+      if(view.name == "agendaShifts") {
+        var workers = Meteor.users.find({"isWorker": true}).fetch();
+        var options = '<option selected="selected" value="">Select worker</option>';
+        if(shift.assignedTo) {
+          var assignedTo = Meteor.users.findOne(shift.assignedTo);
+          options += '<option selected="selected" value=' + assignedTo._id + '>' + assignedTo.username + '</option>'
         }
-      });
-      var select = '' +
-      '<div>' +
-        '<select class="form-control selectWorkers" name="selectWorkers" data-id="' + shiftId + '">' +     
-          options +
-        '</select>' +
-      '</div>'
-      ;
+        workers.forEach(function(worker) {
+          if(worker._id != shift.assignedTo) {
+            options += '<option value=' + worker._id + '>' + worker.username + '</option>'
+          }
+        });
+        select = '<div>' +
+          '<select class="form-control selectWorkers" name="selectWorkers" data-id="' + shiftId + '">' +     
+            options +
+          '</select>' +
+        '</div>';
+      }
     }
     return '' +
       '<th class="fc-day-header ' + view.widgetHeaderClass + ' fc-' + dayIDs[date.day()] + '" data-id="' + cell.id + '">' +

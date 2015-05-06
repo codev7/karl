@@ -185,8 +185,7 @@ Template.dailyShiftScheduling.rendered = function() {
             },
             events: events
           });    
-        }
-        
+        }       
       });
     }
   }, 1000);
