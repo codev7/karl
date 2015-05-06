@@ -189,29 +189,6 @@ Template.dailyShiftScheduling.rendered = function() {
         
       });
     }
-
-    var fc_row = $(".fc-row").find("tr").find("th").find("a").get();
-
-    var shiftCount = shifts.fetch().length;
-    var workers = Meteor.users.find().fetch();
-    var options = '';
-    workers.forEach(function(worker) {
-      options += '<option value=' + worker._id + '>' + worker.username + '</option>'
-    });
-
-    // fc_row.forEach(function(day) {
-    //   var shiftId = $(day).attr("data-id");
-    //   var select = '' +
-    //   '<div>' +
-    //     '<select class="form-control selectWorkers" name="selectWorkers" data-id="' + shiftId + '">' + 
-    //       '<option value="" selected="selected">Select worker</option>' + 
-    //       options +
-    //     '</select>' +
-    //   '</div>'
-    //   ;
-    //   console.log(shiftId);
-    //   $(day).after(select);
-    // });
   }, 1000);
 }
 
