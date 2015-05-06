@@ -1,46 +1,164 @@
 Meteor.methods({
   generateJobs: function(menuInfo, date) {
     var jobIds = [];
+    var maxTimePerJob = 5*60*60;
+
     if(Object.keys(menuInfo).length > 0) {
       menuInfo.forEach(function(menu) {
+
         var menuItem = MenuItems.findOne(menu.id);
         if(Object.keys(menuItem.jobItems).length > 0) { 
+
           menuItem.jobItems.forEach(function(jobItem) {
             var item = JobItems.findOne(jobItem._id);
+            var maxPortions = (maxTimePerJob * item.portions)/item.activeTime;
+
             var quantity = jobItem.quantity * menu.quantity;
             var timeTaken = (item.activeTime/item.portions) * quantity;
             var today = new Date(date).toISOString().slice(0,10).replace(/-/g,"-");
-            var todayJobExist = Jobs.findOne({"name": item.name, "createdOn": today});
+            var todayJobExist = Jobs.findOne({"name": item.name, "createdOn": today, "status": "draft", "activeTime": {$lt: maxTimePerJob}});
+
             if(todayJobExist) {
+              // console.log(".......job exists.......", todayJobExist);
               var newActiveTime = todayJobExist.activeTime + timeTaken;
               var newPortions = todayJobExist.portions + quantity;
-              Jobs.update({"_id": todayJobExist._id}, {$set: {"activeTime": newActiveTime, "portions": newPortions}});
-            } else {
-              var info = {
-                "name": item.name,
-                "type": item.type,
-                "status": "draft",
-                "options": [],
-                "onshift": null,
-                "portions": quantity,
-                "activeTime": timeTaken,
-                "assignedTo": null,
-                "shelfLife": item.shelfLife,
-                "createdOn": today,
-                "createdBy": null, //add logged in users id,
-                "ingredients": [],
-                "totalIngredientCost": 0
+              // console.log("........nadee.........", timeTaken, newActiveTime, quantity);
+
+              if(newActiveTime <= maxTimePerJob) {
+                // console.log("..newActiveTime..less than.........", newActiveTime)
+                Jobs.update({"_id": todayJobExist._id}, {$set: {"activeTime": newActiveTime, "portions": newPortions}});
+
+              } else {
+                // console.log("....newActiveTime....greater than.....",  timeTaken, newActiveTime, quantity);
+                //update existing job with rest of the time and portions to reach to max
+                Jobs.update({"_id": todayJobExist._id}, {$set: {"activeTime": maxTimePerJob, "portions": maxPortions}});
+
+                //repeating jobs
+                var repeat = parseInt((newActiveTime-maxTimePerJob)/maxTimePerJob);
+                if(repeat > 0) {
+                  for(var i=0; i<repeat; i++) {
+                    var info = {
+                      "name": item.name,
+                      "type": item.type,
+                      "status": "draft",
+                      "options": [],
+                      "onshift": null,
+                      "portions": maxPortions,
+                      "activeTime": maxTimePerJob,
+                      "assignedTo": null,
+                      "createdOn": today,
+                      "createdBy": null, //add logged in users id,
+                      "ingredients": [],
+                      "totalIngredientCost": 0
+                    }
+                    var jobId = Jobs.insert(info);
+                    if(jobId) {
+                      jobIds.push(jobId);
+                    }
+                  }
+                }
+
+                //create new job for the rest of the time and portions
+                var restActiveTime = newActiveTime - (maxTimePerJob + (maxTimePerJob * repeat));
+                var restPortions = newPortions - (maxPortions + (maxPortions * repeat));
+
+                var info = {
+                  "name": item.name,
+                  "type": item.type,
+                  "status": "draft",
+                  "options": [],
+                  "onshift": null,
+                  "portions": restPortions,
+                  "activeTime": restActiveTime,
+                  "assignedTo": null,
+                  "createdOn": today,
+                  "createdBy": null, //add logged in users id,
+                  "ingredients": [],
+                  "totalIngredientCost": 0
+                }
+                var jobId = Jobs.insert(info);
+                if(jobId) {
+                  jobIds.push(jobId);
+                }
+                
               }
-              var jobId = Jobs.insert(info);
-              if(jobId) {
-                jobIds.push(jobId);
+            } else {
+              // console.log("............no job exist....create new...");
+              if(timeTaken <= maxTimePerJob) {
+                // console.log("............max time less......");
+                var info = {
+                  "name": item.name,
+                  "type": item.type,
+                  "status": "draft",
+                  "options": [],
+                  "onshift": null,
+                  "portions": quantity,
+                  "activeTime": timeTaken,
+                  "assignedTo": null,
+                  "createdOn": today,
+                  "createdBy": null, //add logged in users id,
+                  "ingredients": [],
+                  "totalIngredientCost": 0
+                }
+                var jobId = Jobs.insert(info);
+                if(jobId) {
+                  jobIds.push(jobId);
+                }    
+              } else {
+                // console.log("...........max time greater........");
+                //repeating jobs
+                var repeat = parseInt((timeTaken)/maxTimePerJob);
+                if(repeat > 0) {
+                  for(var i=0; i<repeat; i++) {
+                    var info = {
+                      "name": item.name,
+                      "type": item.type,
+                      "status": "draft",
+                      "options": [],
+                      "onshift": null,
+                      "portions": maxPortions,
+                      "activeTime": maxTimePerJob,
+                      "assignedTo": null,
+                      "createdOn": today,
+                      "createdBy": null, //add logged in users id,
+                      "ingredients": [],
+                      "totalIngredientCost": 0
+                    }
+                    var jobId = Jobs.insert(info);
+                    if(jobId) {
+                      jobIds.push(jobId);
+                    }
+                  }
+                }
+                //create new job for the rest of the time and portions
+                var restActiveTime = timeTaken - (maxTimePerJob * repeat);
+                var restPortions = quantity - (maxPortions * repeat);
+
+                var info = {
+                  "name": item.name,
+                  "type": item.type,
+                  "status": "draft",
+                  "options": [],
+                  "onshift": null,
+                  "portions": restPortions,
+                  "activeTime": restActiveTime,
+                  "assignedTo": null,
+                  "createdOn": today,
+                  "createdBy": null, //add logged in users id,
+                  "ingredients": [],
+                  "totalIngredientCost": 0
+                }
+                var jobId = Jobs.insert(info);
+                if(jobId) {
+                  jobIds.push(jobId);
+                }                
               }
             }
           });
         }
       });
     }
-    console.log(jobIds);
+    // console.log(jobIds);
     return jobIds;
   },
 
@@ -109,7 +227,7 @@ Meteor.methods({
     return Jobs.update({'_id': id}, {$set: editFields});
   },
 
-  'deleteJob': function(id) {
+  'deleteJob': function(id, shiftId) {
     if(!id) {
       logger.error("Job id field not found");
       throw new Meteor.Error(404, "Job id field not found");
@@ -124,6 +242,13 @@ Meteor.methods({
       Jobs.remove({'_id': id});
     } else {
       if(job.status == "assigned") {
+        if(shiftId) {
+          var shift = Shifts.findOne(shiftId);
+          if(shift) {
+            Shifts.update({'_id': shiftId}, {$pull: {"jobs": id}});
+            logger.info("Removed job from shift");
+          }
+        }
         logger.info("Job set back to draft state - not deleted", {"jobId": id});
         Jobs.update({'_id': id}, {$set: {"status": "draft", "onshift": null}});
       } else {

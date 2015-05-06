@@ -24,7 +24,7 @@ Template.navTop.helpers({
   },
 
   week: function() {
-    var week = moment(new Date()).format("w");
+    var week = moment().format("w");
     return week;
   }
 });
