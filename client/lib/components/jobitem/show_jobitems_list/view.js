@@ -53,5 +53,12 @@ Template.showJobItemsList.events({
     $("#searchText-box").val("");
     $("#jobItemListModal").modal("hide");
     FlowComponents.callAction('submit');
-  }
+  },
+
+  'click #addNewJobItem': function(event) {
+    event.preventDefault();
+    $("#jobItemListModal").modal("hide");
+    Router.go("submitJobItem");
+  },
+
 });

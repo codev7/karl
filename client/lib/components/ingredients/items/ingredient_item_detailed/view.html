@@ -7,14 +7,6 @@
   <td>$ {{state$costPerPortion}}</td>
   <td>{{state$portionUsed}}</td>
   <td><p data-toggle="tooltip" data-placement="top" title="How many {{state$portionUsed}}s in a {{state$portionOrdered}}">{{state$unitSize}}</p></td>
-  <td>
-    <div class="btn-group">
-      <button data-toggle="dropdown" class="btn btn-warning btn-sm dropdown-toggle" aria-expanded="false"><i class="fa fa-cog pad-right-4"></i>Settings <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="#editIngredientModal" data-id="{{state$id}}" data-toggle="modal" class="editIngredient">Edit</a></li>
-        <li><a href="#" class="deleteIngredient" data-id="{{state$id}}">Delete</a></li>
-      </ul>
-    </div>
-  </td>
+  <td><a href="#editIngredientModal" data-id="{{state$id}}" data-toggle="modal" class="btn btn-primary btn-sm editIngredient">View Item</a></td>
 </tr>
 </template>

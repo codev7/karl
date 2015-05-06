@@ -1,14 +1,12 @@
 Meteor.methods({
   generateJobs: function(menuInfo, date) {
-    console.log(menuInfo, date);
     var jobIds = [];
     if(Object.keys(menuInfo).length > 0) {
       menuInfo.forEach(function(menu) {
         var menuItem = MenuItems.findOne(menu.id);
-
         if(Object.keys(menuItem.jobItems).length > 0) { 
           menuItem.jobItems.forEach(function(jobItem) {
-            var item = JobItems.findOne(jobItem.id);
+            var item = JobItems.findOne(jobItem._id);
             var quantity = jobItem.quantity * menu.quantity;
             var timeTaken = (item.activeTime/item.portions) * quantity;
             var today = new Date(date).toISOString().slice(0,10).replace(/-/g,"-");
@@ -42,6 +40,7 @@ Meteor.methods({
         }
       });
     }
+    console.log(jobIds);
     return jobIds;
   },
 
@@ -115,18 +114,18 @@ Meteor.methods({
       logger.error("Job id field not found");
       throw new Meteor.Error(404, "Job id field not found");
     }
-    var job = Jobs.findOne(jobId);
+    var job = Jobs.findOne(id);
     if(!job) {
       logger.error("Job not found", {"jobId": id});
       throw new Meteor.Error(404, "Job not found");
     }
     if(job.status == "draft") {
       logger.info("Job removed", {"jobId": id});
-      Jobs.remove({'_id': jobId});
+      Jobs.remove({'_id': id});
     } else {
       if(job.status == "assigned") {
         logger.info("Job set back to draft state - not deleted", {"jobId": id});
-        Jobs.update({'_id': jobId}, {$set: {"status": "draft", "onshift": null}});
+        Jobs.update({'_id': id}, {$set: {"status": "draft", "onshift": null}});
       } else {
         logger.error("Job is in active stage, can't delete", {"JobId": id, "State": job.status});
         throw new Meteor.Error(404, "Job in '" + job.status + "' status cannot be deleted");

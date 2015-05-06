@@ -99,6 +99,28 @@ Template.editJobItem.events({
     event.preventDefault();
     $("#addIngredientModal").modal('show');
   },
+
+  'click .deleteJobItem': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    var result = confirm("Are you sure you want to delete this job ?");
+    if(result) {
+      Meteor.call("deleteJobItem", id, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        } else {
+          Router.go("jobItemsMaster");
+        }
+      });
+    }
+  },
+
+  'click .cancelEditJobItem': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Router.go("jobItemDetailed", {"_id": id});
+  }
 });
 
 Template.editJobItem.rendered = function() {

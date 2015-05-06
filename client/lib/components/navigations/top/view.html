@@ -5,36 +5,47 @@
       {{#if currentUser}}
         {{#if isPermitted}}
           <li class="dropdown">
-            <a aria-expanded="false" role="button" href="/menuItems/all/all" class="dropdown-toggle" data-toggle="dropdown">Menus</a>
+            <a href="/menuItems/all/all">Menus</a>
           </li>
           <li class="dropdown">
-            <a aria-expanded="false" role="button" href="/jobItems" class="dropdown-toggle" data-toggle="dropdown">Jobs</a>
+            <a href="/jobItems">Jobs</a>
           </li>
           <li class="dropdown">
-            <a aria-expanded="false" role="button" href="/ingredients" class="dropdown-toggle" data-toggle="dropdown">Ingredients
-            </a>
-            <!-- <ul role="menu" class="dropdown-menu">
-              <li><a href="/menuItem/submit">New Menu</a></li>
-            </ul> -->
+            <a href="/ingredients">Ingredients</a>
+          </li>
+          <li class="dropdown">
+            <a href="/sales/{{today}}">Sales</a>
+          </li>
+          <li class="dropdown">
+            <a href="/sales/calibration/{{week}}">Sales Calibration</a>
+          </li>
+          <li class="dropdown">
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Sales Forecast <span class="caret"></span></a>
+            <ul role="menu" class="dropdown-menu">
+              <li><a href="/sales/forecast/cafe">Cafe</a></li>
+              <li><a href="/sales/forecast/catering">Catering</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="/jobs">New Jobs</a>
           </li>
         {{/if}}
       {{/if}}
     </ul>
-    <ul class="nav navbar-top-links navbar-right">
+
+    <ul class="nav navbar-nav navbar-right">
       {{#if currentUser}}
         <li class="dropdown">
           <div class="feed-element top-nav-profile-image">
             <img alt="image" class="img-circle" src="{{profileImage}}">
-            <a aria-expanded="false" role="button" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.username}} </a>
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> {{currentUser.username}} <span class="caret"></span></a>
             <ul role="menu" class="dropdown-menu">
-              <li>
-                {{#if isAdmin}}
-                <a aria-expanded="false" role="button" href="/admin" class="dropdown-toggle" data-toggle="dropdown">Users</a>
-                {{/if}}
-              </li>
+              {{#if isAdmin}}
+                <li><a href="/admin">Users</a></li>
+              {{/if}}
               <li role="presentation" class="divider"></li>
               <li><a id="signOutButton">Sign Out</a></li>
-            </ul> 
+            </ul>
           </div>
         </li>
       {{else}}

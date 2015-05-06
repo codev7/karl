@@ -45,9 +45,6 @@
         </div>
         <div class="form-group">
           <label class="col-sm-3 control-label">Prep items used
-            <a id="showJobItemsList" class="btn btn-xs btn-primary margin-right-10">
-              <i class="fa fa-plus"></i>
-            </a>
           </label>
           <div class="col-sm-8">
             <table class="table table-hover thumbnail">
@@ -68,14 +65,14 @@
                   {{> render component='jobItemEdit' jobitem=this}}
                 {{/each}}
               </tbody>
+                <br>
+                <button id="showJobItemsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add prep jobs to menu item</button>
+
             </table>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-3 control-label">Ingredients used
-            <a id="showIngredientsList" class="btn btn-xs btn-primary margin-right-10">
-              <i class="fa fa-plus"></i>
-            </a>
           </label>
           <div class="col-sm-8">
             <table class="table table-hover thumbnail">
@@ -96,6 +93,8 @@
                   {{>  render component='ingredientItemEdit' ingredient=this}}
                 {{/each}}
               </tbody>
+                <br>
+                <button id="showIngredientsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add ingredient to menu item</button>
             </table>
           </div>
         </div>
