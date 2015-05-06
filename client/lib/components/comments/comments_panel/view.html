@@ -1,0 +1,29 @@
+<template name="commentsPanel">
+  <div class="col-md-12">
+    <div class="ibox chat-view">
+      <div class="ibox-title">
+        <!-- <small class="pull-right text-muted">Last message:  Mon Jan 26 2015 - 18:39:23</small> -->
+        Comments
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="chat-discussion">
+              {{#if state$commentsExist}}
+                {{#each state$commentsList}}
+                  {{> render component="comment" comment=this}}
+                {{/each}}
+              {{else}}
+                <div class="middle-box text-center">
+                  <h3 class="font-bold">Add Comments Here.</h3>
+              </div>
+              {{/if}}
+            </div>
+            {{> render component="submitComment"}}
+          </div>
+          <!-- {{> render component="chatUsersList"}} -->
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
