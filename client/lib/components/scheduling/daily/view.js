@@ -37,6 +37,19 @@ Template.dailyShiftScheduling.events({
     Session.set("thisJob", id);
     Session.set("shiftId", shiftId);
     $("#jobProfile").modal();
+  },
+
+  'change .selectWorkers': function(event) {
+    var workerId = $(event.target).val();
+    var shiftId = $(event.target).attr("data-id");
+    Meteor.call("assignWorker", workerId, shiftId, function(err) {
+      if(err) {
+        console.log(err);
+        alert(err.reason);
+        $(event.target).val("");
+        return;
+      }
+    });
   }
 });
 
@@ -144,6 +157,7 @@ Template.dailyShiftScheduling.rendered = function() {
                 duration: {days: shiftCount}
               }
             },
+            allDaySlot: false,
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar
             eventDurationEditable: false,
@@ -176,7 +190,29 @@ Template.dailyShiftScheduling.rendered = function() {
       });
     }
 
-  }, 1000)
+    var fc_row = $(".fc-row").find("tr").find("th").find("a").get();
+
+    var shiftCount = shifts.fetch().length;
+    var workers = Meteor.users.find().fetch();
+    var options = '';
+    workers.forEach(function(worker) {
+      options += '<option value=' + worker._id + '>' + worker.username + '</option>'
+    });
+
+    // fc_row.forEach(function(day) {
+    //   var shiftId = $(day).attr("data-id");
+    //   var select = '' +
+    //   '<div>' +
+    //     '<select class="form-control selectWorkers" name="selectWorkers" data-id="' + shiftId + '">' + 
+    //       '<option value="" selected="selected">Select worker</option>' + 
+    //       options +
+    //     '</select>' +
+    //   '</div>'
+    //   ;
+    //   console.log(shiftId);
+    //   $(day).after(select);
+    // });
+  }, 1000);
 }
 
 function assignJob(job, shift, startAt) {

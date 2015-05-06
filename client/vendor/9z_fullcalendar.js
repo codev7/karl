@@ -3397,10 +3397,30 @@ var Grid = fc.Grid = RowRenderer.extend({
       startTime = moment(startTime).format("hh:mm A");
       endTime = moment(endTime).format("hh:mm A");
       name = startTime + " - " + endTime + " Shift";
+
+      var workers = Meteor.users.find().fetch();
+      var options = '<option selected="selected" value="">Select worker</option>';
+      if(shift.assignedTo) {
+        var assignedTo = Meteor.users.findOne(shift.assignedTo);
+        options += '<option selected="selected" value=' + assignedTo._id + '>' + assignedTo.username + '</option>'
+      }
+      workers.forEach(function(worker) {
+        if(worker._id != shift.assignedTo) {
+          options += '<option value=' + worker._id + '>' + worker.username + '</option>'
+        }
+      });
+      var select = '' +
+      '<div>' +
+        '<select class="form-control selectWorkers" name="selectWorkers" data-id="' + shiftId + '">' +     
+          options +
+        '</select>' +
+      '</div>'
+      ;
     }
     return '' +
       '<th class="fc-day-header ' + view.widgetHeaderClass + ' fc-' + dayIDs[date.day()] + '" data-id="' + cell.id + '">' +
-        '<a class="editShiftProfile" data-toggle="modal" data-id="' + shiftId + '">' + name + '</a>'
+        '<a class="editShiftProfile" data-toggle="modal" data-id="' + shiftId + '">' + name + '</a>' +
+        select +
       '</th>';
   },
 

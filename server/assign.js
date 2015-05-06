@@ -84,6 +84,11 @@ Meteor.methods({
       "assignedTo": null
     };
     if(workerId) {
+      var existInShift = Shifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": workerId});
+      if(existInShift) {
+        logger.error("User already exist in a shift", {"date": shift.shiftDate});
+        throw new Meteor.Error(404, "Worker has already been assigned to a shift");
+      }
       var worker = Meteor.users.findOne(workerId);
       if(!worker) {
         logger.error("Worker not found");
@@ -92,6 +97,6 @@ Meteor.methods({
       updateDoc.assignedTo = workerId;
     }
     Shifts.update({_id: shiftId}, {$set: updateDoc});
-    logger.info("Shift has been assigned to a worker", {"shiftId": shiftId, "workerId": workerId});
+    logger.info("Worker assigned to shift", {"shiftId": shiftId, "workerId": workerId});
   }
 });
