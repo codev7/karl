@@ -23,6 +23,10 @@
   background-color: #db5a3c !important;
 }
 
+#external-events > div > a {
+  color: #fff !important;
+}
+
 a, a:hover {
   text-decoration: none;
 }
@@ -144,28 +148,19 @@ select {
   color: #bbb;
 }
 
-.time-panel-daily {
-  width: 10px;
-  border-right: none !important;
-  /*background-color: #aaa;*/
-
-}
-
-.time-panel-member {
-  width: 60px;
-  border-right: none !important;
-  /*background-color: #aaa;*/
-
-}
-
 .shift-div {
   height: 500px;
   max-height: 500px;
   overflow-y: scroll; 
 }
 
-.time-divider-hour {
-  height: 60px;
+.time-panel {
+  padding-top: 2px !important;
+  padding-left: 2px !important;
+}
+
+.timeline-height {
+  height: 40px;
   font-size: 10px;
 }
 
@@ -184,6 +179,7 @@ select {
 
 .job-panel {
   border-left: none !important;
+  width: 600px !important;
 }
 
 .shiftedWorkers {
@@ -856,3 +852,12 @@ button.dim:active:before {
   padding-bottom: 4px !important;
 }
 
+.draggable-jobs {
+  padding: 0px !important;
+}
+
+
+.control-p {
+  margin: 0px !important;
+  padding-top: 8px;
+}

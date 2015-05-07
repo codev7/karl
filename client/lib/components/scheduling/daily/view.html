@@ -1,0 +1,68 @@
+<template name="dailyShiftScheduling">
+  <div class="col-md-2 draggable-jobs">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Draggable Events
+          <a href="#submitJobModal" class="btn btn-xs btn-primary" data-toggle="modal">
+            <i class="fa fa-plus"></i>
+          </a>
+        </h5>
+      </div>
+      <div class="ibox-content">
+        <div id='external-events'>
+          <p>Drag a event and drop into callendar.</p>
+          {{> render component='schedulingJobsList'}} 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-10">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <div class="col-md-4">
+          <a href="#submitShiftModal" class="btn btn-xs btn-primary left" data-toggle="modal">
+            <i class="fa fa-plus"></i>
+          </a>
+        </div>
+        <div class="col-md-4 center">
+          <h5>{{state$date}}</h5>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-xs btn-warning right nextDay m-r-xs">Next Day</button>
+          <button class="btn btn-xs btn-warning right prevDay m-r-xs">Prev Day</button>
+          <button class="btn btn-xs btn-warning right today m-r-xs">Today</button>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div id="external-events">
+          {{> render component='schedulingShiftsList'}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT SHIFT -->
+  <div class="modal fade" id="submitShiftModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='submitShift'}}
+  </div>
+  <!-- /SUBMIT SHIFT -->
+
+  <!-- SUBMIT JOB -->
+  <div class="modal fade" id="submitJobModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='submitJob'}}
+  </div>
+  <!-- /SUBMIT JOB -->
+
+  <!-- SHIFT PROFILE -->
+  <div class="modal fade" id="shiftProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- {{> shiftProfile}} -->
+    {{> render component='shiftProfile'}}
+  </div>
+  <!-- /SHIFT PROFILE -->
+
+   <!-- JOB PROFILE -->
+  <div class="modal fade" id="jobProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='jobProfile'}}
+  </div>
+  <!-- /JOB PROFILE -->
+</template>

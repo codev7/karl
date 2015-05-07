@@ -19,9 +19,14 @@ component.state.id = function() {
 }
 
 component.state.activeTime = function() {
-  var time = this.job.activeTime;
-  time = parseInt(time/60);
-  return Math.round(time);;
+  var time = parseInt(this.job.activeTime);
+  var timeInHours = parseInt(time/(60*60));
+  var timeInMins = parseInt((time - (timeInHours*60*60))/60);
+  var timeString = timeInHours + " hours "; 
+  if(timeInMins > 0) {
+    timeString += timeInMins + " mins";
+  }
+  return timeString;
 }
 
 component.state.createdOn = function() {
