@@ -1,7 +1,7 @@
 Template.weeklyForecastListView.helpers({
   'week': function() {
     var week = Router.current().params.week;
-    var monday = moment().day("Monday").week(week).format("Do MMMM YYYY");
+    var monday = moment().day("Monday").week(week).format("Do of MMMM YYYY");
     return monday;
   }
 });
