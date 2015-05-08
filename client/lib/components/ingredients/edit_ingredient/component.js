@@ -1,5 +1,15 @@
+var subs = new SubsManager();
+
 var component = FlowComponents.define('editIngredientItem', function(props) {
 });
+
+component.state.id = function() {
+  var id = Session.get("thisIngredientId");
+  subs.subscribe("ingredients", [id]);
+  var ing = Ingredients.findOne(id);
+  return id;
+}
+
 
 component.action.submit = function(id, info, event) {
    Meteor.call("editIngredient", id, info, function(err) {
