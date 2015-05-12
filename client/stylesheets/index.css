@@ -861,3 +861,9 @@ button.dim:active:before {
   margin: 0px !important;
   padding-top: 8px;
 }
+
+.menu-item-delete {
+  bottom: 27px;
+  position: relative;
+  left: -5px;
+}

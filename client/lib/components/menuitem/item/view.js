@@ -1,5 +1,5 @@
 Template.menuItem.events({
-  'click .removeMenuItem': function(event) {
+  'click .menu-item-delete': function(event) {
     event.preventDefault();
     var result = confirm("Are you sure, you want to delete this menu ?");
     if(result) {
