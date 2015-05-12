@@ -68,23 +68,5 @@ Template.menuItemDetail.events({
   'click .printMenuItemBtn': function(event) {
     event.preventDefault();
     print();
-  },
-
-  'click .deleteMenuItemBtn': function(e) {
-    e.preventDefault();
-    var result = confirm("Are you sure, you want to delete this menu ?");
-    if(result) {
-      var id = $(event.target).attr("data-id");
-      if(id) {
-        Meteor.call("deleteMenuItem", id, function(err) {
-          if(err) {
-            console.log(err);
-            return alert(err.reason);
-          } else {
-            Router.go("menuItemsMaster", {"category": "all", "status": "all"});
-          }
-        });
-      }
-    }
-  },
+  }
 });

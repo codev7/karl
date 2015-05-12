@@ -144,10 +144,29 @@ Template.editMenuItem.events({
           $("#uploadedImageUrl").attr("src", doc[0].url);
         }
     });
+  },
+
+  'click .deleteMenuItemBtn': function(e) {
+    e.preventDefault();
+    var result = confirm("Are you sure, you want to delete this menu ?");
+    if(result) {
+      var id = $(event.target).attr("data-id");
+      if(id) {
+        Meteor.call("deleteMenuItem", id, function(err) {
+          if(err) {
+            console.log(err);
+            return alert(err.reason);
+          } else {
+            Router.go("menuItemsMaster", {"category": "all", "status": "all"});
+          }
+        });
+      }
+    }
+  },
+
+  'click .cancelBtn': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Router.go("menuItemDetail", {"_id": id});
   }
 });
-
-Template.editMenuItem.rendered = function() {
-  // Session.set("selectedIngredients", null);
-  // Session.set("selectedJobItems", null);
-}
