@@ -10,33 +10,39 @@ Meteor.methods({
       logger.error("User not permitted to create job items");
       throw new Meteor.Error(404, "User not permitted to create jobs");
     }
+    var doc = {};
     if(!info.name) {
       logger.error("Name field not found");
       throw new Meteor.Error(404, "Name field not found");
     }
-    if(!info.activeTime) {
-      logger.error("Time field not found");
-      throw new Meteor.Error(404, "Time field not found");
-    }
+    doc.name = info.name;
+    // var doc = {
+    //   "name": info.name,
+    //   "type": info.type,
+    //   "recipe": info.recipe,
+    //   "portions": parseInt(info.portions),
+    //   "activeTime": activeTime,
+    //   "shelfLife": shelfLife,
+    //   "createdOn": Date.now(),
+    //   "createdBy": userId,
+    //   "ingredients": [],
+    //   "wagePerHour": 0 
+    // }
+    
     var exist = JobItems.findOne({"name": info.name});
     if(exist) {
       logger.error("Duplicate entry");
       throw new Meteor.Error(404, "Duplicate entry, change name and try again");
     }
-    var activeTime = parseInt(info.activeTime) * 60; //seconds
-    var shelfLife = parseFloat(info.shelfLife); //days
-    var doc = {
-      "name": info.name,
-      "type": info.type,
-      "recipe": info.recipe,
-      "portions": parseInt(info.portions),
-      "activeTime": activeTime,
-      "shelfLife": shelfLife,
-      "createdOn": Date.now(),
-      "createdBy": userId,
-      "ingredients": [],
-      "wagePerHour": 0 
+
+    if(!info.activeTime) {
+      logger.error("Time field not found");
+      throw new Meteor.Error(404, "Time field not found");
     }
+    doc.activeTime = parseInt(info.activeTime) * 60; //seconds
+    
+    var shelfLife = parseFloat(info.shelfLife); //days
+    
     if(info.ingredients) {
       if(info.ingredients.length > 0) {
         var ingIds = [];
