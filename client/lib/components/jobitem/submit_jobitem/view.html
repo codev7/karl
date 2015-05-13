@@ -80,7 +80,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Frequency</label>
             <div class="col-sm-8">
-              <select name="type" class="form-control changeFrequency">
+              <select name="frequency" class="form-control changeFrequency">
                 <option value="Daily">Daily</option>
                 <option value="Weekly">Weekly</option>
               </select>
@@ -94,7 +94,7 @@
                 <div class="checkbox-inline checkbox">
                   {{#each state$week}}
                   <label>
-                    <input type="checkbox" class="daysSelected" value="{{id}}">{{day}}
+                    <input type="checkbox" name="daysSelected" class="daysSelected" value="{{this}}">{{this}}
                   </label>
                   {{/each}}
                 </div>

@@ -10,58 +10,60 @@ Meteor.methods({
       logger.error("User not permitted to create job items");
       throw new Meteor.Error(404, "User not permitted to create jobs");
     }
-    var doc = {};
     if(!info.name) {
       logger.error("Name field not found");
       throw new Meteor.Error(404, "Name field not found");
     }
-    doc.name = info.name;
-    // var doc = {
-    //   "name": info.name,
-    //   "type": info.type,
-    //   "recipe": info.recipe,
-    //   "portions": parseInt(info.portions),
-    //   "activeTime": activeTime,
-    //   "shelfLife": shelfLife,
-    //   "createdOn": Date.now(),
-    //   "createdBy": userId,
-    //   "ingredients": [],
-    //   "wagePerHour": 0 
-    // }
-    
     var exist = JobItems.findOne({"name": info.name});
     if(exist) {
       logger.error("Duplicate entry");
       throw new Meteor.Error(404, "Duplicate entry, change name and try again");
     }
-
+    var doc = {};
+    doc.name = info.name;
     if(!info.activeTime) {
       logger.error("Time field not found");
       throw new Meteor.Error(404, "Time field not found");
     }
-    doc.activeTime = parseInt(info.activeTime) * 60; //seconds
-    
-    var shelfLife = parseFloat(info.shelfLife); //days
-    
-    if(info.ingredients) {
-      if(info.ingredients.length > 0) {
-        var ingIds = [];
-        info.ingredients.forEach(function(item) {
-          if(ingIds.indexOf(item._id) < 0) {
-            ingIds.push(item._id);
-            doc.ingredients.push(item);
-          }
-        });
+    var activeTime = parseInt(info.activeTime) * 60; //seconds
+    doc.activeTime = activeTime;
+    doc.type = info.type;
+    if(info.type == "Prep") {
+      var shelfLife = parseFloat(info.shelfLife); //days
+      doc.shelfLife = shelfLife;
+      doc.recipe = info.recipe;
+      doc.portions =  parseInt(info.portions);
+      doc.ingredients = [];
+      if(info.ingredients) {
+        if(info.ingredients.length > 0) {
+          var ingIds = [];
+          info.ingredients.forEach(function(item) {
+            if(ingIds.indexOf(item._id) < 0) {
+              ingIds.push(item._id);
+              doc.ingredients.push(item);
+            }
+          });
+        }
+      }
+    } else if(info.type == "Recurring") {
+      doc.repeatAt = info.repeatAt;
+      doc.description = info.description;
+      doc.frequency = info.frequency;
+      if(info.frequency == "Weekly") {
+        doc.repeatOn = info.repeatOn;
       }
     }
     if(info.wagePerHour) {
       doc.wagePerHour = info.wagePerHour;
     }
+    doc.createdOn = Date.now();
+    doc.createdBy = userId;
+
     var id = JobItems.insert(doc);
     logger.info("Job Item inserted", {"jobId": id, 'type': info.type});
     return id;
   },
-
+  
   'editJobItem': function(id, info) {
     if(!Meteor.userId()) {
       logger.error('No user has logged in');

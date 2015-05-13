@@ -15,15 +15,7 @@ component.state.repeatAt = function() {
 }
 
 component.state.week = function() {
-  var week = [
-    {"id": 1, "day": "Mon"},
-    {"id": 2, "day": "Tue"},
-    {"id": 3, "day": "Wed"},
-    {"id": 4, "day": "Thurs"},
-    {"id": 5, "day": "Fri"},
-    {"id": 6, "day": "Sat"},
-    {"id": 7, "day": "Sun"},
-  ]
+  var week = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"];
   return week;
 }
 

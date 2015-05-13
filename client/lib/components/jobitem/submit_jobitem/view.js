@@ -133,7 +133,7 @@ Template.submitJobItem.events({
     }
 
     //if Recurring
-    if(type == "Recurring") {
+    else if(type == "Recurring") {
       var description = FlowComponents.child('jobItemEditorSubmit').getState('content');
       if(description) {
         if($('.ql-editor').text() === "Add description here" || $('.ql-editor').text() === "") {
@@ -142,10 +142,20 @@ Template.submitJobItem.events({
           info.description = description;
         }
       }
-      var frequency = $(event.target).find("[name=changeFrequency]").val();
+      var frequency = $(event.target).find("[name=frequency]").val();
+      info.frequency = frequency;
       var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
+      info.repeatAt = repeatAt;
       if(frequency == "Weekly") {
-        var repeatOn = $(event.target).find('[name=repeatOn]').get();
+        var repeatDays = [];
+        var repeatOn = $(event.target).find('[name=daysSelected]').get();
+        repeatOn.forEach(function(doc) {
+          if(doc.checked) {
+            var value = $(doc).val();
+            repeatDays.push(value);
+          }
+        });
+        info.repeatOn = repeatDays;
       }
     }
     FlowComponents.callAction('submit', info);

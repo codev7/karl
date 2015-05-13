@@ -1,16 +1,4 @@
-Template.jobItemDetail.helpers({
-  item: function() {
-    var id = Session.get("thisJobItem");
-    var item = getPrepItem(id)
-    if(item) {
-      item.ingsListView = false;
-      if(item.ingredients.length > 0) {
-        item.ingsListView = true;
-      }
-      return item;
-    }
-  }
-});
+
 
 Template.jobItemDetail.events({
   'click .editJobItemBtn': function(event) {
