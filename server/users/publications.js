@@ -16,3 +16,10 @@ Meteor.publish("usersList", function() {
   var users = Meteor.users.find({}, {fields: options});
   return users;
 });
+
+//managers and workers that should be assigned to shifts
+Meteor.publish("workers", function() {
+  var cursors = [];
+  cursors.push(Meteor.users.find({$or: [{"isWorker": true}, {"isManager": true}]}));
+  return cursors;
+});
