@@ -7,14 +7,28 @@
           <div class="col-sm-8">
             <input type="text" name="name" class="form-control" placeholder="Enter Name for the job">
           </div>
+        </div> 
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Type</label>
+          <div class="col-sm-8">
+            <select name="type" class="form-control changeType">
+              <option value="Prep">Prep</option>
+              <option value="Recurring">Recurring</option>
+            </select>
+          </div>
         </div>    
         <div class="form-group">
-          <label class="col-sm-3 control-label">Recipe</label>
+          {{#if isPrep}}
+            <label class="col-sm-3 control-label">Recipe</label>
+          {{else}}
+            <label class="col-sm-3 control-label">Description</label>
+          {{/if}}
           <div class="col-sm-8">
           {{> render component = 'textEditor' id='jobItemEditorSubmit' 
             initialHtml=state$initialHTML}}
           </div>
         </div>
+        {{#if isPrep}}
         <div class="form-group">
           <label class="col-sm-3 control-label">Ingredients used
             <br>
@@ -41,38 +55,103 @@
               </tbody>
             </table>
           </div>
-        </div> 
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Type</label>
-          <div class="col-sm-8">
-            <select name="type" class="form-control">
-              <option value="Prep">Prep</option>
-              <option value="Service">Service</option>
-              <option value="Other">Service</option>
-            </select>
-          </div>
-        </div> 
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Active Time</label>
-          <div class="col-sm-8">
-            <div class="input-group m-b">
-              <input type="number" name="activeTime" class="form-control" placeholder="Active Time">
-              <span class="input-group-addon">mins</span> 
-            </div>
-          </div>
         </div>
+        {{/if}} 
+        {{#if isPrep}}
         <div class="form-group">
           <label class="col-sm-3 control-label">Portions</label>
           <div class="col-sm-8">
             <input type="number" name="portions" class="form-control" placeholder="No. of Portions">
           </div>
         </div>
+        {{/if}}
+        {{#if isPrep}}
         <div class="form-group">
           <label class="col-sm-3 control-label">Shelf Life</label>
           <div class="col-sm-8">
             <div class="input-group m-b">
               <input type="text" name="shelfLife" class="form-control" placeholder="Shelf Life">
               <span class="input-group-addon">Days</span> 
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        {{#if isRecurring}}
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Frequency</label>
+            <div class="col-sm-8">
+              <select name="frequency" class="form-control changeFrequency">
+                <option value="Daily">Daily</option>
+                <option value="Weekly">Weekly</option>
+              </select>
+            </div>
+          </div> 
+          {{#if isRecurringDaily}}
+          {{else}}
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Repeat On</label>
+              <div class="col-sm-8">
+                <div class="checkbox">
+                  {{#each state$week}}
+                  <label>
+                    <input type="checkbox" name="daysSelected" class="daysSelected" value="{{this}}">{{this}}
+                  </label>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+          {{/if}}
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Repeat At</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <input type="text" name="repeatAt" class="form-control timepicker" value="{{state$repeatAt}}">
+                <span class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Starts On</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <input type="text" name="startsOn" class="form-control datepicker" value="{{state$startsOn}}">
+                <span class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Ends</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" checked="checked" data-doc="endsNever">Never
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" data-doc="endsAfter">After<input type="text" name="occurrences" class="" value="10"> occurrences
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" data-doc="endsOn">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endsOn}}">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/if}}
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Active Time</label>
+          <div class="col-sm-8">
+            <div class="input-group m-b">
+              <input type="number" name="activeTime" class="form-control" placeholder="Active Time">
+              <span class="input-group-addon">mins</span> 
             </div>
           </div>
         </div>

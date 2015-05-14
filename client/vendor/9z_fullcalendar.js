@@ -3400,17 +3400,28 @@ var Grid = fc.Grid = RowRenderer.extend({
       var select = '';
 
       if(view.name == "agendaShifts") {
-        var workers = Meteor.users.find({"isWorker": true}).fetch();
-        var options = '<option selected="selected" value="">Select worker</option>';
+        var shifts = Shifts.find({"shiftDate": shift.shiftDate}).fetch();
+        var alreadyAssigned = [];
+        shifts.forEach(function(shift) {
+          if(shift.assignedTo) {
+            alreadyAssigned.push(shift.assignedTo);
+          }
+        });
+        var workers = Meteor.users.find({"_id": {$nin: alreadyAssigned}, $or: [{"isWorker": true}, {"isManager": true}]}).fetch();
+
+        var options = null;
         if(shift.assignedTo) {
           var assignedTo = Meteor.users.findOne(shift.assignedTo);
           options += '<option selected="selected" value=' + assignedTo._id + '>' + assignedTo.username + '</option>'
+        } else {
+          options = '<option selected="selected" value="">Select worker</option>';
         }
         workers.forEach(function(worker) {
-          if(worker._id != shift.assignedTo) {
-            options += '<option value=' + worker._id + '>' + worker.username + '</option>'
-          }
+          options += '<option value=' + worker._id + '>' + worker.username + '</option>'
         });
+        if(shift.assignedTo) {
+          options += '<option value="">Remove</option>'
+        }
         select = '<div>' +
           '<select class="form-control selectWorkers" name="selectWorkers" data-id="' + shiftId + '">' +     
             options +

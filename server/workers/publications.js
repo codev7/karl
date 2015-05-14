@@ -54,10 +54,3 @@
 //   logger.info("Holiday published");
 //   return cursors;
 // });
-
-
-Meteor.publish("workers", function() {
-  var cursors = [];
-  cursors.push(Meteor.users.find({"isWorker": true}));
-  return cursors;
-});
