@@ -237,7 +237,6 @@ component.state.wagePerHour = function() {
 }
 
 component.action.submit = function(id, info) {
-  console.log("..................................");
   Meteor.call("editJobItem", id, info, function(err) {
     if(err) {
       console.log(err);

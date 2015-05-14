@@ -126,7 +126,7 @@ Template.editJobItem.events({
         var lastDate = $(event.target).find("[name=endsOn]").val();
         info.endsOn.lastDate = new Date(lastDate);
       }
-      
+
       if(frequency == "Weekly") {
         var repeatDays = [];
         var repeatOn = $(event.target).find('[name=daysSelected]').get();
@@ -139,7 +139,6 @@ Template.editJobItem.events({
         info.repeatOn = repeatDays;
       }
     }
-    console.log("...........", id, info);
     FlowComponents.callAction('submit', id, info);
   },
 
