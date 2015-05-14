@@ -172,9 +172,9 @@ component.state.endOccurrences = function() {
   if(item && item.endsOn) {
     if(item.endsOn.on == "endsAfter") {
       return item.endsOn.after;
+    } else {
+      return 10;
     }
-  } else {
-    return 10;
   }
 }
 
@@ -194,10 +194,10 @@ component.state.endDate = function() {
   if(item && item.endsOn) {
     if(item.endsOn.on == "endsOn") {
       return moment(item.endsOn.lastDate).format("YYYY-MM-DD");
+    } else {
+      return moment().add(7, 'days').format("YYYY-MM-DD");
     }
-  } else {
-    return moment().add(7, 'days').format("YYYY-MM-DD");
-  }
+  } 
 }
 
 component.state.weekWithRepeats = function() {
