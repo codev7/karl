@@ -94,8 +94,12 @@ Meteor.methods({
         throw new Meteor.Error(404, "Worker not found");
       }
       updateDoc.assignedTo = workerId;
+      Shifts.update({_id: shiftId}, {$set: updateDoc});
+      logger.info("Worker assigned to shift", {"shiftId": shiftId, "workerId": workerId});
+    } else {
+      Shifts.update({_id: shiftId}, {$set: {"assignedTo": null}});
+      logger.info("Worker removed from shift", {"shiftId": shiftId, "workerId": shift.assignedTo});
     }
-    Shifts.update({_id: shiftId}, {$set: updateDoc});
-    logger.info("Worker assigned to shift", {"shiftId": shiftId, "workerId": workerId});
-  }
+    return;
+  } 
 });
