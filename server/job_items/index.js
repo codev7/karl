@@ -90,8 +90,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "No editing fields found");
     }
     var query = {
-      $set: {},
-      $unset: {}
+      $set: {}
     }
     var updateDoc = {};
     var removeDoc = {}
@@ -123,8 +122,8 @@ Meteor.methods({
         updateDoc.wagePerHour = wagePerHour;
       }
     }
-    if(updateDoc.type) {
-      if(updateDoc.type == "Prep") {
+    if(info.type) {
+      if(info.type == "Prep") {
         var shelfLife = parseFloat(info.shelfLife); //days
         if(info.shelfLife || (info.shelfLife >= 0)) {
           var shelfLife = parseFloat(info.shelfLife);
@@ -158,7 +157,9 @@ Meteor.methods({
         removeDoc.repeatAt = "";
         removeDoc.repeatOn = "";
         removeDoc.frequency = "";
-      } else if(updateDoc.type == "Recurring") {
+        removeDoc.endsOn = "";
+        removeDoc.startsOn = "";
+      } else if(info.type == "Recurring") {
         if(info.repeatAt) {
           if(info.repeatAt != job.repeatAt) {
             updateDoc.repeatAt = info.repeatAt;
@@ -177,17 +178,26 @@ Meteor.methods({
             }
           }
         }
+        if(info.startsOn) {
+          if(info.startsOn != job.startsOn) {
+            updateDoc.startsOn = info.startsOn;
+          }
+        }
+        if(info.endsOn) {
+          updateDoc.endsOn = info.endsOn;
+        }
         removeDoc.shelfLife = "";
         removeDoc.portions = "";
         removeDoc.ingredients = "";
       }
     }
-    
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
       updateDoc['editedBy'] = userId;
       query["$set"] = updateDoc;
-      query["$unset"] = removeDoc;
+      if(Object.keys(removeDoc).length > 0) {
+        query["$unset"] = removeDoc;
+      }
       logger.info("Job Item updated", {"JobItemId": id});
       return JobItems.update({'_id': id}, query);
     }

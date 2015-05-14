@@ -85,16 +85,20 @@
             <label>Repeat At :</label>
             <p class="form-control non-edit">{{state$repeatAt}}</p>
           </div>
+          {{#if state$startsOn}}
           <br>
           <div class="form-group">
             <label>Starts On :</label>
             <p class="form-control non-edit">{{state$startsOn}}</p>
           </div>
+          {{/if}}
+          {{#if state$endsOn}}
           <br>
           <div class="form-group">
             <label>Ends :</label>
             <p class="form-control non-edit">{{state$endsOn}}</p>
           </div>
+          {{/if}}
         {{/if}}
         {{#if state$isPrep}}
         <br>

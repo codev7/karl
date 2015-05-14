@@ -153,7 +153,7 @@ Template.submitJobItem.events({
       info.endsOn.on = endsOn;
       if(endsOn == "endsAfter") {
         var after = $(event.target).find("[name=occurrences]").val();
-        info.endsOn.after = after;
+        info.endsOn.after = parseInt(after);
       } else if(endsOn == "endsOn") {
         var lastDate = $(event.target).find("[name=endsOn]").val();
         info.endsOn.lastDate = new Date(lastDate);
@@ -194,7 +194,7 @@ Template.submitJobItem.events({
     });
   },
 
-   'focus .dateselecter': function(event) {
+  'focus .dateselecter': function(event) {
     event.preventDefault();
     $(".dateselecter").datetimepicker({
       format: "YYYY-MM-DD"

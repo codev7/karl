@@ -118,6 +118,57 @@
               </div>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Starts On</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <input type="text" name="startsOn" class="form-control datepicker" value="{{state$startsOn}}">
+                <span class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Ends</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                {{#if state$endsOnNotNull}}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" checked="{{state$endsNever}}" data-doc="endsNever">Never
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" checked="{{state$endsAfter}}" data-doc="endsAfter">After<input type="text" name="occurrences" class="" value="{{state$endOccurrences}}"> occurrences
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" checked="{{state$endsOn}}" data-doc="endsOn">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endDate}}">
+                  </label>
+                </div>
+                {{else}}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" checked="checked" data-doc="endsNever">Never
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" data-doc="endsAfter">After<input type="text" name="occurrences" class="" value="10"> occurrences
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" data-doc="endsOn">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endDate}}">
+                  </label>
+                </div>
+                {{/if}}
+              </div>
+            </div>
+          </div>
         {{/if}} 
         <div class="form-group">
           <label class="col-sm-3 control-label">Active Time</label>

@@ -129,6 +129,77 @@ component.state.repeatAt = function() {
   return at;
 }
 
+component.state.startsOn = function() {
+  if(this.item.startsOn) {
+    return moment(this.item.startsOn).format("YYYY-MM-DD");
+  } else {
+    return moment().format("YYYY-MM-DD");
+  }
+}
+
+component.state.endsOnNotNull = function() {
+  if(this.item.endsOn) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.endsNever = function() {
+  var item = this.item;
+  if(item && item.endsOn) {
+    if(item.endsOn.on == "endsNever") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.endsAfter = function() {
+  var item = this.item;
+  if(item && item.endsOn) {
+    if(item.endsOn.on == "endsAfter") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.endOccurrences = function() {
+  var item = this.item;
+  if(item && item.endsOn) {
+    if(item.endsOn.on == "endsAfter") {
+      return item.endsOn.after;
+    }
+  } else {
+    return 10;
+  }
+}
+
+component.state.endsOn = function() {
+  var item = this.item;
+  if(item && item.endsOn) {
+    if(item.endsOn.on == "endsOn") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.endDate = function() {
+  var item = this.item;
+  if(item && item.endsOn) {
+    if(item.endsOn.on == "endsOn") {
+      return moment(item.endsOn.lastDate).format("YYYY-MM-DD");
+    }
+  } else {
+    return moment().add(7, 'days').format("YYYY-MM-DD");
+  }
+}
+
 component.state.weekWithRepeats = function() {
   var week = [
     {"index": "Mon", "checked": false}, 
@@ -149,8 +220,6 @@ component.state.weekWithRepeats = function() {
       });
     }
   }
-  console.log(week);
-
   return week;
 }
 
@@ -168,6 +237,7 @@ component.state.wagePerHour = function() {
 }
 
 component.action.submit = function(id, info) {
+  console.log("..................................");
   Meteor.call("editJobItem", id, info, function(err) {
     if(err) {
       console.log(err);

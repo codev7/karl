@@ -114,6 +114,19 @@ Template.editJobItem.events({
       info.frequency = frequency;
       var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
       info.repeatAt = repeatAt;
+      var startsOn = $(event.target).find('[name=startsOn]').val();
+      info.startsOn = new Date(startsOn);
+      info.endsOn = {};
+      var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
+      info.endsOn.on = endsOn;
+      if(endsOn == "endsAfter") {
+        var after = $(event.target).find("[name=occurrences]").val();
+        info.endsOn.after = after;
+      } else if(endsOn == "endsOn") {
+        var lastDate = $(event.target).find("[name=endsOn]").val();
+        info.endsOn.lastDate = new Date(lastDate);
+      }
+      
       if(frequency == "Weekly") {
         var repeatDays = [];
         var repeatOn = $(event.target).find('[name=daysSelected]').get();
@@ -179,6 +192,13 @@ Template.editJobItem.events({
     event.preventDefault();
     $(".timepicker").datetimepicker({
       format: "LT"
+    });
+  },
+
+  'focus .dateselecter': function(event) {
+    event.preventDefault();
+    $(".dateselecter").datetimepicker({
+      format: "YYYY-MM-DD"
     });
   }
 });
