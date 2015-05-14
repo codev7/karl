@@ -11,14 +11,46 @@ var component = FlowComponents.define('editJobItem', function(props) {
 component.state.initialHTML = function() {
   var id = Session.get("thisJobItem");
   var item = JobItems.findOne(id);
+  var type = this.get("type");
   if(item) {
-    if(item.recipe) {
-      return item.recipe;
-    } else {
-      return "Add recipe here";
-    }
+    if(type == "Prep") {
+      if(item.recipe) {
+        return item.recipe;
+      } else {
+        return "Add recipe here";
+      } 
+    } else if(type == "Recurring") {
+      if(item.description) {
+        return item.description;
+      } else {
+        return "Add description here";
+      }
+    } 
   }
 };
+
+component.state.isPrep = function() {
+  var type = this.get("type");
+  if(type) {
+    if(type == "Prep") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.isRecurring = function() {
+  var type = this.get("type");
+  if(type) {
+    if(type == "Recurring") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 
 component.state.id = function() {
   return this.item._id;
@@ -32,8 +64,22 @@ component.state.ingredients = function() {
   return this.item.ingredients;
 }
 
-component.state.type = function() {
-  return this.item.type;
+component.state.typesWithSelected = function() {
+  var types = [
+    {"index": "Prep", "selected": false},
+    {"index": "Recurring", "selected": false}
+  ];
+  var type = this.item.type;
+  if(Session.get("jobType")) {
+    type = Session.get("jobType");
+  }
+  this.set("type", type);
+  types.forEach(function(doc) {
+    if(type == doc.index) {
+      doc.selected = true;
+    }
+  });
+  return types;
 }
 
 component.state.activeTime = function() {
@@ -48,17 +94,78 @@ component.state.shelfLife = function() {
   return this.item.shelfLife;
 }
 
-component.state.wagePerHour = function() {
-  return this.item.wagePerHour;
+component.state.frequencyWithSelected = function() {
+  var frequencies = [
+    {"index": "Daily", "selected": false},
+    {"index": "Weekly", "selected": false}
+  ];
+  var frequency = this.item.frequency;
+  if(Session.get("frequency")) {
+    frequency = Session.get("frequency");
+  }
+  this.set("frequency", frequency);
+  frequencies.forEach(function(doc) {
+    if(frequency == doc.index) {
+      doc.selected = true;
+    }
+  });
+  console.log("..", frequencies);
+  return frequencies;
 }
 
-component.state.isMyType = function(type) {
-  var myType = this.item.type;
-  if(myType === type) {
+
+component.state.isRecurringDaily = function() {
+  if(this.get("frequency") == "Daily") {
     return true;
   } else {
     return false;
   }
+}
+
+component.state.repeatAt = function() {
+  var at = this.item.repeatAt;
+  if(!this.item.repeatAt) {
+    at = "8:00 AM"
+  }
+  return at;
+}
+
+component.state.weekWithRepeats = function() {
+  var week = [
+    {"index": "Mon", "checked": false}, 
+    {"index": "Tue", "checked": false}, 
+    {"index": "Wed", "checked": false}, 
+    {"index": "Thurs", "checked": false}, 
+    {"index": "Fri", "checked": false}, 
+    {"index": "Sat", "checked": false}, 
+    {"index": "Sun", "checked": false}
+  ]
+  if(this.item && this.item.repeatOn) {
+    var repeatOn = this.item.repeatOn;
+    if(repeatOn.length > 0) {
+      week.forEach(function(doc) {
+        if(repeatOn.indexOf(doc.index) >= 0) {
+          doc.checked = true;
+        }
+      });
+    }
+  }
+  console.log(week);
+
+  return week;
+}
+
+component.state.repeatOnDays = function() {
+  var item = this.item;
+  if(item) {
+    if(item.frequency == "Weekly") {
+      return item.repeatOn;
+    } 
+  }
+}
+
+component.state.wagePerHour = function() {
+  return this.item.wagePerHour;
 }
 
 component.action.submit = function(id, info) {

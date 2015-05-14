@@ -8,6 +8,7 @@
           </h3>
         </div>
         {{#if state$isPrep}}
+          {{#if state$recipe}}
           <div class="form-group">
             <label>Recipe</label>
             <div class="panel panel-default">
@@ -16,8 +17,10 @@
               </div>
             </div>
           </div>
+          {{/if}}
         {{/if}}
         {{#if state$isRecurring}}
+          {{#if state$description}}
           <div class="form-group">
             <label>Description</label>
             <div class="panel panel-default">
@@ -26,6 +29,7 @@
               </div>
             </div>
           </div>
+          {{/if}}
         {{/if}}
         {{#if state$isPrep}}
         <div class="form-group">
@@ -44,7 +48,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each item.ingredients}}
+                {{#each state$ingredients}}
                   {{> render component='ingredientItemView' ingredient=this}}
                 {{/each}}
               </tbody>

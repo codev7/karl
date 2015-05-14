@@ -47,6 +47,13 @@ component.state.isRecurring = function() {
   }
 }
 
+component.state.ingredients = function() {
+  var item = this.get("job");
+  if(item) {
+    return item.ingredients;
+  }
+}
+
 
 component.state.activeTime = function() {
   var item = this.get("job");

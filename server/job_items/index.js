@@ -65,6 +65,7 @@ Meteor.methods({
   },
   
   'editJobItem': function(id, info) {
+    console.log("..........", arguments);
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
@@ -72,8 +73,8 @@ Meteor.methods({
     var userId = Meteor.userId();
     var permitted = isManagerOrAdmin(userId);
     if(!permitted) {
-      logger.error("User not permitted to edit job item");
-      throw new Meteor.Error(404, "User not permitted to edit job");
+      logger.error("User not permitted to create job items");
+      throw new Meteor.Error(404, "User not permitted to create jobs");
     }
     if(!id) {
       logger.error("JobItem id field not found");
@@ -89,17 +90,25 @@ Meteor.methods({
       throw new Meteor.Error(404, "No editing fields found");
     }
     var query = {
-      $set: {}
+      $set: {},
+      $unset: {}
     }
     var updateDoc = {};
+    var removeDoc = {}
     if(info.name) {
       if(info.name.trim() == "") {
         logger.error("Name field null");
-        throw new Meteor.Error(404, "You can't add empty name job");
+        throw new Meteor.Error(404, "You can't add empty name for job");
       } else {
         if(info.name != job.name) {
           updateDoc.name = info.name;
         }
+      }
+    }
+    if(info.type) {
+      if(info.type != job.type) {
+        updateDoc.type = info.type;
+
       }
     }
     if(info.activeTime || (info.activeTime >= 0)) {
@@ -114,44 +123,72 @@ Meteor.methods({
         updateDoc.wagePerHour = wagePerHour;
       }
     }
-    if(info.portions || (info.portions >= 0)) {
-      var portions = parseFloat(info.portions);
-      if(portions != job.portions) {
-        updateDoc.portions = portions;
-      }
-    }
-    if(info.shelfLife || (info.shelfLife >= 0)) {
-      var shelfLife = parseFloat(info.shelfLife);
-      if(shelfLife != job.shelfLife) {
-        updateDoc.shelfLife = shelfLife;
-      }
-    }
-    if(info.recipe) {
-      if(info.recipe != job.recipe) {
-        updateDoc.recipe = info.recipe;
-      }
-    }
-    if(info.type) {
-      if(info.type != job.type) {
-        updateDoc.type = info.type;
-      }
-    }
-    updateDoc.ingredients = [];
-    if(info.ingredients) {
-      if(info.ingredients.length > 0) {
-        var ingIds = [];
-        info.ingredients.forEach(function(item) {
-          if(ingIds.indexOf(item._id) < 0) {
-            ingIds.push(item._id);
-            updateDoc.ingredients.push(item);
+    if(updateDoc.type) {
+      if(updateDoc.type == "Prep") {
+        var shelfLife = parseFloat(info.shelfLife); //days
+        if(info.shelfLife || (info.shelfLife >= 0)) {
+          var shelfLife = parseFloat(info.shelfLife);
+          if(shelfLife != job.shelfLife) {
+            updateDoc.shelfLife = shelfLife;
           }
-        });
+        }
+        if(info.recipe) {
+          if(info.recipe != job.recipe) {
+            updateDoc.recipe = info.recipe;
+          }
+        }
+        if(info.portions || (info.portions >= 0)) {
+          var portions = parseFloat(info.portions);
+          if(portions != job.portions) {
+            updateDoc.portions = portions;
+          }
+        }
+        updateDoc.ingredients = [];
+        if(info.ingredients) {
+          if(info.ingredients.length > 0) {
+            var ingIds = [];
+            info.ingredients.forEach(function(item) {
+              if(ingIds.indexOf(item._id) < 0) {
+                ingIds.push(item._id);
+                updateDoc.ingredients.push(item);
+              }
+            });
+          }
+        }
+        removeDoc.repeatAt = "";
+        removeDoc.repeatOn = "";
+        removeDoc.frequency = "";
+      } else if(updateDoc.type == "Recurring") {
+        if(info.repeatAt) {
+          if(info.repeatAt != job.repeatAt) {
+            updateDoc.repeatAt = info.repeatAt;
+          }
+        }
+        if(info.description) {
+          if(info.description != job.description) {
+            updateDoc.description = info.description;
+          }
+        }
+        if(info.frequency) {
+          if(info.frequency != job.frequency) {
+            updateDoc.frequency = info.frequency;
+            if(info.frequency == "Weekly") {
+              updateDoc.repeatOn = info.repeatOn;
+            }
+          }
+        }
+        removeDoc.shelfLife = "";
+        removeDoc.portions = "";
+        removeDoc.ingredients = "";
       }
     }
+    
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
       updateDoc['editedBy'] = userId;
       query["$set"] = updateDoc;
+      query["$unset"] = removeDoc;
+      console.log(".....query...", query);
       logger.info("Job Item updated", {"JobItemId": id});
       return JobItems.update({'_id': id}, query);
     }
