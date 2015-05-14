@@ -68,23 +68,33 @@
           <p class="form-control non-edit">{{secondsToMinutes state$activeTime}} mins</p>
         </div>
         {{#if state$isRecurring}}
-        <br>
-        <div class="form-group">
-          <label>Repeat Frequency :</label>
-          <p class="form-control non-edit">{{state$frequency}}</p>
-        </div>
-        {{#if state$isWeekly}}
-        <br>
-        <div class="form-group">
-          <label>Repeat On :</label>
-          <p class="form-control non-edit">{{state$repeatOnDays}}</p>
-        </div>
-        {{/if}}
-        <br>
-        <div class="form-group">
-          <label>Repeat At :</label>
-          <p class="form-control non-edit">{{state$repeatAt}}</p>
-        </div>
+          <br>
+          <div class="form-group">
+            <label>Repeat Frequency :</label>
+            <p class="form-control non-edit">{{state$frequency}}</p>
+          </div>
+          {{#if state$isWeekly}}
+          <br>
+          <div class="form-group">
+            <label>Repeat On :</label>
+            <p class="form-control non-edit">{{state$repeatOnDays}}</p>
+          </div>
+          {{/if}}
+          <br>
+          <div class="form-group">
+            <label>Repeat At :</label>
+            <p class="form-control non-edit">{{state$repeatAt}}</p>
+          </div>
+          <br>
+          <div class="form-group">
+            <label>Starts On :</label>
+            <p class="form-control non-edit">{{state$startsOn}}</p>
+          </div>
+          <br>
+          <div class="form-group">
+            <label>Ends :</label>
+            <p class="form-control non-edit">{{state$endsOn}}</p>
+          </div>
         {{/if}}
         {{#if state$isPrep}}
         <br>

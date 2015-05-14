@@ -62,6 +62,28 @@ component.state.activeTime = function() {
   }
 }
 
+component.state.startsOn = function() {
+  var item = this.get("job");
+  if(item) {
+    return moment(item.startsOn).format("YYYY-MM-DD");
+  }
+}
+
+component.state.endsOn = function() {
+  var item = this.get("job");
+  var ends = null;
+  if(item) {
+    if(item.endsOn.on == "endsNever") {
+      ends = "Never";
+    } else if(item.endsOn.on == "endsAfter") {
+      ends = "After " + item.endsOn.after + " occurrences"; 
+    } else if(item.endsOn.on == "endsOn") {
+      ends = "On " + moment(item.endsOn.lastDate).format("YYYY-MM-DD");
+    }
+    return ends;
+  }
+}
+
 component.state.shelfLife = function() {
   var item = this.get("job");
   if(item) {

@@ -91,7 +91,7 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">Repeat On</label>
               <div class="col-sm-8">
-                <div class="checkbox-inline checkbox">
+                <div class="checkbox">
                   {{#each state$week}}
                   <label>
                     <input type="checkbox" name="daysSelected" class="daysSelected" value="{{this}}">{{this}}
@@ -109,6 +109,39 @@
                 <span class="input-group-addon">
                   <i class="fa fa-clock-o"></i>
                 </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Starts On</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <input type="text" name="startsOn" class="form-control datepicker" value="{{state$startsOn}}">
+                <span class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Ends</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" checked="checked" data-doc="endsNever">Never
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" data-doc="endsAfter">After<input type="text" name="occurrences" class="" value="10"> occurrences
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="never" data-doc="endsOn">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endsOn}}">
+                  </label>
+                </div>
               </div>
             </div>
           </div>

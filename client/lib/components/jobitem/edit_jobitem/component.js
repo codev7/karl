@@ -109,7 +109,6 @@ component.state.frequencyWithSelected = function() {
       doc.selected = true;
     }
   });
-  console.log("..", frequencies);
   return frequencies;
 }
 

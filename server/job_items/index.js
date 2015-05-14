@@ -49,6 +49,8 @@ Meteor.methods({
       doc.repeatAt = info.repeatAt;
       doc.description = info.description;
       doc.frequency = info.frequency;
+      doc.startsOn = info.startsOn;
+      doc.endsOn = info.endsOn;
       if(info.frequency == "Weekly") {
         doc.repeatOn = info.repeatOn;
       }
@@ -58,14 +60,12 @@ Meteor.methods({
     }
     doc.createdOn = Date.now();
     doc.createdBy = userId;
-
     var id = JobItems.insert(doc);
     logger.info("Job Item inserted", {"jobId": id, 'type': info.type});
     return id;
   },
   
   'editJobItem': function(id, info) {
-    console.log("..........", arguments);
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
@@ -188,7 +188,6 @@ Meteor.methods({
       updateDoc['editedBy'] = userId;
       query["$set"] = updateDoc;
       query["$unset"] = removeDoc;
-      console.log(".....query...", query);
       logger.info("Job Item updated", {"JobItemId": id});
       return JobItems.update({'_id': id}, query);
     }
