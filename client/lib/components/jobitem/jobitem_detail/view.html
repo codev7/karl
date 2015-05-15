@@ -98,6 +98,15 @@
             <label>Ends :</label>
             <p class="form-control non-edit">{{state$endsOn}}</p>
           </div>
+          <br>
+          <div class="form-group">
+            <label>Section :</label>
+            {{#if state$section}}
+              <p class="form-control non-edit">{{state$section}}</p>
+            {{else}}
+              <p class="form-control non-edit">Not assigned</p>
+            {{/if}}
+          </div>
           {{/if}}
         {{/if}}
         {{#if state$isPrep}}

@@ -54,6 +54,7 @@ Meteor.methods({
       if(info.frequency == "Weekly") {
         doc.repeatOn = info.repeatOn;
       }
+      doc.section = info.section;
     }
     if(info.wagePerHour) {
       doc.wagePerHour = info.wagePerHour;
@@ -159,6 +160,7 @@ Meteor.methods({
         removeDoc.frequency = "";
         removeDoc.endsOn = "";
         removeDoc.startsOn = "";
+        removeDoc.section = "";
       } else if(info.type == "Recurring") {
         if(info.repeatAt) {
           if(info.repeatAt != job.repeatAt) {
@@ -185,6 +187,11 @@ Meteor.methods({
         }
         if(info.endsOn) {
           updateDoc.endsOn = info.endsOn;
+        }
+        if(info.section) {
+          if(info.section != job.section) {
+            updateDoc.section = info.section;
+          }
         }
         removeDoc.shelfLife = "";
         removeDoc.portions = "";
