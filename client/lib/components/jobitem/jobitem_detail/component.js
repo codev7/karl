@@ -69,6 +69,20 @@ component.state.activeTime = function() {
   }
 }
 
+component.state.isChecklist = function() {
+  var item = this.get("job");
+  if(item && item.checklist) {
+    return true;
+  }
+}
+
+component.state.checklist = function() {
+  var item = this.get("job");
+  if(item) {
+    return item.checklist;
+  }
+}
+
 component.state.startsOn = function() {
   var item = this.get("job");
   if(item && item.startsOn) {

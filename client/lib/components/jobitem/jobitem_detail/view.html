@@ -30,6 +30,16 @@
             </div>
           </div>
           {{/if}}
+          {{#if state$isChecklist}}
+          <div class="form-group">
+            <label>Checklist</label>
+            <ol class="list-group">
+              {{#each state$checklist}}
+                <li class="list-group-item">{{this}}</li>
+              {{/each}}
+            </ol>
+          </div>
+          {{/if}}
         {{/if}}
         {{#if state$isPrep}}
         <div class="form-group">
