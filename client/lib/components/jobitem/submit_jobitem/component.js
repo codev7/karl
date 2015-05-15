@@ -29,6 +29,11 @@ component.state.week = function() {
   return week;
 }
 
+component.state.sections = function() {
+  var sections = ["Kitchen Hand", "Larder", "Baking", "Hot Section", "Pass"];
+  return sections;
+}
+
 component.action.submit = function(info) {
   Meteor.call("createJobItem", info, function(err, id) {
     if(err) {

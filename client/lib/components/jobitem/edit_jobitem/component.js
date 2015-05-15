@@ -236,6 +236,25 @@ component.state.wagePerHour = function() {
   return this.item.wagePerHour;
 }
 
+component.state.sectionsWithSelected = function() {
+  var sections = [
+    {"index": "Kitchen Hand", "selected": false}, 
+    {"index": "Larder", "selected": false}, 
+    {"index": "Baking", "selected": false}, 
+    {"index": "Hot Section", "selected": false}, 
+    {"index": "Pass", "selected": false}
+  ];
+  var selectedSection = this.item.section;
+  if(selectedSection) {
+    sections.forEach(function(sec) {
+      if(sec.index == selectedSection) {
+        sec.selected = true;
+      }
+    });
+  }
+  return sections;
+}
+
 component.action.submit = function(id, info) {
   Meteor.call("editJobItem", id, info, function(err) {
     if(err) {

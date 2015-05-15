@@ -25,6 +25,13 @@ component.state.type = function() {
   }
 }
 
+component.state.section = function() {
+  var item = this.get("job");
+  if(item) {
+    return item.section;
+  }
+}
+
 component.state.isPrep = function() {
   var item = this.get("job");
   if(item) {

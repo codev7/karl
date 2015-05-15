@@ -126,6 +126,10 @@ Template.editJobItem.events({
         var lastDate = $(event.target).find("[name=endsOn]").val();
         info.endsOn.lastDate = new Date(lastDate);
       }
+      var section = $(event.target).find("[name=sections]").val();
+      if(section) {
+        info.section = section;
+      }
 
       if(frequency == "Weekly") {
         var repeatDays = [];
