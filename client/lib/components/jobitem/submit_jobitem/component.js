@@ -2,8 +2,32 @@ var component = FlowComponents.define('submitJobItem', function(props) {
 });
 
 component.state.initialHTML = function() {
-  return "Add recipe here";
+  var type = Session.get("jobType");
+  if(type == "Prep") {
+    return "Add recipe here";
+  } else {
+    return "Add description here";
+  }
 };
+
+component.state.repeatAt = function() {
+  return "8:00 AM";
+}
+
+
+component.state.startsOn = function() {
+  return moment().format("YYYY-MM-DD");
+}
+
+component.state.endsOn = function() {
+  var endDate = moment().add(7, 'days').format("YYYY-MM-DD");
+  return endDate;
+}
+
+component.state.week = function() {
+  var week = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+  return week;
+}
 
 component.action.submit = function(info) {
   Meteor.call("createJobItem", info, function(err, id) {

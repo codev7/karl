@@ -14,48 +14,57 @@ Meteor.methods({
       logger.error("Name field not found");
       throw new Meteor.Error(404, "Name field not found");
     }
-    if(!info.activeTime) {
-      logger.error("Time field not found");
-      throw new Meteor.Error(404, "Time field not found");
-    }
     var exist = JobItems.findOne({"name": info.name});
     if(exist) {
       logger.error("Duplicate entry");
       throw new Meteor.Error(404, "Duplicate entry, change name and try again");
     }
-    var activeTime = parseInt(info.activeTime) * 60; //seconds
-    var shelfLife = parseFloat(info.shelfLife); //days
-    var doc = {
-      "name": info.name,
-      "type": info.type,
-      "recipe": info.recipe,
-      "portions": parseInt(info.portions),
-      "activeTime": activeTime,
-      "shelfLife": shelfLife,
-      "createdOn": Date.now(),
-      "createdBy": userId,
-      "ingredients": [],
-      "wagePerHour": 0 
+    var doc = {};
+    doc.name = info.name;
+    if(!info.activeTime) {
+      logger.error("Time field not found");
+      throw new Meteor.Error(404, "Time field not found");
     }
-    if(info.ingredients) {
-      if(info.ingredients.length > 0) {
-        var ingIds = [];
-        info.ingredients.forEach(function(item) {
-          if(ingIds.indexOf(item._id) < 0) {
-            ingIds.push(item._id);
-            doc.ingredients.push(item);
-          }
-        });
+    var activeTime = parseInt(info.activeTime) * 60; //seconds
+    doc.activeTime = activeTime;
+    doc.type = info.type;
+    if(info.type == "Prep") {
+      var shelfLife = parseFloat(info.shelfLife); //days
+      doc.shelfLife = shelfLife;
+      doc.recipe = info.recipe;
+      doc.portions =  parseInt(info.portions);
+      doc.ingredients = [];
+      if(info.ingredients) {
+        if(info.ingredients.length > 0) {
+          var ingIds = [];
+          info.ingredients.forEach(function(item) {
+            if(ingIds.indexOf(item._id) < 0) {
+              ingIds.push(item._id);
+              doc.ingredients.push(item);
+            }
+          });
+        }
+      }
+    } else if(info.type == "Recurring") {
+      doc.repeatAt = info.repeatAt;
+      doc.description = info.description;
+      doc.frequency = info.frequency;
+      doc.startsOn = info.startsOn;
+      doc.endsOn = info.endsOn;
+      if(info.frequency == "Weekly") {
+        doc.repeatOn = info.repeatOn;
       }
     }
     if(info.wagePerHour) {
       doc.wagePerHour = info.wagePerHour;
     }
+    doc.createdOn = Date.now();
+    doc.createdBy = userId;
     var id = JobItems.insert(doc);
     logger.info("Job Item inserted", {"jobId": id, 'type': info.type});
     return id;
   },
-
+  
   'editJobItem': function(id, info) {
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
@@ -64,8 +73,8 @@ Meteor.methods({
     var userId = Meteor.userId();
     var permitted = isManagerOrAdmin(userId);
     if(!permitted) {
-      logger.error("User not permitted to edit job item");
-      throw new Meteor.Error(404, "User not permitted to edit job");
+      logger.error("User not permitted to create job items");
+      throw new Meteor.Error(404, "User not permitted to create jobs");
     }
     if(!id) {
       logger.error("JobItem id field not found");
@@ -84,14 +93,21 @@ Meteor.methods({
       $set: {}
     }
     var updateDoc = {};
+    var removeDoc = {}
     if(info.name) {
       if(info.name.trim() == "") {
         logger.error("Name field null");
-        throw new Meteor.Error(404, "You can't add empty name job");
+        throw new Meteor.Error(404, "You can't add empty name for job");
       } else {
         if(info.name != job.name) {
           updateDoc.name = info.name;
         }
+      }
+    }
+    if(info.type) {
+      if(info.type != job.type) {
+        updateDoc.type = info.type;
+
       }
     }
     if(info.activeTime || (info.activeTime >= 0)) {
@@ -106,44 +122,82 @@ Meteor.methods({
         updateDoc.wagePerHour = wagePerHour;
       }
     }
-    if(info.portions || (info.portions >= 0)) {
-      var portions = parseFloat(info.portions);
-      if(portions != job.portions) {
-        updateDoc.portions = portions;
-      }
-    }
-    if(info.shelfLife || (info.shelfLife >= 0)) {
-      var shelfLife = parseFloat(info.shelfLife);
-      if(shelfLife != job.shelfLife) {
-        updateDoc.shelfLife = shelfLife;
-      }
-    }
-    if(info.recipe) {
-      if(info.recipe != job.recipe) {
-        updateDoc.recipe = info.recipe;
-      }
-    }
     if(info.type) {
-      if(info.type != job.type) {
-        updateDoc.type = info.type;
-      }
-    }
-    updateDoc.ingredients = [];
-    if(info.ingredients) {
-      if(info.ingredients.length > 0) {
-        var ingIds = [];
-        info.ingredients.forEach(function(item) {
-          if(ingIds.indexOf(item._id) < 0) {
-            ingIds.push(item._id);
-            updateDoc.ingredients.push(item);
+      if(info.type == "Prep") {
+        var shelfLife = parseFloat(info.shelfLife); //days
+        if(info.shelfLife || (info.shelfLife >= 0)) {
+          var shelfLife = parseFloat(info.shelfLife);
+          if(shelfLife != job.shelfLife) {
+            updateDoc.shelfLife = shelfLife;
           }
-        });
+        }
+        if(info.recipe) {
+          if(info.recipe != job.recipe) {
+            updateDoc.recipe = info.recipe;
+          }
+        }
+        if(info.portions || (info.portions >= 0)) {
+          var portions = parseFloat(info.portions);
+          if(portions != job.portions) {
+            updateDoc.portions = portions;
+          }
+        }
+        updateDoc.ingredients = [];
+        if(info.ingredients) {
+          if(info.ingredients.length > 0) {
+            var ingIds = [];
+            info.ingredients.forEach(function(item) {
+              if(ingIds.indexOf(item._id) < 0) {
+                ingIds.push(item._id);
+                updateDoc.ingredients.push(item);
+              }
+            });
+          }
+        }
+        removeDoc.repeatAt = "";
+        removeDoc.repeatOn = "";
+        removeDoc.frequency = "";
+        removeDoc.endsOn = "";
+        removeDoc.startsOn = "";
+      } else if(info.type == "Recurring") {
+        if(info.repeatAt) {
+          if(info.repeatAt != job.repeatAt) {
+            updateDoc.repeatAt = info.repeatAt;
+          }
+        }
+        if(info.description) {
+          if(info.description != job.description) {
+            updateDoc.description = info.description;
+          }
+        }
+        if(info.frequency) {
+          if(info.frequency != job.frequency) {
+            updateDoc.frequency = info.frequency;
+            if(info.frequency == "Weekly") {
+              updateDoc.repeatOn = info.repeatOn;
+            }
+          }
+        }
+        if(info.startsOn) {
+          if(info.startsOn != job.startsOn) {
+            updateDoc.startsOn = info.startsOn;
+          }
+        }
+        if(info.endsOn) {
+          updateDoc.endsOn = info.endsOn;
+        }
+        removeDoc.shelfLife = "";
+        removeDoc.portions = "";
+        removeDoc.ingredients = "";
       }
     }
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
       updateDoc['editedBy'] = userId;
       query["$set"] = updateDoc;
+      if(Object.keys(removeDoc).length > 0) {
+        query["$unset"] = removeDoc;
+      }
       logger.info("Job Item updated", {"JobItemId": id});
       return JobItems.update({'_id': id}, query);
     }

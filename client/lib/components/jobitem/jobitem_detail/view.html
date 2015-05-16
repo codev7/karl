@@ -4,20 +4,34 @@
       <div class="col-md-8">
         <div class="form-group">
           <h3>
-            {{item.name}}
+            {{state$name}}
           </h3>
         </div>
-        {{#if item.recipe}}
-        <div class="form-group">
-          <label>Recipe</label>
-          <div class="panel panel-default">
-            <div class="panel-body">
-              {{{item.recipe}}}
+        {{#if state$isPrep}}
+          {{#if state$recipe}}
+          <div class="form-group">
+            <label>Recipe</label>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                {{{state$recipe}}}
+              </div>
             </div>
           </div>
-        </div>
+          {{/if}}
         {{/if}}
-        {{#if item.ingsListView}}
+        {{#if state$isRecurring}}
+          {{#if state$description}}
+          <div class="form-group">
+            <label>Description</label>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                {{{state$description}}}
+              </div>
+            </div>
+          </div>
+          {{/if}}
+        {{/if}}
+        {{#if state$isPrep}}
         <div class="form-group">
           <label>
             Ingredients used
@@ -34,7 +48,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each item.ingredients}}
+                {{#each state$ingredients}}
                   {{> render component='ingredientItemView' ingredient=this}}
                 {{/each}}
               </tbody>
@@ -46,41 +60,78 @@
       <div class="col-md-3 form-inline">
         <div class="form-group">
           <label>Type: </label>
-          <p class="form-control non-edit">{{item.type}}</p>
+          <p class="form-control non-edit">{{state$type}}</p>
         </div>
         <br>
         <div class="form-group">
           <label>Active Time :</label>
-          <p class="form-control non-edit">{{secondsToMinutes item.activeTime}} mins</p>
+          <p class="form-control non-edit">{{secondsToMinutes state$activeTime}} mins</p>
         </div>
+        {{#if state$isRecurring}}
+          <br>
+          <div class="form-group">
+            <label>Repeat Frequency :</label>
+            <p class="form-control non-edit">{{state$frequency}}</p>
+          </div>
+          {{#if state$isWeekly}}
+          <br>
+          <div class="form-group">
+            <label>Repeat On :</label>
+            <p class="form-control non-edit">{{state$repeatOnDays}}</p>
+          </div>
+          {{/if}}
+          <br>
+          <div class="form-group">
+            <label>Repeat At :</label>
+            <p class="form-control non-edit">{{state$repeatAt}}</p>
+          </div>
+          {{#if state$startsOn}}
+          <br>
+          <div class="form-group">
+            <label>Starts On :</label>
+            <p class="form-control non-edit">{{state$startsOn}}</p>
+          </div>
+          {{/if}}
+          {{#if state$endsOn}}
+          <br>
+          <div class="form-group">
+            <label>Ends :</label>
+            <p class="form-control non-edit">{{state$endsOn}}</p>
+          </div>
+          {{/if}}
+        {{/if}}
+        {{#if state$isPrep}}
         <br>
         <div class="form-group">
           <label>Portions :</label>
-          <p class="form-control non-edit">{{item.portions}}</p>
+          <p class="form-control non-edit">{{state$portions}}</p>
         </div>
+        {{/if}}
         <br>
         <div class="form-group">
           <label>Labour Cost ($): </label>
-          <p class="form-control non-edit">$ {{item.labourCost}}</p>
+          <p class="form-control non-edit">$ {{state$labourCost}}</p>
         </div>
         <br>
+        {{#if state$isPrep}}
         <div class="form-group">
           <label>Cost per Portion ($) :</label>
-          <p class="form-control non-edit">$ {{item.prepCostPerPortion}}</p>
+          <p class="form-control non-edit">$ {{state$prepCostPerPortion}}</p>
         </div>
         <br>
         <div class="form-group">
           <label>Shelf Life: </label>
-          <p class="form-control non-edit">{{item.shelfLife}} Days</p>
+          <p class="form-control non-edit">{{state$shelfLife}} Days</p>
         </div>
         <br>
+        {{/if}}
       </div>
       <div class="row">
         <div class="col-sm-4 col-sm-offset-2">
         </div>
       </div>
       <div class="col-md-12">
-        <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{item._id}}">Edit</button>
+        <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$id}}">Edit</button>
         <button type="button" class="btn btn-primary printJobItemBtn hidden-print">Print</button>
       </div>
     </div>

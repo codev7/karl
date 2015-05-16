@@ -21,7 +21,7 @@ var component = FlowComponents.define('showIngredientsList', function(props) {
 
 component.prototype.setIds = function() {
   var ids = [];
-  if(this.item) {
+  if(this.item && this.item.ingredients) {
     if(this.item.ingredients.length > 0) {
       this.item.ingredients.forEach(function(doc) {
         ids.push(doc._id);

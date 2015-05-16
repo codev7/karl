@@ -51,5 +51,23 @@ Template.editIngredientItem.events({
       info.suppliers.push(supplier);
     }
     FlowComponents.callAction('submit', id, info, event);
+  },
+
+  'click .deleteIngredient': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    if(id) {
+      Meteor.call("deleteIngredient", id, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        } else {
+          var text = $("#searchIngBox").val();
+          $("#editIngredientModal").modal("hide");
+          IngredientsListSearch.cleanHistory();
+          IngredientsListSearch.search(text, {"limit": 10});
+        }
+      });
+    }
   }
 });
