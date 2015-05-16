@@ -110,6 +110,11 @@ Template.editJobItem.events({
           info.description = description;
         }
       }
+
+      //checklist
+      var listItems = Session.get("checklist");
+      info.checklist = listItems;
+
       var frequency = $(event.target).find("[name=frequency]").val();
       info.frequency = frequency;
       var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
@@ -203,6 +208,35 @@ Template.editJobItem.events({
     $(".dateselecter").datetimepicker({
       format: "YYYY-MM-DD"
     });
+  },
+
+  'keypress .addItemToChecklist': function(event) {
+    if(event.keyCode == 10 || event.keyCode == 13) {
+      event.preventDefault();
+      var item = $(event.target).val().trim();
+      if(item) {
+        var listItems = Session.get("checklist");
+        listItems.push(item);
+        Session.set("checklist", listItems);
+        var listItem = "<li class='list-group-item'>" + item + "<i class='fa fa-minus-circle m-l-lg right removelistItem'></i></li>"
+        $(".checklist").append(listItem);
+        $(event.target).val("");
+      }
+    }
+  },
+
+  'click .removelistItem': function(event) {
+    event.preventDefault();
+    var removing = $(event.target).closest("li").text().trim();
+    var listItems = Session.get("checklist");
+    if(listItems.length > 0) {
+      var index = listItems.indexOf(removing);
+      if(index >= 0) {
+        listItems.splice(index, 1);
+      }
+    }
+    Session.set("checklist", listItems);
+    var item = $(event.target).closest("li").remove();
   }
 });
 

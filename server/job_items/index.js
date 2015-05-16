@@ -55,6 +55,7 @@ Meteor.methods({
         doc.repeatOn = info.repeatOn;
       }
       doc.section = info.section;
+      doc.checklist = info.checklist;
     }
     if(info.wagePerHour) {
       doc.wagePerHour = info.wagePerHour;
@@ -192,6 +193,9 @@ Meteor.methods({
           if(info.section != job.section) {
             updateDoc.section = info.section;
           }
+        }
+        if(info.checklist) {
+          updateDoc.checklist = info.checklist;
         }
         removeDoc.shelfLife = "";
         removeDoc.portions = "";

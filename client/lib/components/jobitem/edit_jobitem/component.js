@@ -121,6 +121,16 @@ component.state.isRecurringDaily = function() {
   }
 }
 
+component.state.checklist = function() {
+  var list = this.item.checklist;
+  if(list) {
+    if(list.length > 0) {
+      Session.set("checklist", list);
+      return this.item.checklist;
+    }
+  }
+}
+
 component.state.repeatAt = function() {
   var at = this.item.repeatAt;
   if(!this.item.repeatAt) {
