@@ -1,0 +1,12 @@
+<template name="notificationItem">
+  <li class="readNotification" data-id="{{state$id}}">
+    <div class="dropdown-messages-box">
+      <div class="media-body">
+        <small class="pull-right">{{state$fromNow}}</small>
+        {{{state$msg}}}. <br>
+        <small class="text-muted">{{state$by}}</small>
+      </div>
+    </div>
+  </li>
+  <li class="divider"></li>
+</template>

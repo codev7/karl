@@ -39,6 +39,19 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a class="dropdown-toggle count-info m-r-sm" data-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="fa fa-bell"></i> 
+          {{#if state$isExistNotifications}}
+          <span class="label label-primary">{{state$notificationsCount}}</span>
+          {{/if}}
+        </a>
+        <ul class="dropdown-menu dropdown-messages notifications">
+        {{#each state$notifications}}
+          {{> render component='notificationItem' noti=this}}
+        {{/each}}
+        </ul>
+      </li>
       {{#if currentUser}}
         <li class="dropdown">
           <div class="feed-element top-nav-profile-image">

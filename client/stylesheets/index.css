@@ -867,3 +867,7 @@ button.dim:active:before {
   position: relative;
   left: -5px;
 }
+
+.notifications {
+  width: 310px;
+}

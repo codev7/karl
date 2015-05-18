@@ -68,5 +68,16 @@ Template.menuItemDetail.events({
   'click .printMenuItemBtn': function(event) {
     event.preventDefault();
     print();
+  },
+
+  'click .subscribeMenuItemBtn': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Meteor.call("addSubscription", id, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    });
   }
 });
