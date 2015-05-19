@@ -144,16 +144,18 @@ Meteor.methods({
         }
       }
       allSubscribers.forEach(function(subscriber) {
-        var doc = {
-          "to": subscriber,
-          "read": false,
-          "updated": item._id, 
-          "msg": "<a href='/menuItem/" + item._id + "'>" + item.name + "</a> menu has been updated",
-          "editedOn": editedTime,
-          "editedBy": userId
+        if(subscriber != userId) {
+          var doc = {
+            "to": subscriber,
+            "read": false,
+            "updated": item._id, 
+            "msg": "<a href='/menuItem/" + item._id + "'>" + item.name + "</a> menu has been updated",
+            "editedOn": editedTime,
+            "editedBy": userId
+          }
+          Notifications.insert(doc);
+          logger.info("Notification send to userId", subscriber);
         }
-        Notifications.insert(doc);
-        logger.info("Notification send to userId", subscriber);
       });
       return;
     }
