@@ -1,7 +1,7 @@
 var subs = new SubsManager();
 var component = FlowComponents.define('navTop', function(props) {
   var cursors = [];
-  var notifications = Notifications.find({"read": false, "to": Meteor.userId()});
+  var notifications = Notifications.find({"read": false, "to": Meteor.userId()}, {sort: {"createdOn": -1}});
   this.notifications = notifications;
   cursors.push(subs.subscribe("unReadNotifications"));
   cursors.push(subs.subscribe("usersList"));

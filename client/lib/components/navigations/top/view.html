@@ -46,20 +46,26 @@
           <span class="label label-danger">{{state$notificationsCount}}</span>
           {{/if}}
         </a>
-        {{#if state$isExistNotifications}}
         <ul class="dropdown-menu dropdown-messages notifications">
-        {{#each state$notifications}}
-          {{> render component='notificationItem' noti=this}}
-        {{/each}}
-        <li>
-          <div class="text-center link-block">
-            <a href="#" class="markAllAsRead">
-              <strong>Mark All As Read</strong>
-            </a>
-          </div>
-        </li>
-        </ul>
+        {{#if state$isExistNotifications}}
+          {{#each state$notifications}}
+            {{> render component='notificationItem' noti=this}}
+          {{/each}}
+          <li>
+            <div class="text-center link-block">
+              <a href="#" class="markAllAsRead">
+                <strong>Mark All As Read</strong>
+              </a>
+            </div>
+          </li>
+        {{else}}
+          <li>
+            <div class="text-center link-block">
+              <strong>No unread notifications</strong>
+            </div>
+          </li>
         {{/if}}
+        </ul>
       </li>
       {{#if currentUser}}
         <li class="dropdown">

@@ -3,7 +3,6 @@ Template.submitComment.events({
     if(event.keyCode == 10 || event.keyCode == 13) {
       event.preventDefault();
       var text = $(".message-input").val();
-      var ref = Session.get("thisMenuItem");
       FlowComponents.callAction('submit', text);
     }
   }
