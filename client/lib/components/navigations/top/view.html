@@ -46,11 +46,13 @@
           <span class="label label-primary">{{state$notificationsCount}}</span>
           {{/if}}
         </a>
+        {{#if state$isExistNotifications}}
         <ul class="dropdown-menu dropdown-messages notifications">
         {{#each state$notifications}}
           {{> render component='notificationItem' noti=this}}
         {{/each}}
         </ul>
+        {{/if}}
       </li>
       {{#if currentUser}}
         <li class="dropdown">
