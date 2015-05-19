@@ -181,3 +181,14 @@ component.state.prepCostPerPortion = function() {
   }
 }
 
+component.state.isSubscribed = function() {
+  var userId = Meteor.userId();
+  var jobSubs = Subscriptions.findOne({"_id": Session.get("thisJobItem"), "subscribers": userId});
+  if(jobSubs) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+

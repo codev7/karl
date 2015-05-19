@@ -1,17 +1,12 @@
 var component = FlowComponents.define('menuItemDetail', function(props) {
 });
 
-component.state.menuSubs = function() {
+component.state.isSubscribed = function() {
   var userId = Meteor.userId();
-  var menuListSubs = Subscriptions.findOne({"_id": "menulist", "subscribers": userId});
-  if(menuListSubs) {
+  var menuSubs = Subscriptions.findOne({"_id": Session.get("thisMenuItem"), "subscribers": userId});
+  if(menuSubs) {
     return true;
   } else {
-    var menuSubs = Subscriptions.findOne({"_id": Session.get("thisMenuItem"), "subscribers": userId});
-    if(menuSubs) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   }
 }

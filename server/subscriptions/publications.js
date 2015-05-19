@@ -1,16 +1,16 @@
-Meteor.publish("menuSubs", function(menuId, subscriber) {
+Meteor.publish("userSubs", function(type, id, subscriber) {
   var cursor = [];
-  var listSubscription = Subscriptions.find({"_id": "menuList", "subscribers": subscriber});
-  if(listSubscription.fetch().length > 0) {
-    cursor.push(listSubscription);
-  } else {
-    if(menuId) {
-      var itemSubscription = Subscriptions.find({"_id": menuId, "subscribers": subscriber});
+  if(type == "menulist" || type == "joblist") {
+    if(id) {
+      var itemSubscription = Subscriptions.find({"_id": id, "subscribers": subscriber});
       if(itemSubscription) {
         cursor.push(itemSubscription);
       }
+    } else {
+      var listSubscription = Subscriptions.find({"_id": type, "subscribers": subscriber});
+      cursor.push(listSubscription);  
     }
+    logger.info("User subscriptions published");
+    return cursor;
   }
-  logger.info("menu subscriptions published");
-  return cursor;
 });

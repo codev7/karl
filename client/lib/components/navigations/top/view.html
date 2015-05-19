@@ -51,6 +51,13 @@
         {{#each state$notifications}}
           {{> render component='notificationItem' noti=this}}
         {{/each}}
+        <li>
+          <div class="text-center link-block">
+            <a href="#" class="markAllAsRead">
+              <strong>Mark All As Read</strong>
+            </a>
+          </div>
+        </li>
         </ul>
         {{/if}}
       </li>

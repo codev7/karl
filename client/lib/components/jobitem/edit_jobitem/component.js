@@ -271,6 +271,12 @@ component.action.submit = function(id, info) {
       console.log(err);
       return alert(err.reason);
     } else {
+      Meteor.call("sendNotifications", 'joblist', id, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
       Router.go("jobItemDetailed", {"_id": id});
     }
   });
