@@ -164,6 +164,7 @@ Template.editJobItem.events({
   'click .deleteJobItem': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
+    var item = JobItems.findOne(id);
     var result = confirm("Are you sure you want to delete this job ?");
     if(result) {
       Meteor.call("deleteJobItem", id, function(err) {
@@ -171,6 +172,12 @@ Template.editJobItem.events({
           console.log(err);
           return alert(err.reason);
         } else {
+          Meteor.call("sendNotifications", "deleteJob", item, function(err) {
+            if(err) {
+              console.log(err);
+              return alert(err.reason);
+            }
+          });
           Router.go("jobItemsMaster");
         }
       });

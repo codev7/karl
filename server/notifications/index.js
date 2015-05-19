@@ -14,26 +14,30 @@ Meteor.methods({
       item = MenuItems.findOne(itemId);
     } else if(type == "joblist" || type == "jobCreate") {
       item = JobItems.findOne(itemId);
+    } else if(type == "deleteMenu" || type == "deleteJob") {
+      item = itemId;
     }
     var allSubscribers = [];
     var itemSubsbcribers = Subscriptions.findOne(itemId);
     if(itemSubsbcribers && itemSubsbcribers.subscribers.length > 0) {
       allSubscribers = itemSubsbcribers.subscribers;
     }
-    if(type == "menulist" || type == "joblist" || type == "menuCreate" || type == "jobCreate") {
-      var findType = type;
-      if(type == "menuCreate") {
-        findType = "menulist";
-      } else if(type == "jobCreate") {
-        findType = "joblist";
-      }
-      var listSubscribers = Subscriptions.findOne(findType);
-      if(listSubscribers && listSubscribers.subscribers.length > 0) {
-        if(allSubscribers > 0) {
-          allSubscribers.concat(listSubscribers.subscribers);
-        } else {
-          allSubscribers = listSubscribers.subscribers;
-        }
+    var findType = type;
+    if(type == "menuCreate") {
+      findType = "menulist";
+    } else if(type == "jobCreate") {
+      findType = "joblist";
+    } else if(type == "deleteMenu") {
+      findType = "menulist";
+    } else if(type == "deleteJob") {
+      findType = "joblist";
+    }
+    var listSubscribers = Subscriptions.findOne(findType);
+    if(listSubscribers && listSubscribers.subscribers.length > 0) {
+      if(allSubscribers > 0) {
+        allSubscribers.concat(listSubscribers.subscribers);
+      } else {
+        allSubscribers = listSubscribers.subscribers;
       }
     }
     allSubscribers.forEach(function(subscriber) {
@@ -47,19 +51,27 @@ Meteor.methods({
         if(type == "menulist") {
           doc.createdOn = item.editedOn;
           doc.type = "menu";
-          doc.msg = "updated menu <a href='/menuItem/" + item._id + "'>" + item.name;
+          doc.msg = " updated menu <a href='/menuItem/" + item._id + "'>" + item.name;
         } else if(type == "joblist") {
           doc.type = "job";
           doc.createdOn = item.editedOn;
-          doc.msg = "updated job <a href='/jobItem/" + item._id + "'>" + item.name;
+          doc.msg = " updated job <a href='/jobItem/" + item._id + "'>" + item.name;
         } else if(type == "menuCreate") {
           doc.type = "menu";
           doc.createdOn = item.createdOn;
-          doc.msg = "created a new menu <a href='/menuItem/" + item._id + "'>" + item.name;
+          doc.msg = " created a new menu <a href='/menuItem/" + item._id + "'>" + item.name;
         } else if(type == "jobCreate") {
-          doc.type = "menu";
+          doc.type = "job";
           doc.createdOn = item.createdOn;
-          doc.msg = "created a new job <a href='/jobItem/" + item._id + "'>" + item.name;
+          doc.msg = " created a new job <a href='/jobItem/" + item._id + "'>" + item.name;
+        } else if(type == "deleteMenu") {
+          doc.type = "menu";
+          doc.createdOn = Date.now();
+          doc.msg = " deleted menu " + item.name;
+        } else if(type == "deleteJob") {
+          doc.type = "job";
+          doc.createdOn = Date.now();
+          doc.msg = " deleted job " + item.name;
         }
         Notifications.insert(doc);
         logger.info("Notification send to userId", subscriber);

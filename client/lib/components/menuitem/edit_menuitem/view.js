@@ -151,12 +151,20 @@ Template.editMenuItem.events({
     var result = confirm("Are you sure, you want to delete this menu ?");
     if(result) {
       var id = $(event.target).attr("data-id");
+      var item = MenuItems.findOne(id);
+      
       if(id) {
         Meteor.call("deleteMenuItem", id, function(err) {
           if(err) {
             console.log(err);
             return alert(err.reason);
           } else {
+            Meteor.call("sendNotifications", "deleteMenu", item, function(err) {
+              if(err) {
+                console.log(err);
+                return alert(err.reason);
+              }
+            });
             Router.go("menuItemsMaster", {"category": "all", "status": "all"});
           }
         });
