@@ -70,6 +70,12 @@ component.action.submit = function(id, info) {
       console.log(err);
       return alert(err.reason);
     } else {
+      Meteor.call("sendNotifications", 'menulist', id, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
       Router.go("menuItemDetail", {"_id": id});
     }
   });

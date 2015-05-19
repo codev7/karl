@@ -128,35 +128,6 @@ Meteor.methods({
 
       MenuItems.update({"_id": id}, query);
       logger.info("Menu item updated ", id);
-
-      //Send notifications to susbcribers
-      var allSubscribers = [];
-      var itemSubsbcribers = Subscriptions.findOne(id);
-      if(itemSubsbcribers && itemSubsbcribers.subscribers.length > 0) {
-        allSubscribers = itemSubsbcribers.subscribers;
-      }
-      var listSubscribers = Subscriptions.findOne("menulist");
-      if(listSubscribers && listSubscribers.subscribers.length > 0) {
-        if(allSubscribers > 0) {
-          allSubscribers.concat(listSubscribers.subscribers);
-        } else {
-          allSubscribers = listSubscribers.subscribers;
-        }
-      }
-      allSubscribers.forEach(function(subscriber) {
-        if(subscriber != userId) {
-          var doc = {
-            "to": subscriber,
-            "read": false,
-            "updated": item._id, 
-            "msg": "<a href='/menuItem/" + item._id + "'>" + item.name + "</a> menu has been updated",
-            "editedOn": editedTime,
-            "editedBy": userId
-          }
-          Notifications.insert(doc);
-          logger.info("Notification send to userId", subscriber);
-        }
-      });
       return;
     }
   },
