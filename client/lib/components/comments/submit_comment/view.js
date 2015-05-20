@@ -7,3 +7,24 @@ Template.submitComment.events({
     }
   }
 });
+
+Template.submitComment.helpers({
+  settings: function() {
+    return {
+      position: "top",
+      limit: 5,
+      rules: [
+        {
+          token: '@',
+          collection: Meteor.users,
+          field: "username",
+          template: Template.user
+        }
+      ]
+    };
+  }
+});
+
+Template.submitComment.rendered = function() {
+  $(".message-input").val("");
+}
