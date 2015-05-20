@@ -94,7 +94,7 @@ Meteor.methods({
     item = MenuItems.findOne(itemId);
     if(!item) {
       type = "jobItem";
-      item == JobItems.findOne(itemId);
+      item = JobItems.findOne(itemId);
     }
     var comment = Comments.findOne(commentId);
     if(!comment) {
