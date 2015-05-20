@@ -121,8 +121,9 @@ Meteor.methods({
       updateDoc.image = info.image;
     }
     if(Object.keys(updateDoc).length > 0) {
+      var editedTime = Date.now();
       updateDoc['editedBy'] = userId;
-      updateDoc['editedOn'] = Date.now();
+      updateDoc['editedOn'] = editedTime;
       query['$set'] = updateDoc;
 
       MenuItems.update({"_id": id}, query);

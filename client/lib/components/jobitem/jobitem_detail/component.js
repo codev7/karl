@@ -25,6 +25,13 @@ component.state.type = function() {
   }
 }
 
+component.state.section = function() {
+  var item = this.get("job");
+  if(item) {
+    return item.section;
+  }
+}
+
 component.state.isPrep = function() {
   var item = this.get("job");
   if(item) {
@@ -59,6 +66,20 @@ component.state.activeTime = function() {
   var item = this.get("job");
   if(item) {
     return item.activeTime;
+  }
+}
+
+component.state.isChecklist = function() {
+  var item = this.get("job");
+  if(item && item.checklist) {
+    return true;
+  }
+}
+
+component.state.checklist = function() {
+  var item = this.get("job");
+  if(item) {
+    return item.checklist;
   }
 }
 
@@ -159,4 +180,15 @@ component.state.prepCostPerPortion = function() {
     return item.prepCostPerPortion;
   }
 }
+
+component.state.isSubscribed = function() {
+  var userId = Meteor.userId();
+  var jobSubs = Subscriptions.findOne({"_id": Session.get("thisJobItem"), "subscribers": userId});
+  if(jobSubs) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 

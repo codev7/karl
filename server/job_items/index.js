@@ -54,6 +54,8 @@ Meteor.methods({
       if(info.frequency == "Weekly") {
         doc.repeatOn = info.repeatOn;
       }
+      doc.section = info.section;
+      doc.checklist = info.checklist;
     }
     if(info.wagePerHour) {
       doc.wagePerHour = info.wagePerHour;
@@ -122,75 +124,83 @@ Meteor.methods({
         updateDoc.wagePerHour = wagePerHour;
       }
     }
-    if(info.type) {
-      if(info.type == "Prep") {
-        var shelfLife = parseFloat(info.shelfLife); //days
-        if(info.shelfLife || (info.shelfLife >= 0)) {
-          var shelfLife = parseFloat(info.shelfLife);
-          if(shelfLife != job.shelfLife) {
-            updateDoc.shelfLife = shelfLife;
-          }
+    if(info.type == "Prep") {
+      var shelfLife = parseFloat(info.shelfLife); //days
+      if(info.shelfLife >= 0) {
+        var shelfLife = parseFloat(info.shelfLife);
+        if(shelfLife != job.shelfLife) {
+          updateDoc.shelfLife = shelfLife;
         }
-        if(info.recipe) {
-          if(info.recipe != job.recipe) {
-            updateDoc.recipe = info.recipe;
-          }
-        }
-        if(info.portions || (info.portions >= 0)) {
-          var portions = parseFloat(info.portions);
-          if(portions != job.portions) {
-            updateDoc.portions = portions;
-          }
-        }
-        updateDoc.ingredients = [];
-        if(info.ingredients) {
-          if(info.ingredients.length > 0) {
-            var ingIds = [];
-            info.ingredients.forEach(function(item) {
-              if(ingIds.indexOf(item._id) < 0) {
-                ingIds.push(item._id);
-                updateDoc.ingredients.push(item);
-              }
-            });
-          }
-        }
-        removeDoc.repeatAt = "";
-        removeDoc.repeatOn = "";
-        removeDoc.frequency = "";
-        removeDoc.endsOn = "";
-        removeDoc.startsOn = "";
-      } else if(info.type == "Recurring") {
-        if(info.repeatAt) {
-          if(info.repeatAt != job.repeatAt) {
-            updateDoc.repeatAt = info.repeatAt;
-          }
-        }
-        if(info.description) {
-          if(info.description != job.description) {
-            updateDoc.description = info.description;
-          }
-        }
-        if(info.frequency) {
-          if(info.frequency != job.frequency) {
-            updateDoc.frequency = info.frequency;
-            if(info.frequency == "Weekly") {
-              updateDoc.repeatOn = info.repeatOn;
-            }
-          }
-        }
-        if(info.startsOn) {
-          if(info.startsOn != job.startsOn) {
-            updateDoc.startsOn = info.startsOn;
-          }
-        }
-        if(info.endsOn) {
-          updateDoc.endsOn = info.endsOn;
-        }
-        removeDoc.shelfLife = "";
-        removeDoc.portions = "";
-        removeDoc.ingredients = "";
       }
+      if(info.recipe) {
+        if(info.recipe != job.recipe) {
+          updateDoc.recipe = info.recipe;
+        }
+      }
+      if(info.portions >= 0) {
+        var portions = parseFloat(info.portions);
+        if(portions != job.portions) {
+          updateDoc.portions = portions;
+        }
+      }
+      updateDoc.ingredients = [];
+      if(info.ingredients) {
+        if(info.ingredients.length > 0) {
+          var ingIds = [];
+          info.ingredients.forEach(function(item) {
+            if(ingIds.indexOf(item._id) < 0) {
+              ingIds.push(item._id);
+              updateDoc.ingredients.push(item);
+            }
+          });
+        }
+      }
+      removeDoc.repeatAt = "";
+      removeDoc.repeatOn = "";
+      removeDoc.frequency = "";
+      removeDoc.endsOn = "";
+      removeDoc.startsOn = "";
+      removeDoc.section = "";
+    } else if(info.type == "Recurring") {
+      if(info.repeatAt) {
+        if(info.repeatAt != job.repeatAt) {
+          updateDoc.repeatAt = info.repeatAt;
+        }
+      }
+      if(info.description) {
+        if(info.description != job.description) {
+          updateDoc.description = info.description;
+        }
+      }
+      if(info.frequency) {
+        if(info.frequency != job.frequency) {
+          updateDoc.frequency = info.frequency;
+          if(info.frequency == "Weekly") {
+            updateDoc.repeatOn = info.repeatOn;
+          }
+        }
+      }
+      if(info.startsOn) {
+        if(info.startsOn != job.startsOn) {
+          updateDoc.startsOn = info.startsOn;
+        }
+      }
+      if(info.endsOn) {
+        updateDoc.endsOn = info.endsOn;
+      }
+      if(info.section) {
+        if(info.section != job.section) {
+          updateDoc.section = info.section;
+        }
+      }
+      if(info.checklist) {
+        updateDoc.checklist = info.checklist;
+      }
+      removeDoc.shelfLife = "";
+      removeDoc.portions = "";
+      removeDoc.ingredients = "";
     }
+
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
       updateDoc['editedBy'] = userId;

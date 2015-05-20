@@ -3,9 +3,7 @@
     <div class="row">
       <div class="col-md-8">
         <div class="form-group">
-          <h3>
-            {{state$name}}
-          </h3>
+          <h3>{{state$name}}</h3>
         </div>
         {{#if state$isPrep}}
           {{#if state$recipe}}
@@ -28,6 +26,16 @@
                 {{{state$description}}}
               </div>
             </div>
+          </div>
+          {{/if}}
+          {{#if state$isChecklist}}
+          <div class="form-group">
+            <label>Checklist</label>
+            <ol class="list-group">
+              {{#each state$checklist}}
+                <li class="list-group-item">{{this}}</li>
+              {{/each}}
+            </ol>
           </div>
           {{/if}}
         {{/if}}
@@ -98,6 +106,15 @@
             <label>Ends :</label>
             <p class="form-control non-edit">{{state$endsOn}}</p>
           </div>
+          <br>
+          <div class="form-group">
+            <label>Section :</label>
+            {{#if state$section}}
+              <p class="form-control non-edit">{{state$section}}</p>
+            {{else}}
+              <p class="form-control non-edit">Not assigned</p>
+            {{/if}}
+          </div>
           {{/if}}
         {{/if}}
         {{#if state$isPrep}}
@@ -132,7 +149,13 @@
       </div>
       <div class="col-md-12">
         <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$id}}">Edit</button>
-        <button type="button" class="btn btn-primary printJobItemBtn hidden-print">Print</button>
+        <button type="button" class="btn btn-primary printJobItemBtn 
+        hidden-print">Print</button>
+        {{#if state$isSubscribed}}
+        <button type="button" class="btn btn-info unSubscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Unsubscribe</button>
+        {{else}}
+        <button type="button" class="btn btn-success subscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Subscribe</button>
+        {{/if}}
       </div>
     </div>
   </div>

@@ -121,6 +121,16 @@ component.state.isRecurringDaily = function() {
   }
 }
 
+component.state.checklist = function() {
+  var list = this.item.checklist;
+  if(list) {
+    if(list.length > 0) {
+      Session.set("checklist", list);
+      return this.item.checklist;
+    }
+  }
+}
+
 component.state.repeatAt = function() {
   var at = this.item.repeatAt;
   if(!this.item.repeatAt) {
@@ -236,12 +246,55 @@ component.state.wagePerHour = function() {
   return this.item.wagePerHour;
 }
 
+component.state.sectionsWithSelected = function() {
+  var sections = [
+    {"index": "Kitchen Hand", "selected": false}, 
+    {"index": "Larder", "selected": false}, 
+    {"index": "Baking", "selected": false}, 
+    {"index": "Hot Section", "selected": false}, 
+    {"index": "Pass", "selected": false}
+  ];
+  var selectedSection = this.item.section;
+  if(selectedSection) {
+    sections.forEach(function(sec) {
+      if(sec.index == selectedSection) {
+        sec.selected = true;
+      }
+    });
+  }
+  return sections;
+}
+
 component.action.submit = function(id, info) {
   Meteor.call("editJobItem", id, info, function(err) {
     if(err) {
       console.log(err);
       return alert(err.reason);
     } else {
+      var desc = null;
+      if(info) {
+        var jobBefore = Session.get("updatingJob");
+        if(jobBefore) {
+          for (var key in info) {
+            if (info.hasOwnProperty(key)) {
+              if(key != "checklist" && key != "startsOn" && key != "recipe" && key != "description") {
+                var str = "<strong>" + key + "</strong> was " + jobBefore[key] + " and updated to be " + info[key];
+                if(desc) {
+                  desc = desc + "<br>" + str;
+                } else {
+                  desc = str;
+                }
+              }
+            }
+          }
+        }
+      }
+      Meteor.call("sendNotifications", 'joblist', id, desc, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
       Router.go("jobItemDetailed", {"_id": id});
     }
   });

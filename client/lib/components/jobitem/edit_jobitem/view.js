@@ -31,115 +31,140 @@ Template.editJobItem.events({
       return alert("Should have an active time for the job");
     }
 
-    var info = {
-      "name": name,
-      "type": type,
-      "activeTime": activeTime,
-      "avgWagePerHour": 0
-    }
-    
-    if(!avgWagePerHour || typeof(parseFloat(avgWagePerHour)) != "number") {
-      info.wagePerHour =  0;
-    } else {
-      info.wagePerHour = parseFloat(avgWagePerHour);
-      info.wagePerHour = Math.round(info.wagePerHour * 100)/100;
-    }
-
-    //if Prep
-    if(type == "Prep") {
-      var portions = $(event.target).find('[name=portions]').val().trim();
-      var shelfLife = $(event.target).find('[name=shelfLife]').val().trim();
-      var ing = $(event.target).find("[name=ing_qty]").get();
-      var recipe = FlowComponents.child('jobItemEditorEdit').getState('content');
-
-      if(!portions) {
-        info.portions = 0;
-      } else {
-        info.portions = parseInt(portions);
+    var job = JobItems.findOne(id);
+    Session.set("updatingJob", job);
+    if(job) {
+      var info = {};
+      if(job.name != name) {
+        info.name = name;
       }
-      info.portions = portions;
-
-
-      shelfLife = parseFloat(shelfLife)
-      if(!shelfLife || typeof(shelfLife) != "number") {
-        info.shelfLife =  0;
-      } else {
-        if(shelfLife === NaN) {
-          info.shelfLife = 0;
-        }
-        info.shelfLife = Math.round(shelfLife * 100)/100;
+      if(type) {
+        info.type = type;
       }
-      
-      if(recipe) {
-        if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
-          info.recipe = ""
-        } else {
-          info.recipe = recipe;
+      avgWagePerHour = parseInt(avgWagePerHour);
+      if((job.activeTime/60) != activeTime) {
+        info.activeTime = activeTime;
+      }
+      avgWagePerHour = parseFloat(avgWagePerHour);
+      avgWagePerHour =  Math.round(avgWagePerHour * 100)/100;
+      if((job.wagePerHour) != avgWagePerHour) {
+        if(avgWagePerHour == avgWagePerHour) {
+          info.wagePerHour = avgWagePerHour;
         }
       }
 
-      var ing_doc = [];
-      var ingIds = [];
-      ing.forEach(function(item) {
-        var dataid = $(item).attr("data-id");
-        if(dataid && ingIds.indexOf(dataid) < 0) {
-          var quantity = $(item).val();
-          if(quantity > 0) {
-            var info = {
-              "_id": dataid,
-              "quantity": quantity
-            }
-            ing_doc.push(info);
-            ingIds.push(dataid);
+      //if Prep
+      if(type == "Prep") {
+        var portions = $(event.target).find('[name=portions]').val().trim();
+        var shelfLife = $(event.target).find('[name=shelfLife]').val().trim();
+        var ing = $(event.target).find("[name=ing_qty]").get();
+        var recipe = FlowComponents.child('jobItemEditorEdit').getState('content');
+
+        if(job.portions != portions) {
+          info.portions = parseInt(portions);
+        }
+
+        shelfLife = parseFloat(shelfLife);
+        if(job.shelfLife != shelfLife) {
+          if(shelfLife == shelfLife) {
+            info.shelfLife = parseInt(shelfLife);
           }
         }
-      });
 
-      if(ing_doc.length > 0) {
-        info.ingredients = ing_doc;
-      } 
-    }
-
-    //if Recurring
-    else if(type == "Recurring") {
-      var description = FlowComponents.child('jobItemEditorEdit').getState('content');
-      if(description) {
-        if($('.ql-editor').text() === "Add description here" || $('.ql-editor').text() === "") {
-          info.description = ""
-        } else {
-          info.description = description;
+        if(job.recipe != recipe) {
+          if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
+            info.recipe = ""
+          } else {
+            info.recipe = recipe;
+          }
         }
-      }
-      var frequency = $(event.target).find("[name=frequency]").val();
-      info.frequency = frequency;
-      var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
-      info.repeatAt = repeatAt;
-      var startsOn = $(event.target).find('[name=startsOn]').val();
-      info.startsOn = new Date(startsOn);
-      info.endsOn = {};
-      var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
-      info.endsOn.on = endsOn;
-      if(endsOn == "endsAfter") {
-        var after = $(event.target).find("[name=occurrences]").val();
-        info.endsOn.after = after;
-      } else if(endsOn == "endsOn") {
-        var lastDate = $(event.target).find("[name=endsOn]").val();
-        info.endsOn.lastDate = new Date(lastDate);
-      }
-
-      if(frequency == "Weekly") {
-        var repeatDays = [];
-        var repeatOn = $(event.target).find('[name=daysSelected]').get();
-        repeatOn.forEach(function(doc) {
-          if(doc.checked) {
-            var value = $(doc).val();
-            repeatDays.push(value);
+        
+        var ing_doc = [];
+        var ingIds = [];
+        ing.forEach(function(item) {
+          var dataid = $(item).attr("data-id");
+          if(dataid && ingIds.indexOf(dataid) < 0) {
+            var quantity = $(item).val();
+            if(quantity > 0) {
+              var info = {
+                "_id": dataid,
+                "quantity": quantity
+              }
+              ing_doc.push(info);
+              ingIds.push(dataid);
+            }
           }
         });
-        info.repeatOn = repeatDays;
+
+        if(ing_doc.length > 0) {
+          info.ingredients = ing_doc;
+        } 
       }
+
+      //if Recurring
+      else if(type == "Recurring") {
+        var description = FlowComponents.child('jobItemEditorEdit').getState('content');
+        if(job.description != description) {
+          if($('.ql-editor').text() === "Add description here" || $('.ql-editor').text() === "") {
+            info.description = ""
+          } else {
+            info.description = description;
+          }
+        }
+
+        //checklist
+        var listItems = Session.get("checklist");
+        info.checklist = listItems;
+
+        var frequency = $(event.target).find("[name=frequency]").val();
+        if(job.frequency != frequency) {
+          info.frequency = frequency;
+        }
+
+        var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
+        if(job.repeatAt != repeatAt) {
+          info.repeatAt = repeatAt;
+        }
+        var startsOn = $(event.target).find('[name=startsOn]').val();
+        startsOn = new Date(startsOn);
+        if(job.startsOn != startsOn) {
+          info.startsOn = startsOn;
+        }
+        var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
+        if(job.endsOn && job.endsOn.on != endsOn) {
+          info.endsOn.on = endsOn;
+        } 
+        if(endsOn == "endsAfter") {
+          var after = $(event.target).find("[name=occurrences]").val();
+          if(job.endsOn && job.endsOn.after != after) {
+            info.endsOn.after = after;
+          }
+
+        } else if(endsOn == "endsOn") {
+          var lastDate = $(event.target).find("[name=endsOn]").val();
+          if(job.endsOn && job.endsOn.lastDate != new Date(lastDate)) {
+            info.endsOn.lastDate = new Date(lastDate);
+          }
+        }
+        var section = $(event.target).find("[name=sections]").val();
+        if(job.section && job.section != section) {
+          info.section = section;
+        }
+
+        if(frequency == "Weekly") {
+          var repeatDays = [];
+          var repeatOn = $(event.target).find('[name=daysSelected]').get();
+          repeatOn.forEach(function(doc) {
+            if(doc.checked) {
+              var value = $(doc).val();
+              repeatDays.push(value);
+            }
+          });
+          info.repeatOn = repeatDays;
+        }
+      }
+      FlowComponents.callAction('submit', id, info);
     }
-    FlowComponents.callAction('submit', id, info);
   },
 
   'click #showIngredientsList': function(event) {
@@ -155,6 +180,7 @@ Template.editJobItem.events({
   'click .deleteJobItem': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
+    var item = JobItems.findOne(id);
     var result = confirm("Are you sure you want to delete this job ?");
     if(result) {
       Meteor.call("deleteJobItem", id, function(err) {
@@ -162,6 +188,12 @@ Template.editJobItem.events({
           console.log(err);
           return alert(err.reason);
         } else {
+          Meteor.call("sendNotifications", "deleteJob", item, null, function(err) {
+            if(err) {
+              console.log(err);
+              return alert(err.reason);
+            }
+          });
           Router.go("jobItemsMaster");
         }
       });
@@ -199,6 +231,35 @@ Template.editJobItem.events({
     $(".dateselecter").datetimepicker({
       format: "YYYY-MM-DD"
     });
+  },
+
+  'keypress .addItemToChecklist': function(event) {
+    if(event.keyCode == 10 || event.keyCode == 13) {
+      event.preventDefault();
+      var item = $(event.target).val().trim();
+      if(item) {
+        var listItems = Session.get("checklist");
+        listItems.push(item);
+        Session.set("checklist", listItems);
+        var listItem = "<li class='list-group-item'>" + item + "<i class='fa fa-minus-circle m-l-lg right removelistItem'></i></li>"
+        $(".checklist").append(listItem);
+        $(event.target).val("");
+      }
+    }
+  },
+
+  'click .removelistItem': function(event) {
+    event.preventDefault();
+    var removing = $(event.target).closest("li").text().trim();
+    var listItems = Session.get("checklist");
+    if(listItems.length > 0) {
+      var index = listItems.indexOf(removing);
+      if(index >= 0) {
+        listItems.splice(index, 1);
+      }
+    }
+    Session.set("checklist", listItems);
+    var item = $(event.target).closest("li").remove();
   }
 });
 
