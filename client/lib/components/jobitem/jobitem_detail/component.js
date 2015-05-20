@@ -78,7 +78,7 @@ component.state.activeTime = function() {
 
 component.state.isChecklist = function() {
   var item = this.get("job");
-  if(item && item.checklist) {
+  if(item && item.checklist.length > 0) {
     return true;
   }
 }
