@@ -68,5 +68,27 @@ Template.menuItemDetail.events({
   'click .printMenuItemBtn': function(event) {
     event.preventDefault();
     print();
+  },
+
+  'click .subscribeMenuItemBtn': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Meteor.call("subscribe", id, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    });
+  },
+
+  'click .unSubscribeMenuItemBtn': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Meteor.call("unSubscribe", id, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    });
   }
 });

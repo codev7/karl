@@ -21,3 +21,4 @@ service-configuration
 
 useraccounts:bootstrap
 meteorhacks:aggregate
+mizzao:autocomplete

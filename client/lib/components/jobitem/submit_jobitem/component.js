@@ -42,6 +42,13 @@ component.action.submit = function(info) {
     } else {
       Session.set("selectedIngredients", null);
       Session.set("selectedJobItems", null);
+      Meteor.call("sendNotifications", 'jobCreate', id, null, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
+      
       Session.set("checklist", []);
       Router.go("jobItemDetailed", {"_id": id});
     }

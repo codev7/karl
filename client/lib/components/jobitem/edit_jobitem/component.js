@@ -271,6 +271,30 @@ component.action.submit = function(id, info) {
       console.log(err);
       return alert(err.reason);
     } else {
+      var desc = null;
+      if(info) {
+        var jobBefore = Session.get("updatingJob");
+        if(jobBefore) {
+          for (var key in info) {
+            if (info.hasOwnProperty(key)) {
+              if(key != "checklist" && key != "startsOn" && key != "recipe" && key != "description") {
+                var str = "<strong>" + key + "</strong> was " + jobBefore[key] + " and updated to be " + info[key];
+                if(desc) {
+                  desc = desc + "<br>" + str;
+                } else {
+                  desc = str;
+                }
+              }
+            }
+          }
+        }
+      }
+      Meteor.call("sendNotifications", 'joblist', id, desc, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
       Router.go("jobItemDetailed", {"_id": id});
     }
   });

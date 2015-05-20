@@ -39,6 +39,34 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a class="dropdown-toggle count-info m-r-sm" data-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="fa fa-bell"></i> 
+          {{#if state$isExistNotifications}}
+          <span class="label label-danger">{{state$notificationsCount}}</span>
+          {{/if}}
+        </a>
+        <ul class="dropdown-menu dropdown-messages notifications">
+        {{#if state$isExistNotifications}}
+          {{#each state$notifications}}
+            {{> render component='notificationItem' noti=this}}
+          {{/each}}
+          <li>
+            <div class="text-center link-block">
+              <a href="#" class="markAllAsRead">
+                <strong>Mark All As Read</strong>
+              </a>
+            </div>
+          </li>
+        {{else}}
+          <li>
+            <div class="text-center link-block">
+              <strong>No unread notifications</strong>
+            </div>
+          </li>
+        {{/if}}
+        </ul>
+      </li>
       {{#if currentUser}}
         <li class="dropdown">
           <div class="feed-element top-nav-profile-image">

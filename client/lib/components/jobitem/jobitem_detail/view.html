@@ -3,9 +3,7 @@
     <div class="row">
       <div class="col-md-8">
         <div class="form-group">
-          <h3>
-            {{state$name}}
-          </h3>
+          <h3>{{state$name}}</h3>
         </div>
         {{#if state$isPrep}}
           {{#if state$recipe}}
@@ -151,7 +149,13 @@
       </div>
       <div class="col-md-12">
         <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$id}}">Edit</button>
-        <button type="button" class="btn btn-primary printJobItemBtn hidden-print">Print</button>
+        <button type="button" class="btn btn-primary printJobItemBtn 
+        hidden-print">Print</button>
+        {{#if state$isSubscribed}}
+        <button type="button" class="btn btn-info unSubscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Unsubscribe</button>
+        {{else}}
+        <button type="button" class="btn btn-success subscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Subscribe</button>
+        {{/if}}
       </div>
     </div>
   </div>

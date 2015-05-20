@@ -1,0 +1,19 @@
+<template name="notificationItem">
+  <li class="readNotification" data-id="{{state$id}}">
+    <div class="dropdown-messages-box">
+      <a href="#" class="pull-left">
+        <img alt="image" class="img-circle" src="{{state$createdByImg}}">
+      </a>
+      <div class="media-body">
+        <small class="pull-right">{{state$fromNow}}</small>
+        <strong>{{state$createdBy}}</strong> {{{state$msg}}}<br><br>
+        {{#if state$description}}
+        <div class="well">{{{state$description}}}</div>
+        {{/if}}
+        <!-- <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small> -->
+      </div>
+    </div>
+  </li>
+  <br>
+  <li class="divider"></li>
+</template>
