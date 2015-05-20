@@ -61,6 +61,13 @@ component.state.ingredients = function() {
   }
 }
 
+component.state.recipe = function() {
+  var item = this.get("job");
+  if(item) {
+    return item.recipe;
+  }
+}
+
 
 component.state.activeTime = function() {
   var item = this.get("job");
