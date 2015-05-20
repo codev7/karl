@@ -195,7 +195,6 @@ Template.editJobItem.events({
           info.repeatOn = repeatDays;
         }
       }
-      console.log("..........", info);
       FlowComponents.callAction('submit', id, info);
     }
   },
