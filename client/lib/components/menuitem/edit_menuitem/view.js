@@ -67,6 +67,8 @@ Template.editMenuItem.events({
     var salesPrice = $(event.target).find('[name=salesPrice]').val().trim(); 
     var image = $("#uploadedImageUrl").attr("src");
 
+    var menu = MenuItems.findOne(id);
+    Session.set("updatingMenu", menu);
     if(!name) {
       return alert("Add a unique name for the menu");
     }
@@ -75,25 +77,28 @@ Template.editMenuItem.events({
         instructions = ""
       }
     }
-    var info = {
-      "name": name,
-      "instructions": instructions,
-      "jobItems": [],
-      "ingredients": [],
-      "image": image,
-      "status": status
+    var info = {};
+    if(menu.name != name) {
+      info.name = name;
     }
+    if(menu.instructions != instructions) {
+      info.instructions = instructions;
+    }
+    if(menu.status != status) {
+      info.status = status;
+    }
+    if(menu.image != image) {
+      info.image = image;
+    }
+
     salesPrice = parseFloat(salesPrice);
-    if(!salesPrice || typeof(salesPrice) != "number") {
-      info.salesPrice =  0;
-    } else {
-      if(salesPrice === NaN) {
-        info.salesPrice = 0;
-      } else {
-        info.salesPrice = Math.round(salesPrice * 100)/100;
+    salesPrice = Math.round(salesPrice * 100)/100;
+    if(menu.salesPrice != salesPrice) {
+      if(salesPrice == salesPrice) {
+        info.salesPrice = salesPrice;
       }
     }
-  
+
     var prep_doc = [];
     var jobItemsIds = [];
     preps.forEach(function(item) {
@@ -130,7 +135,9 @@ Template.editMenuItem.events({
     
     info.jobItems = prep_doc;
     info.ingredients = ing_doc;
-    info.category = category;
+    if(menu.category != category) {
+      info.category = category;
+    }
     FlowComponents.callAction('submit', id, info);
   },
 
@@ -159,7 +166,7 @@ Template.editMenuItem.events({
             console.log(err);
             return alert(err.reason);
           } else {
-            Meteor.call("sendNotifications", "deleteMenu", item, function(err) {
+            Meteor.call("sendNotifications", "deleteMenu", item, null, function(err) {
               if(err) {
                 console.log(err);
                 return alert(err.reason);

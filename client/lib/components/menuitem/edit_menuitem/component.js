@@ -70,7 +70,29 @@ component.action.submit = function(id, info) {
       console.log(err);
       return alert(err.reason);
     } else {
-      Meteor.call("sendNotifications", 'menulist', id, function(err) {
+      var desc = null;
+      if(info) {
+        var menuBefore = Session.get("updatingMenu");
+        if(menuBefore) {
+          for (var key in info) {
+            if (info.hasOwnProperty(key)) {
+              if(key != "jobItems" && key != "ingredients") {
+                if(key == "category") {
+                  var str = "<strong>" + key + "</strong> was " + Categories.findOne(menuBefore[key]).name + " and updated to be " + Categories.findOne(info[key]).name;  
+                } else {
+                  var str = "<strong>" + key + "</strong> was " + menuBefore[key] + " and updated to be " + info[key];
+                }
+                if(desc) {
+                  desc = desc + "<br>" + str;
+                } else {
+                  desc = str;
+                }
+              }
+            }
+          }
+        }
+      }
+      Meteor.call("sendNotifications", 'menulist', id, desc, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);

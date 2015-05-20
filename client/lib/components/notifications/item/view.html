@@ -6,7 +6,10 @@
       </a>
       <div class="media-body">
         <small class="pull-right">{{state$fromNow}}</small>
-        <strong>{{state$createdBy}}</strong> {{{state$msg}}}<br>
+        <strong>{{state$createdBy}}</strong> {{{state$msg}}}<br><br>
+        {{#if state$description}}
+        <div class="well">{{{state$description}}}</div>
+        {{/if}}
         <!-- <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small> -->
       </div>
     </div>

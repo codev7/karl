@@ -37,14 +37,14 @@ component.state.createdByImg = function() {
 }
 
 component.state.fromNow = function() {
-  if(this.notification) {
-    if(this.notification.editedOn) {
-      return moment(this.notification.editedOn).fromNow();
-    } else if(this.notification.createdOn) {
-      return moment(this.notification.createdOn).fromNow();   
-    } else if(this.notification.taggedOn) {
-      return moment(this.notification.taggedOn).fromNow();
-    }
+  if(this.notification && this.notification.createdOn) {
+    return moment(this.notification.createdOn).fromNow();
+  }
+}
+
+component.state.description = function() {
+  if(this.notification && this.notification.desc) {
+    return this.notification.desc;
   }
 }
 

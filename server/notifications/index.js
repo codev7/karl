@@ -1,5 +1,5 @@
 Meteor.methods({
-  'sendNotifications': function(type, itemId) {
+  'sendNotifications': function(type, itemId, desc) {
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
@@ -52,6 +52,7 @@ Meteor.methods({
           doc.createdOn = item.editedOn;
           doc.type = "menu";
           doc.msg = " updated menu <a href='/menuItem/" + item._id + "'>" + item.name;
+
         } else if(type == "joblist") {
           doc.type = "job";
           doc.createdOn = item.editedOn;
@@ -73,8 +74,12 @@ Meteor.methods({
           doc.createdOn = Date.now();
           doc.msg = " deleted job " + item.name;
         }
-        Notifications.insert(doc);
-        logger.info("Notification send to userId", subscriber);
+        if(desc) {
+          doc.desc = desc;
+        }
+        var id = Notifications.insert(doc);
+        logger.info("Notification send to userId", subscriber, id);
+        return;
       }
     });
   },
@@ -102,7 +107,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "Comment not found");
     }
     users.forEach(function(username) {
-      var filter = new RegExp(username, 'i')
+      var filter = new RegExp(username, 'i');
       var subscriber = Meteor.users.findOne({"username": filter});
       if(subscriber) {
         var doc = {
@@ -114,8 +119,9 @@ Meteor.methods({
           "type": "comment",
           "msg": "mentioned you on a comment on <a href='/" + type + "/" + item._id + "'>" + item.name + "</a>"
         }
-        Notifications.insert(doc);
-        logger.info("Notification send to tagged user", subscriber._id);
+        var id = Notifications.insert(doc);
+        logger.info("Notification send to tagged user", subscriber._id, id);
+        return;
       }
     });
   },

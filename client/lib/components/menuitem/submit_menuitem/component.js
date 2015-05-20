@@ -13,7 +13,7 @@ component.action.submit = function(info) {
     }
     Session.set("selectedIngredients", null);
     Session.set("selectedJobItems", null);
-    Meteor.call("sendNotifications", 'menuCreate', id, function(err) {
+    Meteor.call("sendNotifications", 'menuCreate', id, null, function(err) {
       if(err) {
         console.log(err);
         return alert(err.reason);
