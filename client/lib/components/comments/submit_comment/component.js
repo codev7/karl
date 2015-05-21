@@ -15,13 +15,19 @@ component.action.submit = function(text) {
     var filter = new RegExp(username, 'i');
     var subscriber = Meteor.users.findOne({"username": filter});
     if(subscriber) {
-      taggedUsers.push("@" + subscriber.username);  
+      var userClass = "label-info";
+      var doc = {
+        "user": "@" + subscriber.username,
+        "class": userClass
+      }
+      taggedUsers.push(doc);  
     }
   });
 
+  var classes = ['info', 'success', 'danger', 'primary', 'warning'];
   var textHtml = "<div>" + text + "</div>"
   taggedUsers.forEach(function(user) {
-    textHtml = textHtml.replace(user, "<span class='label label-info'>" + user + "</span>");
+    textHtml = textHtml.replace(user.user, "<span class='label " + user.class + "'>" + user.user + "</span>");
   });
   
   Meteor.call("createComment", textHtml, ref, function(err, id) {
