@@ -109,7 +109,7 @@ Meteor.methods({
     users.forEach(function(username) {
       var filter = new RegExp(username, 'i');
       var subscriber = Meteor.users.findOne({"username": filter});
-      if(subscriber) {
+      if(subscriber && subscriber._id != user._id) {
         var doc = {
           "to": subscriber._id,
           "read": false,
