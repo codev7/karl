@@ -47,6 +47,8 @@ Template.editJobItem.events({
       if((job.activeTime/60) != activeTime) {
         if(activeTime == activeTime) {
           info.activeTime = activeTime;
+        } else {
+          info.activeTime = 0;
         }
       }
 
@@ -55,6 +57,8 @@ Template.editJobItem.events({
       if((job.wagePerHour) != avgWagePerHour) {
         if(avgWagePerHour == avgWagePerHour) {
           info.wagePerHour = avgWagePerHour;
+        } else {
+          info.wagePerHour = 0;
         }
       }
 
@@ -69,6 +73,8 @@ Template.editJobItem.events({
         if(job.portions != portions) {
           if(portions == portions) {
             info.portions = portions;
+          } else {
+            info.portions = 0;
           }
         }
 
@@ -76,6 +82,8 @@ Template.editJobItem.events({
         if(job.shelfLife != shelfLife) {
           if(shelfLife == shelfLife) {
             info.shelfLife = shelfLife;
+          } else {
+            info.shelfLife = 0;
           }
         }
 
