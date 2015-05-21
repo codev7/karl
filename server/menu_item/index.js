@@ -346,9 +346,11 @@ Meteor.methods({
       logger.error('Menu should exist to be duplicated');
       throw new Meteor.Error(404, "Menu should exist to be duplicated");
     }
+    var filter = new RegExp(exist.name, 'i');
+    var count = MenuItems.find({"name": filter}).count();
 
     var duplicate = {
-      "name": exist.name + " - " + Date.now(),
+      "name": exist.name + " - copy " + count,
       "category": exist.category,
       "instructions": exist.instructions,
       "ingredients": exist.ingredients,

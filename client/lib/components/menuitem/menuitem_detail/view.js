@@ -97,7 +97,7 @@ Template.menuItemDetail.events({
     var id = $(event.target).attr("data-id");
     Meteor.call("duplicateMenuItem", id, function(err, id) {
       if(err) {
-        console.lg(err);
+        console.log(err);
         return alert(err.reason);
       } else {
         Router.go("menuItemEdit", {"_id": id});
