@@ -1,39 +1,3 @@
-Template.editMenuItem.helpers({
-  jobItemsList: function() {
-    var jobItems = Session.get("selectedJobItems");
-    if(jobItems) {
-      if(jobItems.length > 0) {
-        var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
-        return jobItemsList;
-      }
-    }
-  },
-
-  ingredientsList: function() {
-    var ing = Session.get("selectedIngredients");
-    if(ing) {
-      if(ing.length > 0) {
-        Meteor.subscribe("ingredients", ing);
-        var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
-        return ingredientsList;
-      }
-    }
-  },
-
-  categoriesList: function() {
-    return Categories.find().fetch();
-  },
-
-  statusList: function() {
-    var list = [
-      {'status': 'Active', 'value': 'active'},
-      {'status': 'Ideas', 'value': 'ideas'},
-      {'status': 'Archived', 'value': 'archived'}
-    ]
-    return list;
-  }
-});
-
 Template.editMenuItem.events({
   'click #showIngredientsList': function(event) {
     event.preventDefault();

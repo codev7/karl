@@ -12,7 +12,7 @@
           <label class="col-sm-3 control-label">Category</label>
           <div class="col-sm-8">
             <select name="category" class="form-control">
-              {{#each categoriesList}}
+              {{#each state$categoriesList}}
               {{#if state$isMyCategory _id}}
                 <option value="{{_id}}" selected='selected'>{{name}}</option>
               {{else}}
@@ -25,13 +25,10 @@
         <div class="form-group">
           <label class="col-sm-3 control-label">Status</label>
           <div class="col-sm-8">
-            <select name="status" class="form-control">
-              {{#each statusList}}
-                {{#if state$isMyStatus status}}
-                  <option value="{{value}}" selected="selected">{{status}}</option>
-                {{else}}
-                  <option value="{{value}}">{{status}}</option>
-                {{/if}}
+            <select name="status" class="form-control text-capitalize">
+              <option value="{{value}}" selected="selected" >{{state$myStatus}}</option>
+              {{#each state$statusList}}
+                <option value="{{value}}">{{status}}</option>
               {{/each}}
             </select>
           </div>
@@ -61,7 +58,7 @@
                 {{#each state$jobItems}}
                   {{> render component='jobItemEdit' jobitem=this}}
                 {{/each}}
-                {{#each jobItemsList}}
+                {{#each state$jobItemsList}}
                   {{> render component='jobItemEdit' jobitem=this}}
                 {{/each}}
               </tbody>
@@ -89,7 +86,7 @@
                 {{#each state$ingredients}}
                   {{> render component='ingredientItemEdit' ingredient=this}}
                 {{/each}}
-                {{#each ingredientsList}}
+                {{#each state$ingredientsList}}
                   {{>  render component='ingredientItemEdit' ingredient=this}}
                 {{/each}}
               </tbody>

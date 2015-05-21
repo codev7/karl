@@ -71,11 +71,11 @@ Template.submitMenuItem.events({
         } else {
           quantity = 1;
         }
-        var info = {
+        var doc = {
           "_id": dataid,
           "quantity": quantity
         }
-        ing_doc.push(info);
+        ing_doc.push(doc);
       }
     });
 
@@ -94,11 +94,11 @@ Template.submitMenuItem.events({
         } else {
           quantity = 1;
         }
-        var info = {
+        var doc = {
           "_id": dataid,
           "quantity": quantity
         }
-        prep_doc.push(info);
+        prep_doc.push(doc);
       }
     });
     var info = {
