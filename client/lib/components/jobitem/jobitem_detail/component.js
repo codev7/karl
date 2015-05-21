@@ -36,7 +36,7 @@ component.state.isPrep = function() {
   var item = this.get("job");
   if(item) {
     if(item.type == "Prep") {
-      return true;
+      return true; 
     } else {
       return false;
     }
@@ -51,6 +51,15 @@ component.state.isRecurring = function() {
     } else {
       return false;
     }
+  }
+}
+
+component.state.ingExists = function() {
+  var item = this.get("job");
+  if(item.ingredients.length > 0) {
+    return true;
+  } else {
+    return false;
   }
 }
 

@@ -64,36 +64,65 @@ Template.editMenuItem.events({
     }
 
     var prep_doc = [];
-    var jobItemsIds = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid && jobItemsIds.indexOf(dataid) < 0) {
-        var quantity = $(item).val();
-        if(quantity > 0) {
-          var info = {
-            "_id": dataid,
-            "quantity": quantity
-          }
-          prep_doc.push(info);
-          jobItemsIds.push(dataid);
+      var quantity = $(item).val();
+      if(quantity) {
+        quantity = parseFloat(quantity);
+        if(quantity == quantity) {
+          quantity = quantity;
+        } else {
+          quantity = 1;
         }
+      } else {
+        quantity = 1;
+      }
+      var doc = {
+        "_id": dataid,
+        "quantity": quantity
+      }
+
+      if(dataid && !(prep_doc.hasOwnProperty(dataid))) {
+        if(menu.jobItems.hasOwnProperty(dataid)) {
+          if(menu.jobItems[dataid] != quantity) {
+            prep_doc.push(doc);
+          }
+        } else {
+          prep_doc.push(doc);
+        }
+      } else {
+        prep_doc.push(doc);
       }
     });
 
     var ing_doc = [];
-    var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid && ingredientIds.indexOf(dataid) < 0) {
-        var quantity = $(item).val();
-        if(quantity > 0) {
-          var info = {
-            "_id": dataid,
-            "quantity": quantity
-          }
-          ing_doc.push(info);
-          ingredientIds.push(dataid);
+      var quantity = $(item).val();
+      if(quantity) {
+        quantity = parseFloat(quantity);
+        if(quantity == quantity) {
+          quantity = quantity;
+        } else {
+          quantity = 1;
         }
+      } else {
+        quantity = 1;
+      }
+      var doc = {
+        "_id": dataid,
+        "quantity": quantity
+      }
+      if(dataid && !(ing_doc.hasOwnProperty(dataid))) {
+        if(menu.ingredients.hasOwnProperty(dataid)) {
+          if(menu.ingredients[dataid] != quantity) {
+            ing_doc.push(doc);
+          }
+        } else {
+          ing_doc.push(doc);
+        }
+      } else {
+        ing_doc.push(doc);
       }
     });
     
@@ -102,6 +131,7 @@ Template.editMenuItem.events({
     if(menu.category != category) {
       info.category = category;
     }
+    console.log(info)
     FlowComponents.callAction('submit', id, info);
   },
 
