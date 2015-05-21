@@ -10,7 +10,21 @@ component.action.submit = function(text) {
     matches.push(match[1]);
   }
 
-  Meteor.call("createComment", text, ref, function(err, id) {
+  var taggedUsers = [];
+  matches.forEach(function(username) {
+    var filter = new RegExp(username, 'i');
+    var subscriber = Meteor.users.findOne({"username": filter});
+    if(subscriber) {
+      taggedUsers.push("@" + subscriber.username);  
+    }
+  });
+
+  var textHtml = "<div>" + text + "</div>"
+  taggedUsers.forEach(function(user) {
+    textHtml = textHtml.replace(user, "<span class='label label-info'>" + user + "</span>");
+  });
+  
+  Meteor.call("createComment", textHtml, ref, function(err, id) {
     if(err) {
       console.log(err);
       return alert(err.reason);
