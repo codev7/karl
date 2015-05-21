@@ -57,36 +57,48 @@ Template.submitMenuItem.events({
     }
 
     var ing_doc = [];
-    var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid && ingredientIds.indexOf(dataid) < 0) {
+      if(dataid && !(ing_doc.hasOwnProperty(dataid))) {
         var quantity = $(item).val();
-        if(quantity > 0) {
-          var info = {
-            "_id": dataid,
-            "quantity": quantity
+        if(quantity) {
+          quantity = parseFloat(quantity);
+          if(quantity == quantity) {
+            quantity = quantity;
+          } else {
+            quantity = 1;
           }
-          ing_doc.push(info);
-          ingredientIds.push(dataid);
+        } else {
+          quantity = 1;
         }
+        var doc = {
+          "_id": dataid,
+          "quantity": quantity
+        }
+        ing_doc.push(doc);
       }
     });
 
     var prep_doc = [];
-    var jobItemsIds = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid && jobItemsIds.indexOf(dataid) < 0) {
+      if(dataid && !(prep_doc.hasOwnProperty(dataid))) {
         var quantity = $(item).val();
-        if(quantity > 0) {
-          var info = {
-            "_id": dataid,
-            "quantity": quantity
+        if(quantity) {
+          quantity = parseFloat(quantity);
+          if(quantity == quantity) {
+            quantity = quantity;
+          } else {
+            quantity = 1;
           }
-          prep_doc.push(info);
-          jobItemsIds.push(dataid);
+        } else {
+          quantity = 1;
         }
+        var doc = {
+          "_id": dataid,
+          "quantity": quantity
+        }
+        prep_doc.push(doc);
       }
     });
     var info = {
@@ -99,14 +111,11 @@ Template.submitMenuItem.events({
       "status": status
     }
     salesPrice = parseFloat(salesPrice);
-    if(!salesPrice || typeof(salesPrice) != "number") {
-      info.salesPrice =  0;
+    salesPrice = Math.round(salesPrice * 100)/100;
+    if(salesPrice == salesPrice) {
+      info.salesPrice =  salesPrice;
     } else {
-      if(salesPrice === NaN) {
-        info.salesPrice = 0;
-      } else {
-        info.salesPrice = Math.round(salesPrice * 100)/100;
-      }
+      info.salesPrice = 0;
     }
     FlowComponents.callAction('submit', info);
   },

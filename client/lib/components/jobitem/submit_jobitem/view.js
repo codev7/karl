@@ -66,15 +66,25 @@ Template.submitJobItem.events({
     var info = {
       "name": name,
       "type": type,
-      "activeTime": activeTime,
+      "activeTime": 0,
       "avgWagePerHour": 0
     }
-    
-    if(!avgWagePerHour || typeof(parseFloat(avgWagePerHour)) != "number") {
-      info.wagePerHour =  0;
-    } else {
-      info.wagePerHour = parseFloat(avgWagePerHour);
-      info.wagePerHour = Math.round(info.wagePerHour * 100)/100;
+    if(activeTime) {
+      activeTime = parseInt(activeTime);
+      if(activeTime == activeTime) {
+        info.activeTime = activeTime;
+      } else {
+        info.activeTime = 0;
+      }
+    }
+
+    if(avgWagePerHour) {
+      avgWagePerHour = parseFloat(avgWagePerHour);
+      if(avgWagePerHour == avgWagePerHour) {
+        info.wagePerHour = Math.round(avgWagePerHour * 100)/100;
+      } else {
+        info.wagePerHour = 0;
+      }
     }
 
     //if Prep
@@ -87,43 +97,49 @@ Template.submitJobItem.events({
       if(!portions) {
         info.portions = 0;
       } else {
-        info.portions = parseInt(portions);
+        portions = parseFloat(portions);
+        if(portions == portions) {
+          info.portions = portions;
+        } else {
+          info.portions = 0;
+        }
       }
-      info.portions = portions;
 
-
-      shelfLife = parseFloat(shelfLife)
-      if(!shelfLife || typeof(shelfLife) != "number") {
+      if(!shelfLife) {
         info.shelfLife =  0;
       } else {
-        if(shelfLife === NaN) {
+        shelfLife = parseFloat(shelfLife)
+        if(shelfLife == shelfLife) {
+          info.shelfLife = Math.round(shelfLife * 100)/100;
+        } else {
           info.shelfLife = 0;
         }
-        info.shelfLife = Math.round(shelfLife * 100)/100;
       }
       
       if(recipe) {
         if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
-          info.recipe = ""
+          info.recipe = null;
         } else {
           info.recipe = recipe;
         }
       }
 
       var ing_doc = [];
-      var ingIds = [];
       ing.forEach(function(item) {
         var dataid = $(item).attr("data-id");
-        if(dataid && ingIds.indexOf(dataid) < 0) {
+        if(dataid && !(ing_doc.hasOwnProperty(dataid))) {
           var quantity = $(item).val();
-          if(quantity > 0) {
-            var info = {
-              "_id": dataid,
-              "quantity": quantity
-            }
-            ing_doc.push(info);
-            ingIds.push(dataid);
+          var doc = {
+            "_id": dataid,
+            "quantity": 1
           }
+          if(quantity) {
+            quantity = parseFloat(quantity);
+            if(quantity == quantity) {
+              doc.quantity = quantity;
+            }
+          }
+          ing_doc.push(doc);
         }
       });
 
@@ -137,7 +153,7 @@ Template.submitJobItem.events({
       var description = FlowComponents.child('jobItemEditorSubmit').getState('content');
       if(description) {
         if($('.ql-editor').text() === "Add description here" || $('.ql-editor').text() === "") {
-          info.description = ""
+          info.description = "";
         } else {
           info.description = description;
         }
@@ -152,12 +168,19 @@ Template.submitJobItem.events({
       info.repeatAt = repeatAt;
       var startsOn = $(event.target).find('[name=startsOn]').val();
       info.startsOn = new Date(startsOn);
-      info.endsOn = {};
+      info.endsOn = {
+        "on": null
+      };
       var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
       info.endsOn.on = endsOn;
       if(endsOn == "endsAfter") {
         var after = $(event.target).find("[name=occurrences]").val();
-        info.endsOn.after = parseInt(after);
+        after = parseInt(after);
+        if(after == after) {
+          info.endsOn.after = after;
+        } else {
+          info.endsOn.after = 1;
+        }
       } else if(endsOn == "endsOn") {
         var lastDate = $(event.target).find("[name=endsOn]").val();
         info.endsOn.lastDate = new Date(lastDate);

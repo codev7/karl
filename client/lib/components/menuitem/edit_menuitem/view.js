@@ -1,39 +1,3 @@
-Template.editMenuItem.helpers({
-  jobItemsList: function() {
-    var jobItems = Session.get("selectedJobItems");
-    if(jobItems) {
-      if(jobItems.length > 0) {
-        var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
-        return jobItemsList;
-      }
-    }
-  },
-
-  ingredientsList: function() {
-    var ing = Session.get("selectedIngredients");
-    if(ing) {
-      if(ing.length > 0) {
-        Meteor.subscribe("ingredients", ing);
-        var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
-        return ingredientsList;
-      }
-    }
-  },
-
-  categoriesList: function() {
-    return Categories.find().fetch();
-  },
-
-  statusList: function() {
-    var list = [
-      {'status': 'Active', 'value': 'active'},
-      {'status': 'Ideas', 'value': 'ideas'},
-      {'status': 'Archived', 'value': 'archived'}
-    ]
-    return list;
-  }
-});
-
 Template.editMenuItem.events({
   'click #showIngredientsList': function(event) {
     event.preventDefault();
@@ -100,36 +64,65 @@ Template.editMenuItem.events({
     }
 
     var prep_doc = [];
-    var jobItemsIds = [];
     preps.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid && jobItemsIds.indexOf(dataid) < 0) {
-        var quantity = $(item).val();
-        if(quantity > 0) {
-          var info = {
-            "_id": dataid,
-            "quantity": quantity
-          }
-          prep_doc.push(info);
-          jobItemsIds.push(dataid);
+      var quantity = $(item).val();
+      if(quantity) {
+        quantity = parseFloat(quantity);
+        if(quantity == quantity) {
+          quantity = quantity;
+        } else {
+          quantity = 1;
         }
+      } else {
+        quantity = 1;
+      }
+      var doc = {
+        "_id": dataid,
+        "quantity": quantity
+      }
+
+      if(dataid && !(prep_doc.hasOwnProperty(dataid))) {
+        if(menu.jobItems.hasOwnProperty(dataid)) {
+          if(menu.jobItems[dataid] != quantity) {
+            prep_doc.push(doc);
+          }
+        } else {
+          prep_doc.push(doc);
+        }
+      } else {
+        prep_doc.push(doc);
       }
     });
 
     var ing_doc = [];
-    var ingredientIds = [];
     ings.forEach(function(item) {
       var dataid = $(item).attr("data-id");
-      if(dataid && ingredientIds.indexOf(dataid) < 0) {
-        var quantity = $(item).val();
-        if(quantity > 0) {
-          var info = {
-            "_id": dataid,
-            "quantity": quantity
-          }
-          ing_doc.push(info);
-          ingredientIds.push(dataid);
+      var quantity = $(item).val();
+      if(quantity) {
+        quantity = parseFloat(quantity);
+        if(quantity == quantity) {
+          quantity = quantity;
+        } else {
+          quantity = 1;
         }
+      } else {
+        quantity = 1;
+      }
+      var doc = {
+        "_id": dataid,
+        "quantity": quantity
+      }
+      if(dataid && !(ing_doc.hasOwnProperty(dataid))) {
+        if(menu.ingredients.hasOwnProperty(dataid)) {
+          if(menu.ingredients[dataid] != quantity) {
+            ing_doc.push(doc);
+          }
+        } else {
+          ing_doc.push(doc);
+        }
+      } else {
+        ing_doc.push(doc);
       }
     });
     
@@ -138,6 +131,7 @@ Template.editMenuItem.events({
     if(menu.category != category) {
       info.category = category;
     }
+    console.log(info)
     FlowComponents.callAction('submit', id, info);
   },
 
