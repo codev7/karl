@@ -328,5 +328,40 @@ Meteor.methods({
 
   menuItemsCount: function() {
     return MenuItems.find().count();
+  },
+
+  duplicateMenuItem: function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add job items");
+      throw new Meteor.Error(404, "User not permitted to add jobs");
+    }
+    var exist = MenuItems.findOne(id);
+    if(!exist) {
+      logger.error('Menu should exist to be duplicated');
+      throw new Meteor.Error(404, "Menu should exist to be duplicated");
+    }
+
+    var duplicate = {
+      "name": exist.name + " - " + Date.now(),
+      "category": exist.category,
+      "instructions": exist.instructions,
+      "ingredients": exist.ingredients,
+      "jobItems": exist.prepItems,
+      "salesPrice": parseFloat(exist.salesPrice),
+      "image": exist.image,
+      "createdOn": Date.now(),
+      "createdBy": userId,
+      "status": exist.status
+    };
+
+    var id = MenuItems.insert(duplicate);
+    logger.info("Menu items added ", id);
+    return id;
   }
 });

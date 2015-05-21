@@ -29,7 +29,7 @@ component.action.keyup = function(text) {
 
 component.prototype.setIds = function() {
   var ids = [];
-  if(this.item) {
+  if(this.item && this.item.jobItems) {
     if(this.item.jobItems.length > 0) {
       this.item.jobItems.forEach(function(doc) {
         ids.push(doc._id);
