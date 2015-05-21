@@ -156,7 +156,9 @@ Template.editJobItem.events({
         }
         var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
         if(job.endsOn && job.endsOn.on != endsOn) {
-          info.endsOn['on']= endsOn;
+          info.endsOn = {
+            "on": endsOn
+          }
         } 
         if(endsOn == "endsAfter") {
           var after = $(event.target).find("[name=occurrences]").val();
