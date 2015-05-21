@@ -1,8 +1,6 @@
 var subs = new SubsManager();
 var component = FlowComponents.define('navTop', function(props) {
   var cursors = [];
-  var notifications = Notifications.find({"read": false, "to": Meteor.userId()}, {sort: {"createdOn": -1}});
-  this.notifications = notifications;
   cursors.push(subs.subscribe("unReadNotifications"));
   cursors.push(subs.subscribe("usersList"));
 });
@@ -15,13 +13,11 @@ component.state.isExistNotifications = function() {
 
 
 component.state.notificationsCount = function() {
-  if(this.notifications) {
-    return this.notifications.fetch().length;
-  }
+  var notificationsCount = Notifications.find({"read": false, "to": Meteor.userId()}, {sort: {"createdOn": -1}}).count();
+  return notificationsCount;
 }
 
 component.state.notifications = function() {
-  if(this.notifications) {
-    return this.notifications;
-  }
+  var notifications = Notifications.find({"read": false, "to": Meteor.userId()}, {sort: {"createdOn": -1}, limit: 5});
+  return notifications;
 }
