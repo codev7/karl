@@ -5,6 +5,8 @@
     </div>
     <div class="col-md-4">
       <div id="nestable-menu">
+        <button type="button" class="btn btn-white copyMenuItemBtn hidden-print pull-right margin-right-10" data-id="{{item._id}}"><i class="fa fa-copy"></i> Copy
+        </button>
         {{#if state$isSubscribed}}
         <button type="button" class="btn btn-info unSubscribeMenuItemBtn hidden-print pull-right margin-right-10" data-id="{{item._id}}"> Unsubscribe
         </button>

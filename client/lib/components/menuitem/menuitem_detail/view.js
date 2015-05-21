@@ -90,5 +90,18 @@ Template.menuItemDetail.events({
         return alert(err.reason);
       }
     });
+  },
+
+  'click .copyMenuItemBtn': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    Meteor.call("duplicateMenuItem", id, function(err, id) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        Router.go("menuItemEdit", {"_id": id});
+      }
+    });
   }
 });
