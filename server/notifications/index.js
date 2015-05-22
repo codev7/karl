@@ -85,6 +85,7 @@ Meteor.methods({
         logger.error('Comment Id needed');
         throw new Meteor.Error(404, "Comment Id needed");
       }
+      info.refType = options.type;
       var comment = Comments.findOne(options.commentId);
       if(comment) {
         info.text = comment.text;
@@ -92,8 +93,7 @@ Meteor.methods({
         info.ref = comment.reference;
       }
     }
-
-    if(type == "job" && type == "menu") {
+    if(type == "job" || type == "menu") {
       allSubscribers.forEach(function(subscriber) {
         if(subscriber != userId) {
           var doc = info;

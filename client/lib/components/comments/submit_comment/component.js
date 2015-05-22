@@ -38,17 +38,21 @@ component.action.submit = function(text) {
       var reference = null;
       reference = MenuItems.findOne(ref);
       var ref_name = null;
+      var ref_type = null;
       if(reference) {
         ref_name = reference.name;
+        ref_type = "menu";
       } else {
         reference = JobItems.findOne(ref);
         ref_name = reference.name;
+        ref_type = "job";
       }
 
       var options = {
         "title": "New comment on " + ref_name,
         "users": matches,
-        "commentId": id
+        "commentId": id,
+        "type": ref_type
       }
       Meteor.call("sendNotifications", this.referenceId, "comment", options, function(err) {
         if(err) {
