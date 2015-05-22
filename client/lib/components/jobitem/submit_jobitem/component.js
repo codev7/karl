@@ -42,7 +42,11 @@ component.action.submit = function(info) {
     } else {
       Session.set("selectedIngredients", null);
       Session.set("selectedJobItems", null);
-      Meteor.call("sendNotifications", 'jobCreate', id, null, function(err) {
+      var options = {
+        "type": "create",
+        "title": "New Job created"
+      }
+      Meteor.call("sendNotifications", id, "job", options, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);
