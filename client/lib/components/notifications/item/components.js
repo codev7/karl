@@ -20,6 +20,17 @@ component.state.type = function() {
   }
 }
 
+component.state.permittedActionTypeate = function() {
+  if(this.notification) {
+    var type = this.notification.actionType;
+    if(type && (type == "delete")) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
+
 component.state.icon = function() {
   if(this.notification) {
     var type = this.notification.type;

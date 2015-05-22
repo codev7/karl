@@ -4,7 +4,7 @@ Meteor.methods({
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var user = Meteor.user();
+    var userId = Meteor.userId();
     if(!itemId) {
       logger.error('ItemId should have a value');
       throw new Meteor.Error(404, "ItemId should have a value");
@@ -16,8 +16,9 @@ Meteor.methods({
     info.ref = itemId;
     info.read = false;
     info.title = options.title;
-    info.createdBy = user._id;
+    info.createdBy = userId;
     info.text = options.text;
+    info.actionType = options.type;
     var allSubscribers = [];
 
     var itemSubsbcribers = Subscriptions.findOne(itemId);
@@ -78,12 +79,13 @@ Meteor.methods({
       }
 
       allSubscribers.forEach(function(subscriber) {
-        console.log(subscriber);
-        var doc = info;
-        doc.to = subscriber;
+        if(subscriber != userId) {
+          var doc = info;
+          doc.to = subscriber;
 
-        var id = Notifications.insert(doc);
-        logger.info("Notification send to userId", subscriber, id);
+          var id = Notifications.insert(doc);
+          logger.info("Notification send to userId", subscriber, id);
+        }
       });
 
     } else if(type == "comment") {

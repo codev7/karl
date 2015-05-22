@@ -13,7 +13,9 @@
             <strong>{{{state$title}}}&nbsp;</strong>
           </p>
           <p>{{{state$text}}}&nbsp;</p>
+          {{#if state$permittedActionTypeate}}
           <a href="#" class="btn btn-primary btn-xs goToItem" data-id="{{state$ref}}" data-type="{{state$type}}">Go to this {{state$type}} Item</a>
+          {{/if}}
           <a href="#" class="btn btn-warning btn-xs readNotification" data-id="{{state$id}}">Mark as read</a>
         </div>
       </div>
