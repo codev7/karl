@@ -277,8 +277,14 @@ component.action.submit = function(id, info) {
         if(jobBefore) {
           for (var key in info) {
             if (info.hasOwnProperty(key)) {
-              if(key != "checklist" && key != "startsOn" && key != "recipe" && key != "description") {
-                var str = "<strong>" + key + "</strong> was " + jobBefore[key] + " and updated to be " + info[key];
+              if(key != "checklist" && key != "startsOn" && key != "recipe" && key != "description" && key != "ingredients") {
+                if(key == "type") {
+                  if(jobBefore.type != info.type) {
+                    var str = "<strong>" + key + "</strong> was '" + jobBefore[key] + "' and updated to be '" + info[key] + "'";
+                  }
+                } else {
+                  var str = "<strong>" + key + "</strong> was '" + jobBefore[key] + "' and updated to be '" + info[key] + "'";
+                }
                 if(desc) {
                   desc = desc + "<br>" + str;
                 } else {

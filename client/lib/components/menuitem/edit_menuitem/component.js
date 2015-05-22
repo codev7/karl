@@ -38,14 +38,8 @@ component.state.isMyCategory = function(categoryId) {
   }
 }
 
-component.state.isMyStatus = function(status) {
-  if(status) {
-    if(status == this.item.status) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+component.state.myStatus = function() { 
+  return this.item.status;
 }
 
 component.state.jobItems = function() {
@@ -62,6 +56,46 @@ component.state.salePrice = function() {
 
 component.state.image = function() {
   return this.item.image;
+}
+
+component.state.categoriesList = function() {
+  return Categories.find().fetch();
+}
+
+component.state.jobItemsList = function() {
+  var jobItems = Session.get("selectedJobItems");
+  if(jobItems) {
+    if(jobItems.length > 0) {
+      var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
+      return jobItemsList;
+    }
+  }
+}
+
+component.state.ingredientsList = function() {
+  var ing = Session.get("selectedIngredients");
+  if(ing) {
+    if(ing.length > 0) {
+      Meteor.subscribe("ingredients", ing);
+      var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
+      return ingredientsList;
+    }
+  }
+}
+component.state.statusList = function() {
+  var myStatus = this.item.status;
+  var list = [
+    {'status': 'Active', 'value': 'active'},
+    {'status': 'Ideas', 'value': 'ideas'},
+    {'status': 'Archived', 'value': 'archived'}
+  ];
+  list.forEach(function(doc) {
+    var index = list.indexOf(doc);
+    if(doc.value == myStatus) {
+      list.splice(index, 1);
+    }
+  });
+  return list;
 }
 
 component.action.submit = function(id, info) {
