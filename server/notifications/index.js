@@ -5,25 +5,27 @@ Meteor.methods({
       throw new Meteor.Error(401, "User not logged in");
     }
     var userId = Meteor.userId();
-    if(!itemId) {
-      logger.error('ItemId should have a value');
-      throw new Meteor.Error(404, "ItemId should have a value");
-    }
 
     var item = null;
     var info = {};
     info.type = type;
-    info.ref = itemId;
     info.read = false;
     info.title = options.title;
     info.createdBy = userId;
-    info.text = options.text;
-    info.actionType = options.type;
     var allSubscribers = [];
 
-    var itemSubsbcribers = Subscriptions.findOne(itemId);
-    if(itemSubsbcribers && itemSubsbcribers.subscribers.length > 0) {
-      allSubscribers = itemSubsbcribers.subscribers;
+    if(type != "comment") {
+      if(!itemId) {
+        logger.error('ItemId should have a value');
+        throw new Meteor.Error(404, "ItemId should have a value");
+      }
+      info.ref = itemId;
+      info.text = options.text;
+      info.actionType = options.type;
+      var itemSubsbcribers = Subscriptions.findOne(itemId);
+      if(itemSubsbcribers && itemSubsbcribers.subscribers.length > 0) {
+        allSubscribers = itemSubsbcribers.subscribers;
+      }
     }
 
     if(type == "menu") {
@@ -79,62 +81,46 @@ Meteor.methods({
       }
 
     } else if(type == "comment") {
-      
-    }
-
-    allSubscribers.forEach(function(subscriber) {
-      if(subscriber != userId) {
-        var doc = info;
-        doc.to = subscriber;
-
-        var id = Notifications.insert(doc);
-        logger.info("Notification send to userId", subscriber, id);
+      if(!options.commentId) {
+        logger.error('Comment Id needed');
+        throw new Meteor.Error(404, "Comment Id needed");
       }
-    });
-   
-  },
+      var comment = Comments.findOne(options.commentId);
+      if(comment) {
+        info.text = comment.text;
+        info.createdOn = comment.createdOn;
+        info.ref = comment.reference;
+      }
+    }
 
-  notifyTagged: function(users, itemId, commentId) {
-    if(!Meteor.userId()) {
-      logger.error('No user has logged in');
-      throw new Meteor.Error(401, "User not logged in");
-    }
-    var user = Meteor.user();
-    if(users.length < 0) {
-      logger.error('User ids not found');
-      throw new Meteor.Error(404, "User ids not found");
-    }
-    var item = null;
-    var type = "menuItem";
-    item = MenuItems.findOne(itemId);
-    if(!item) {
-      type = "jobItem";
-      item = JobItems.findOne(itemId);
-    }
-    var comment = Comments.findOne(commentId);
-    if(!comment) {
-      logger.error('Comment not found');
-      throw new Meteor.Error(404, "Comment not found");
-    }
-    users.forEach(function(username) {
-      var filter = new RegExp(username, 'i');
-      var subscriber = Meteor.users.findOne({"username": filter});
-      if(subscriber && (subscriber._id != user._id)) {
-        var doc = {
-          "to": subscriber._id,
-          "read": false,
-          "createdBy": user._id,
-          "notifyRef": commentId,
-          "createdOn": comment.createdOn,
-          "type": "comment",
-          "msg": "New comment on " + item.name + ".",
-          "desc": comment.text
+    if(type == "job" && type == "menu") {
+      allSubscribers.forEach(function(subscriber) {
+        if(subscriber != userId) {
+          var doc = info;
+          doc.to = subscriber;
+
+          var id = Notifications.insert(doc);
+          logger.info("Notification send to userId", subscriber, id);
         }
-        var id = Notifications.insert(doc);
-        logger.info("Notification send to tagged user", subscriber._id, id);
-        return;
+      });
+    } else if(type == "comment") {
+      if(!options.users) {
+        logger.error('User ids not found');
+        throw new Meteor.Error(404, "User ids not found");
       }
-    });
+      options.users.forEach(function(username) {
+        var filter = new RegExp(username, 'i');
+        var subscriber = Meteor.users.findOne({"username": filter});
+        if(subscriber && (subscriber._id != userId)) {
+          var doc = info;
+          doc.to = subscriber._id;
+
+          var id = Notifications.insert(doc);
+          logger.info("Notification send to userId", subscriber._id, id);
+        }
+      });
+    }
+   
   },
 
   'readNotifications': function(id) {
