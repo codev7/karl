@@ -8,6 +8,12 @@ component.state.id = function() {
   }
 }
 
+component.state.ref = function() {
+  if(this.notification) {
+    return this.notification.ref;
+  }
+}
+
 component.state.title = function() {
   if(this.notification) {
     return this.notification.title;
@@ -41,12 +47,6 @@ component.state.icon = function() {
     } else if(type == "comment") {
       return "comment";
     }
-  }
-}
-
-component.state.ref = function() {
-  if(this.notification) {
-    return this.notification.ref;
   }
 }
 
