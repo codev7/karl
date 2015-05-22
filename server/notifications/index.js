@@ -78,19 +78,19 @@ Meteor.methods({
         }
       }
 
-      allSubscribers.forEach(function(subscriber) {
-        if(subscriber != userId) {
-          var doc = info;
-          doc.to = subscriber;
-
-          var id = Notifications.insert(doc);
-          logger.info("Notification send to userId", subscriber, id);
-        }
-      });
-
     } else if(type == "comment") {
       
     }
+
+    allSubscribers.forEach(function(subscriber) {
+      if(subscriber != userId) {
+        var doc = info;
+        doc.to = subscriber;
+
+        var id = Notifications.insert(doc);
+        logger.info("Notification send to userId", subscriber, id);
+      }
+    });
    
   },
 

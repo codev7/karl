@@ -13,12 +13,16 @@ component.action.submit = function(info) {
     }
     Session.set("selectedIngredients", null);
     Session.set("selectedJobItems", null);
-    Meteor.call("sendNotifications", 'menuCreate', id, null, function(err) {
+    var options = {
+      "type": "create",
+      "title": "New Menu created"
+    }
+    Meteor.call("sendNotifications", id, "menu", options, function(err) {
       if(err) {
         console.log(err);
         return alert(err.reason);
       }
-    });
+    });    
     Router.go("menuItemDetail", {"_id": id});
   });
 };

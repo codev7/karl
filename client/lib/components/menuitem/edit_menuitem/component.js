@@ -112,12 +112,12 @@ component.action.submit = function(id, info) {
             if (info.hasOwnProperty(key)) {
               if(key != "jobItems" && key != "ingredients") {
                 if(key == "category") {
-                  var str = "<strong>" + key + "</strong> was " + Categories.findOne(menuBefore[key]).name + " and updated to be " + Categories.findOne(info[key]).name;  
+                  var str = key + " changed from " + Categories.findOne(menuBefore[key]).name + " to " + Categories.findOne(info[key]).name + ".</br>";  
                 } else {
-                  var str = "<strong>" + key + "</strong> was " + menuBefore[key] + " and updated to be " + info[key];
+                  var str = key + " changed from " + menuBefore[key] + " to " + info[key] + ".</br>";
                 }
                 if(desc) {
-                  desc = desc + "<br>" + str;
+                  desc += str;
                 } else {
                   desc = str;
                 }
@@ -126,12 +126,17 @@ component.action.submit = function(id, info) {
           }
         }
       }
-      Meteor.call("sendNotifications", 'menulist', id, desc, function(err) {
-        if(err) {
-          console.log(err);
-          return alert(err.reason);
-        }
-      });
+     var options = {
+      "type": "edit",
+      "title": menuBefore.name + " has been updated",
+      "text": desc
+    }
+    Meteor.call("sendNotifications", id, "menu", options, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    }); 
       Router.go("menuItemDetail", {"_id": id});
     }
   });

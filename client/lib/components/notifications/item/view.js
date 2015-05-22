@@ -14,9 +14,9 @@ Template.notificationItem.events({
     event.preventDefault();
     var id = $(event.target).attr("data-id");
     var type = $(event.target).attr("data-type");
-    if(type == "Job") {
+    if(type == "job") {
       Router.go("jobItemDetailed", {"_id": id});   
-    } else if(type == "Menu") {
+    } else if(type == "menu") {
       Router.go("menuItemDetail", {"_id": id});      
     }
   }
