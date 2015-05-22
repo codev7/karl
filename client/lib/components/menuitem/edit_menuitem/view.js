@@ -159,7 +159,12 @@ Template.editMenuItem.events({
             console.log(err);
             return alert(err.reason);
           } else {
-            Meteor.call("sendNotifications", "deleteMenu", item, null, function(err) {
+             var options = {
+              "type": "delete",
+              "title": "Menu " + item.name + " has been deleted",
+              "time": Date.now()
+            }
+            Meteor.call("sendNotifications", id, "menu", options, function(err) {
               if(err) {
                 console.log(err);
                 return alert(err.reason);

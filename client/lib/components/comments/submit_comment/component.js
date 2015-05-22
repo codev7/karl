@@ -25,7 +25,7 @@ component.action.submit = function(text) {
   });
 
   var classes = ['info', 'success', 'danger', 'primary', 'warning'];
-  var textHtml = "<div>" + text + "</div>"
+  var textHtml = "<div class='non'>" + text + "</div>"
   taggedUsers.forEach(function(user) {
     textHtml = textHtml.replace(user.user, "<span class='label " + user.class + "'>" + user.user + "</span>");
   });
@@ -35,12 +35,31 @@ component.action.submit = function(text) {
       console.log(err);
       return alert(err.reason);
     } else {
-      Meteor.call("notifyTagged", matches, ref, id, function(err) {
+      var reference = null;
+      reference = MenuItems.findOne(ref);
+      var ref_name = null;
+      var ref_type = null;
+      if(reference) {
+        ref_name = reference.name;
+        ref_type = "menu";
+      } else {
+        reference = JobItems.findOne(ref);
+        ref_name = reference.name;
+        ref_type = "job";
+      }
+
+      var options = {
+        "title": "New comment on " + ref_name,
+        "users": matches,
+        "commentId": id,
+        "type": ref_type
+      }
+      Meteor.call("sendNotifications", this.referenceId, "comment", options, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);
         }
-      });
+      });  
     }
     $('.message-input').val("");
   });

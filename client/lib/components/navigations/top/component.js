@@ -15,13 +15,11 @@ component.state.isExistNotifications = function() {
 
 
 component.state.notificationsCount = function() {
-  if(this.notifications) {
-    return this.notifications.fetch().length;
-  }
+  var count = this.notifications.fetch().length;
+  return count;
 }
 
 component.state.notifications = function() {
-  if(this.notifications) {
-    return this.notifications;
-  }
+  var notifications = Notifications.find({"read": false, "to": Meteor.userId()}, {sort: {"createdOn": -1}, limit: 5});
+  return notifications;
 }
