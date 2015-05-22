@@ -22,7 +22,8 @@ component.state.profilePicture = function() {
 }
 
 component.state.text = function() {
-  return this.comment.text;
+  var text = this.comment.text;
+  return text;
 }
 
 component.state.createdOn = function() {

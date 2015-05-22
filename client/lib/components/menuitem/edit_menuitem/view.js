@@ -131,7 +131,6 @@ Template.editMenuItem.events({
     if(menu.category != category) {
       info.category = category;
     }
-    console.log(info)
     FlowComponents.callAction('submit', id, info);
   },
 
