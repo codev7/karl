@@ -8,9 +8,34 @@ component.state.id = function() {
   }
 }
 
-component.state.msg = function() {
+component.state.title = function() {
   if(this.notification) {
-    return this.notification.msg;
+    return this.notification.title;
+  }
+}
+
+component.state.type = function() {
+  if(this.notification) {
+    return this.notification.type;
+  }
+}
+
+component.state.icon = function() {
+  if(this.notification) {
+    var type = this.notification.type;
+    if(type == "job") {
+      return "briefcase";
+    } else if(type == "menu") {
+      return "cutlery";
+    } else if(type == "comment") {
+      return "comment";
+    }
+  }
+}
+
+component.state.ref = function() {
+  if(this.notification) {
+    return this.notification.ref;
   }
 }
 
@@ -23,28 +48,21 @@ component.state.createdBy = function() {
   }
 }
 
-component.state.createdByImg = function() {
-  var img = "/images/user-image.jpeg";
-  if(this.notification && this.notification.createdBy) {
-    var user = Meteor.users.findOne(this.notification.createdBy);
-    if(user && user.services) {
-      if(user.services.google) {
-        img = user.services.google.picture;
-      }
-    }
-    return img;
-  } 
-}
-
 component.state.fromNow = function() {
   if(this.notification && this.notification.createdOn) {
     return moment(this.notification.createdOn).fromNow();
   }
 }
 
-component.state.description = function() {
-  if(this.notification && this.notification.desc) {
-    return this.notification.desc;
+component.state.createAt = function() {
+  if(this.notification && this.notification.createdOn) {
+    return moment(this.notification.createdOn).format("hh:mm A");
+  }
+}
+
+component.state.text = function() {
+  if(this.notification && this.notification.text) {
+    return this.notification.text;
   }
 }
 

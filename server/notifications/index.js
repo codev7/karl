@@ -1,5 +1,5 @@
 Meteor.methods({
-  'sendNotifications': function(type, itemId, desc) {
+  'sendNotifications': function(itemId, type, options) {
     if(!Meteor.userId()) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
@@ -9,79 +9,87 @@ Meteor.methods({
       logger.error('ItemId should have a value');
       throw new Meteor.Error(404, "ItemId should have a value");
     }
+
     var item = null;
-    if(type == "menulist" || type == "menuCreate") {
-      item = MenuItems.findOne(itemId);
-    } else if(type == "joblist" || type == "jobCreate") {
-      item = JobItems.findOne(itemId);
-    } else if(type == "deleteMenu" || type == "deleteJob") {
-      item = itemId;
-    }
+    var info = {};
+    info.type = type;
+    info.ref = itemId;
+    info.read = false;
+    info.title = options.title;
+    info.createdBy = user._id;
+    info.text = options.text;
     var allSubscribers = [];
+
     var itemSubsbcribers = Subscriptions.findOne(itemId);
     if(itemSubsbcribers && itemSubsbcribers.subscribers.length > 0) {
       allSubscribers = itemSubsbcribers.subscribers;
     }
-    var findType = type;
-    if(type == "menuCreate") {
-      findType = "menulist";
-    } else if(type == "jobCreate") {
-      findType = "joblist";
-    } else if(type == "deleteMenu") {
-      findType = "menulist";
-    } else if(type == "deleteJob") {
-      findType = "joblist";
-    }
-    var listSubscribers = Subscriptions.findOne(findType);
-    if(listSubscribers && listSubscribers.subscribers.length > 0) {
-      if(allSubscribers > 0) {
-        allSubscribers.concat(listSubscribers.subscribers);
-      } else {
-        allSubscribers = listSubscribers.subscribers;
-      }
-    }
-    allSubscribers.forEach(function(subscriber) {
-      if(subscriber != user._id) {
-        var doc = {
-          "to": subscriber,
-          "read": false,
-          "createdBy": user._id,
-          "notifyRef": item._id
-        }
-        if(type == "menulist") {
-          doc.createdOn = item.editedOn;
-          doc.type = "menu";
-          doc.msg = " updated menu <a href='/menuItem/" + item._id + "'>" + item.name;
 
-        } else if(type == "joblist") {
-          doc.type = "job";
-          doc.createdOn = item.editedOn;
-          doc.msg = " updated job <a href='/jobItem/" + item._id + "'>" + item.name;
-        } else if(type == "menuCreate") {
-          doc.type = "menu";
-          doc.createdOn = item.createdOn;
-          doc.msg = " created a new menu <a href='/menuItem/" + item._id + "'>" + item.name;
-        } else if(type == "jobCreate") {
-          doc.type = "job";
-          doc.createdOn = item.createdOn;
-          doc.msg = " created a new job <a href='/jobItem/" + item._id + "'>" + item.name;
-        } else if(type == "deleteMenu") {
-          doc.type = "menu";
-          doc.createdOn = Date.now();
-          doc.msg = " deleted menu " + item.name;
-        } else if(type == "deleteJob") {
-          doc.type = "job";
-          doc.createdOn = Date.now();
-          doc.msg = " deleted job " + item.name;
+    if(type == "menu") {
+      var listSubscribers = Subscriptions.findOne("menulist");
+      if(listSubscribers && listSubscribers.subscribers.length > 0) {
+        if(allSubscribers > 0) {
+          allSubscribers.concat(listSubscribers.subscribers);
+        } else {
+          allSubscribers = listSubscribers.subscribers;
         }
-        if(desc) {
-          doc.desc = desc;
+      }
+      if(options.type == "delete") {
+        if(!options.time) {
+          logger.error('Items deleted time needed');
+          throw new Meteor.Error(404, "Items deleted time needed");
         }
+        time = options.time;
+        info.createdOn = time;
+      } else {
+        item = MenuItems.findOne(itemId);
+        if(options.type == "create") {
+          info.createdOn = item.createdOn;
+          info.text = item.name;
+        } else if(options.type == "edit") {
+          info.createdOn = item.editedOn;
+        }
+      }
+
+    } else if(type == "job") {
+      var listSubscribers = Subscriptions.findOne("joblist");
+      if(listSubscribers && listSubscribers.subscribers.length > 0) {
+        if(allSubscribers > 0) {
+          allSubscribers.concat(listSubscribers.subscribers);
+        } else {
+          allSubscribers = listSubscribers.subscribers;
+        }
+      }
+      if(options.type == "delete") {
+        if(!options.time) {
+          logger.error('Items deleted time needed');
+          throw new Meteor.Error(404, "Items deleted time needed");
+        }
+        time = options.time;
+        info.createdOn = time;
+      } else {
+        item = JobItems.findOne(itemId);
+        if(options.type == "create") {
+          info.createdOn = item.createdOn;
+          info.text = item.name;
+        } else if(options.type == "edit") {
+          info.createdOn = item.editedOn;
+        }
+      }
+
+      allSubscribers.forEach(function(subscriber) {
+        console.log(subscriber);
+        var doc = info;
+        doc.to = subscriber;
+
         var id = Notifications.insert(doc);
         logger.info("Notification send to userId", subscriber, id);
-        return;
-      }
-    });
+      });
+
+    } else if(type == "comment") {
+      
+    }
+   
   },
 
   notifyTagged: function(users, itemId, commentId) {
@@ -109,7 +117,7 @@ Meteor.methods({
     users.forEach(function(username) {
       var filter = new RegExp(username, 'i');
       var subscriber = Meteor.users.findOne({"username": filter});
-      if(subscriber && subscriber._id != user._id) {
+      if(subscriber && (subscriber._id != user._id)) {
         var doc = {
           "to": subscriber._id,
           "read": false,
@@ -117,7 +125,8 @@ Meteor.methods({
           "notifyRef": commentId,
           "createdOn": comment.createdOn,
           "type": "comment",
-          "msg": "mentioned you on a comment on <a href='/" + type + "/" + item._id + "'>" + item.name + "</a>"
+          "msg": "New comment on " + item.name + ".",
+          "desc": comment.text
         }
         var id = Notifications.insert(doc);
         logger.info("Notification send to tagged user", subscriber._id, id);

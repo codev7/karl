@@ -450,5 +450,9 @@ select {
 }
 
 .notifications {
-  width: 310px;
+  width: 375px;
+}
+
+.timeline-item .date {
+  width: 95px !important;
 }

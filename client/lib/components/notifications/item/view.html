@@ -1,19 +1,23 @@
 <template name="notificationItem">
-  <li class="readNotification" data-id="{{state$id}}">
-    <div class="dropdown-messages-box">
-      <a href="#" class="pull-left">
-        <img alt="image" class="img-circle" src="{{state$createdByImg}}">
-      </a>
-      <div class="media-body">
-        <small class="pull-right">{{state$fromNow}}</small>
-        <strong>{{state$createdBy}}</strong> {{{state$msg}}}<br><br>
-        {{#if state$description}}
-        <div class="well">{{{state$description}}}</div>
-        {{/if}}
-        <!-- <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small> -->
+  <li>
+    <div class="timeline-item">
+      <div class="row">
+        <div class="col-xs-1 date">
+          <i class="fa fa-{{state$icon}}"></i>
+          {{state$createAt}}
+          <br>
+          <small class="text-navy">{{state$fromNow}}</small>
+        </div>
+        <div class="col-xs-9 content no-top-border">
+          <p class="m-b-xs">
+            <strong>{{{state$title}}}&nbsp;</strong>
+          </p>
+          <p>{{{state$text}}}&nbsp;</p>
+          <a href="#" class="btn btn-primary btn-xs goToItem" data-id="{{state$ref}}" data-type="{{state$type}}">Go to this {{state$type}} Item</a>
+          <a href="#" class="btn btn-warning btn-xs readNotification" data-id="{{state$id}}">Mark as read</a>
+        </div>
       </div>
     </div>
   </li>
-  <br>
-  <li class="divider"></li>
+  <!-- <li class="divider"></li> -->
 </template>

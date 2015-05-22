@@ -271,36 +271,41 @@ component.action.submit = function(id, info) {
       console.log(err);
       return alert(err.reason);
     } else {
+      var jobBefore = Session.get("updatingJob");
       var desc = null;
-      if(info) {
-        var jobBefore = Session.get("updatingJob");
-        if(jobBefore) {
-          for (var key in info) {
-            if (info.hasOwnProperty(key)) {
-              if(key != "checklist" && key != "startsOn" && key != "recipe" && key != "description" && key != "ingredients") {
-                if(key == "type") {
-                  if(jobBefore.type != info.type) {
-                    var str = "<strong>" + key + "</strong> was '" + jobBefore[key] + "' and updated to be '" + info[key] + "'";
-                  }
-                } else {
-                  var str = "<strong>" + key + "</strong> was '" + jobBefore[key] + "' and updated to be '" + info[key] + "'";
+      if(jobBefore) {
+        for (var key in info) {
+          if (info.hasOwnProperty(key)) {
+            if(key != "checklist" && key != "startsOn" && key != "recipe" && key != "description" && key != "ingredients") {
+              if(key == "type") {
+                if(jobBefore.type != info.type) {
+                  var str =  key + " changed from '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
                 }
-                if(desc) {
-                  desc = desc + "<br>" + str;
-                } else {
-                  desc = str;
-                }
+              } else {
+                var str = key + " changed from  '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
+              }
+              if(desc) {
+                desc = desc + str;
+              } else {
+                desc = str;
               }
             }
           }
         }
       }
-      Meteor.call("sendNotifications", 'joblist', id, desc, function(err) {
+
+      var options = {
+        "type": "edit",
+        "title": jobBefore.name + " has been updated",
+        "text": desc
+      }
+      Meteor.call("sendNotifications", id, "job", options, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);
         }
       });
+      
       Router.go("jobItemDetailed", {"_id": id});
     }
   });
