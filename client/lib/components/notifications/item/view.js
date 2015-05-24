@@ -2,12 +2,16 @@ Template.notificationItem.events({
   'click .readNotification': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
+    $(".dropdown-notifi").addClass("open");
     Meteor.call("readNotifications", id, function(err) {
       if(err) {
         console.log(err);
         return alert(err.reason);
       }
+      $(".dropdown-notifi").addClass("open");
     });
+    $(".dropdown-notifi").addClass("open");
+
   },
 
   'click .goToItem': function(event) {

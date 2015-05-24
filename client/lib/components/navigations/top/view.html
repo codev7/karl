@@ -39,7 +39,7 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown">
+      <li class="dropdown dropdown-notifi">
         <a class="dropdown-toggle count-info m-r-sm" data-toggle="dropdown" href="#" aria-expanded="false">
           <i class="fa fa-bell"></i> 
           {{#if state$isExistNotifications}}
@@ -51,7 +51,6 @@
           {{#each state$notifications}}
             {{> render component='notificationItem' noti=this}}
           {{/each}}
-          <li class="divider"></li>
           <li>
             <div class="text-center link-block">
               <a href="#" class="markAllAsRead">
