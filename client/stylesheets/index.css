@@ -456,3 +456,18 @@ select {
 .timeline-item .date {
   width: 95px !important;
 }
+
+.theme-config {
+  top: 97px !important;
+  height: 100% !important;
+}
+
+.skin-setttings {
+  width: 300px !important;
+  height: 100% !important;
+}
+
+.theme-config-box {
+  height: 100% !important;
+  margin-right: -300px;
+}
