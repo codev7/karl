@@ -9,6 +9,8 @@ Template.notificationItem.events({
       }
       $(".dropdown-notifi").addClass("open");
     });
+    $(".dropdown-notifi").addClass("open");
+
   },
 
   'click .goToItem': function(event) {
