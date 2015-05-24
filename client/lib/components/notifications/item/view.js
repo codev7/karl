@@ -2,6 +2,7 @@ Template.notificationItem.events({
   'click .readNotification': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
+    $(".dropdown-notifi").addClass("open");
     Meteor.call("readNotifications", id, function(err) {
       if(err) {
         console.log(err);
