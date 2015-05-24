@@ -7,6 +7,7 @@ Template.notificationItem.events({
         console.log(err);
         return alert(err.reason);
       }
+      $(".dropdown-notifi").addClass("open");
     });
   },
 
