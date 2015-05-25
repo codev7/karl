@@ -4,7 +4,6 @@ if (Meteor.isClient) {
   Meteor.subscribe('currentUser');
 
   IntercomSettings.userInfo = function(user, info) {
-    console.log(user, info);
     if(Meteor.user().intercomHash) {
       // add properties to the info object, for instance:
       if(user.services && user.services.google) {
