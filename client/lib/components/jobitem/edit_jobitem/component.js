@@ -279,10 +279,20 @@ component.action.submit = function(id, info) {
             if(key != "checklist" && key != "startsOn" && key != "recipe" && key != "description" && key != "ingredients") {
               if(key == "type") {
                 if(jobBefore.type != info.type) {
-                  var str =  key + " changed from '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
+                  var str =  key;
+                  if(jobBefore[key]) {
+                    str += " changed from '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
+                  } else {
+                    str += " updated to be " + info[key] + "'.<br>";  
+                  }
                 }
               } else {
-                var str = key + " changed from  '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
+                var str =  key;
+                if(jobBefore[key]) {
+                  str += " changed from '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
+                } else {
+                  str += " updated to be " + info[key] + "'.<br>";  
+                }
               }
               if(desc) {
                 desc = desc + str;

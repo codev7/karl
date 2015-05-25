@@ -161,6 +161,7 @@ Meteor.methods({
       removeDoc.endsOn = "";
       removeDoc.startsOn = "";
       removeDoc.section = "";
+      removeDoc.description = "";
     } else if(info.type == "Recurring") {
       if(info.repeatAt) {
         if(info.repeatAt != job.repeatAt) {
@@ -199,6 +200,7 @@ Meteor.methods({
       removeDoc.shelfLife = "";
       removeDoc.portions = "";
       removeDoc.ingredients = "";
+      removeDoc.recipe = "";
     }
 
     if(Object.keys(updateDoc).length > 0) {

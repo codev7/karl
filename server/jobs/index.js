@@ -39,6 +39,7 @@ Meteor.methods({
                   for(var i=0; i<repeat; i++) {
                     var info = {
                       "name": item.name,
+                      "ref": item._id,
                       "type": item.type,
                       "status": "draft",
                       "options": [],
@@ -65,6 +66,7 @@ Meteor.methods({
                 var info = {
                   "name": item.name,
                   "type": item.type,
+                  "ref": item._id,
                   "status": "draft",
                   "options": [],
                   "onshift": null,
@@ -88,6 +90,7 @@ Meteor.methods({
                 // console.log("............max time less......");
                 var info = {
                   "name": item.name,
+                  "ref": item._id,
                   "type": item.type,
                   "status": "draft",
                   "options": [],
@@ -112,6 +115,7 @@ Meteor.methods({
                   for(var i=0; i<repeat; i++) {
                     var info = {
                       "name": item.name,
+                      "ref": item._id,
                       "type": item.type,
                       "status": "draft",
                       "options": [],
@@ -136,6 +140,7 @@ Meteor.methods({
 
                 var info = {
                   "name": item.name,
+                  "ref": item._id,
                   "type": item.type,
                   "status": "draft",
                   "options": [],
@@ -184,6 +189,7 @@ Meteor.methods({
     // });
     var doc = {
       "name": info.name,
+      "ref": null,
       "type": info.type,
       "status": 'draft',
       "options": [],

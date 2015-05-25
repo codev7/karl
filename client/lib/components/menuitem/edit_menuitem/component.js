@@ -114,7 +114,20 @@ component.action.submit = function(id, info) {
                 if(key == "category") {
                   var str = key + " changed from " + Categories.findOne(menuBefore[key]).name + " to " + Categories.findOne(info[key]).name + ".</br>";  
                 } else {
-                  var str = key + " changed from " + menuBefore[key] + " to " + info[key] + ".</br>";
+                  var str =  key;
+                  if(key == "image") {
+                    if(menuBefore[key]) {
+                      str += " changed from <img src='" + menuBefore[key] + "'/> to <img src='" + info[key] + "'/><br>";
+                    } else {
+                      str += " updated to be <img src='" + info[key] + "'/><br>";  
+                    }
+                  } else {
+                    if(menuBefore[key]) {
+                      str += " changed from '" + menuBefore[key] + "' to '" + info[key] + "'.<br>";
+                    } else {
+                      str += " updated to be " + info[key] + "'.<br>";  
+                    }
+                  }
                 }
                 if(desc) {
                   desc += str;

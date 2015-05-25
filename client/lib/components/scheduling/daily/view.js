@@ -36,7 +36,8 @@ Template.dailyShiftScheduling.events({
     var shiftId = $(event.target).attr("data-shift");
     Session.set("thisJob", id);
     Session.set("shiftId", shiftId);
-    $("#jobProfile").modal();
+    $(".theme-config-box").toggleClass("show");
+    // $("#jobProfile").modal();
   },
 
   'change .selectWorkers': function(event) {
