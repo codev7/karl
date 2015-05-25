@@ -1,5 +1,11 @@
 {
   "public": {
+    "intercom": {
+      "id": "rc6uoqw0"
+    }
+  },
 
+  "intercom": {
+    "secret": "fF3c2THd9ILbXpPuvNs7Q-_UpisGchsbjMj2W4Y-"
   }
 }
