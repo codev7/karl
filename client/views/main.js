@@ -4,7 +4,7 @@ if (Meteor.isClient) {
   Meteor.subscribe('currentUser');
 
   IntercomSettings.userInfo = function(user, info) {
-    if(Meteor.user().intercomHash) {
+    if(user.intercomHash) {
       // add properties to the info object, for instance:
       if(user.services && user.services.google) {
         info.email = user.services.google.email;
@@ -12,6 +12,8 @@ if (Meteor.isClient) {
       } else {
         info.email = user.emails[0].address;
       }
+    } else {
+      return false;
     }
   }
 }
