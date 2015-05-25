@@ -1,3 +1,5 @@
+var autolinker = new Autolinker();
+
 var component = FlowComponents.define("submitComment", function(props) {
   this.referenceId = Router.current().params._id;
 });
@@ -29,8 +31,11 @@ component.action.submit = function(text) {
   taggedUsers.forEach(function(user) {
     textHtml = textHtml.replace(user.user, "<span class='label " + user.class + "'>" + user.user + "</span>");
   });
+
+  var linkedText = autolinker.link(textHtml);
+  console.log(linkedText);
   
-  Meteor.call("createComment", textHtml, ref, function(err, id) {
+  Meteor.call("createComment", linkedText, ref, function(err, id) {
     if(err) {
       console.log(err);
       return alert(err.reason);
