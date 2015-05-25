@@ -73,6 +73,7 @@ component.state.createAt = function() {
 
 component.state.text = function() {
   if(this.notification && this.notification.text) {
+    console.log(this.notification.text);
     var text = this.notification.text;
     return text;
   }

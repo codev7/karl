@@ -471,3 +471,8 @@ select {
   height: 100% !important;
   margin-right: -300px;
 }
+
+.notifi-text > div > img, .notifi-text > img {
+  width: 250px !important;
+  max-height: 195px !important;
+}
