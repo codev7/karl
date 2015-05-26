@@ -1,9 +1,0 @@
-<template name="dailyMenusForecastList">
-  {{#each state$forecastPerWeek}}
-    {{> render component="dailyForecastedMenus" forecast=this}}
-  {{/each}}
-  <tr>
-    <td><h4>Total</h4></td>
-    <td class="text-warning">$ {{state$expectedTotalRevenue}}</td>
-  </tr>
-</template>

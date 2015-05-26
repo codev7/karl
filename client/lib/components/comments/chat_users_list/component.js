@@ -1,1 +1,0 @@
-var component = FlowComponents.define("chatUsersList", function(props) {});
