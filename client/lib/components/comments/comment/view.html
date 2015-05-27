@@ -1,0 +1,10 @@
+<template name="comment">
+  <div class="chat-message">
+    <img class="message-avatar" src="{{state$profilePicture}}" alt="">
+    <div class="message">
+      <a class="message-author" href="#">{{state$name}}</a>
+      <span class="message-date">{{timeFormattedWithDate state$createdOn}}</span>
+      <span class="message-content">{{{state$text}}}</span>
+    </div>
+  </div>
+</template>

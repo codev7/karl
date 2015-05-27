@@ -1,10 +1,12 @@
 <template name="menuItemsListMainView">
-   <!-- Page heading -->
+  <!-- Page heading -->
   {{> pageHeading title="Menus List" category='Other pages' }}
 
   <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-    {{> render component="menuItemsList"}}
+      <div class="col-lg-12">
+        {{> render component="menuItemsList"}}
+      </div>
     </div>
   </div>
 </template>
