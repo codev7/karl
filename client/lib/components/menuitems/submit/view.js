@@ -36,8 +36,8 @@ Template.submitMenuItem.events({
     $("#jobItemListModal").modal("show");
   },
 
-  'submit form': function(e, instance) {
-    e.preventDefault();
+  'submit form': function(event, instance) {
+    event.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim(); 
     var category = $(event.target).find('[name=category]').val().trim(); 
     var status = $(event.target).find('[name=status]').val().trim(); 
@@ -47,14 +47,15 @@ Template.submitMenuItem.events({
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
 
+    console.log(instructions);
     if(!name) {
       return alert("Add a unique name for the menu");
     }
-    if(instructions) {
-      if($('.ql-editor').text() === "Add instructions here" || $('.ql-editor').text() === "") {
-        instructions = ""
-      }
-    }
+    // if(instructions) {
+    //   if($('.ql-editor').text() === "Add instructions here" || $('.ql-editor').text() === "") {
+    //     instructions = ""
+    //   }
+    // }
 
     var ing_doc = [];
     ings.forEach(function(item) {

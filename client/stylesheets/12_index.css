@@ -7,3 +7,8 @@
   width: 100% !important;
   height: 191px !important;
 }
+
+.ibox-content > div >  img {
+  max-width: 30%;
+  height: auto;
+}

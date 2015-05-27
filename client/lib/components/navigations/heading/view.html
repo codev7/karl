@@ -1,25 +1,59 @@
 <template name="pageHeading">
   <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-6">
-      <h2>{{title}}</h2>
+      <h2>{{state$title}}</h2>
       <ol class="breadcrumb">
         <li>
-          <a href="{{pathFor route=home}}">Home</a>
+          <a href="/">Home</a>
         </li>
-        {{#if category}}
+        {{#if state$category}}
         <li>
-          <a>{{category}}</a>
+          <a>{{state$category}}</a>
         </li>
         {{/if}}
         <li class="active">
-          <strong>{{title}}</strong>
+          <strong>{{state$title}}</strong>
         </li>
       </ol>
     </div>
     <div class="col-xs-6">
+      {{#if state$isMenuList}}
       <div class="title-action">
-        <a href="" class="btn btn-primary">Add new ingredient</a>
+        <a href="/menuItem/submit" class="btn btn-primary">Add new menu</a>
+        {{#if state$isMenuListSubscribed}}
+          <a href="#" class="btn btn-info unSubscribeMenuList">Unsubscribe</a>
+        {{else}}
+          <a href="#" class="btn btn-success subscribeMenuList">Subscribe</a>
+        {{/if}}
       </div>
+      {{/if}}
+
+      {{#if state$isMenuSubmit}}
+      <div class="title-action">
+        <a href="/menuItems/all/all" class="btn btn-white">Cancel</a>
+        <a href="#" class="btn btn-primary" id="menuSubmit">Save Changes</a>
+      </div>
+      {{/if}}
+
+      {{#if state$isMenuDetailed}}
+        <div class="title-action">
+          {{#if state$isMenuSubscribed}}
+          <a href="/menuItems/all/all" class="btn hidden-print  btn-info unSubscribeMenuItemBtn" data-id="{{state$id}}">Unsubscribe</a>
+          {{else}}
+          <a href="" class="btn btn-success hidden-print subscribeMenuItemBtn" data-id="{{state$id}}">Subscribe</a>
+          {{/if}}
+          <a href="" class="btn btn-primary hidden-print editMenuItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-edit"></i>Edit
+          </a>
+          <a href="" class="btn btn-white hidden-print copyMenuItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-copy"></i>
+          </a>
+          <a href="" class="btn btn-white hidden-print printMenuItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-print"></i>
+          </a>
+        </div>
+      {{/if}}
+
       <!-- JOBITEM -->
       <!-- <a type="button" href="/jobItem/submit" class="btn btn-xs btn-primary margin-right-10" data-id="{{state$id}}">
         <i class="fa fa-plus"></i>

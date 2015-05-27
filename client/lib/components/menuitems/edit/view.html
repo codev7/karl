@@ -1,0 +1,143 @@
+<template name="editMenuItem">
+  <div class="ibox-content">
+    <div class="row">
+      <form method="get" class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Name</label>
+          <div class="col-sm-8">
+            <input type="text" name="name" class="form-control" placeholder="Enter Name for the menu" value="{{state$name}}">
+          </div>
+        </div>  
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Category</label>
+          <div class="col-sm-8">
+            <select name="category" class="form-control">
+              {{#each state$categoriesList}}
+              {{#if state$isMyCategory _id}}
+                <option value="{{_id}}" selected='selected'>{{name}}</option>
+              {{else}}
+                <option value="{{_id}}">{{name}}</option>
+              {{/if}}
+              {{/each}}        
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Status</label>
+          <div class="col-sm-8">
+            <select name="status" class="form-control text-capitalize">
+              <option value="{{value}}" selected="selected" >{{state$myStatus}}</option>
+              {{#each state$statusList}}
+                <option value="{{value}}">{{status}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>   
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Instructions</label>
+          <div class="col-sm-8 panel panel-body">
+            {{> render component = 'textEditor' id='menuItemEditorEdit' 
+            initialHtml=state$initialHTML}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Prep items used
+          </label>
+          <div class="col-sm-8">
+            <table class="table table-hover thumbnail">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Cost per Portion ($)</th>
+                  <th>Portions</th>
+                  <!-- <th>Cost</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {{#each state$jobItems}}
+                  {{> render component='jobItemEdit' jobitem=this}}
+                {{/each}}
+                {{#each state$jobItemsList}}
+                  {{> render component='jobItemEdit' jobitem=this}}
+                {{/each}}
+              </tbody>
+                <br>
+                <button id="showJobItemsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add prep jobs to menu item</button>
+
+            </table>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Ingredients used
+          </label>
+          <div class="col-sm-8">
+            <table class="table table-hover thumbnail">
+              <thead>
+                <tr>
+                  <th>Supplier's Code</th>
+                  <th>Description</th>
+                  <th>Unit used</th>
+                  <th>Unit Price ($)</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each state$ingredients}}
+                  {{> render component='ingredientItemEdit' ingredient=this}}
+                {{/each}}
+                {{#each state$ingredientsList}}
+                  {{>  render component='ingredientItemEdit' ingredient=this}}
+                {{/each}}
+              </tbody>
+                <br>
+                <button id="showIngredientsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add ingredient to menu item</button>
+            </table>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Sale price</label>
+          <div class="col-sm-8">
+            <div class="input-group m-b">
+              <div class="input-group-addon">$</div>
+              <input type="text" class="form-control" name="salesPrice" placeholder="Sale price" value="{{state$salePrice}}">     
+            </div>
+          </div>
+        </div> 
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Image</label>
+          <div class="col-sm-8">
+            <button type="button" class="btn btn-sm btn-info" id="uploadMenuItem">Upload Image</button><br>
+            <div>
+              {{#if state$image}}
+              <div class="file col-sm-3 uploadedImageDiv">
+                <a href="#">
+                  <span class="corner"></span>
+                  <div class="image">
+                    <img id="uploadedImageUrl" src="{{state$image}}" class="img-responsive menu-item-image">
+                  </div>
+                </a>
+              </div>
+              {{else}}
+                <div class="file col-sm-3 uploadedNewImageDiv hide">
+                <a href="#">
+                  <span class="corner"></span>
+                  <div class="image">
+                    <img id="uploadedImageUrl" src="" class="img-responsive menu-item-image">
+                  </div>
+                </a>
+              </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <button type="button" class="btn btn-danger deleteMenuItemBtn" data-id="{{state$id}}">Delete</button>
+          <button class="btn btn-white cancelBtn" data-id="{{state$id}}" type="button">Cancel</button>
+          <button class="btn btn-primary saveBtn" type="submit">Save changes</button>
+        </div>
+      </form>
+    </div>
+    <br>
+  </div>
+</template>

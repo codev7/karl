@@ -1,5 +1,5 @@
 <template name="submitMenuItem">
-  <form method="get" class="form-horizontal">
+  <form method="get" class="form-horizontal" id="submitNewMenu">
     <div class="form-group">
       <label class="col-sm-3 control-label">Name</label>
       <div class="col-sm-8">
@@ -28,9 +28,9 @@
     </div>  
     <div class="form-group">
       <label class="col-sm-3 control-label">Instructions</label>
-      <div class="col-sm-8">
-      <!-- {{> render component = 'textEditor' id='menuItemEditorSubmit' 
-        initialHtml=state$initialHTML}} -->
+      <div class="col-sm-8 panel panel-default p-xxs">
+      {{> render component = 'textEditor' id='menuItemEditorSubmit' 
+        initialHtml=state$initialHTML}}
       </div>
     </div>
     <div class="form-group">
@@ -106,10 +106,6 @@
           </a>
         </div>
       </div>
-    </div>
-    <div class="col-md-12">
-      <button class="btn btn-white" type="button">Cancel</button>
-      <button class="btn btn-primary" type="submit">Save changes</button>
     </div>
   </form>   
 

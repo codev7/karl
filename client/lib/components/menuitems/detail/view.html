@@ -1,26 +1,10 @@
 <template name="menuItemDetail">
   <!-- Page heading -->
-  {{> pageHeading title=item.name category='Other pages' }}
+  {{> render component="pageHeading" title=item.name category='Menus' name="menudetailed" id=item._id}}
 
   <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
       <div class="col-lg-12">
-        <!--   <div class="col-md-4">
-            <div id="nestable-menu">
-              <button type="button" class="btn btn-white copyMenuItemBtn hidden-print pull-right margin-right-10" data-id="{{item._id}}"><i class="fa fa-copy"></i> Copy
-              </button>
-              {{#if state$isSubscribed}}
-              <button type="button" class="btn btn-info unSubscribeMenuItemBtn hidden-print pull-right margin-right-10" data-id="{{item._id}}"> Unsubscribe
-              </button>
-              {{else}}
-              <button type="button" class="btn btn-success subscribeMenuItemBtn hidden-print pull-right margin-right-10" data-id="{{item._id}}"> Subscribe
-              </button>
-              {{/if}}
-              <button type="button" class="btn btn-primary editMenuItemBtn hidden-print pull-right margin-right-10" data-id="{{item._id}}"><i class="fa fa-edit"></i> Edit
-              </button>
-              <button type="button" class="btn btn-white printMenuItemBtn hidden-print pull-right"><i class="fa fa-print"></i></button>
-            </div>
-          </div> -->
           <div class="col-md-12">
             {{#if item.instructions}}
               <div class="ibox float-e-margins">
