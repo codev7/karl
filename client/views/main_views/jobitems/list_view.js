@@ -1,4 +1,4 @@
-Template.jobItemsListView.events({
+Template.jobItemsListMainView.events({
   'click #submitJobItem': function(event) {
     event.preventDefault();
     Router.go("submitJobItem");
@@ -25,7 +25,7 @@ Template.jobItemsListView.events({
   }
 });
 
-Template.jobItemsListView.helpers({
+Template.jobItemsListMainView.helpers({
   'isSubscribed': function() {
     var result = Subscriptions.findOne({"_id": "joblist", "subscribers": Meteor.userId()});
     if(result) {

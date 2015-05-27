@@ -1,0 +1,173 @@
+<template name="jobItemDetail">
+  <!-- Page heading -->
+  {{> pageHeading title=state$name category='Other pages' }}
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox-content">
+          <div class="row">
+            <div class="col-md-8">
+              {{#if state$isPrep}}
+                {{#if state$recipe}}
+                <div class="form-group">
+                  <label>Recipe</label>
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      {{{state$recipe}}}
+                    </div>
+                  </div>
+                </div>
+                {{/if}}
+              {{/if}}
+              {{#if state$isRecurring}}
+                {{#if state$description}}
+                <div class="form-group">
+                  <label>Description</label>
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      {{{state$description}}}
+                    </div>
+                  </div>
+                </div>
+                {{/if}}
+                {{#if state$isChecklist}}
+                <div class="form-group">
+                  <label>Checklist</label>
+                  <ol class="list-group">
+                    {{#each state$checklist}}
+                      <li class="list-group-item">{{this}}</li>
+                    {{/each}}
+                  </ol>
+                </div>
+                {{/if}}
+              {{/if}}
+              {{#if state$isPrep}}
+                {{#if state$ingExists}}
+                  <div class="form-group">
+                    <label>
+                      Ingredients used
+                    </label>
+                    <div>
+                      <table class="table table-hover thumbnail col-md-7">
+                        <thead>
+                          <tr>
+                            <th>Supplier's Code</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Cost ($)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {{#each state$ingredients}}
+                            {{> render component='ingredientItemView' ingredient=this}}
+                          {{/each}}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                {{/if}}
+              {{/if}}
+            </div>
+            <div class="col-md-3 form-inline">
+              <div class="form-group">
+                <label>Type: </label>
+                <p class="form-control non-edit">{{state$type}}</p>
+              </div>
+              <br>
+              <div class="form-group">
+                <label>Active Time :</label>
+                <p class="form-control non-edit">{{secondsToMinutes state$activeTime}} mins</p>
+              </div>
+              {{#if state$isRecurring}}
+                <br>
+                <div class="form-group">
+                  <label>Repeat Frequency :</label>
+                  <p class="form-control non-edit">{{state$frequency}}</p>
+                </div>
+                {{#if state$isWeekly}}
+                <br>
+                <div class="form-group">
+                  <label>Repeat On :</label>
+                  <p class="form-control non-edit">{{state$repeatOnDays}}</p>
+                </div>
+                {{/if}}
+                <br>
+                <div class="form-group">
+                  <label>Repeat At :</label>
+                  <p class="form-control non-edit">{{state$repeatAt}}</p>
+                </div>
+                {{#if state$startsOn}}
+                <br>
+                <div class="form-group">
+                  <label>Starts On :</label>
+                  <p class="form-control non-edit">{{state$startsOn}}</p>
+                </div>
+                {{/if}}
+                {{#if state$endsOn}}
+                <br>
+                <div class="form-group">
+                  <label>Ends :</label>
+                  <p class="form-control non-edit">{{state$endsOn}}</p>
+                </div>
+                <br>
+                <div class="form-group">
+                  <label>Section :</label>
+                  {{#if state$section}}
+                    <p class="form-control non-edit">{{state$section}}</p>
+                  {{else}}
+                    <p class="form-control non-edit">Not assigned</p>
+                  {{/if}}
+                </div>
+                {{/if}}
+              {{/if}}
+              {{#if state$isPrep}}
+              <br>
+              <div class="form-group">
+                <label>Portions :</label>
+                <p class="form-control non-edit">{{state$portions}}</p>
+              </div>
+              {{/if}}
+              <br>
+              <div class="form-group">
+                <label>Labour Cost ($): </label>
+                <p class="form-control non-edit">$ {{state$labourCost}}</p>
+              </div>
+              <br>
+              {{#if state$isPrep}}
+              <div class="form-group">
+                <label>Cost per Portion ($) :</label>
+                <p class="form-control non-edit">$ {{state$prepCostPerPortion}}</p>
+              </div>
+              <br>
+              <div class="form-group">
+                <label>Shelf Life: </label>
+                <p class="form-control non-edit">{{state$shelfLife}} Days</p>
+              </div>
+              <br>
+              {{/if}}
+            </div>
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-2">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <button type="button" class="btn btn-white printJobItemBtn hidden-print"><i class="fa fa-print"></i></button>
+              <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$id}}"><i class="fa fa-edit"></i> Edit
+              </button>
+              {{#if state$isSubscribed}}
+              <button type="button" class="btn btn-info unSubscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Unsubscribe</button>
+              {{else}}
+              <button type="button" class="btn btn-success subscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Subscribe</button>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        <div class="row m-t-lg">
+          {{> render component='commentsPanel'}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
