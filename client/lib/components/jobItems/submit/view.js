@@ -227,8 +227,13 @@ Template.submitJobItem.events({
 
   'focus .dateselecter': function(event) {
     event.preventDefault();
-    $(".dateselecter").datetimepicker({
-      format: "YYYY-MM-DD"
+    $(".dateselecter").datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        format: "yyyy-mm-dd"
     });
   },
 

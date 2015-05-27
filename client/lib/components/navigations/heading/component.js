@@ -52,11 +52,30 @@ component.state.isMenuDetailed = function() {
   }
 }
 
+component.state.isJobsList = function() {
+  if(this.type == "jobslist") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 component.state.isMenuSubscribed = function() {
   if(this.type == "menudetailed") {
     var userId = Meteor.userId();
     var menuSubs = Subscriptions.findOne({"_id": Session.get("thisMenuItem"), "subscribers": userId});
     if(menuSubs) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.isJobsSubscribed = function() {
+  if(this.type == "jobslist") {
+    var result = Subscriptions.findOne({"_id": "joblist", "subscribers": Meteor.userId()});
+    if(result) {
       return true;
     } else {
       return false;

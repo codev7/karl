@@ -54,6 +54,17 @@
         </div>
       {{/if}}
 
+      {{#if state$isJobsList}}
+      <div class="title-action">
+         <a href="/jobItem/submit" class="btn btn-primary">Add new job</a>
+        {{#if state$isJobsSubscribed}}
+          <a href="#" class="btn btn-info hidden-print unSubscribeJobsList">Unsubscribe</a>
+        {{else}}
+          <a href="#" class="btn btn-success btn-sm subscribeJobsList">Subscribe</a>
+        {{/if}}
+      </div>
+      {{/if}}
+
       <!-- JOBITEM -->
       <!-- <a type="button" href="/jobItem/submit" class="btn btn-xs btn-primary margin-right-10" data-id="{{state$id}}">
         <i class="fa fa-plus"></i>
