@@ -10,10 +10,10 @@
         </form>
       </div>
       <ul class="nav navbar-top-links navbar-right">
-        <li>
+        <!-- <li>
           <span class="m-r-sm text-muted welcome-message"> Welcome to INSPINIA+ Admin Theme.</span>
-        </li>
-        <li class="dropdown">
+        </li> -->
+       <!--  <li class="dropdown">
           <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
             <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
           </a>
@@ -65,54 +65,49 @@
               </div>
             </li>
           </ul>
-        </li>
+        </li> -->
         <li class="dropdown">
           <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-            <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+            <i class="fa fa-bell"></i>
+            {{#if state$isExistNotifications}}
+              <span class="label label-primary">{{state$notificationsCount}}</span>
+            {{/if}}
           </a>
           <ul class="dropdown-menu dropdown-alerts">
-            <li>
-              <a href="{{pathFor route='mailbox'}}">
-                <div>
-                  <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                  <span class="pull-right text-muted small">4 minutes ago</span>
+            {{#if state$isExistNotifications}}
+              {{#each state$notifications}}
+                {{> render component='notificationItem' noti=this}}
+              {{/each}}
+              <li class="divider"></li>
+              <li>
+                <div class="text-center link-block">
+                  <a href="#" class="markAllAsRead">
+                    <strong>Mark All As Read</strong>
+                  </a>
                 </div>
-              </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a href="{{pathFor route='profile'}}">
-                <div>
-                  <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                  <span class="pull-right text-muted small">12 minutes ago</span>
+              </li>
+            {{else}}
+              <li>
+                <div class="text-center link-block">
+                  <strong>No unread notifications</strong>
                 </div>
-              </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a href="{{pathFor route='gridOptions'}}">
-                <div>
-                  <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                  <span class="pull-right text-muted small">4 minutes ago</span>
-                </div>
-              </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <div class="text-center link-block">
-                <a href="{{pathFor route='notifications'}}">
-                  <strong>See All Alerts</strong>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-              </div>
-            </li>
+              </li>
+            {{/if}}
           </ul>
         </li>
-        <li>
-          <a href="{{pathFor route='login'}}">
-            <i class="fa fa-sign-out"></i> Log out
-          </a>
-        </li>
+        {{#if currentUser}}
+          <li>
+            <a href="" id="signOutButton">
+              <i class="fa fa-sign-out"></i> Log out
+            </a>
+          </li>
+        {{else}}
+          <li>
+            <a href="" id="signInButton">
+              <i class="fa fa-sign-in"></i> Log in
+            </a>
+          </li>
+        {{/if}}
         <li>
           <a class="right-sidebar-toggle">
             <i class="fa fa-tasks"></i>
