@@ -1,0 +1,5 @@
+<template name="menuItemsList">
+  {{#each state$list}}
+    {{> render component='menuItem' menuitem=this}}
+  {{/each}}
+</template>
