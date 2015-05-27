@@ -1,0 +1,23 @@
+<template name="userDetailed">
+  <tr>
+    <td>{{state$username}}</td>
+    <td>{{{state$type}}}</td>
+    <td>{{state$email}}</td>
+    <td>
+      {{#if state$isAdmin}}
+        {{#if state$ifMe}}
+        <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
+        <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+        {{/if}}
+      {{/if}}
+      {{#if state$isManager}}
+      <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
+      <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+      {{/if}}
+      {{#if state$isWorker}}
+      <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
+      <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
+      {{/if}}
+    </td>
+  </tr>
+</template>

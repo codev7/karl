@@ -4,8 +4,9 @@
   <div id="wrapper">
 
     <!-- Navigation -->
-    {{> render component="navigation" }}
-
+    {{#if currentUser}}
+      {{> render component="navigation" }}
+    {{/if}}
     <!-- Page wraper -->
     <div id="page-wrapper" class="gray-bg">
 
@@ -23,7 +24,6 @@
 
     <!-- Right Sidebar -->
     {{> render component="rightSidebar" }}
-
   </div>
   <!-- End wrapper-->
 
