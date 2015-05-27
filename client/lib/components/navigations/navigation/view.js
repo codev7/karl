@@ -7,5 +7,10 @@ Template.navigation.rendered = function(){
 Template.navigation.events({
   'click .close-canvas-menu' : function(){
     $('body').toggleClass("mini-navbar");
-  }
+  },
+
+  'click #signOutButton': function(event) {
+    event.preventDefault();
+    Meteor.logout();
+  },
 });
