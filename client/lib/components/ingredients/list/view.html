@@ -1,0 +1,38 @@
+<template name="ingredientsList">
+  <div class="col-lg-12">
+    <div class="row">
+      <div class="col-sm-12">
+        <input type="text" name="searchIngs"  id="searchIngBox" class="form-control col-sm-8" placeholder="Search from Code, description or supplier">
+      </div>
+    </div>
+    <hr>
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Supplier's Code </th>
+                <th>Description </th>
+                <th>Supplier </th>
+                <th>Portion Ordered (b) </th>
+                <th>Cost per Portion (b) ($)</th>
+                <th>Portion used (a)</th>
+                <th>How many (a)'s in a (b)</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each getIngredients}}
+                {{> render component = 'ingredientItemDetailed' ingredient=this}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+         <p>
+          <a  href="#" class="btn btn-block btn-outline btn-primary" id="loadMoreIngs">Load More</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
