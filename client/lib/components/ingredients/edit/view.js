@@ -56,18 +56,21 @@ Template.editIngredientItem.events({
   'click .deleteIngredient': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
-    if(id) {
-      Meteor.call("deleteIngredient", id, function(err) {
-        if(err) {
-          console.log(err);
-          return alert(err.reason);
-        } else {
-          var text = $("#searchIngBox").val();
-          $("#editIngredientModal").modal("hide");
-          IngredientsListSearch.cleanHistory();
-          IngredientsListSearch.search(text, {"limit": 10});
-        }
-      });
+    var result = confirm("Are you sure, you want to delete this item ?");
+    if (result == true) {
+      if(id) {
+        Meteor.call("deleteIngredient", id, function(err) {
+          if(err) {
+            console.log(err);
+            return alert(err.reason);
+          } else {
+            var text = $("#searchIngBox").val();
+            $("#editIngredientModal").modal("hide");
+            IngredientsListSearch.cleanHistory();
+            IngredientsListSearch.search(text, {"limit": 10});
+          }
+        });
+      }
     }
   }
 });
