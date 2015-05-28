@@ -28,8 +28,10 @@ component.state.totals = function() {
   list.forEach(function(item) {
     totals.portions += parseFloat(item.quantity);
     var menuItem = MenuItems.findOne(item._id);
-    var revenue = parseFloat(item.quantity) * menuItem.salesPrice;
-    totals.revenue += revenue;
+    if(menuItem) {
+      var revenue = parseFloat(item.quantity) * menuItem.salesPrice;
+      totals.revenue += revenue;
+    }
   });
   return totals;
 }

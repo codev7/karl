@@ -1,10 +1,8 @@
 Template.weeklySalesForecastMenusListView.helpers({
-  'week': function() {
+  'title': function() {
     var week = Router.current().params.week;
-    var monday = moment().day("Monday").week(week).format("YYYY-MM-DD");
-    var sunday = moment().day("Sunday").week(parseInt(week) + 1).format("YYYY-MM-DD");
-    var dateRange = monday + " - " + sunday;
-    return dateRange;
+    var date = moment().day("Monday").week(week).format("Do of MMMM YYYY");
+    return "Edit Cafe Sales Forecasting for the week starting from " + date;
   }
 });
 

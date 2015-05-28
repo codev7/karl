@@ -2,11 +2,7 @@
   <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-6">
       <h2>
-      {{#if state$isCafeForecasting}}
-        {{state$cafeForecastingTitle}}
-      {{else}}
         {{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}
-      {{/if}}
       </h2>
       <ol class="breadcrumb">
         <li>
