@@ -1,7 +1,13 @@
 <template name="pageHeading">
   <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-6">
-      <h2>{{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}</h2>
+      <h2>
+      {{#if state$isCafeForecasting}}
+        {{state$cafeForecastingTitle}}
+      {{else}}
+        {{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}
+      {{/if}}
+      </h2>
       <ol class="breadcrumb">
         <li>
           <a href="/">Home</a>
@@ -76,6 +82,14 @@
         <a href="" class="btn btn-white previousDay"><i class="fa fa-chevron-left"></i></a>
         <a href="" class="btn btn-white today">Today</a>
         <a href="" class="btn btn-white nextDay"><i class="fa fa-chevron-right"></i></a>
+      </div>
+      {{/if}}
+
+      {{#if state$isCafeForecasting}}
+      <div class="title-action">
+        <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
+        <a href="" class="btn btn-white thisWeek">This Week</a>
+        <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
       </div>
       {{/if}}
     </div>

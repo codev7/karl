@@ -40,12 +40,15 @@
           <li class="{{isActiveRoute regex='menuItemsMaster'}}">
             <a href="/menuItems/all/all"><i class="fa fa-cutlery"></i> <span class="nav-label">Menu</span></a>
           </li>
+
           <li class="{{isActiveRoute regex='jobItemsMaster'}}">
-            <a href="/jobItems"><i class="fa fa-align-justify"></i> <span class="nav-label">Jobs</span> </a>
+            <a href="/jobItems"><i class="fa fa-spoon"></i> <span class="nav-label">Jobs</span> </a>
           </li>
+
           <li class="{{isActiveRoute regex='ingredientsList'}}">
             <a href="/ingredients"><i class="fa -o fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
+
           <li class="{{isActiveRoute regex='salesCalibration|actualSales'}}">
             <a href="#">
               <i class="fa fa-calculator"></i>
@@ -58,9 +61,33 @@
               </li>
               <li class="{{isActiveRoute regex='actualSales'}}">
                 <a href="/sales/{{today}}">Actual Sales</a>
-                </li>
+              </li>
+              <li class="{{isActiveRoute regex='actualSales'}}">
+                <a href="#">
+                  <span class="nav-label">Forecasting</span>
+                  <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-third-level {{isActiveRoute regex='cafeSalesForecast' className='in'}}">
+                  <li class="{{isActiveRoute regex='cafeSalesForecast'}}">
+                    <a href="/sales/forecast/cafe/{{week}}">Cafe</a>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
+
+          <!-- <li class="{{isActiveRoute regex='cafeSalesForecast'}}">
+            <a href="#">
+              <i class="fa fa-bar-chart-o"></i>
+              <span class="nav-label">Sales Forecast</span>
+              <span class="fa arrow"></span>
+            </a>
+            <ul class="nav nav-second-level {{isActiveRoute regex='cafeSalesForecast' className='in'}}">
+              <li class="{{isActiveRoute regex='cafeSalesForecast'}}">
+                <a href="/sales/forecast/cafe/{{week}}">Cafe</a>
+              </li>
+            </ul>
+          </li> -->
         </ul>
       </div>
     </nav>
