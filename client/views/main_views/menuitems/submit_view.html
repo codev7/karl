@@ -6,6 +6,9 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <h5>Create a new menu</h5>
+          </div>
           <div class="ibox-content">
             {{> render component="submitMenuItem"}}
           </div>
@@ -13,4 +16,10 @@
       </div>
     </div>
   </div>
+
+  <!-- JOB ITEMS LIST-->
+  <div class="modal fade" id="jobItemListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='showJobItemsList' name="submitMenuItem"}}
+  </div>
+  <!-- /JOB ITEMS LIST -->
 </template>

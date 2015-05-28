@@ -1,14 +1,14 @@
 <template name="submitMenuItem">
   <form method="get" class="form-horizontal" id="submitNewMenu">
     <div class="form-group">
-      <label class="col-sm-3 control-label">Name</label>
-      <div class="col-sm-8">
+      <label class="col-sm-2 control-label">Name</label>
+      <div class="col-sm-10">
         <input type="text" name="name" class="form-control" placeholder="Enter Name for the menu">
       </div>
     </div>  
     <div class="form-group">
-      <label class="col-sm-3 control-label">Category</label>
-      <div class="col-sm-8">
+      <label class="col-sm-2 control-label">Category</label>
+      <div class="col-sm-10">
         <select name="category" class="form-control">
           {{#each categoriesList}}
           <option value="{{_id}}">{{name}}</option>
@@ -17,8 +17,8 @@
       </div>
     </div>  
     <div class="form-group">
-      <label class="col-sm-3 control-label">Status</label>
-      <div class="col-sm-8">
+      <label class="col-sm-2 control-label">Status</label>
+      <div class="col-sm-10">
         <select name="status" class="form-control">
           <option value="active" selected="selected">Active</option>
           <option value="ideas">Ideas</option>
@@ -27,20 +27,19 @@
       </div>
     </div>  
     <div class="form-group">
-      <label class="col-sm-3 control-label">Instructions</label>
-      <div class="col-sm-8 panel panel-default p-xxs">
+      <label class="col-sm-2 control-label">Instructions</label>
+      <div class="col-sm-10">
       {{> render component = 'textEditor' id='menuItemEditorSubmit' 
         initialHtml=state$initialHTML}}
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Prep items used
+      <label class="col-sm-2 control-label">Prep items used
         <a id="showJobItemsList" class="btn btn-xs btn-primary margin-right-10">
           <i class="fa fa-plus"></i>
         </a>
-        <!-- <button class="btn btn-xs btn-info" id="showJobItemsList">+</button> -->
       </label>
-      <div class="col-sm-8">
+      <div class="col-sm-10">
         <table class="table table-hover thumbnail">
           <thead>
             <tr>
@@ -60,12 +59,12 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Ingredients used
+      <label class="col-sm-2 control-label">Ingredients used
       <a id="showIngredientsList" class="btn btn-xs btn-primary margin-right-10">
         <i class="fa fa-plus"></i>
       </a>
       </label>
-      <div class="col-sm-8">
+      <div class="col-sm-10">
         <table class="table table-hover thumbnail">
           <thead>
             <tr>
@@ -85,8 +84,8 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Sale price</label>
-      <div class="col-sm-8">
+      <label class="col-sm-2 control-label">Sale price</label>
+      <div class="col-sm-10">
         <div class="input-group m-b">
           <div class="input-group-addon">$</div>
           <input type="text" class="form-control" name="salesPrice" placeholder="Sale price">     
@@ -94,10 +93,10 @@
       </div>
     </div> 
     <div class="form-group">
-      <label class="col-sm-3 control-label">Image</label>
-      <div class="col-sm-8">
+      <label class="col-sm-2 control-label">Image</label>
+      <div class="col-sm-10">
         <button type="button" class="btn btn-sm btn-info" id="uploadMenuItem">Upload Image</button><br>
-        <div class="file col-sm-3 uploadedImageDiv hide">
+        <div class="file col-sm-2 uploadedImageDiv hide">
           <a href="#">
             <span class="corner"></span>
             <div class="image">
@@ -108,11 +107,4 @@
       </div>
     </div>
   </form>   
-
-
-  <!-- JOB ITEMS LIST-->
-  <div class="modal fade" id="jobItemListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    {{> render component='showJobItemsList' name="submitMenuItem"}}
-  </div>
-  <!-- /JOB ITEMS LIST -->
 </template>

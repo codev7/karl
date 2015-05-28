@@ -12,3 +12,8 @@
   max-width: 30%;
   height: auto;
 }
+
+.image > img {
+  width: 100%;
+  height: 315px;
+}

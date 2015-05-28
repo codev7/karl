@@ -47,15 +47,14 @@ Template.submitMenuItem.events({
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
 
-    console.log(instructions);
     if(!name) {
       return alert("Add a unique name for the menu");
     }
-    // if(instructions) {
-    //   if($('.ql-editor').text() === "Add instructions here" || $('.ql-editor').text() === "") {
-    //     instructions = ""
-    //   }
-    // }
+    if(instructions) {
+      if($('.note-editable').text() === "Add instructions here" || $('.note-editable').text() === "") {
+        instructions = ""
+      }
+    }
 
     var ing_doc = [];
     ings.forEach(function(item) {

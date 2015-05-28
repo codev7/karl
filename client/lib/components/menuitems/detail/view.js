@@ -62,7 +62,10 @@ Template.menuItemDetail.helpers({
 Template.menuItemDetail.events({
   'click .editMenuItemBtn': function(e) {
     e.preventDefault();
-    Router.go("menuItemEdit", {"_id": $(e.target).attr("data-id")})
+    var id = $(e.target).attr("data-id");
+    if(id) {
+      Router.go("menuItemEdit", {"_id": id})
+    }
   },
 
   'click .printMenuItemBtn': function(event) {
