@@ -82,3 +82,11 @@ component.state.isJobsSubscribed = function() {
     }
   }
 }
+
+component.state.isIngredientsList = function() {
+  if(this.type == "ingredientslist") {
+    return true;
+  } else {
+    return false;
+  }
+}
