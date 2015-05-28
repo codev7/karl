@@ -36,11 +36,11 @@ Template.editMenuItem.events({
     if(!name) {
       return alert("Add a unique name for the menu");
     }
-    // if(instructions) {
-    //   if($('.ql-editor').text() === "Add instructions here" || $('.ql-editor').text() === "") {
-    //     instructions = ""
-    //   }
-    // }
+    if(instructions) {
+      if($('.note-editable').text() === "Add instructions here" || $('.note-editable').text() === "") {
+        instructions = ""
+      }
+    }
     var info = {};
     if(menu.name != name) {
       info.name = name;
