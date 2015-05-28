@@ -3,6 +3,25 @@
   {{> render component="pageHeading" title="Menus List" category='Menus' name="menulist"}}
 
   <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+          <div class="col-md-3">
+              <select name="MenuCategory" class="form-control m-b">
+                  <option>Main Menu</option>
+                  <option>Kids Menu</option>
+                  <option>Specials</option>
+                  <option>All</option>
+              </select>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-3">
+              <select name="account" class="form-control m-b pull-right">
+                  <option>Active</option>
+                  <option>Ideas</option>
+                  <option>Archive</option>
+                  <option>All</option>
+              </select>
+          </div>
+      </div>
     <div class="row">
       <div class="col-lg-12">
         {{> render component="menuItemsList"}}
