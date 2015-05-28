@@ -38,7 +38,6 @@
           <a type="button" id="showIngredientsList" class="btn btn-xs btn-primary margin-right-10">
             <i class="fa fa-plus"></i>
           </a>
-          <!-- <button class="btn btn-xs btn-primary" id="showIngredientsList">+</button> -->
         </label>
         <div class="col-sm-10">
           <table class="table table-hover thumbnail">
@@ -113,13 +112,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">Repeat On</label>
             <div class="col-sm-10">
-              <div class="checkbox-inline checkbox">
-                {{#each state$weekWithRepeats}}
-                <label>
-                  <input type="checkbox" checked="{{checked}}" name="daysSelected" class="daysSelected" value="{{index}}">{{index}}
-                </label>
-                {{/each}}
-              </div>
+              {{#each state$weekWithRepeats}}
+                <div class="checkbox">
+                  <input type="checkbox" checked="{{checked}}" id="{{this}}" name="daysSelected" value="{{index}}">
+                  <label for="{{index}}">
+                      {{index}}
+                  </label>
+                </div>
+              {{/each}}
             </div>
           </div>
         {{/if}}
@@ -148,41 +148,33 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Ends</label>
           <div class="col-sm-10">
-            <div class="input-group">
-              {{#if state$endsOnNotNull}}
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" checked="{{state$endsNever}}" data-doc="endsNever">Never
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" checked="{{state$endsAfter}}" data-doc="endsAfter">After<input type="text" name="occurrences" class="" value="{{state$endOccurrences}}"> occurrences
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" checked="{{state$endsOn}}" data-doc="endsOn">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endDate}}">
-                </label>
-              </div>
-              {{else}}
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" checked="checked" data-doc="endsNever">Never
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" data-doc="endsAfter">After<input type="text" name="occurrences" class="" value="10"> occurrences
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" data-doc="endsOn">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endDate}}">
-                </label>
-              </div>
-              {{/if}}
+            {{#if state$endsOnNotNull}}
+            <div class="radio">
+              <input type="radio" id="radio" name="radioOption" data-doc="endsNever" checked="{{state$endsNever}}" >
+              <label for="radio">Never</label>
             </div>
+            <div class="radio">
+              <input type="radio" id="radio" data-doc="endsAfter" name="radioOption" checked="{{state$endsAfter}}">
+              <label for="radio">After<input type="text" name="occurrences" class="" value="{{state$endOccurrences}}">occurrences</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="radio" name="radioOption" data-doc="endsOn" checked="{{state$endsOn}}">
+              <label for="radio">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endDate}}"></label>
+            </div>
+            {{else}}
+            <div class="radio">
+              <input type="radio" id="radio" name="radioOption" data-doc="endsNever" checked>
+              <label for="radio">Never</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="radio" data-doc="endsAfter" name="radioOption">
+              <label for="radio">After<input type="text" name="occurrences" class="" value="10">occurrences</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="radio" name="radioOption" data-doc="endsOn">
+              <label for="radio">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endsOn}}"></label>
+            </div>
+            {{/if}}
           </div>
         </div>
         <div class="form-group">

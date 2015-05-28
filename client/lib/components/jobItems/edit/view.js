@@ -163,26 +163,34 @@ Template.editJobItem.events({
           info.startsOn = startsOn;
         }
         var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
-        if(job.endsOn && job.endsOn.on != endsOn) {
-          info.endsOn = {
-            "on": endsOn
+        info.endsOn = {};
+        if(job.endsOn) {
+          if(job.endsOn.on != endsOn) {
+            info.endsOn.on = endsOn;
           }
-        } 
+        } else {
+          info.endsOn = {"on": endsOn};
+        }
+
         if(endsOn == "endsAfter") {
           var after = $(event.target).find("[name=occurrences]").val();
           after = parseInt(after);
           if(after == after) {
-            if(job.endsOn && job.endsOn.after != after) {
-              info.endsOn['after'] = after;
+            if(job.endsOn.after && job.endsOn.after != after) {
+              info.endsOn.on = endsOn;
+              info.endsOn.after = after;
             } else {
-              info.endsOn['after'] = 1;
+              info.endsOn.on = endsOn;
+              info.endsOn['after'] = 10;
             }
           } else {
+            info.endsOn.on = endsOn;
             info.endsOn['after'] = 1;
           }
         } else if(endsOn == "endsOn") {
           var lastDate = $(event.target).find("[name=endsOn]").val();
           if(job.endsOn && moment(job.endsOn.lastDate).format("YYYY-MM-DD") != lastDate) {
+            info.endsOn.on = endsOn;
             info.endsOn['lastDate'] = new Date(lastDate);
           }
         }
