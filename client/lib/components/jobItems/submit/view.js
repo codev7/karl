@@ -117,7 +117,7 @@ Template.submitJobItem.events({
       }
       
       if(recipe) {
-        if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
+        if($('.note-editable').text() === "Add recipe here" || $('.note-editable').text() === "") {
           info.recipe = null;
         } else {
           info.recipe = recipe;
@@ -151,13 +151,13 @@ Template.submitJobItem.events({
     //if Recurring
     else if(type == "Recurring") {
       var description = FlowComponents.child('jobItemEditorSubmit').getState('content');
-      if(description) {
-        if($('.ql-editor').text() === "Add description here" || $('.ql-editor').text() === "") {
+      if(description) { 
+        if($('.note-editable').text() === "Add description here" || $('.note-editable').text() === "") {
           info.description = "";
         } else {
           info.description = description;
         }
-      }
+      } 
       //checklist
       var listItems = Session.get("checklist");
       info.checklist = listItems;

@@ -88,7 +88,7 @@ Template.editJobItem.events({
         }
 
         if(job.recipe != recipe) {
-          if($('.ql-editor').text() === "Add recipe here" || $('.ql-editor').text() === "") {
+          if($('.note-editable').text() === "Add recipe here" || $('.note-editable').text() === "") {
             info.recipe = "";
           } else {
             info.recipe = recipe;
@@ -137,7 +137,7 @@ Template.editJobItem.events({
       else if(type == "Recurring") {
         var description = FlowComponents.child('jobItemEditorEdit').getState('content');
         if(job.description != description) {
-          if($('.ql-editor').text() === "Add description here" || $('.ql-editor').text() === "") {
+          if($('.note-editable').text() === "Add description here" || $('.note-editable').text() === "") {
             info.description = "";
           } else {
             info.description = description;

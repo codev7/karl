@@ -7,31 +7,29 @@
     </div>
     <hr>
     <div class="ibox float-e-margins">
-      <div class="ibox-content">
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Active Time (mins) </th>
-                <th>Type </th>
-                <th>Shelf Life (Days)</th>
-                <th>Portions</th>
-                <th>Cost per Portion ($)</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each state$getJobItems}}
-                {{> render component='jobItemDetailed' jobitem=this}}
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
-         <p>
-          <a  href="#" class="btn btn-block btn-outline btn-primary" id="loadMoreJobItems">Load More</a>
-        </p>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Active Time (mins) </th>
+              <th>Type </th>
+              <th>Shelf Life (Days)</th>
+              <th>Portions</th>
+              <th>Cost per Portion ($)</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each state$getJobItems}}
+              {{> render component='jobItemDetailed' jobitem=this}}
+            {{/each}}
+          </tbody>
+        </table>
       </div>
+       <p>
+        <a  href="#" class="btn btn-block btn-outline btn-primary" id="loadMoreJobItems">Load More</a>
+      </p>
     </div>
   </div>
 </template>

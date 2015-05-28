@@ -5,7 +5,8 @@ var component = FlowComponents.define('textEditor', function(props) {
 
 component.prototype.renderTextEditor = function() {
   $('#summernote').summernote();
-  $(".note-editor").addClass("panel-body")
+
+  $("#summernote").code(this.initialHtml);
 };
 
 component.state.content = function() {
