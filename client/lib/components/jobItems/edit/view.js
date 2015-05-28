@@ -205,8 +205,16 @@ Template.editJobItem.events({
           repeatOn.forEach(function(doc) {
             if(doc.checked) {
               var value = $(doc).val();
-              if(job.repeatOn.indexOf(value) < 0) {
-                repeatDays.push(value);
+              if(job.repeatOn) {
+                if(job.repeatOn.indexOf(value) < 0) {
+                  if(repeatDays.indexOf(value) < 0) {
+                    repeatDays.push(value);
+                  }
+                }
+              } else {
+                if(repeatDays.indexOf(value) < 0) {
+                  repeatDays.push(value);
+                }
               }
             }
           });

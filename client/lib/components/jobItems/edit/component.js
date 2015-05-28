@@ -281,17 +281,17 @@ component.action.submit = function(id, info) {
                 if(jobBefore.type != info.type) {
                   var str =  key;
                   if(jobBefore[key]) {
-                    str += " changed from '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
+                    str += " changed from '" + JSON.stringify(jobBefore[key]) + "' to '" + JSON.stringify(info[key]) + "'.<br>";
                   } else {
-                    str += " updated to be " + info[key] + "'.<br>";  
+                    str += " updated to be " + JSON.stringify(info[key]) + "'.<br>";  
                   }
                 }
               } else {
                 var str =  key;
                 if(jobBefore[key]) {
-                  str += " changed from '" + jobBefore[key] + "' to '" + info[key] + "'.<br>";
+                  str += " changed from '" + JSON.stringify(jobBefore[key]) + "' to '" + JSON.stringify(info[key]) + "'.<br>";
                 } else {
-                  str += " updated to be " + info[key] + "'.<br>";  
+                  str += " updated to be " + JSON.stringify(info[key]) + "'.<br>";  
                 }
               }
               if(desc) {

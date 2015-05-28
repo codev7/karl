@@ -66,14 +66,14 @@
             </li>
           </ul>
         </li> -->
-        <li class="dropdown">
+        <li class="dropdown dropdown-notifi">
           <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
             <i class="fa fa-bell"></i>
             {{#if state$isExistNotifications}}
               <span class="label label-primary">{{state$notificationsCount}}</span>
             {{/if}}
           </a>
-          <ul class="dropdown-menu dropdown-alerts">
+          <ul class="dropdown-menu dropdown-messages">
             {{#if state$isExistNotifications}}
               {{#each state$notifications}}
                 {{> render component='notificationItem' noti=this}}
