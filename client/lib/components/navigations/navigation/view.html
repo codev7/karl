@@ -46,7 +46,7 @@
           </li>
 
           <li class="{{isActiveRoute regex='ingredientsList'}}">
-            <a href="/ingredients"><i class="fa -o fa-list"></i> <span class="nav-label">Ingredients</span></a>
+            <a href="/ingredients"><i class="fa fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
 
           <li class="{{isActiveRoute regex='salesCalibration|actualSales|cafeSalesForecast|weeklySalesForecastMenusList'}}">
@@ -74,6 +74,22 @@
                 </ul>
               </li>
             </ul>
+          </li>
+
+          <li class="{{isActiveRoute regex='dailyShiftScheduling'}}">
+            <a href="/scheduling/daily/{{today}}">
+              <i class="fa fa-calendar-o"></i>
+              <span class="nav-label">Roster</span>
+              <!-- <span class="fa arrow"></span> -->
+            </a>
+            <!-- <ul class="nav nav-second-level {{isActiveRoute regex='jobs' className='in'}}">
+              <li class="{{isActiveRoute regex='jobs'}}">
+                <a href="/jobs">Jobs</a>
+              </li>
+              <li class="{{isActiveRoute regex='jobs'}}">
+                <a href="/jobs">Jobs</a>
+              </li>
+            </ul> -->
           </li>
 
           <!-- <li class="{{isActiveRoute regex='cafeSalesForecast'}}">

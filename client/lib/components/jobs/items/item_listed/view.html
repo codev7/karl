@@ -1,0 +1,12 @@
+<template name="jobListed">
+  <tr>
+    <td>{{state$type}} {{state$name}}</td>
+    <td>{{state$type}}</td>
+    <td>{{state$status}}</td>
+    <td>{{state$activeTime}}</td>
+    <td>{{state$createdOn}}</td>
+    <td>{{state$shelfLife}}</td>
+    <td>{{state$portions}}</td>
+    <td><a href="#" class="deleteJob" data-id="{{state$id}}">Delete</a></td>
+  </tr>
+</template>

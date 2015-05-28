@@ -42,3 +42,19 @@
   margin-right: !important;
 }
 /*CHATS ALIGN FIX ON LEFT*/
+
+.theme-config {
+  top: 97px !important;
+  height: 100% !important;
+}
+
+.skin-setttings {
+  width: 300px !important;
+  height: 100% !important;
+}
+
+.theme-config-box {
+  height: 100% !important;
+  margin-right: -300px;
+}
+
