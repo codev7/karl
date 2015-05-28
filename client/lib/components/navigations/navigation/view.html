@@ -37,34 +37,28 @@
           </li>
           <!-- USER PROFILE HEADER -->
 
-          <li>
-            <a href="/menuItems/all/all"><i class="fa fa-spoon"></i> <span class="nav-label">Menu</span></a>
+          <li class="{{isActiveRoute regex='menuItemsMaster'}}">
+            <a href="/menuItems/all/all"><i class="fa fa-cutlery"></i> <span class="nav-label">Menu</span></a>
           </li>
-          <li>
+          <li class="{{isActiveRoute regex='jobItemsMaster'}}">
             <a href="/jobItems"><i class="fa fa-align-justify"></i> <span class="nav-label">Jobs</span> </a>
           </li>
-          <li>
+          <li class="{{isActiveRoute regex='ingredientsList'}}">
             <a href="/ingredients"><i class="fa -o fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
-          <li>
-            <a href=""><i class="fa fa-line-chart"></i> <span class="nav-label">Sales </span></a>
-            <ul class="nav nav-second-level">
-              <li>
-                  <a href="">Calibration</a>
+          <li class="{{isActiveRoute regex='salesCalibration|actualSales'}}">
+            <a href="#">
+              <i class="fa fa-calculator"></i>
+              <span class="nav-label">Sales</span>
+              <span class="fa arrow"></span>
+            </a>
+            <ul class="nav nav-second-level {{isActiveRoute regex='salesCalibration|actualSales' className='in'}}">
+              <li class="{{isActiveRoute regex='salesCalibration'}}">
+                <a href="/sales/calibration">Calibration</a>
               </li>
-              <li>
-                  <a href="">Actual Sales</a>
-              </li>
-              <li>
-                  <a href="">Forecasting</a>
-              </li>
-            </ul>
-          </li>
-          <li class="{{isActiveRoute regex='gallery|carusela'}}">
-            <a href="#"><i class="fa fa-picture-o"></i> <span class="nav-label">Gallery</span><span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level {{isActiveRoute regex='gallery|carusela' className='in'}}">
-              <li class="{{isActiveRoute regex='gallery'}}"><a href="{{pathFor route='gallery'}}">Lightbox Gallery</a></li>
-              <li class="{{isActiveRoute regex='carusela'}}"><a href="{{pathFor route='carusela'}}">Bootstrap Carusela</a></li>
+              <li class="{{isActiveRoute regex='actualSales'}}">
+                <a href="/sales/{{today}}">Actual Sales</a>
+                </li>
             </ul>
           </li>
         </ul>
