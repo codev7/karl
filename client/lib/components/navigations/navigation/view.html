@@ -49,20 +49,20 @@
             <a href="/ingredients"><i class="fa -o fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
 
-          <li class="{{isActiveRoute regex='salesCalibration|actualSales'}}">
+          <li class="{{isActiveRoute regex='salesCalibration|actualSales|cafeSalesForecast'}}">
             <a href="#">
-              <i class="fa fa-calculator"></i>
+              <i class="fa fa-line-chart"></i>
               <span class="nav-label">Sales</span>
               <span class="fa arrow"></span>
             </a>
-            <ul class="nav nav-second-level {{isActiveRoute regex='salesCalibration|actualSales' className='in'}}">
+            <ul class="nav nav-second-level {{isActiveRoute regex='salesCalibration|actualSales|cafeSalesForecast' className='in'}}">
               <li class="{{isActiveRoute regex='salesCalibration'}}">
                 <a href="/sales/calibration">Calibration</a>
               </li>
               <li class="{{isActiveRoute regex='actualSales'}}">
                 <a href="/sales/{{today}}">Actual Sales</a>
               </li>
-              <li class="{{isActiveRoute regex='actualSales'}}">
+              <li class="{{isActiveRoute regex='cafeSalesForecast'}}">
                 <a href="#">
                   <span class="nav-label">Forecasting</span>
                   <span class="fa arrow"></span>
