@@ -4,11 +4,10 @@ var component = FlowComponents.define('textEditor', function(props) {
 });
 
 component.prototype.renderTextEditor = function() {
-  $('#summernote').summernote();
-
-  $("#summernote").code(this.initialHtml);
+  $('.summernote').summernote();
+  $(".summernote").code(this.initialHtml);
 };
 
 component.state.content = function() {
-  return $('#summernote').code();
+  return $('.summernote').code();
 }

@@ -1,6 +1,6 @@
-// Template.textEditor.rendered = function () {
+Template.textEditorInspinia.rendered = function () {
 
-//     // Initialize summernote plugin
-//     $('.summernote').summernote();
+    // Initialize summernote plugin
+    $('.summernote').summernote();
 
-// };
+};
