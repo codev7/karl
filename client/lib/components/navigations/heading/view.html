@@ -1,7 +1,7 @@
 <template name="pageHeading">
   <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-xs-6">
-      <h2>{{state$title}}</h2>
+      <h2>{{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}</h2>
       <ol class="breadcrumb">
         <li>
           <a href="/">Home</a>
@@ -68,6 +68,14 @@
       {{#if state$isIngredientsList}}
       <div class="title-action">
         <a href="#addIngredientModal" class="btn btn-primary"  data-toggle="modal">Add new ingredient</a>
+      </div>
+      {{/if}}
+
+      {{#if state$isActualSales}}
+      <div class="title-action">
+        <a href="" class="btn btn-white previousDay"><i class="fa fa-chevron-left"></i></a>
+        <a href="" class="btn btn-white today">Today</a>
+        <a href="" class="btn btn-white nextDay"><i class="fa fa-chevron-right"></i></a>
       </div>
       {{/if}}
     </div>

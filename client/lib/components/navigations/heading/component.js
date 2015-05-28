@@ -25,6 +25,21 @@ component.state.isMenuList = function() {
   }
 }
 
+component.state.isActualSales = function() {
+  if(this.type == "actualsales") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.routeDate = function() {
+  var date = Router.current().params.date;
+  if(date) {
+    return date;
+  }
+}
+
 component.state.isMenuListSubscribed = function() {
   if(this.type == "menulist") {
     var result = Subscriptions.findOne({"_id": "menulist", "subscribers": Meteor.userId()});

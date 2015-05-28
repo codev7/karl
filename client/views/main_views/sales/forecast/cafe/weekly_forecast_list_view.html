@@ -1,0 +1,21 @@
+<template name="weeklyForecastListView">
+  <div class="wrapper wrapper-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5 class="col-md-5">Cafe Sales Forecasting for the week starting {{week}} </h5>
+              <div class="col-md-5">
+                <button class="btn btn-warning btn-xs previousWeek">Prev Week</button>
+                <button class="btn btn-warning btn-xs thisWeek">This Week</button>
+                <button class="btn btn-warning btn-xs nextWeek">Next Week</button>
+              </div>  
+            </div>
+           {{> render component="weekForecastView"}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

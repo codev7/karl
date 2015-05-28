@@ -57,5 +57,25 @@ Template.pageHeading.events({
         return alert(err.reason);
       }
     });
+  },
+
+  'click .today': function(event) {
+    event.preventDefault();
+    var date = moment().format("YYYY-MM-DD");
+    Router.go("actualSales", {"date": date});
+  },
+
+  'click .previousDay': function(event) {
+    event.preventDefault();
+    var date = Router.current().params.date;
+    var yesterday = moment(date).subtract(1, "days").format("YYYY-MM-DD");
+    Router.go("actualSales", {"date": yesterday});
+  },
+
+  'click .nextDay': function(event) {
+    event.preventDefault();
+    var date = Router.current().params.date;
+    var tomorrow = moment(date).add(1, "days").format("YYYY-MM-DD")
+    Router.go("actualSales", {"date": tomorrow});
   }
 });
