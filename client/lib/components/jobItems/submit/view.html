@@ -101,13 +101,20 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">Repeat On</label>
             <div class="col-sm-10">
+              {{#each state$week}}
               <div class="checkbox">
-                {{#each state$week}}
+                <input type="checkbox" id="{{this}}" name="daysSelected" value="{{this}}">
+                <label for="{{this}}">
+                    {{this}}
+                </label>
+              </div>
+              {{/each}}
+              <!-- <div class="checkbox">
                 <label>
                   <input type="checkbox" name="daysSelected" class="daysSelected" value="{{this}}">{{this}}
                 </label>
                 {{/each}}
-              </div>
+              </div> -->
             </div>
           </div>
         {{/if}}
@@ -136,22 +143,17 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Ends</label>
           <div class="col-sm-10">
-            <div class="input-group">
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" checked="checked" data-doc="endsNever">Never
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" data-doc="endsAfter">After<input type="text" name="occurrences" class="" value="10"> occurrences
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="never" data-doc="endsOn">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endsOn}}">
-                </label>
-              </div>
+            <div class="radio">
+              <input type="radio" id="radio" name="radioOption" data-doc="endsNever" checked>
+              <label for="radio">Never</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="radio" data-doc="endsAfter" name="radioOption">
+              <label for="radio">After<input type="text" name="occurrences" class="" value="10">occurrences</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="radio" name="radioOption" data-doc="endsOn">
+              <label for="radio">On<input type="text" name="endsOn" class="dateselecter" value="{{state$endsOn}}"></label>
             </div>
           </div>
         </div>
