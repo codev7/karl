@@ -28,5 +28,5 @@ Template.navigation.helpers({
 
   'isPermitted': function() {
     return isManagerOrAdmin(Meteor.userId());
-  }
+  },
 });

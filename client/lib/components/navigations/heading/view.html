@@ -21,7 +21,9 @@
     <div class="col-xs-6">
       {{#if state$isMenuList}}
       <div class="title-action">
+        {{#if state$isManagerOrAdmin}}
         <a href="/menuItem/submit" class="btn btn-primary">Add new menu</a>
+        {{/if}}
         {{#if state$isMenuListSubscribed}}
           <a href="#" class="btn btn-info unSubscribeMenuList">Unsubscribe</a>
         {{else}}
