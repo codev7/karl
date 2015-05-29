@@ -27,8 +27,8 @@
                   </span>
                 </span>
               </a>
-              <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                <li><a href="{{pathFor route='profile'}}">Profile</a></li>
+              <ul class="dropdown-menu animated m-t-xs">
+                <li><a href="/profile">Profile</a></li>
                 {{#if state$isAdmin}}
                 <li><a href="/users">Users</a></li>
                 {{/if}}
@@ -51,7 +51,7 @@
           <li class="{{isActiveRoute regex='ingredientsList'}}">
             <a href="/ingredients"><i class="fa fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
-          {{#if isPermitted}}
+          {{#if state$isPermitted}}
           <li class="{{isActiveRoute regex='salesCalibration|actualSales|cafeSalesForecast|weeklySalesForecastMenusList'}}">
             <a href="#">
               <i class="fa fa-line-chart"></i>
@@ -78,6 +78,7 @@
               </li>
             </ul>
           </li>
+          {{/if}}
 
           <li class="{{isActiveRoute regex='dailyShiftScheduling'}}">
             <a href="/scheduling/daily/{{today}}">
@@ -94,7 +95,7 @@
               </li>
             </ul> -->
           </li>
-          {{/if}}
+          <!-- {{/if}} -->
 
           <!-- <li class="{{isActiveRoute regex='cafeSalesForecast'}}">
             <a href="#">

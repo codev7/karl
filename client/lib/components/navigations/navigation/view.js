@@ -24,9 +24,5 @@ Template.navigation.helpers({
   week: function() {
     var week = moment().format("w");
     return week;
-  },
-
-  'isPermitted': function() {
-    return isManagerOrAdmin(Meteor.userId());
-  },
+  }
 });

@@ -24,3 +24,13 @@ component.state.userType = function() {
     return "Worker";
   }
 }
+
+component.state.isPermitted = function() {
+  if(isAdmin()) {
+    return true;
+  } else if(isManager()) {
+    return true;
+  } else if(isWorker()) {
+    return false;
+  }
+}
