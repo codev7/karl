@@ -73,12 +73,11 @@
               <span class="label label-primary">{{state$notificationsCount}}</span>
             {{/if}}
           </a>
-          <ul class="dropdown-menu dropdown-messages">
+          <ul class="dropdown-menu dropdown-alerts">
             {{#if state$isExistNotifications}}
               {{#each state$notifications}}
                 {{> render component='notificationItem' noti=this}}
               {{/each}}
-              <li class="divider"></li>
               <li>
                 <div class="text-center link-block">
                   <a href="#" class="markAllAsRead">

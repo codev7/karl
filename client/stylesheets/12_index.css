@@ -9,11 +9,12 @@
 }
 
 .ibox-content > div >  img, 
-.ibox-content > img, 
+.col-md-12 > .ibox > .ibox-content > img,
 .panel-body > div > img,
 .panel-body > img, 
 .note-editable > div > img,
-.note-editable > img {
+.note-editable > img,
+.content > p > div > img {
   max-width: 30%;
   height: auto;
 }
@@ -63,8 +64,11 @@
   margin-right: -300px;
 }
 
-/*@media (screen )*/
-.dropdown-messages {
-  width: 430px !important;
+.navbar-top-links .dropdown-alerts {
+  width: 400px;
+  min-width: 0;
 }
 
+.navbar-top-links .dropdown-alerts {
+  margin-left: -74px;
+}
