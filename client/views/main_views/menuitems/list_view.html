@@ -2,30 +2,24 @@
   <!-- Page heading -->
   {{> render component="pageHeading" title="Menus List" category='Menus' name="menulist"}}
 
-  <div class="wrapper wrapper-content animated fadeInRight">
-      <div class="row">
-          <div class="col-md-3">
-              <select name="MenuCategory" class="form-control m-b">
-                  <option>Main Menu</option>
-                  <option>Kids Menu</option>
-                  <option>Specials</option>
-                  <option>All</option>
-              </select>
-          </div>
-          <div class="col-md-6"></div>
-          <div class="col-md-3">
-              <select name="account" class="form-control m-b pull-right">
-                  <option>Active</option>
-                  <option>Ideas</option>
-                  <option>Archive</option>
-                  <option>All</option>
-              </select>
-          </div>
-      </div>
+  <div class="wrapper wrapper-content animated">
+    {{> render component="menuFilters"}}
     <div class="row">
       <div class="col-lg-12">
         {{> render component="menuItemsList"}}
       </div>
     </div>
   </div>
+
+  <!-- ADD CATEGORY -->
+  <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'addNewCategory'}}
+  </div>
+  <!-- /ADD CATEGORY  -->
+
+  <!-- ADD STATUS -->
+  <div class="modal fade" id="addStatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'addNewStatus'}}
+  </div>
+  <!-- /ADD STATUS  -->
 </template>

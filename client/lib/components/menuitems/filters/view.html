@@ -1,0 +1,26 @@
+<template name="menuFilters">
+  <div class="row">
+    <div class="col-md-3">
+      <select name="MenuCategory" class="form-control m-b categorizedMenus">
+        {{#each state$categories}}
+        <option value="{{this._id}}">{{this.name}}</option>
+        {{/each}}
+        <option value="all">All</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      {{#if state$isAdmin}}
+      <a data-toggle="modal" data-target="#addCategoryModal" class="btn btn-primary btn-sm">Add new category</a>
+      <a data-toggle="modal" data-target="#addStatusModal" class="btn btn-primary btn-sm pull-right btn">Add new status</a>
+      {{/if}}
+    </div>
+    <div class="col-md-3">
+      <select name="account" class="form-control m-b pull-right menuStatus">
+        {{#each state$statuses}}
+        <option value="{{this.name}}">{{this.name}}</option>
+        {{/each}}
+        <option value="all">All</option>
+      </select>
+    </div>
+  </div>
+</template>
