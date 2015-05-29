@@ -46,7 +46,6 @@ Template.submitMenuItem.events({
     var image = $("#uploadedImageUrl").attr("src");
     var preps = $(event.target).find("[name=prep_qty]").get();
     var ings = $(event.target).find("[name=ing_qty]").get();
-
     if(!name) {
       return alert("Add a unique name for the menu");
     }
@@ -55,6 +54,7 @@ Template.submitMenuItem.events({
         instructions = ""
       }
     }
+    console.log(instructions);
 
     var ing_doc = [];
     ings.forEach(function(item) {

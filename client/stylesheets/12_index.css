@@ -9,8 +9,11 @@
 }
 
 .ibox-content > div >  img, 
-.panel-body > div > img, 
-.note-editable > div > img {
+.ibox-content > img, 
+.panel-body > div > img,
+.panel-body > img, 
+.note-editable > div > img,
+.note-editable > img {
   max-width: 30%;
   height: auto;
 }
