@@ -57,7 +57,7 @@ component.action.submit = function(text) {
       }
 
       var options = {
-        "title": "New comment on " + ref_name,
+        "title": "New comment on " + ref_name + " by " + Meteor.user().username,
         "users": matches,
         "commentId": id,
         "type": ref_type
