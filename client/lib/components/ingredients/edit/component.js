@@ -23,3 +23,16 @@ component.action.submit = function(id, info, event) {
     $("#editIngredientModal").modal("hide");
   });
 };
+
+component.state.isManagerOrAdmin = function() {
+  var userId = Meteor.userId();
+  return isManagerOrAdmin(userId);
+}
+
+component.state.isDisabled = function() {
+  if(isManagerOrAdmin(Meteor.userId())) {
+    return false;
+  } else {
+    return true;
+  }
+}

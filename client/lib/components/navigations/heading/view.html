@@ -75,7 +75,9 @@
 
       {{#if state$isIngredientsList}}
       <div class="title-action">
+        {{#if state$isManagerOrAdmin}}
         <a href="#addIngredientModal" class="btn btn-primary"  data-toggle="modal">Add new ingredient</a>
+        {{/if}}
       </div>
       {{/if}}
 
