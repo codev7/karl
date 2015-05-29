@@ -1,18 +1,20 @@
 <template name="userDetailed">
   <tr>
-    <td>{{username}}</td>
-    <td>{{{item.type}}}</td>
-    <td>{{item.email}}</td>
+    <td>{{state$username}}</td>
+    <td>{{{state$type}}}</td>
+    <td>{{state$email}}</td>
     <td>
-      {{#if isAdmin}}
-      <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
-      <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+      {{#if state$isAdmin}}
+        {{#if state$ifMe}}
+        <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
+        <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+        {{/if}}
       {{/if}}
-      {{#if isManager}}
+      {{#if state$isManager}}
       <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
       <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
       {{/if}}
-      {{#if isWorker}}
+      {{#if state$isWorker}}
       <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
       <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
       {{/if}}

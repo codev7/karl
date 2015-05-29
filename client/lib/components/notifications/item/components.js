@@ -26,7 +26,7 @@ component.state.type = function() {
   }
 }
 
-component.state.permittedActionTypeate = function() {
+component.state.permittedActionType = function() {
   if(this.notification) {
     var type = this.notification.actionType;
     if(type && (type == "delete")) {
@@ -41,7 +41,7 @@ component.state.icon = function() {
   if(this.notification) {
     var type = this.notification.type;
     if(type == "job") {
-      return "briefcase";
+      return "spoon";
     } else if(type == "menu") {
       return "cutlery";
     } else if(type == "comment") {
@@ -73,7 +73,6 @@ component.state.createAt = function() {
 
 component.state.text = function() {
   if(this.notification && this.notification.text) {
-    console.log(this.notification.text);
     var text = this.notification.text;
     return text;
   }

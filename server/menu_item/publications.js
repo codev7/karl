@@ -1,4 +1,8 @@
 Meteor.publish("menuList", function(categoryId, status) {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
   var menuCursor = [];
   var query = {};
   if(categoryId && categoryId != "all") {
@@ -15,11 +19,19 @@ Meteor.publish("menuList", function(categoryId, status) {
 });
 
 Meteor.publish("menuItem", function(id) {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
   var cursor = MenuItems.find(id);
   return cursor;
 });
 
 Meteor.publish("menuItems", function(ids) {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
   var cursor = [];
   var items = MenuItems.find({"_id": {$in: ids}});
   cursor.push(items);
@@ -27,5 +39,9 @@ Meteor.publish("menuItems", function(ids) {
 });
 
 Meteor.publish("allCategories", function() {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
   return Categories.find();
 });

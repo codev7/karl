@@ -23,3 +23,10 @@ useraccounts:bootstrap
 meteorhacks:aggregate
 mizzao:autocomplete
 konecty:autolinker
+less
+fortawesome:fontawesome
+twbs:bootstrap
+zimme:iron-router-active
+jquery
+okgrow:iron-router-autoscroll
+dbarrett:dropzonejs

@@ -1,0 +1,101 @@
+<template name="pageHeading">
+  <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-xs-6">
+      <h2>
+        {{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}
+      </h2>
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Home</a>
+        </li>
+        {{#if state$category}}
+        <li>
+          <a>{{state$category}}</a>
+        </li>
+        {{/if}}
+        <li class="active">
+          <strong>{{state$title}}</strong>
+        </li>
+      </ol>
+    </div>
+    <div class="col-xs-6">
+      {{#if state$isMenuList}}
+      <div class="title-action">
+        {{#if state$isManagerOrAdmin}}
+        <a href="/menuItem/submit" class="btn btn-primary">Add new menu</a>
+        {{/if}}
+        {{#if state$isMenuListSubscribed}}
+          <a href="#" class="btn btn-info unSubscribeMenuList">Unsubscribe</a>
+        {{else}}
+          <a href="#" class="btn btn-success subscribeMenuList">Subscribe</a>
+        {{/if}}
+      </div>
+      {{/if}}
+
+      {{#if state$isMenuSubmit}}
+      <div class="title-action">
+        <a href="/menuItems/all/all" class="btn btn-white">Cancel</a>
+        <a href="#" class="btn btn-primary" id="menuSubmit">Save Changes</a>
+      </div>
+      {{/if}}
+
+      {{#if state$isMenuDetailed}}
+        <div class="title-action">
+          {{#if state$isMenuSubscribed}}
+          <a href="/menuItems/all/all" class="btn hidden-print  btn-info unSubscribeMenuItemBtn" data-id="{{state$id}}">Unsubscribe</a>
+          {{else}}
+          <a href="" class="btn btn-success hidden-print subscribeMenuItemBtn" data-id="{{state$id}}">Subscribe</a>
+          {{/if}}
+          {{#if state$isManagerOrAdmin}}
+          <a href="" class="btn btn-primary hidden-print editMenuItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-edit"></i>Edit
+          </a>
+          <a href="" class="btn btn-white hidden-print copyMenuItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-copy"></i>
+          </a>
+          {{/if}}
+          <a href="" class="btn btn-white hidden-print printMenuItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-print"></i>
+          </a>
+        </div>
+      {{/if}}
+
+      {{#if state$isJobsList}}
+      <div class="title-action">
+        {{#if state$isManagerOrAdmin}}
+         <a href="/jobItem/submit" class="btn btn-primary">Add new job</a>
+        {{/if}}
+        {{#if state$isJobsSubscribed}}
+          <a href="#" class="btn btn-info hidden-print unSubscribeJobsList">Unsubscribe</a>
+        {{else}}
+          <a href="#" class="btn btn-success btn-sm subscribeJobsList">Subscribe</a>
+        {{/if}}
+      </div>
+      {{/if}}
+
+      {{#if state$isIngredientsList}}
+      <div class="title-action">
+        {{#if state$isManagerOrAdmin}}
+        <a href="#addIngredientModal" class="btn btn-primary"  data-toggle="modal">Add new ingredient</a>
+        {{/if}}
+      </div>
+      {{/if}}
+
+      {{#if state$isActualSales}}
+      <div class="title-action">
+        <a href="" class="btn btn-white previousDay"><i class="fa fa-chevron-left"></i></a>
+        <a href="" class="btn btn-white today">Today</a>
+        <a href="" class="btn btn-white nextDay"><i class="fa fa-chevron-right"></i></a>
+      </div>
+      {{/if}}
+
+      {{#if state$isCafeForecasting}}
+      <div class="title-action">
+        <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
+        <a href="" class="btn btn-white thisWeek">This Week</a>
+        <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</template>

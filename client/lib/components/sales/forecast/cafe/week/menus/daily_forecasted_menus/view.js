@@ -3,7 +3,9 @@ Template.dailyForecastedMenus.events({
     event.preventDefault();
     var id = $(event.target).attr("data-id");
     var forecastOfDay = ForecastCafe.findOne(id);
-    Session.set("menuAddForForecast", id);
-    $("#showMenusList").modal();
+    if(forecastOfDay) {
+      Session.set("menuAddForForecast", id);
+      $("#showMenusList").modal();
+    }
   }
 });

@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         {{#each users}}
-          {{> userDetailed}}
+          {{> render component="userDetailed" user=this}}
         {{/each}}
         </tbody>
       </table>
