@@ -46,12 +46,14 @@
           {{else}}
           <a href="" class="btn btn-success hidden-print subscribeMenuItemBtn" data-id="{{state$id}}">Subscribe</a>
           {{/if}}
+          {{#if state$isManagerOrAdmin}}
           <a href="" class="btn btn-primary hidden-print editMenuItemBtn" data-id="{{state$id}}">
             <i class="fa fa-edit"></i>Edit
           </a>
           <a href="" class="btn btn-white hidden-print copyMenuItemBtn" data-id="{{state$id}}">
             <i class="fa fa-copy"></i>
           </a>
+          {{/if}}
           <a href="" class="btn btn-white hidden-print printMenuItemBtn" data-id="{{state$id}}">
             <i class="fa fa-print"></i>
           </a>
@@ -60,7 +62,9 @@
 
       {{#if state$isJobsList}}
       <div class="title-action">
+        {{#if state$isManagerOrAdmin}}
          <a href="/jobItem/submit" class="btn btn-primary">Add new job</a>
+        {{/if}}
         {{#if state$isJobsSubscribed}}
           <a href="#" class="btn btn-info hidden-print unSubscribeJobsList">Unsubscribe</a>
         {{else}}

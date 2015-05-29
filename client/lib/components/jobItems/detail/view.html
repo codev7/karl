@@ -132,8 +132,10 @@
             </div>
             <div class="col-md-12">
               <button type="button" class="btn btn-white printJobItemBtn hidden-print"><i class="fa fa-print"></i></button>
+              {{#if state$isManagerOrAdmin}}
               <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$id}}"><i class="fa fa-edit"></i> Edit
               </button>
+              {{/if}}
               {{#if state$isSubscribed}}
               <button type="button" class="btn btn-info unSubscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Unsubscribe</button>
               {{else}}

@@ -3,11 +3,11 @@ Meteor.publish('allJobItems', function() {
     logger.error('User not found : ' + this.userId);
     this.error(new Meteor.Error(404, "User not found"));
   }
-  var permitted = isManagerOrAdmin(this.userId);
-  if(!permitted) {
-    logger.error("User not permitted to publish all job items");
-    this.error(new Meteor.Error(404, "User not permitted to publish all jobs"));
-  }
+  // var permitted = isManagerOrAdmin(this.userId);
+  // if(!permitted) {
+  //   logger.error("User not permitted to publish all job items");
+  //   this.error(new Meteor.Error(404, "User not permitted to publish all jobs"));
+  // }
   var cursors = JobItems.find({}, {sort: {'name': 1}});
   return cursors;
 });
@@ -17,17 +17,21 @@ Meteor.publish("jobItem", function(id) {
     logger.error('User not found : ' + this.userId);
     this.error(new Meteor.Error(404, "User not found"));
   }
-  var permitted = isManagerOrAdmin(this.userId);
-  if(!permitted) {
-    logger.error("User not permitted to publish job item");
-    this.error(new Meteor.Error(404, "User not permitted to publish job"));
-  }
+  // var permitted = isManagerOrAdmin(this.userId);
+  // if(!permitted) {
+  //   logger.error("User not permitted to publish job item");
+  //   this.error(new Meteor.Error(404, "User not permitted to publish job"));
+  // }
   var cursors = [];
   cursors.push(JobItems.find(id));
   return cursors;
 });
 
 Meteor.publish("menuItemJobItems", function(ids) {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
   var cursors = [];
   var items = null;
   if(ids.length > 0) {

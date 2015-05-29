@@ -207,4 +207,9 @@ component.state.isSubscribed = function() {
   }
 }
 
+component.state.isManagerOrAdmin = function() {
+  var userId = Meteor.userId();
+  return isManagerOrAdmin(userId);
+}
+
 
