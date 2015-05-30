@@ -26,3 +26,7 @@ component.action.submit = function(info) {
     Router.go("menuItemDetail", {"_id": id});
   });
 };
+
+component.state.statuses = function() {
+  return Statuses.find();
+}
