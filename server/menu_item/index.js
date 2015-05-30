@@ -346,7 +346,7 @@ Meteor.methods({
       logger.error('Status name should be unique', exist);
       throw new Meteor.Error(404, "Status name should be unique");
     }
-    return Statuses.insert({"name": name});
+    return Statuses.insert({"name": name.toLowerCase()});
   },
 
   menuItemsCount: function() {
