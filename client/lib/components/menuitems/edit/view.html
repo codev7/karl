@@ -29,9 +29,9 @@
           <label class="col-sm-3 control-label">Status</label>
           <div class="col-sm-8">
             <select name="status" class="form-control text-capitalize">
-              <option value="{{value}}" selected="selected" >{{state$myStatus}}</option>
+              <option value="{{state$myStatus}}" selected="selected" >{{state$myStatus}}</option>
               {{#each state$statusList}}
-                <option value="{{value}}">{{status}}</option>
+                <option value="{{this.name}}">{{this.name}}</option>
               {{/each}}
             </select>
           </div>

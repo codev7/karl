@@ -84,17 +84,10 @@ component.state.ingredientsList = function() {
 }
 component.state.statusList = function() {
   var myStatus = this.item.status;
-  var list = [
-    {'status': 'Active', 'value': 'active'},
-    {'status': 'Ideas', 'value': 'ideas'},
-    {'status': 'Archived', 'value': 'archived'}
-  ];
-  list.forEach(function(doc) {
-    var index = list.indexOf(doc);
-    if(doc.value == myStatus) {
-      list.splice(index, 1);
-    }
-  });
+  var list = null;
+  if(myStatus) {
+    list = Statuses.find({"name": {$nin: [myStatus]}}).fetch();
+  }
   return list;
 }
 
