@@ -1,7 +1,7 @@
 <template name="menuFilters">
   <div class="row">
     <div class="col-md-3">
-      <select name="MenuCategory" class="form-control m-b categorizedMenus">
+      <select name="MenuCategory" class="form-control m-b categorizedMenus text-capitalize">
         <option selected="selected" value="{{state$selectedCategory._id}}">{{state$selectedCategory.name}}</option>
         {{#each state$categories}}
         <option value="{{this._id}}">{{this.name}}</option>
@@ -15,7 +15,7 @@
       {{/if}}
     </div>
     <div class="col-md-3">
-      <select name="account" class="form-control m-b pull-right menuStatus">
+      <select name="account" class="form-control m-b pull-right menuStatus text-capitalize">
         <option selected="selected" value="{{state$selectedStatus.name}}">{{state$selectedStatus.name}}</option>
         {{#each state$statuses}}
         <option value="{{this.name}}">{{this.name}}</option>
