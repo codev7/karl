@@ -192,9 +192,9 @@ Meteor.methods({
     ingredients.forEach(function(ingredient) {
       var exist = MenuItems.findOne(
         {"_id": menuId, "ingredients": {$elemMatch: {"_id": ingredient._id}}}, 
-        {"fields": {"ingredients": {$elemMatch: {"_id": ingredient._id}}}});
+        {fields: {"ingredients": {$elemMatch: {"_id": ingredient._id}}}});
 
-      if(exist.ingredients[0]._id == ingredient._id) {
+      if(exist && (exist.ingredients[0]._id == ingredient._id)) {
         if(exist.ingredients[0].quantity != ingredient.quantity) {
           MenuItems.update({'_id': menuId, "ingredients": {$elemMatch: {"_id": ingredient._id}}}, 
             {$set: {'ingredients.$.quantity': ingredient.quantity}});   
@@ -320,9 +320,9 @@ Meteor.methods({
     preps.forEach(function(prep) {
       var exist = MenuItems.findOne(
         {"_id": menuId, "jobItems": {$elemMatch: {"_id": prep._id}}}, 
-        {"fields": {"jobItems": {$elemMatch: {"_id": prep._id}}}});
+        {fields: {"jobItems": {$elemMatch: {"_id": prep._id}}}});
 
-      if(exist.jobItems[0]._id == prep._id) {
+      if(exist && (exist.jobItems[0]._id == prep._id)) {
         if(exist.jobItems[0].quantity != prep.quantity) {
           MenuItems.update({'_id': menuId, "jobItems": {$elemMatch: {"_id": prep._id}}}, 
             {$set: {'jobItems.$.quantity': prep.quantity}});   
