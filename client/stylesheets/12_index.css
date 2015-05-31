@@ -72,3 +72,8 @@
 .navbar-top-links .dropdown-alerts {
   margin-left: -74px;
 }
+
+.filter-menus {
+  width: 93% !important; 
+  left: 15px !important;
+} 

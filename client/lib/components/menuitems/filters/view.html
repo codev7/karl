@@ -1,26 +1,30 @@
 <template name="menuFilters">
-  <div class="row">
+  <div class="row m-b">
     <div class="col-md-3">
-      <select name="MenuCategory" class="form-control m-b categorizedMenus text-capitalize">
-        <option selected="selected" value="{{state$selectedCategory._id}}">{{state$selectedCategory.name}}</option>
+      <button data-toggle="dropdown" class="btn btn-white dropdown-toggle form-control text-capitalize" style="text-align: left">{{state$selectedCategory.name}} 
+        <span class="caret pull-right m-t-sm" ></span>
+      </button>
+      <ul class="dropdown-menu text-capitalize filter-menus">
         {{#each state$categories}}
-        <option value="{{this._id}}">{{this.name}}</option>
+          <li><a href="/menuItems/{{this._id}}/{{state$selectedStatus._id}}" class="">{{this.name}}</a></li>
         {{/each}}
-      </select>
+        {{#if state$isAdminOrManager}}
+        <li class="divider"></li>
+        <li><a data-toggle="modal" data-target="#addCategoryModal">Add new category</a></li>
+        {{/if}}
+      </ul>
     </div>
     <div class="col-md-6">
-      {{#if state$isAdmin}}
-      <a data-toggle="modal" data-target="#addCategoryModal" class="btn btn-primary btn-sm">Add new category</a>
-      <a data-toggle="modal" data-target="#addStatusModal" class="btn btn-primary btn-sm pull-right btn">Add new status</a>
-      {{/if}}
     </div>
     <div class="col-md-3">
-      <select name="account" class="form-control m-b pull-right menuStatus text-capitalize">
-        <option selected="selected" value="{{state$selectedStatus.name}}">{{state$selectedStatus.name}}</option>
+      <button data-toggle="dropdown" class="btn btn-white dropdown-toggle form-control text-capitalize" style="text-align: left">{{state$selectedStatus.name}} 
+        <span class="caret pull-right m-t-sm" ></span>
+      </button>
+      <ul class="dropdown-menu text-capitalize filter-menus">
         {{#each state$statuses}}
-        <option value="{{this.name}}">{{this.name}}</option>
+          <li><a href="/menuItems/{{state$selectedCategory._id}}/{{this.name}}" class="">{{this.name}}</a></li>
         {{/each}}
-      </select>
+      </ul>
     </div>
   </div>
 </template>
