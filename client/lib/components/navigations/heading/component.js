@@ -115,6 +115,12 @@ component.state.isCafeForecasting = function() {
 }
 
 component.state.isManagerOrAdmin = function() {
-  var userId = Meteor.userId();
-  return isManagerOrAdmin(userId);
+  if(isAdmin()) {
+    return true;
+  } else if(isManager()) {
+    return true; 
+  } else {
+    return false;
+  }
+  
 }

@@ -25,7 +25,7 @@ component.state.userType = function() {
   }
 }
 
-component.state.isPermitted = function() {
+component.state.isManagerOrAdmin = function() {
   if(isAdmin()) {
     return true;
   } else if(isManager()) {

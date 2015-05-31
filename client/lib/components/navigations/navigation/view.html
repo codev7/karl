@@ -51,7 +51,7 @@
           <li class="{{isActiveRoute regex='ingredientsList'}}">
             <a href="/ingredients"><i class="fa fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
-          {{#if state$isPermitted}}
+          {{#if state$isManagerOrAdmin}}
           <li class="{{isActiveRoute regex='salesCalibration|actualSales|cafeSalesForecast|weeklySalesForecastMenusList'}}">
             <a href="#">
               <i class="fa fa-line-chart"></i>
