@@ -6,7 +6,7 @@
       </button>
       <ul class="dropdown-menu text-capitalize filter-menus">
         {{#each state$categories}}
-          <li><a href="/menuItems/{{this._id}}/{{state$selectedStatus._id}}" class="">{{this.name}}</a></li>
+          <li><a href="/menuItems/{{this._id}}/{{state$selectedStatus.name}}" class="">{{this.name}}</a></li>
         {{/each}}
         {{#if state$isAdminOrManager}}
         <li class="divider"></li>
