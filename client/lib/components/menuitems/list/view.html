@@ -1,7 +1,7 @@
 <template name="menuItemsList">
-  <ul class="list-group">
+  <div class="list-group">
   {{#each state$list}}
     {{> render component='menuItem' menuitem=this}}
   {{/each}}
-  </ul>
+  </div>
 </template>
