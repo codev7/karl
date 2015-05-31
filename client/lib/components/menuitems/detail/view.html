@@ -1,6 +1,6 @@
 <template name="menuItemDetail">
   <!-- Page heading -->
-  {{> render component="pageHeading" title=item.name category='Menus' name="menudetailed" id=item._id}}
+  {{> render component="pageHeading" title=state$name category='Menus' name="menudetailed" id=state$id}}
   <hr>
 
   <div class="wrapper wrapper-content animated">
@@ -11,7 +11,7 @@
             <h3 class="panel-title">Instructions</h3>
           </div>
           <div class="panel-body">
-            <p>{{{state.instructions}}}<br></p>
+            <p>{{{state$instructions}}}<br></p>
           </div>
           <div class="panel-footer">click here to edit</div>
         </div>
@@ -36,21 +36,9 @@
             {{#each state$ingredients}}
               {{> render component="ingsAndPreps" item=this type="ings"}}
             {{/each}}
-            <!-- {{#each item.jobsListView}} -->
-             <!-- {{> render component='jobItemView' jobitem=this}} -->
-            <!-- <tr>
-              <td>
-                <a class="btn btn-primary btn-xs"><i class="fa fa-edit fa-fw"></i>Edit </a>
-              </td>
-              <td>Eggs</td>
-              <td>2</td>
-              <td>each</td>
-              <td>remove</td>
-            </tr> -->
-            <!-- {{/each}} -->
           </tbody>
         </table>
-        <a class="btn btn-primary">Add prep or stock</a>
+        <a class="btn btn-primary" href="#showListOfIngs" data-toggle="modal">Add prep or stock</a>
         {{> render component='commentsPanel'}}
       </div>
     </div>

@@ -15,4 +15,12 @@ component.state.ingredients = function() {
   return this.menu.ingredients;
 }
 
+component.state.name = function() {
+  return this.menu.name;
+}
+
+component.state.id = function() {
+  return this.menu._id;
+}
+
 
