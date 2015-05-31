@@ -2,8 +2,7 @@ Template.navigation.rendered = function(){
   setTimeout(function() {
     // Initialize metisMenu
     $('#side-menu').metisMenu();
-    console.log("rendered");
-  }, 500);
+  }, 1000);
 };
 
 // Used only on OffCanvas layout
