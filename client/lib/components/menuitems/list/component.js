@@ -5,7 +5,7 @@ component.state.list = function() {
   var category = Session.get("category")
   var status =  Session.get("status")
   if(category == "all" && status == "all") {
-    return MenuItems.find();
+    return MenuItems.find({}, {"sort": {"createdOn": -1}});
   } else {
     var query = {
       $and: []
@@ -16,7 +16,7 @@ component.state.list = function() {
     if(status != "all") {
       query["$and"].push({"status": status.toLowerCase()});
     }
-    var menuItems = MenuItems.find(query);
+    var menuItems = MenuItems.find(query, {"sort": {"createdOn": -1}});
     return menuItems;
   }
 }
