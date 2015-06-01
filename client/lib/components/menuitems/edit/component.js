@@ -1,5 +1,6 @@
 var component = FlowComponents.define('editMenuItem', function(props) {
   this.id = Router.current().params._id;
+  this.item = MenuItems.findOne(this.id);
 });
 
 component.state.initialHTML = function() {

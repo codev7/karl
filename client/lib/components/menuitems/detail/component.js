@@ -1,10 +1,13 @@
 var component = FlowComponents.define('menuItemDetail', function(props) {
   this.id = Router.current().params._id;
+  this.onRendered(this.onViewRendered);
 });
 
 component.state.menu = function() {
   this.menu = MenuItems.findOne(this.id);
-  return this.menu;
+  if(this.menu) {
+    return this.menu;
+  }
 }
 
 component.state.initialHTML = function() {
@@ -16,4 +19,8 @@ component.state.initialHTML = function() {
     }
   }
 };
+
+component.prototype.onViewRendered = function() {
+  this.menu = MenuItems.findOne(this.id);
+}
 
