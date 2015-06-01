@@ -1,6 +1,6 @@
 var component = FlowComponents.define('editMenuItem', function(props) {
   this.id = Router.current().params._id;
-  this.item = MenuItems.findOne(this.id);
+  this.onRendered(this.onMenuRendered);
 });
 
 component.state.initialHTML = function() {
@@ -15,46 +15,30 @@ component.state.initialHTML = function() {
   }
 };
 
-component.state.id = function() {
-  return this.item._id;
+component.prototype.onMenuRendered = function() {
+  this.item = MenuItems.findOne(this.id);
 }
 
-component.state.name = function() {
-  return this.item.name;
-}
-
-component.state.isMyCategory = function(categoryId) {
-  if(categoryId) {
-    if(categoryId == this.item.category) {
-      return true;
-    } else {
-      return false;
-    }
+component.state.menu = function() {
+  this.item = MenuItems.findOne(this.id);
+  if(this.item) {
+    return this.item;
   }
 }
 
-component.state.myStatus = function() { 
-  return this.item.status;
+component.state.myCategory = function(categoryId) {
+  var myCategory = this.item.category;
+  if(myCategory) {
+    return Categories.findOne(myCategory);
+  }
 }
 
-component.state.jobItems = function() {
-  return this.item.jobItems;
-}
-
-component.state.ingredients = function() {
-  return this.item.ingredients;
-}
-
-component.state.salePrice = function() {
-  return this.item.salesPrice;
-}
-
-component.state.image = function() {
-  return this.item.image;
-}
 
 component.state.categoriesList = function() {
-  return Categories.find().fetch();
+  var myCategory = this.item.category;
+  if(myCategory) {
+    return Categories.find({"_id": {$nin: [myCategory]}}).fetch();
+  }
 }
 
 component.state.jobItemsList = function() {

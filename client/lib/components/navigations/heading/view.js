@@ -20,17 +20,18 @@ Template.pageHeading.events({
   },
 
   'click .copyMenuItemBtn': function(event) {
-    console.log("------------------------");
     event.preventDefault();
     var id = $(event.target).attr("data-id");
-    Meteor.call("duplicateMenuItem", id, function(err, id) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      } else {
-        Router.go("menuItemEdit", {"_id": id});
-      }
-    });
+    if(id) {
+      Meteor.call("duplicateMenuItem", id, function(err, id) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        } else {
+          Router.go("menuItemEdit", {"_id": id});
+        }
+      });
+    }
   },
 
   'click .unSubscribeMenuItemBtn': function(event) {
@@ -53,10 +54,10 @@ Template.pageHeading.events({
     print();
   },
   
-  'click #menuSubmit': function(event) {
-    event.preventDefault();
-    $("#submitNewMenu").submit();
-  },
+  // 'click #menuSubmit': function(event) {
+  //   event.preventDefault();
+  //   $("#submitNewMenu").submit();
+  // },
 
   'click #submitJobItem': function(event) {
     event.preventDefault();

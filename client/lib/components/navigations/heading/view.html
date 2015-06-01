@@ -32,13 +32,6 @@
       </div>
       {{/if}}
 
-      {{#if state$isMenuSubmit}}
-      <div class="title-action">
-        <a href="/menuItems/all/all" class="btn btn-white">Cancel</a>
-        <a href="#" class="btn btn-primary" id="menuSubmit">Save Changes</a>
-      </div>
-      {{/if}}
-
       {{#if state$isMenuDetailed}}
         <div class="title-action">
           {{#if state$isMenuSubscribed}}
@@ -47,11 +40,11 @@
           <a href="" class="btn btn-success hidden-print subscribeMenuItemBtn" data-id="{{state$id}}">Subscribe</a>
           {{/if}}
           {{#if state$isManagerOrAdmin}}
-          <!-- <a href="" class="btn btn-primary hidden-print editMenuItemBtn" data-id="{{state$id}}">
-            <i class="fa fa-edit"></i>Edit
-          </a> -->
+          <a href="" class="btn btn-primary hidden-print editMenuItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-edit" data-id="{{state$id}}"></i>Edit
+          </a>
           <a href="" class="btn btn-white hidden-print copyMenuItemBtn" data-id="{{state$id}}">
-            <i class="fa fa-copy"></i>
+            <i class="fa fa-copy" data-id="{{state$id}}"></i>
           </a>
           {{/if}}
           <a href="" class="btn btn-white hidden-print printMenuItemBtn" data-id="{{state$id}}">

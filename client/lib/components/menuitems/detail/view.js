@@ -18,7 +18,7 @@ Template.menuItemDetail.events({
         return alert(err.reason);
       } else {
         $(".editor").addClass("hide");
-        $(".editorPanel").show().find("p").html(text);
+        $(".editorPanel").show().find("p").replaceWith(text);
         $(event.target).text("Click here to edit").removeClass("saveText").addClass("textEdit");
       }
     })

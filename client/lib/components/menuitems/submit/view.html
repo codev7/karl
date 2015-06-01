@@ -19,7 +19,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Status</label>
       <div class="col-sm-10">
-        <select name="status" class="form-control">
+        <select name="status" class="form-control text-capitalize">
           {{#each state$statuses}}
           <option value="{{this.name}}">{{this.name}}</option>
           {{/each}}
@@ -34,11 +34,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Prep items used
-        <a id="showJobItemsList" class="btn btn-xs btn-primary margin-right-10">
-          <i class="fa fa-plus"></i>
-        </a>
-      </label>
+      <label class="col-sm-2 control-label">Prep items used</label>
       <div class="col-sm-10">
         <table class="table table-hover thumbnail">
           <thead>
@@ -55,15 +51,13 @@
               {{> render component='jobItemEdit' jobitem=this}}
             {{/each}}
           </tbody>
+          <br>
+          <button id="showJobItemsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add prep jobs to menu item</button>
         </table>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Ingredients used
-      <a id="showIngredientsList" class="btn btn-xs btn-primary margin-right-10">
-        <i class="fa fa-plus"></i>
-      </a>
-      </label>
+      <label class="col-sm-2 control-label">Ingredients used</label>
       <div class="col-sm-10">
         <table class="table table-hover thumbnail">
           <thead>
@@ -80,6 +74,8 @@
               {{> render component='ingredientItemEdit' ingredient=this}}
             {{/each}}
           </tbody>
+          <br>
+          <button id="showIngredientsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add ingredient to menu item</button>
         </table>
       </div>
     </div>
@@ -105,6 +101,11 @@
           </a>
         </div>
       </div>
+    </div>
+
+    <div class="row">
+      <a href="/menuItems/all/all" class="btn btn-white">Cancel</a>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
     </div>
   </form>   
 </template>

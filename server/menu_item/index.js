@@ -93,8 +93,8 @@ Meteor.methods({
         updateDoc.instructions = info.instructions;
       }
     }
-    updateDoc.ingredients = [];
     if(info.ingredients) {
+      updateDoc.ingredients = [];
       if(info.ingredients.length > 0) {
         var ingIds = [];
         info.ingredients.forEach(function(item) {
@@ -105,8 +105,8 @@ Meteor.methods({
         });
       }
     }
-    updateDoc.jobItems = [];
     if(info.jobItems) {
+      updateDoc.jobItems = [];
       if(info.jobItems.length > 0) {
         var jobIds = [];
         info.jobItems.forEach(function(item) {
@@ -410,7 +410,7 @@ Meteor.methods({
       "category": exist.category,
       "instructions": exist.instructions,
       "ingredients": exist.ingredients,
-      "jobItems": exist.prepItems,
+      "jobItems": exist.jobItems,
       "salesPrice": parseFloat(exist.salesPrice),
       "image": exist.image,
       "createdOn": Date.now(),

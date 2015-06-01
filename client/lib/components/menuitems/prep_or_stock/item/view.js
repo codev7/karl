@@ -36,7 +36,8 @@ Template.ingsAndPreps.events({
   'click .view-prep': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
-    Router.go("jobItemDetailed", {"_id": id});
+    Session.set("goBackMenu", Session.get("thisMenuItem"));
+    Router.go("jobItemEdit", {"_id": id});
   },
 
   'click .view-ings': function(event) {

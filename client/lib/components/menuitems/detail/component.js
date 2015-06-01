@@ -22,5 +22,6 @@ component.state.initialHTML = function() {
 
 component.prototype.onViewRendered = function() {
   this.menu = MenuItems.findOne(this.id);
+  Session.set("goBackMenu", null);
 }
 
