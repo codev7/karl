@@ -7,7 +7,7 @@
       </div>
       <form class="form-horizontal" role="form" style="padding: 10px 20px">
         <div class="modal-body">
-            <!-- <input type="text" class="form-control input-lg" id="searchText-box" placeholder="Search for job item..."><br> -->
+            <input type="text" class="form-control input-lg" id="searchText-box" placeholder="Search for prep or stock..."><br>
           <div class="row">
             <table class="table table-striped">
               <thead>
@@ -15,16 +15,15 @@
                   <th>Name</th>
                   <th>Type</th>
                   <th>Active Time</th>
-                  <th>Cost per Portion ($)</th>
                   <th>Action</th>
                 </tr>
               </thead>
              <tbody>
                 {{#each state$getJobItems}}
-                  {{> render component='jobItemListed' jobitem=this}}
+                  {{> render component='itemListed' item=this type="prep"}}
                 {{/each}}
-                {{#each state$getIngItems}}
-                  {{> render component="ingredientItemListed" ingredient=this}}
+                {{#each state$getIngredients}}
+                  {{> render component="itemListed" item=this type="ing"}}
                 {{/each}}
               </tbody>
             </table>

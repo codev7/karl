@@ -1,13 +1,11 @@
 var component = FlowComponents.define("ingsAndPreps", function(props) {
   this.type = props.type;
   if(this.type == "prep") {
-    var item = getPrepItem(props.item._id);
-    this.item = item;
-    this.item.quantity = props.item.quantity;
+    this.item = JobItems.findOne(props.item._id);
+    this.quantity = props.item.quantity;
   } else if(this.type == "ings") {
-    var item = getIngredientItem(props.item._id);
-    this.item = item;
-    this.item.quantity = props.item.quantity;
+    this.item = Ingredients.findOne(props.item._id);
+    this.quantity = props.item.quantity;
   }
 });
 
@@ -16,14 +14,14 @@ component.state.name = function() {
     if(this.type == "prep") {
       return this.item.name;
     } else if(this.type == "ings") {
-      return this.item.code;
+      return this.item.description;
     }
   }
 }
 
 component.state.quantity = function() {
   if(this.item) {
-    return this.item.quantity;
+    return this.quantity;
   }
 }
 
