@@ -1,6 +1,6 @@
 <template name="menuItemDetail">
   <!-- Page heading -->
-  {{> render component="pageHeading" title=state$name category='Menus' name="menudetailed" id=state$id}}
+  {{> render component="pageHeading" title=state$menu.name category='Menus' name="menudetailed" id=state$menu._id}}
   <hr>
 
   <div class="wrapper wrapper-content animated">
@@ -11,7 +11,7 @@
             <h3 class="panel-title">Instructions</h3>
           </div>
           <div class="panel-body editorPanel">
-            <p>{{{state$instructions}}}<br></p>
+            <p>{{{state$menu.instructions}}}<br></p>
           </div>
           <div class="panel-body editor hide">
             {{> render component="textEditor" id='menuItemEditorDetail' 
@@ -34,10 +34,10 @@
             </tr>
           </thead>
           <tbody>
-            {{#each state$preps}}
+            {{#each state$menu.jobItems}}
               {{> render component="ingsAndPreps" item=this type="prep"}}
             {{/each}}
-            {{#each state$ingredients}}
+            {{#each state$menu.ingredients}}
               {{> render component="ingsAndPreps" item=this type="ings"}}
             {{/each}}
           </tbody>
