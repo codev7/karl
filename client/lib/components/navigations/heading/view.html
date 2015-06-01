@@ -35,9 +35,9 @@
       {{#if state$isMenuDetailed}}
         <div class="title-action">
           {{#if state$isMenuSubscribed}}
-          <a href="/menuItems/all/all" class="btn hidden-print  btn-info unSubscribeMenuItemBtn" data-id="{{state$id}}">Unsubscribe</a>
+          <a href="/menuItems/all/all" class="btn hidden-print  btn-white unSubscribeMenuItemBtn" data-id="{{state$id}}"><i class="fa fa-lg fa-rss text-info"></i></a>
           {{else}}
-          <a href="" class="btn btn-success hidden-print subscribeMenuItemBtn" data-id="{{state$id}}">Subscribe</a>
+          <a href="" class="btn btn-white hidden-print subscribeMenuItemBtn" data-id="{{state$id}}"><i class="fa fa-lg fa-rss text-muted"></i></a>
           {{/if}}
           {{#if state$isManagerOrAdmin}}
           <a href="" class="btn btn-primary hidden-print editMenuItemBtn" data-id="{{state$id}}">

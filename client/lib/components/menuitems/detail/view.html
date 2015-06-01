@@ -1,7 +1,6 @@
 <template name="menuItemDetail">
   <!-- Page heading -->
   {{> render component="pageHeading" title=state$menu.name category='Menus' name="menudetailed" id=state$menu._id}}
-  <hr>
 
   <div class="wrapper wrapper-content animated">
     <div class="row">
@@ -51,9 +50,8 @@
         {{#if state$isPermitted}}
         <a class="btn btn-primary" href="#showListOfIngs" data-toggle="modal">Add prep or stock</a>
         {{/if}}
-        <hr>
-        {{> render component='commentsPanel'}}
       </div>
+      {{> render component='commentsPanel'}}
     </div>
   </div>
 </template>
