@@ -14,15 +14,6 @@ var component = FlowComponents.define("showListOfIngs", function(props) {
   this.IngredientsSearch = new SearchSource('ingredients', fieldsIng, options);
 });
 
-
-// component.state.getJobItems = function(argument) {
-//   return JobItems.find({}, {"limit": 10});
-// }
-
-// component.state.getIngItems = function(argument) {
-//   return Ingredients.find({}, {"limit": 10});
-// }
-
 component.prototype.setJobIds = function() {
   var ids = [];
   if(this.item && this.item.jobItems) {
@@ -51,7 +42,7 @@ component.prototype.setIngIds = function() {
 
 component.prototype.renderList = function() {
   var jobids = this.setJobIds();
-  this.JobItemsSearch.search("",{"ids": jobids, "limit": 10});
+  this.JobItemsSearch.search("",{"ids": jobids, "type": "Prep", "limit": 10});
 
   var ingids = this.setJobIds();
   this.IngredientsSearch.search("", {"ids": ingids});
@@ -63,7 +54,7 @@ component.action.keyup = function(text) {
   this.IngredientsSearch.search(text, {"ids": ingids});
 
   var jobids = this.setJobIds();
-  this.JobItemsSearch.search(text, {"ids": jobids, "limit": 10});
+  this.JobItemsSearch.search(text, {"ids": jobids, "type": "Prep", "limit": 10});
 }
 
 component.state.getJobItems = function() {

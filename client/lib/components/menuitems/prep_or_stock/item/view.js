@@ -9,6 +9,8 @@ Template.ingsAndPreps.events({
         if(err) {
           console.log(err);
           return alert(err.reason);
+        } else {
+          $(event.target).closest("tr").remove()
         }
       });
     }
@@ -24,6 +26,8 @@ Template.ingsAndPreps.events({
         if(err) {
           console.log(err);
           return alert(err.reason);
+        } else {
+          $(event.target).closest("tr").remove()
         }
       });
     }
