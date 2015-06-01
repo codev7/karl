@@ -320,6 +320,11 @@ component.action.submit = function(id, info) {
         if(err) {
           console.log(err);
           return alert(err.reason);
+        } else {
+          var goback = Session.get("goBackMenu");
+          if(goback) {
+            Router.go("menuItemDetail", {"_id": goback});
+          }
         }
       });
       

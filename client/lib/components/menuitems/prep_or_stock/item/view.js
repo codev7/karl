@@ -36,7 +36,8 @@ Template.ingsAndPreps.events({
   'click .view-prep': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
-    Router.go("jobItemDetailed", {"_id": id});
+    Session.set("goBackMenu", Session.get("thisMenuItem"));
+    Router.go("jobItemEdit", {"_id": id});
   },
 
   'click .view-ings': function(event) {
@@ -49,29 +50,31 @@ Template.ingsAndPreps.events({
 
 Template.ingsAndPreps.rendered = function() {
   var menu = Session.get("thisMenuItem");
-  $('.username').editable({
-    success: function(response, newValue) {
-      if(newValue) {
-        var ing = $(this).data("pk");
-        var type = $(this).data("itemtype");
-        if(type == "ings") {
-          Meteor.call("addIngredients", menu, [{"_id": ing, "quantity": newValue}], function(err) {
-            if(err) {
-              console.log(err);
-              return alert(err.reason);
-            }
-            return;
-          });
-        } else if(type == "prep") {
-          Meteor.call("addJobItem", menu, [{"_id": ing, "quantity": newValue}], function(err) {
-            if(err) {
-              console.log(err);
-              return alert(err.reason);
-            }
-            return;
-          });
+  if(managerPlusAdminPermission()) {
+    $('.username').editable({
+      success: function(response, newValue) {
+        if(newValue) {
+          var ing = $(this).data("pk");
+          var type = $(this).data("itemtype");
+          if(type == "ings") {
+            Meteor.call("addIngredients", menu, [{"_id": ing, "quantity": newValue}], function(err) {
+              if(err) {
+                console.log(err);
+                return alert(err.reason);
+              }
+              return;
+            });
+          } else if(type == "prep") {
+            Meteor.call("addJobItem", menu, [{"_id": ing, "quantity": newValue}], function(err) {
+              if(err) {
+                console.log(err);
+                return alert(err.reason);
+              }
+              return;
+            });
+          }
         }
       }
-    }
-  });
+    });
+  }
 }

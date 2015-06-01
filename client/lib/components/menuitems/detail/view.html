@@ -1,6 +1,6 @@
 <template name="menuItemDetail">
   <!-- Page heading -->
-  {{> render component="pageHeading" title=state$name category='Menus' name="menudetailed" id=state$id}}
+  {{> render component="pageHeading" title=state$menu.name category='Menus' name="menudetailed" id=state$menu._id}}
   <hr>
 
   <div class="wrapper wrapper-content animated">
@@ -11,13 +11,15 @@
             <h3 class="panel-title">Instructions</h3>
           </div>
           <div class="panel-body editorPanel">
-            <p>{{{state$instructions}}}<br></p>
+            <p>{{{state$menu.instructions}}}<br></p>
           </div>
           <div class="panel-body editor hide">
             {{> render component="textEditor" id='menuItemEditorDetail' 
           initialHtml=state$initialHTML}}
           </div>
-          <div class="panel-footer textEdit">click here to edit</div>
+          {{#if state$isPermitted}}
+          <div class="panel-footer textEdit">Click here to edit</div>
+          {{/if}}
         </div>
         <hr>
         <h1>Ingredients</h1>
@@ -25,24 +27,31 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              {{#if state$isPermitted}}
               <th></th>
+              {{/if}}
               <th>Name</th>
               <th>Type</th>
               <th>Quantity</th>
               <th>Measure</th>
+              {{#if state$isPermitted}}
               <th></th>
+              {{/if}}
             </tr>
           </thead>
           <tbody>
-            {{#each state$preps}}
+            {{#each state$menu.jobItems}}
               {{> render component="ingsAndPreps" item=this type="prep"}}
             {{/each}}
-            {{#each state$ingredients}}
+            {{#each state$menu.ingredients}}
               {{> render component="ingsAndPreps" item=this type="ings"}}
             {{/each}}
           </tbody>
         </table>
+        {{#if state$isPermitted}}
         <a class="btn btn-primary" href="#showListOfIngs" data-toggle="modal">Add prep or stock</a>
+        {{/if}}
+        <hr>
         {{> render component='commentsPanel'}}
       </div>
     </div>

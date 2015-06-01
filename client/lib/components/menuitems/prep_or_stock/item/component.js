@@ -44,3 +44,7 @@ component.state.measure = function() {
     }
   }
 }
+
+component.state.isPermitted = function() {
+  return managerPlusAdminPermission();
+}
