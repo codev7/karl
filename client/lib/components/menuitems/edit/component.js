@@ -111,17 +111,17 @@ component.action.submit = function(id, info) {
           }
         }
       }
-     var options = {
-      "type": "edit",
-      "title": menuBefore.name + " has been updated",
-      "text": desc
-    }
-    Meteor.call("sendNotifications", id, "menu", options, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
+      var options = {
+        "type": "edit",
+        "title": menuBefore.name + " has been updated",
+        "text": desc
       }
-    }); 
+      Meteor.call("sendNotifications", id, "menu", options, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      }); 
       Router.go("menuItemDetail", {"_id": id});
     }
   });

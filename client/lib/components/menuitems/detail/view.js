@@ -17,10 +17,23 @@ Template.menuItemDetail.events({
         console.log(err);
         return alert(err.reason);
       } else {
-        $(".editor").addClass("hide");
-        $(".editorPanel").show().find("p").replaceWith(text);
-        $(event.target).text("Click here to edit").removeClass("saveText").addClass("textEdit");
+        var menu = MenuItems.findOne(menuId);
+        var options = {
+          "type": "edit",
+          "title": "Instructions on " + menu.name + " has been updated",
+          "text": text
+        }
+        Meteor.call("sendNotifications", menuId, "menu", options, function(err) {
+          if(err) {
+            console.log(err);
+            return alert(err.reason);
+          }
+        });   
+         
       }
+      $(".editor").addClass("hide");
+      $(".editorPanel").show().find("p").replaceWith(text);
+      $(event.target).text("Click here to edit").removeClass("saveText").addClass("textEdit");
     })
   }
 });

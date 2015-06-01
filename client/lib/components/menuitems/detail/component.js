@@ -25,3 +25,7 @@ component.prototype.onViewRendered = function() {
   Session.set("goBackMenu", null);
 }
 
+component.state.isPermitted = function() {
+  return managerPlusAdminPermission();
+}
+
