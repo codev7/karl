@@ -3,22 +3,12 @@
     <td>{{{state$name}}}</td>
     <td>{{state$type}}</td>
     <td>{{state$activeTime}}</td>
-    {{#if state$isTypePrep}}
     <td>
       <div class="i-checks">
         <label>
-          <input type="checkbox" value="" data-id="{{state$id}}" class="selectedPrep" name="selectedPrep">
+          <input type="checkbox" value="" data-id="{{state$id}}" data-type="{{state$type}}" class="selectedItem" name="selectedItem">
         </label>
       </div>
     </td>
-    {{else}}
-    <td>
-      <div class="i-checks">
-        <label>
-          <input type="checkbox" value="" data-id="{{state$id}}" class="selectedIng" name="selectedIng">
-        </label>
-      </div>
-    </td>
-    {{/if}}
   </tr>
 </template>
