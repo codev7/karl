@@ -16,6 +16,7 @@ var component = FlowComponents.define("showListOfIngs", function(props) {
 
 component.prototype.setJobIds = function() {
   var ids = [];
+  console.log(this.item)
   if(this.item && this.item.jobItems) {
     if(this.item.jobItems.length > 0) {
       this.item.jobItems.forEach(function(doc) {
@@ -23,12 +24,15 @@ component.prototype.setJobIds = function() {
       });
     }
   }
+
   this.set("jobids", ids);
   return ids;
 }
 
 component.prototype.setIngIds = function() {
   var ids = [];
+  console.log(this.item)
+
   if(this.item && this.item.ingredients) {
     if(this.item.ingredients.length > 0) {
       this.item.ingredients.forEach(function(doc) {
@@ -44,13 +48,13 @@ component.prototype.renderList = function() {
   var jobids = this.setJobIds();
   this.JobItemsSearch.search("",{"ids": jobids, "type": "Prep", "limit": 10});
 
-  var ingids = this.setJobIds();
+  var ingids = this.setIngIds();
   this.IngredientsSearch.search("", {"ids": ingids});
   
 };
 
 component.action.keyup = function(text) {
-  var ingids = this.setJobIds();
+  var ingids = this.setIngIds();
   this.IngredientsSearch.search(text, {"ids": ingids});
 
   var jobids = this.setJobIds();

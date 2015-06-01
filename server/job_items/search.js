@@ -21,6 +21,7 @@ SearchSource.defineSource('jobItemsSearch', function(searchText, options) {
   } else {
     optionFileds['limit'] = 10;
   }
+
   if(searchText) {
     var regExp = buildRegExp(searchText);
     selector['$or'] = [
