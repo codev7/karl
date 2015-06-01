@@ -10,13 +10,16 @@
           <div class="panel-heading">
             <h3 class="panel-title">Instructions</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body editorPanel">
             <p>{{{state$instructions}}}<br></p>
           </div>
-          <div class="panel-footer">click here to edit</div>
+          <div class="panel-body editor hide">
+            {{> render component="textEditor" id='menuItemEditorDetail' 
+          initialHtml=state$initialHTML}}
+          </div>
+          <div class="panel-footer textEdit">click here to edit</div>
         </div>
         <hr>
-
         <h1>Ingredients</h1>
         <p>Add the prep jobs and stock items that are used in this recipe.</p>
         <table class="table table-striped">

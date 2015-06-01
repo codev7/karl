@@ -23,4 +23,13 @@ component.state.id = function() {
   return this.menu._id;
 }
 
+component.state.initialHTML = function() {
+  if(this.menu) {
+    if(this.menu.instructions) {
+      return this.menu.instructions;
+    } else {
+      return "Add instructions here"
+    }
+  }
+};
 
