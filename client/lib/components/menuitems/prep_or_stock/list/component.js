@@ -16,7 +16,6 @@ var component = FlowComponents.define("showListOfIngs", function(props) {
 
 component.prototype.setJobIds = function() {
   var ids = [];
-  console.log(this.item)
   if(this.item && this.item.jobItems) {
     if(this.item.jobItems.length > 0) {
       this.item.jobItems.forEach(function(doc) {
@@ -31,7 +30,6 @@ component.prototype.setJobIds = function() {
 
 component.prototype.setIngIds = function() {
   var ids = [];
-  console.log(this.item)
 
   if(this.item && this.item.ingredients) {
     if(this.item.ingredients.length > 0) {
