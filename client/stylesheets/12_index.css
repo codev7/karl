@@ -79,3 +79,8 @@
   width: 93% !important; 
   left: 15px !important;
 } 
+
+.showJobProfile,
+.showJobProfile:hover {
+  color: #fff;
+}

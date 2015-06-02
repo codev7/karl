@@ -160,9 +160,9 @@ Template.dailyShiftScheduling.rendered = function() {
               // debugger;
               var day = date.date() - 1;
               var shift = TimeToShifts["" + day * oneDay];
-              var job = ui.helper.attr("data-id");
+              var job = ui.helper.attr("data-id").trim();
               var startTime = date.format();
-
+   
               assignJob(job, shift, startTime);
             },
             eventDrop: function(event, duration, revertFunc, ui) {
