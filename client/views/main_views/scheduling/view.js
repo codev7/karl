@@ -1,5 +1,6 @@
 Template.dailyShiftSchedulingMainView.helpers({
   title: function() {
-    return "Roster for " + moment().format("Do of MMMM YYYY")
+    var date = Router.current().params.date;
+    return "Roster for " + moment(date).format("dddd, Do of MMMM YYYY")
   }
 });

@@ -116,5 +116,25 @@ Template.pageHeading.events({
     event.preventDefault();
     var week = parseInt(Router.current().params.week) - 1;
     Router.go("cafeSalesForecast", {"week": week});
-  }
+  },
+
+   'click .todayRoster': function(event) {
+    event.preventDefault();
+    var date = moment().format("YYYY-MM-DD");
+    Router.go("dailyShiftScheduling", {"date": date});
+  },
+
+  'click .prevDayRoster': function(event) {
+    event.preventDefault();
+    var date = Router.current().params.date;
+    var yesterday = moment(date).subtract(1, "days").format("YYYY-MM-DD");
+    Router.go("dailyShiftScheduling", {"date": yesterday});
+  },
+
+  'click .nextDayRoster': function(event) {
+    event.preventDefault();
+    var date = Router.current().params.date;
+    var tomorrow = moment(date).add(1, "days").format("YYYY-MM-DD")
+    Router.go("dailyShiftScheduling", {"date": tomorrow});
+  },
 });
