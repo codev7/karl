@@ -4,6 +4,7 @@ Template.submitShift.events({
     var dateOfShift = $(event.target).find('[name=dateOfShift]').val();
     var startTime = $(event.target).find('[name=startTime]').val().trim();
     var endTime = $(event.target).find('[name=endTime]').val().trim();
+    var section = $(event.target).find('[name=section]').val();
 
     var start_hours = parseInt(startTime.slice(0, startTime.indexOf(":")).trim());
     var start_mins = parseInt(startTime.slice(startTime.indexOf(":") + 1, startTime.indexOf(" ")).trim());
@@ -38,7 +39,8 @@ Template.submitShift.events({
       var info = {
         "shiftDate": dateOfShift,
         "startTime": dateObj_start,
-        "endTime": dateObj_end
+        "endTime": dateObj_end,
+        "section": section
       }
       Meteor.call("createShift", info, function(err, id) {
         if(err) {

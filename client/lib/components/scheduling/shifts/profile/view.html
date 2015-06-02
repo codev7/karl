@@ -8,6 +8,21 @@
       <form class="form-horizontal" role="form" data-id="{{state$id}}">
         <div class="modal-body">
           <div class="form-group">
+            <label class="col-sm-4 control-label">Section</label>
+            <div class="col-sm-6">
+              <select class="form-control" name="section">
+                {{#if state$mySection}}
+                  <option selected="selected" value="{{state$mySection}}">{{state$mySection}}</option>
+                {{else}}
+                  <option value="">Select a section</option>
+                {{/if}}
+                {{#each state$sections}}
+                <option>{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-4 control-label">Date</label>
             <div class="col-sm-6">
               <div class="input-group">

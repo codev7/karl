@@ -8,6 +8,16 @@
       <form class="form-horizontal" role="form">
         <div class="modal-body">
           <div class="form-group">
+            <label class="col-sm-4 control-label">Section</label>
+            <div class="col-sm-6">
+              <select class="form-control" name="section">
+                {{#each state$sections}}
+                <option>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-4 control-label">Date</label>
             <div class="col-sm-6">
               <div class="input-group">

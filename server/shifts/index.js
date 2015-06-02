@@ -12,6 +12,10 @@ Meteor.methods({
       logger.error("Date field not found");
       throw new Meteor.Error(404, "Date field not found");
     }
+    if(!info.section) {
+      logger.error("Section field not found");
+      throw new Meteor.Error(404, "Section field not found");
+    }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(info.shiftDate) <= yesterday) {
@@ -22,6 +26,7 @@ Meteor.methods({
       "startTime": info.startTime,
       "endTime": info.endTime,
       "shiftDate": info.shiftDate,
+      "section": info.section,
       "createdOn": Date.now(),
       "createdBy": null, //add logged in users id
       "assignedTo": null, //update
@@ -50,6 +55,9 @@ Meteor.methods({
     }
     if(info.endTime) {
       updateDoc.endTime = info.endTime;
+    }
+    if(info.section) {
+      updateDoc.section = info.section;
     }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
