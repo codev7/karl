@@ -29,7 +29,7 @@ Meteor.publish("menuItem", function(id) {
 
   var menuFetched = menu.fetch()[0];
   var ingIds = [];
-  if(menuFetched.ingredients.length > 0) {
+  if(menuFetched.ingredients && menuFetched.ingredients.length > 0) {
     menuFetched.ingredients.forEach(function(ing) {
       ingIds.push(ing._id);
     });
@@ -38,7 +38,7 @@ Meteor.publish("menuItem", function(id) {
   }
 
   var prepIds = [];
-  if(menuFetched.jobItems.length > 0) {
+  if(menuFetched.jobItems && menuFetched.jobItems.length > 0) {
     menuFetched.jobItems.forEach(function(prep) {
       prepIds.push(prep._id);
     });
