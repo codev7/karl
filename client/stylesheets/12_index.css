@@ -79,3 +79,7 @@
   width: 93% !important; 
   left: 15px !important;
 } 
+
+.field {
+  margin-bottom: 15px;
+}

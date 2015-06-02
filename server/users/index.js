@@ -1,11 +1,10 @@
 Accounts.onCreateUser(function(options, user){
   user.profile = options.profile || {};
-  if(options.profile) {
-    if(!options.profile.email) {
+  if(user.services.google) {
       user.emails = [{ "address": null}];
       user.emails[0].address = user.services.google.email;
+      user.emails[0].verified = user.services.google.verified_email
       user.username = options.profile.name;
-    }
   }     
   if(!user.profile.name) {
     user.profile.name = user.username;
