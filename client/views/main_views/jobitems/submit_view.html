@@ -1,0 +1,20 @@
+<template name="submitJobItemMainView">
+  <!-- Page heading -->
+  {{> render component="pageHeading" title='Submit Job' category='Job' name="jobsubmit"}}
+
+  <div class="wrapper wrapper-content animated">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          {{> render component="submitJobItem"}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD INGREDIENT-->
+  <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'submitIngredient'}}
+  </div>
+  <!-- /ADD INGREDIENT -->
+</template>

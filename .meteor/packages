@@ -26,3 +26,10 @@ meteorhacks:kadira
 meteorhacks:kadira-profiler
 percolate:intercom
 konecty:autolinker
+less
+fortawesome:fontawesome
+twbs:bootstrap
+zimme:iron-router-active
+jquery
+okgrow:iron-router-autoscroll
+dbarrett:dropzonejs

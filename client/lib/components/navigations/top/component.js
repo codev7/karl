@@ -1,5 +1,5 @@
 var subs = new SubsManager();
-var component = FlowComponents.define('navTop', function(props) {
+var component = FlowComponents.define('topNavbar', function(props) {
   var cursors = [];
   var notifications = Notifications.find({"read": false, "to": Meteor.userId()}, {sort: {"createdOn": -1}});
   this.notifications = notifications;
@@ -22,4 +22,12 @@ component.state.notificationsCount = function() {
 component.state.notifications = function() {
   var notifications = Notifications.find({"read": false, "to": Meteor.userId()}, {sort: {"createdOn": -1}, limit: 5});
   return notifications;
+}
+
+component.state.userLoggedIn = function() {
+  if(Meteor.user()) {
+    return true;
+  } else {
+    return false;
+  }
 }

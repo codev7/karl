@@ -1,0 +1,72 @@
+<template name="mainLayout">
+
+  <!-- Wrapper-->
+  <div id="wrapper">
+
+    <!-- Navigation -->
+    {{#if currentUser}}
+      {{> render component="navigation" }}
+    {{/if}}
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="gray-bg">
+
+      <!-- Page wrapper -->
+      {{> render component="topNavbar" }}
+
+      <!-- Main view  -->
+      {{> yield}}
+
+      <!-- Footer -->
+      {{> footer }}
+
+    </div>
+    <!-- End page wrapper-->
+
+    <!-- Right Sidebar -->
+    {{> render component="rightSidebar" }}
+  </div>
+  <!-- End wrapper-->
+
+  <!-- EDIT INGREDIENT-->
+  <div class="modal fade" id="editIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'editIngredientItem'}}
+  </div>
+  <!-- /EDIT INGREDIENT -->
+
+  <!-- INGREDIENTS LIST-->
+  <div class="modal fade" id="ingredientsListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'showIngredientsList' name="editJob"}}
+  </div>
+  <!-- /INGREDIENTS LIST -->
+
+  <!-- SHOW MENUS LIST -->
+  <div class="modal fade" id="showMenusList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'showMenusList'}}
+  </div>
+  <!-- /SHOW MENUS LIST  -->
+
+  <!-- SUBMIT SHIFT -->
+  <div class="modal fade" id="submitShiftModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='submitShift'}}
+  </div>
+  <!-- /SUBMIT SHIFT -->
+
+  <!-- SUBMIT JOB -->
+  <div class="modal fade" id="submitJobModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='submitJob'}}
+  </div>
+  <!-- /SUBMIT JOB -->
+
+  <!-- SHIFT PROFILE -->
+  <div class="modal fade" id="shiftProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- {{> shiftProfile}} -->
+    {{> render component='shiftProfile'}}
+  </div>
+  <!-- /SHIFT PROFILE -->
+
+   <!-- JOB PROFILE -->
+  <div class="modal fade" id="jobProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component='jobProfile'}}
+  </div>
+  <!-- /JOB PROFILE -->
+</template>

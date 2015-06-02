@@ -1,94 +1,47 @@
-<template name="navTop">
-  <!-- TOP NAV -->
-  <div class="navbar-collapse collapse" id="navbar">
-    <ul class="nav navbar-nav">
-      {{#if currentUser}}
-        {{#if isPermitted}}
-          <li class="dropdown">
-            <a href="/menuItems/all/all">Menus</a>
-          </li>
-          <li class="dropdown">
-            <a href="/jobItems">Jobs</a>
-          </li>
-          <li class="dropdown">
-            <a href="/ingredients">Ingredients</a>
-          </li>
-          <li class="dropdown">
-            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Sales <span class="caret"></span></a>
-            <ul role="menu" class="dropdown-menu">
-              <li><a href="/sales/{{today}}">Actual Sales</a></li>
-              <li><a href="/sales/calibration">Sales Calibration</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Sales Forecast <span class="caret"></span></a>
-            <ul role="menu" class="dropdown-menu">
-              <li><a href="/sales/forecast/cafe/{{week}}">Cafe</a></li>
-              <!-- <li><a href="/sales/forecast/catering">Catering</a></li> -->
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Scheduling <span class="caret"></span></a>
-            <ul role="menu" class="dropdown-menu">
-              <li><a href="/scheduling/daily/{{today}}">Daily</a></li>
-              <!-- <li><a href="/scheduling/weekly/{{week}}">Weekly</a></li> -->
-            </ul>
-          </li>
-        {{/if}}
-      {{/if}}
-    </ul>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown dropdown-notifi">
-        <a class="dropdown-toggle count-info m-r-sm" data-toggle="dropdown" href="#" aria-expanded="false">
-          <i class="fa fa-bell"></i> 
-          {{#if state$isExistNotifications}}
-          <span class="label label-danger">{{state$notificationsCount}}</span>
-          {{/if}}
-        </a>
-        <ul class="dropdown-menu dropdown-messages notifications">
-        {{#if state$isExistNotifications}}
-          {{#each state$notifications}}
-            {{> render component='notificationItem' noti=this}}
-          {{/each}}
-          <li>
-            <div class="text-center link-block">
-              <a href="#" class="markAllAsRead">
-                <strong>Mark All As Read</strong>
-              </a>
-            </div>
-          </li>
-        {{else}}
-          <li>
-            <div class="text-center link-block">
-              <strong>No unread notifications</strong>
-            </div>
-          </li>
-        {{/if}}
-        </ul>
-      </li>
-      {{#if currentUser}}
-        <li class="dropdown">
-          <div class="feed-element top-nav-profile-image">
-            <img alt="image" class="img-circle" src="{{profileImage}}">
-            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> {{currentUser.username}} <span class="caret"></span></a>
-            <ul role="menu" class="dropdown-menu">
-              {{#if isAdmin}}
-                <li><a href="/admin">Users</a></li>
-              {{/if}}
-              <li role="presentation" class="divider"></li>
-              <li><a id="signOutButton">Sign Out</a></li>
-            </ul>
+<template name="topNavbar">
+  <div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <div class="navbar-header">
+        <a id="navbar-minimalize" class="minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        <form role="search" class="navbar-form-custom" action="search_results">
+          <div class="form-group">
+            <!--<input type="text" placeholder="Search..." class="form-control" name="top-search" id="top-search">-->
           </div>
-        </li>
-      {{else}}
+        </form>
+      </div>
+      <ul class="nav navbar-top-links navbar-right">
         <li>
-          <a href="" id="signInButton">
-            <i class="fa fa-sign-in"></i> Log In
-          </a>
+          <a><i class="fa fa-check-square-o"></i></a>
         </li>
-      {{/if}}
-    </ul>
+        <li class="dropdown dropdown-notifi">
+          <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+            <i class="fa fa-bell"></i>
+            {{#if state$isExistNotifications}}
+              <span class="label label-primary">{{state$notificationsCount}}</span>
+            {{/if}}
+          </a>
+          <ul class="dropdown-menu dropdown-alerts">
+            {{#if state$isExistNotifications}}
+              {{#each state$notifications}}
+                {{> render component='notificationItem' noti=this}}
+              {{/each}}
+              <li>
+                <div class="text-center link-block">
+                  <a href="#" class="markAllAsRead">
+                    <strong>Mark All As Read</strong>
+                  </a>
+                </div>
+              </li>
+            {{else}}
+              <li>
+                <div class="text-center link-block">
+                  <strong>No unread notifications</strong>
+                </div>
+              </li>
+            {{/if}}
+          </ul>
+        </li>
+      </ul>
+    </nav>
   </div>
-  <!-- /TOP NAV -->
 </template>

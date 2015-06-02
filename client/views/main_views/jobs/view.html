@@ -1,0 +1,16 @@
+<template name="jobsMainView">
+  <!-- Page heading -->
+  {{> render component="pageHeading" title="Generated jobs" category='Roster' name="jobs"}}
+
+  <div class="wrapper wrapper-content animated">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="table-responsive">
+            {{> render component="jobsList"}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

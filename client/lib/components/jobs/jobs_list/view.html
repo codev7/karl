@@ -1,25 +1,23 @@
 <template name="jobsList">
-   <div class="ibox-content">
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Job</th>
-            <th>Type</th>
-            <th>Status</th>
-            <th>Active Time (mins)</th>
-            <th>Created on</th>
-            <th>Shelf Life</th>
-            <th>Portions</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each state$jobsList}}
-            {{> render component='jobListed' job=this}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Job</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Active Time (mins)</th>
+          <th>Created on</th>
+          <th>Shelf Life</th>
+          <th>Portions</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each state$jobsList}}
+          {{> render component='jobListed' job=this}}
+        {{/each}}
+      </tbody>
+    </table>
   </div>
 </template>

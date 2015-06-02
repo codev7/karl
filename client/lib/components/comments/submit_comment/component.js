@@ -1,4 +1,6 @@
-var autolinker = new Autolinker();
+var autolinker = new Autolinker({
+  "twitter": false
+});
 
 var component = FlowComponents.define("submitComment", function(props) {
   this.referenceId = Router.current().params._id;
@@ -11,7 +13,7 @@ component.action.submit = function(text) {
   while (match = matched.exec(text)) {
     matches.push(match[1]);
   }
-
+  console.log(matches);
   var taggedUsers = [];
   matches.forEach(function(username) {
     var filter = new RegExp(username, 'i');
@@ -30,10 +32,11 @@ component.action.submit = function(text) {
   var textHtml = "<div class='non'>" + text + "</div>"
   taggedUsers.forEach(function(user) {
     textHtml = textHtml.replace(user.user, "<span class='label " + user.class + "'>" + user.user + "</span>");
+    console.log(textHtml);
+
   });
 
   var linkedText = autolinker.link(textHtml);
-  console.log(linkedText);
   
   Meteor.call("createComment", linkedText, ref, function(err, id) {
     if(err) {
@@ -54,7 +57,7 @@ component.action.submit = function(text) {
       }
 
       var options = {
-        "title": "New comment on " + ref_name,
+        "title": "New comment on " + ref_name + " by " + Meteor.user().username,
         "users": matches,
         "commentId": id,
         "type": ref_type
