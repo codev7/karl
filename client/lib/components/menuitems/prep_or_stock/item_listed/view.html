@@ -3,11 +3,12 @@
     <td>{{{state$name}}}</td>
     <td>{{state$type}}</td>
     <td>{{state$activeTime}}</td>
-    <!-- <td>$ {{state$costPerPortion}}</td> -->
-    {{#if state$isTypePrep}}
-    <td><input type="checkbox" data-id="{{state$id}}" class="selectedPrep" name="selectedPrep"></td>
-    {{else}}
-    <td><input type="checkbox" data-id="{{state$id}}" class="selectedIng" name="selectedIng"></td>
-    {{/if}}
+    <td>
+      <div class="i-checks">
+        <label>
+          <input type="checkbox" value="" data-id="{{state$id}}" data-type="{{state$type}}" class="selectedItem" name="selectedItem">
+        </label>
+      </div>
+    </td>
   </tr>
 </template>

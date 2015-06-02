@@ -12,7 +12,7 @@ component.state.menu = function() {
 
 component.state.initialHTML = function() {
   if(this.menu) {
-    if(this.menu.instructions) {
+    if(this.menu.instructions.trim()) {
       return this.menu.instructions;
     } else {
       return "Add instructions here"
