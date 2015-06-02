@@ -11,17 +11,18 @@ Template.pageHeading.events({
 
   'click .subscribeMenuItemBtn': function(event) {
     event.preventDefault();
-    Meteor.call("subscribe", "menulist", function(err) {
+    var id = Session.get("thisMenuItem");
+    Meteor.call("subscribe", id, function(err) {
       if(err) {
         console.log(err);
         return alert(err.reason);
       }
     });
   },
-
   'click .unSubscribeMenuItemBtn': function(event) {
     event.preventDefault();
-    Meteor.call("unSubscribe", "menulist", function(err) {
+    var id = Session.get("thisMenuItem");
+    Meteor.call("unSubscribe", id, function(err) {
       if(err) {
         console.log(err);
         return alert(err.reason);
@@ -29,11 +30,31 @@ Template.pageHeading.events({
     });
   },
 
-  'click #menuSubmit': function(event) {
+  'click .copyMenuItemBtn': function(event) {
     event.preventDefault();
-    $("#submitNewMenu").submit();
+    var id = $(event.target).attr("data-id");
+    if(id) {
+      Meteor.call("duplicateMenuItem", id, function(err, id) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        } else {
+          Router.go("menuItemEdit", {"_id": id});
+        }
+      });
+    }
   },
 
+  'click .editMenuItemBtn': function(e) {
+    e.preventDefault();
+    Router.go("menuItemEdit", {"_id": $(e.target).attr("data-id")})
+  },
+
+  'click .printMenuItemBtn': function(event) {
+    event.preventDefault();
+    print();
+  },
+  
   'click #submitJobItem': function(event) {
     event.preventDefault();
     Router.go("submitJobItem");

@@ -1,0 +1,30 @@
+<template name="menuFilters">
+  <div class="row m-b">
+    <div class="col-md-3">
+      <button data-toggle="dropdown" class="btn btn-white dropdown-toggle form-control text-capitalize" style="text-align: left">{{state$selectedCategory.name}} 
+        <span class="caret pull-right m-t-sm" ></span>
+      </button>
+      <ul class="dropdown-menu text-capitalize filter-menus">
+        {{#each state$categories}}
+          <li><a href="/menuItems/{{this._id}}/{{state$selectedStatus.name}}" class="">{{this.name}}</a></li>
+        {{/each}}
+        {{#if state$isAdminOrManager}}
+        <li class="divider"></li>
+        <li><a data-toggle="modal" data-target="#addCategoryModal">Add new category</a></li>
+        {{/if}}
+      </ul>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-3">
+      <button data-toggle="dropdown" class="btn btn-white dropdown-toggle form-control text-capitalize" style="text-align: left">{{state$selectedStatus.name}} 
+        <span class="caret pull-right m-t-sm" ></span>
+      </button>
+      <ul class="dropdown-menu text-capitalize filter-menus">
+        {{#each state$statuses}}
+          <li><a href="/menuItems/{{state$selectedCategory._id}}/{{this.name}}" class="">{{this.name}}</a></li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>

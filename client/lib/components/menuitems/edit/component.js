@@ -1,11 +1,6 @@
 var component = FlowComponents.define('editMenuItem', function(props) {
-  var id = Router.current().params._id;
-  if(id) {
-    var item = MenuItems.findOne(id);
-    if(item) {
-      this.item = item;
-    }
-  }
+  this.id = Router.current().params._id;
+  this.onRendered(this.onMenuRendered);
 });
 
 component.state.initialHTML = function() {
@@ -20,46 +15,30 @@ component.state.initialHTML = function() {
   }
 };
 
-component.state.id = function() {
-  return this.item._id;
+component.prototype.onMenuRendered = function() {
+  this.item = MenuItems.findOne(this.id);
 }
 
-component.state.name = function() {
-  return this.item.name;
-}
-
-component.state.isMyCategory = function(categoryId) {
-  if(categoryId) {
-    if(categoryId == this.item.category) {
-      return true;
-    } else {
-      return false;
-    }
+component.state.menu = function() {
+  this.item = MenuItems.findOne(this.id);
+  if(this.item) {
+    return this.item;
   }
 }
 
-component.state.myStatus = function() { 
-  return this.item.status;
+component.state.myCategory = function(categoryId) {
+  var myCategory = this.item.category;
+  if(myCategory) {
+    return Categories.findOne(myCategory);
+  }
 }
 
-component.state.jobItems = function() {
-  return this.item.jobItems;
-}
-
-component.state.ingredients = function() {
-  return this.item.ingredients;
-}
-
-component.state.salePrice = function() {
-  return this.item.salesPrice;
-}
-
-component.state.image = function() {
-  return this.item.image;
-}
 
 component.state.categoriesList = function() {
-  return Categories.find().fetch();
+  var myCategory = this.item.category;
+  if(myCategory) {
+    return Categories.find({"_id": {$nin: [myCategory]}}).fetch();
+  }
 }
 
 component.state.jobItemsList = function() {
@@ -84,17 +63,10 @@ component.state.ingredientsList = function() {
 }
 component.state.statusList = function() {
   var myStatus = this.item.status;
-  var list = [
-    {'status': 'Active', 'value': 'active'},
-    {'status': 'Ideas', 'value': 'ideas'},
-    {'status': 'Archived', 'value': 'archived'}
-  ];
-  list.forEach(function(doc) {
-    var index = list.indexOf(doc);
-    if(doc.value == myStatus) {
-      list.splice(index, 1);
-    }
-  });
+  var list = null;
+  if(myStatus) {
+    list = Statuses.find({"name": {$nin: [myStatus]}}).fetch();
+  }
   return list;
 }
 
@@ -139,17 +111,17 @@ component.action.submit = function(id, info) {
           }
         }
       }
-     var options = {
-      "type": "edit",
-      "title": menuBefore.name + " has been updated",
-      "text": desc
-    }
-    Meteor.call("sendNotifications", id, "menu", options, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
+      var options = {
+        "type": "edit",
+        "title": menuBefore.name + " has been updated",
+        "text": desc
       }
-    }); 
+      Meteor.call("sendNotifications", id, "menu", options, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      }); 
       Router.go("menuItemDetail", {"_id": id});
     }
   });

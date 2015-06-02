@@ -1,6 +1,6 @@
 <template name="navigation">
   {{#if currentUser}}
-    <nav class="navbar-default navbar-static-side" role="navigation">
+    <nav class="navbar-default navbar-static-side hidden-print" role="navigation">
       <div class="sidebar-collapse">
         <!-- Close canvas menu used only on OffCanvas page -->
         <!-- You can remove this tag if you dont use offCanvas menu -->
@@ -41,7 +41,7 @@
           <!-- USER PROFILE HEADER -->
 
           <li class="{{isActiveRoute regex='menuItemsMaster'}}">
-            <a href="/menuItems/all/all"><i class="fa fa-cutlery"></i> <span class="nav-label">Menu</span></a>
+            <a href="/menuItems/{{state$category}}/{{state$status}}"><i class="fa fa-cutlery"></i> <span class="nav-label">Menu</span></a>
           </li>
 
           <li class="{{isActiveRoute regex='jobItemsMaster'}}">
@@ -51,7 +51,7 @@
           <li class="{{isActiveRoute regex='ingredientsList'}}">
             <a href="/ingredients"><i class="fa fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
-          {{#if state$isPermitted}}
+          {{#if state$isManagerOrAdmin}}
           <li class="{{isActiveRoute regex='salesCalibration|actualSales|cafeSalesForecast|weeklySalesForecastMenusList'}}">
             <a href="#">
               <i class="fa fa-line-chart"></i>

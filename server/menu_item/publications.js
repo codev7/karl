@@ -45,3 +45,7 @@ Meteor.publish("allCategories", function() {
   }
   return Categories.find();
 });
+
+Meteor.publish("allStatuses", function() {
+  return Statuses.find();
+});

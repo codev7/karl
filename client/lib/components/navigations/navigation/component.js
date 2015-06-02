@@ -25,12 +25,29 @@ component.state.userType = function() {
   }
 }
 
-component.state.isPermitted = function() {
+component.state.isManagerOrAdmin = function() {
   if(isAdmin()) {
     return true;
   } else if(isManager()) {
     return true;
   } else if(isWorker()) {
     return false;
+  }
+}
+
+component.state.category = function() {
+  if(Session.get("category")) {
+    return Session.get('category');
+  } else {
+    return "all";
+  }
+}
+
+
+component.state.status = function() {
+  if(Session.get("status")) {
+    return Session.get('status');
+  } else {
+    return "all";
   }
 }

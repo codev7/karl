@@ -15,9 +15,13 @@ SearchSource.defineSource('jobItemsSearch', function(searchText, options) {
     if(options.ids) {
       selector['_id'] = {$nin: options.ids}
     }
+    if(options.type) {
+      selector["type"] = options.type;
+    }
   } else {
     optionFileds['limit'] = 10;
   }
+
   if(searchText) {
     var regExp = buildRegExp(searchText);
     selector['$or'] = [

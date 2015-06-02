@@ -14,7 +14,11 @@ component.state.category = function() {
 }
 
 component.state.id = function() {
-  return this.id;
+  if(this.id) {
+    return this.id;
+  } else if(Router.current().params._id) {
+    return Router.current().params._id;
+  }
 }
 
 component.state.isMenuList = function() {
@@ -48,14 +52,6 @@ component.state.isMenuListSubscribed = function() {
     } else {
       return false;
     }
-  }
-}
-
-component.state.isMenuSubmit = function() {
-  if(this.type == "menusubmit") {
-    return true;
-  } else {
-    return false;
   }
 }
 
@@ -115,6 +111,12 @@ component.state.isCafeForecasting = function() {
 }
 
 component.state.isManagerOrAdmin = function() {
-  var userId = Meteor.userId();
-  return isManagerOrAdmin(userId);
+  if(isAdmin()) {
+    return true;
+  } else if(isManager()) {
+    return true; 
+  } else {
+    return false;
+  }
+  
 }
