@@ -29,8 +29,13 @@ component.state.image = function() {
 }
 
 component.state.isPermitted = function() {
+  var user = this.get("user");
   if(isAdmin() || isManager()) {
-    return true;
+    if(user._id == Meteor.userId()) {
+      return false;
+    } else {
+      return true;
+    }
   } else {
     return false;
   }

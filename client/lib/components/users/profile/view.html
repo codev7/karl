@@ -13,6 +13,7 @@
               <img alt="image" class="img-responsive" src="{{state$image}}">
             </div>
             <div class="ibox-content profile-content">
+              <a href="#" id="username" data-type="text" data-pk="1" data-url="/post" data-title="Enter username">superuser</a>
               <h4><strong>{{state$basic.profile.name}}</strong></h4>
               {{#if state$basic.profile.address}}
               <p><i class="fa fa-map-marker m-r-xs"></i>{{state$basic.profile.address}}</p>
@@ -25,16 +26,17 @@
               {{#if state$isPermitted}}
                 <input name="payRate" value="{{state$basic.profile.payRate}}"/>
               {{else}}
+                {{#if state$basic.profile.payRate}}
                 {{state$basic.profile.payRate}}
+                {{else}}
+                Not added <a href="#">Ask about it</a>
+                {{/if}}
               {{/if}}
               </p>
-              
-
-
-              <!-- <h5>About me</h5>
+              <h5>Availability</h5>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.
-              </p>      -->         
+                <div id="datepicker"></div>
+              </p>              
             </div>
           </div>
         </div>
@@ -45,6 +47,7 @@
             <h5>Training</h5>
           </div>
           <div class="ibox-content">
+            Coming soon
           </div>
         </div>
       </div>

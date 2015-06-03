@@ -61,3 +61,11 @@ component.state.ifMe = function() {
     return true;
   }
 }
+
+component.state.isPermitted = function() {
+  if(isAdmin() || isManager()) {
+    return true;
+  } else {
+    return false;
+  }
+}
