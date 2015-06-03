@@ -51,50 +51,70 @@ Meteor.methods({
   },
 
   generateRecurrings: function(date) {
+    console.log(date);
     var ids = [];
+    var allJobItems = [];
+    var d = new Date(date);
+    var weekday = new Array(7);
+    weekday[0]=  "Sun";
+    weekday[1] = "Mon";
+    weekday[2] = "Tue";
+    weekday[3] = "Wed";
+    weekday[4] = "Thurs";
+    weekday[5] = "Fri";
+    weekday[6] = "Sat";
+
+    var day = weekday[d.getDay()];
+
     if(!date) {
       logger.error("Date should be defined");
       throw new Meteor.Error(404, "Date should be defined");
     }
 
     //endsNever
-    var endsNever = JobItems.find({"createdOn": {$lt: new Date(date).getTime()}, "type": "Recurring", "endsOn.on": "endsNever"}).fetch();
+    var endsNever = JobItems.find({"type": "Recurring", "endsOn.on": "endsNever"}).fetch();
     if(endsNever.length > 0) {
-      endsNever.forEach(function(job) {
-
-        var id = createNewRecurringJob(job.name, job._id, job.type, job.activeTime, job.section, date);
-        if(ids.indexOf(id) < 0) {
-          ids.push(id);
-        }
-      });
+      allJobItems = allJobItems.concat(endsNever);
     }
-    //endsOn date
-    var endsOn = JobItems.find({"createdOn": {$lt: new Date(date).getTime()}, "type": "Recurring", "endsOn.on": "endsOn", "endsOn.lastDate": {$lt: new Date(date).getTime()}}).fetch();
-    if(endsOn.length > 0) {
-      endsNever.forEach(function(job) {
-        console.log("=======", job);
 
-        var id = createNewRecurringJob(job.name, job._id, job.type, job.activeTime, job.section, date);
-        if(ids.indexOf(id) < 0) {
-          ids.push(id);
-        }
-      });
+    //endsOn date
+    var endsOn = JobItems.find({"type": "Recurring", "endsOn.on": "endsOn", "endsOn.lastDate": {$lt: new Date(date).getTime()}}).fetch();
+    if(endsOn.length > 0) {
+       allJobItems = allJobItems.concat(endsOn);
     }
 
     //endsAfter occurences
-    var endsAfter = JobItems.find({"createdOn": {$lt: new Date(date).getTime()}, "type": "Recurring", "endsOn.on": "endsAfter"}).fetch();
-    endsAfter.forEach(function(job) {
-      var jobsCount = Jobs.find({"ref": job._id}).count();
-      if(jobsCount <= job.endsOn.after) {
-        console.log("=======", job);
-        var id = createNewRecurringJob(job.name, job._id, job.type, job.activeTime, job.section, date);
-        if(ids.indexOf(id) < 0) {
-          ids.push(id);
+    var endsAfter = JobItems.find({"type": "Recurring", "endsOn.on": "endsAfter"}).fetch();
+    if(endsAfter.length > 0) {
+      endsAfter.forEach(function(job) {
+        var jobsCount = Jobs.find({"ref": job._id}).count();
+        if(jobsCount < job.endsOn.after) {
+          allJobItems.push(job);
         }
-      }
-    });
+      });
+    }
 
-    return ids;
+    console.log(".......allllll.........", allJobItems);
+
+    if(allJobItems.length > 0) {
+      allJobItems.forEach(function(job) {
+        if(job.frequency == "Daily") {
+          var id = createNewRecurringJob(job.name, job._id, job.type, job.activeTime, job.section, job.repeatAt, date);
+          if(ids.indexOf(id) < 0) {
+            ids.push(id);
+          }
+        } else if(job.frequency == "Weekly") {
+          if(job.repeatOn.indexOf(day) >= 0) {
+            var id = createNewRecurringJob(job.name, job._id, job.type, job.activeTime, job.section, job.repeatAt, date);
+            if(ids.indexOf(id) < 0) {
+              ids.push(id);
+            }
+          }
+        }
+      }); 
+      return ids;
+    }
+
   }
 });
 
@@ -155,7 +175,7 @@ function createNewJob(info, time, portions, maxTime, maxPortions) {
 }
 
 
-function createNewRecurringJob(name, ref, type, time, section, date) {
+function createNewRecurringJob(name, ref, type, time, section, startAt, date) {
   var existingJob = Jobs.find({
     "name": name, 
     "ref": ref, 
@@ -179,22 +199,23 @@ function createNewRecurringJob(name, ref, type, time, section, date) {
       "section": section,
       "createdOn": new Date().toDateString(),
       "createdBy": Meteor.userId(),
+      "startAt": startAt
     }
 
-    var shifts = Shifts.findOne({"shiftDate": new Date(date).toDateString(), "section": section})
-    if(shifts) {
-      console.log("------shift-----", shifts);
-      // shifts.forEach(function(shift) {
-        doc.onshift = shifts._id;
-        var id = Jobs.insert(doc);
-        Shifts.update({"_id": shifts._id}, {$addToSet: {"jobs": id}});
+    var shifts = Shifts.find({"shiftDate": new Date(date).toDateString(), "section": section}).fetch();
+    if(shifts.length > 0) {
+      shifts.forEach(function(shift) {
+        console.log("------shift-----", shifts);
+        // shifts.forEach(function(shift) {
+          doc.onshift = shift._id;
+          var id = Jobs.insert(doc);
+          Shifts.update({"_id": shift._id}, {$addToSet: {"jobs": id}});
+      });
       // });
     } else {
       Jobs.insert(doc);
     }
-
     console.log("........doc........", doc);
-
   }
 
 }

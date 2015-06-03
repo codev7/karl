@@ -31,7 +31,9 @@ Template.dailyShiftScheduling.events({
 
   'click .generateRecurring': function(event) {
     event.preventDefault();
-    Meteor.call("generateRecurrings", new Date(), function(err, result) {
+    var date = Router.current().params.date;
+    console.log(date);
+    Meteor.call("generateRecurrings", date, function(err, result) {
       if(err) {
         console.log(err);
         return alert(err.reason);
