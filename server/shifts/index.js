@@ -25,7 +25,7 @@ Meteor.methods({
     var doc = {
       "startTime": info.startTime,
       "endTime": info.endTime,
-      "shiftDate": info.shiftDate,
+      "shiftDate": new Date(info.shiftDate).toDateString(),
       "section": info.section,
       "createdOn": Date.now(),
       "createdBy": null, //add logged in users id
@@ -70,7 +70,7 @@ Meteor.methods({
         logger.error("Can't change the date of an assigned shift ", {"id": info._id});
         throw new Meteor.Error(404, "Can't change the date of shift when you have assigned jobs or workers");
       } else {
-        updateDoc.shiftDate = info.shiftDate;
+        updateDoc.shiftDate = new Date(info.shiftDate).toDateString();
       }
     }
     if(Object.keys(updateDoc).length <= 0) {

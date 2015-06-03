@@ -27,6 +27,18 @@ Template.dailyShiftScheduling.events({
         return;
       }
     });
+  },
+
+  'click .generateRecurring': function(event) {
+    event.preventDefault();
+    Meteor.call("generateRecurrings", new Date(), function(err, result) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        console.log(result);
+      }
+    });
   }
 });
 
@@ -34,7 +46,7 @@ Template.dailyShiftScheduling.rendered = function() {
   var routeDate = Router.current().params.date;
   setTimeout(function() {
     var oneDay = 1000 * 3600 * 24;
-    var shifts = Shifts.find({"shiftDate": routeDate});
+    var shifts = Shifts.find({"shiftDate": new Date(routeDate).toDateString()});
     var businessStartsAt = 8;
     var businessEndsAt = 5;
     if(shifts) {

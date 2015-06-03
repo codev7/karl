@@ -25,7 +25,7 @@ Template.weeklyForecastedMenus.events({
         });
       } 
     });
-    Meteor.call("generateJobs", menus, new Date(), function(err, result) {
+    Meteor.call("generatePreps", menus, new Date(), function(err, result) {
       if(err) {
         console.log(err);
         return alert(err.reason);

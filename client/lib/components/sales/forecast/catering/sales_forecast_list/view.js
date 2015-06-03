@@ -25,7 +25,7 @@ Template.cateringSalesForecastList.events({
         menuInfo.push(doc);
       });
       console.log("........", menuInfo)
-      Meteor.call("generateJobs", menuInfo, new Date(), function(err, result) {
+      Meteor.call("generatePreps", menuInfo, new Date(), function(err, result) {
         if(err) {
           console.log(err);
           return;

@@ -195,6 +195,7 @@ Template.editJobItem.events({
           }
         }
         var section = $(event.target).find("[name=sections]").val();
+        console.log("............", section);
         if(job.section && job.section != section) {
           info.section = section;
         }

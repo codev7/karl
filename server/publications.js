@@ -2,7 +2,7 @@ Meteor.publish("daily", function(date, worker) {
   var cursors = [];
   //get Shifts
   var query = {
-    "shiftDate": date
+    "shiftDate": new Date(date).toDateString()
   }
   if(worker) {
     query.assignedTo = worker
@@ -11,6 +11,7 @@ Meteor.publish("daily", function(date, worker) {
   cursors.push(shiftsCursor);
   
   var shifts = shiftsCursor.fetch();
+  
   var shiftsList = [];
   shifts.forEach(function(shift) {
     shiftsList.push(shift._id);
@@ -28,7 +29,7 @@ Meteor.publish("weekly", function(dates, worker) {
   var firstDate = dates.day1;
   var lastDate = dates.day7;
 
-  var query = {"shiftDate": {$gte: firstDate, $lte: lastDate}};
+  var query = {"shiftDate": {$gte: new Date(firstDate).toDateString(), $lte: new Date(lastDate).toDateString()}};
   if(worker) {
     query["assignedTo"] = worker
   }

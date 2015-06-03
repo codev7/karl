@@ -181,9 +181,9 @@
           <label class="col-sm-2 control-label">Sections</label>
           <div class="col-sm-10">
             <select name="sections" class="form-control">
-              <option value="">Select a section</option>
+              <option value="{{state$mySection}}">{{state$mySection}}</option>
               {{#each state$sectionsWithSelected}}
-              <option value="{{index}}" selected="{{selected}}">{{index}}</option>
+              <option value="{{name}}">{{name}}</option>
               {{/each}}
             </select>
           </div>
