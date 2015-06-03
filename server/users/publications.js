@@ -1,5 +1,5 @@
-Meteor.publish('currentUser', function() {
-  var user = Meteor.users.find(this.userId);
+Meteor.publish('profileUser', function(id) {
+  var user = Meteor.users.find({"_id": id}, {fields: {"services.google": 1}});
   return user;
 });
 

@@ -1,5 +1,9 @@
 var component = FlowComponents.define("navigation", function(props) {});
 
+component.state.id = function() {
+  return Meteor.userId();
+}
+
 component.state.profileImage = function() {
   var user = Meteor.user();
   var image = '/images/user-image.jpeg';
