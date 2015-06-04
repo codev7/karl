@@ -47,8 +47,14 @@ Template.dailyShiftScheduling.events({
 Template.dailyShiftScheduling.rendered = function() {
   var routeDate = Router.current().params.date;
   setTimeout(function() {
+    Meteor.call("generateRecurrings", routeDate, function(err, result) {
+      if(err) {
+        console.log(err);
+      }
+    });
+
     var oneDay = 1000 * 3600 * 24;
-    var shifts = Shifts.find({"shiftDate": new Date(routeDate).toDateString()});
+    var shifts = Shifts.find({"shiftDate": new Date(routeDate).getTime()});
     var businessStartsAt = 8;
     var businessEndsAt = 5;
     if(shifts) {

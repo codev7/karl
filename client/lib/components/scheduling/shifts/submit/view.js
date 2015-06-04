@@ -47,7 +47,23 @@ Template.submitShift.events({
           return alert(err.reason);
         } else {
           $("#submitShiftModal").modal("hide");
-          $('#calendar').fullCalendar('render');
+          var recurringJobs = Jobs.find({
+            "type": "Recurring", 
+            "createdOn": new Date(dateOfShift).toDateString(), 
+            "section": section,
+            "status": "draft"}).fetch();
+          if(recurringJobs.length > 0) {
+            recurringJobs.forEach(function(job) {
+              Meteor.call("assignJob", job._id, id, job.startAt, function(err) {
+                if(err) {
+                  console.log(err);
+                  return alert(err.reason);
+                } 
+              });
+            });
+          }
+          $('#calendar').fullCalendar('rerenderEvents')
+          Blaze.render(Template.dailyShiftScheduling, document.getElementById("dailyShiftSchedulingMainView"))
         }
       });
     }

@@ -12,7 +12,7 @@ Meteor.methods({
           if(menuItem.jobItems.length > 0) {
 
             menuItem.jobItems.forEach(function(job) {
-              var jobItem = JobItems.findOne(job._id);
+              var jobItem = JobItems.findOne({"_id": job._id, "type": "Prep"});
               if(!jobItem) {
                 logger.error("MenuItem not found", menu.id);
               } else {
@@ -51,7 +51,6 @@ Meteor.methods({
   },
 
   generateRecurrings: function(date) {
-    console.log(date);
     var ids = [];
     var allJobItems = [];
     var d = new Date(date);
@@ -76,13 +75,11 @@ Meteor.methods({
     if(endsNever.length > 0) {
       allJobItems = allJobItems.concat(endsNever);
     }
-
     //endsOn date
-    var endsOn = JobItems.find({"type": "Recurring", "endsOn.on": "endsOn", "endsOn.lastDate": {$lt: new Date(date).getTime()}}).fetch();
+    var endsOn = JobItems.find({"type": "Recurring", "endsOn.on": "endsOn", "endsOn.lastDate": {$gte: new Date(date)}}).fetch();
     if(endsOn.length > 0) {
        allJobItems = allJobItems.concat(endsOn);
     }
-
     //endsAfter occurences
     var endsAfter = JobItems.find({"type": "Recurring", "endsOn.on": "endsAfter"}).fetch();
     if(endsAfter.length > 0) {
@@ -93,8 +90,6 @@ Meteor.methods({
         }
       });
     }
-
-    console.log(".......allllll.........", allJobItems);
 
     if(allJobItems.length > 0) {
       allJobItems.forEach(function(job) {
@@ -119,7 +114,7 @@ Meteor.methods({
 });
 
 function createNewJob(info, time, portions, maxTime, maxPortions) {
-  var existingJobs = Jobs.findOne({"name": info.name, "ref": info.ref, "status": "draft", "activeTime": {$lt: maxTimePerDay}});
+  var existingJobs = Jobs.findOne({"name": info.name, "ref": info.ref, "status": "draft", "activeTime": {$lt: maxTime}});
   if(existingJobs) {
     var newTime = existingJobs.activeTime + time;
     var newPortions = existingJobs.portions + portions;
@@ -175,47 +170,33 @@ function createNewJob(info, time, portions, maxTime, maxPortions) {
 }
 
 
-function createNewRecurringJob(name, ref, type, time, section, startAt, date) {
-  var existingJob = Jobs.find({
-    "name": name, 
-    "ref": ref, 
-    "type": type, 
-    "activeTime": time,    
-    "section": section,
-    "createdOn": new Date(date).toDateString()
-  }).fetch();
-  console.log("........", section, existingJob);
+createNewRecurringJob = function(name, ref, type, time, section, startAt, date) {
+  var shifts = Shifts.find({"shiftDate": new Date(date).getTime(), "section": section}).fetch();
 
-  if(existingJob.length <= 0) {
-    var doc = {
-      "name": name,
-      "ref": ref,
-      "type": type,
-      "status": "draft",
-      "options": [],
-      "onshift": null,
-      "activeTime": time,
-      "assignedTo": null,
-      "section": section,
-      "createdOn": new Date().toDateString(),
-      "createdBy": Meteor.userId(),
-      "startAt": startAt
-    }
+  if(shifts.length > 0) {
+    shifts.forEach(function(shift) {
+      var doc = {
+        "name": name,
+        "ref": ref,
+        "type": type,
+        "status": "assigned",
+        "options": [],
+        "onshift": shift._id,
+        "activeTime": time,
+        "assignedTo": null,
+        "section": section,
+        "createdOn": new Date(date).toDateString(),
+        "startAt": startAt
+      }
 
-    var shifts = Shifts.find({"shiftDate": new Date(date).toDateString(), "section": section}).fetch();
-    if(shifts.length > 0) {
-      shifts.forEach(function(shift) {
-        console.log("------shift-----", shifts);
-        // shifts.forEach(function(shift) {
-          doc.onshift = shift._id;
-          var id = Jobs.insert(doc);
-          Shifts.update({"_id": shift._id}, {$addToSet: {"jobs": id}});
-      });
-      // });
-    } else {
-      Jobs.insert(doc);
-    }
-    console.log("........doc........", doc);
+      var existingJob = Jobs.find(doc).fetch();
+      if(existingJob.length <= 0) {
+        doc.createdBy = Meteor.userId();
+        var id = Jobs.insert(doc);
+        Shifts.update({"_id": shift._id}, {$addToSet: {"jobs": id}});
+        return id;
+      }
+    });
   }
 
 }
