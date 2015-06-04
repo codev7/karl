@@ -4,3 +4,7 @@ Template.showListOfIngs.events({
     FlowComponents.callAction('keyup', text);
   }, 200)
 });
+
+Template.showListOfIngs.rendered = function() {
+  console.log("......rendered...............");
+}
