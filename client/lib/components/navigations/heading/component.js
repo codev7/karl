@@ -37,6 +37,14 @@ component.state.isActualSales = function() {
   }
 }
 
+component.state.isDailyRoster = function() {
+  if(this.type == "dailyroster") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 component.state.routeDate = function() {
   var date = Router.current().params.date;
   if(date) {

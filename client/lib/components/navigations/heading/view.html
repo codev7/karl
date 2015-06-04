@@ -89,6 +89,19 @@
         <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
       </div>
       {{/if}}
+
+      {{#if state$isDailyRoster}}
+      <div class="title-action">
+        <a href="#submitShiftModal" class="btn btn-primary" data-toggle="modal">
+          Create new shift
+        </a>
+        <!-- <div class=""> -->
+          <button class="btn btn-white right prevDayRoster"><i class="fa fa-chevron-left"></i></button>
+          <button class="btn btn-white right todayRoster">Today</button>
+          <button class="btn btn-white right nextDayRoster"><i class="fa fa-chevron-right"></i></button>
+        <!-- </div> -->
+      </div>
+      {{/if}}
     </div>
   </div>
 </template>

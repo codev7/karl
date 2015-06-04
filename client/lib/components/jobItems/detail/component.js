@@ -1,35 +1,13 @@
 var component = FlowComponents.define('jobItemDetail', function(props) {
   var id = Router.current().params._id;
-  var item = getPrepItem(id);
-  this.set("job", item);
+  this.id = id;
 });
 
-component.state.id = function() {
-  var item = this.get("job");
-  if(item) {
-    return item._id;
-  }
-}
-
-component.state.name = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.name;
-  }
-}
-
-component.state.type = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.type;
-  }
-}
-
-component.state.section = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.section;
-  }
+component.state.job = function() {
+  var id = this.id;
+  var item = getPrepItem(id);
+  this.set("job", item);
+  return item;
 }
 
 component.state.isPrep = function() {
@@ -63,31 +41,10 @@ component.state.ingExists = function() {
   }
 }
 
-component.state.ingredients = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.ingredients;
-  }
-}
-
-component.state.recipe = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.recipe;
-  }
-}
-
-
-component.state.activeTime = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.activeTime;
-  }
-}
 
 component.state.isChecklist = function() {
   var item = this.get("job");
-  if(item && item.checklist.length > 0) {
+  if(item && item.checklist && item.checklist.length > 0) {
     return true;
   }
 }

@@ -165,7 +165,7 @@ Template.submitJobItem.events({
       var frequency = $(event.target).find("[name=frequency]").val();
       info.frequency = frequency;
       var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
-      info.repeatAt = repeatAt;
+      info.repeatAt = moment(repeatAt, ["h:mm A"]).format();
       var startsOn = $(event.target).find('[name=startsOn]').val();
       info.startsOn = new Date(startsOn);
       info.endsOn = {

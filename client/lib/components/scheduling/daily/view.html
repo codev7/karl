@@ -1,48 +1,22 @@
 <template name="dailyShiftScheduling">
   <div class="col-md-12 draggable-jobs">
-      <div class="alert alert-success alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-          <p>When you've completed your forecast for the week, you'll see the jobs listed below. You can drag & drop to create your prep lists. </p>
-          <p>If you need to add a job that hasn't been created using the forecast, simply hit the 'add job' button and you can select from the list. </p>
-          <p><a href="#" class="alert-link">Watch a screencast of how this page works here. </a></p>
-      </div>
-
-          <a href="#submitJobModal" class="btn btn-primary pull-right" data-toggle="modal">
-          <i class="fa fa-plus"></i> Add job
-      </a>
-
-        <h3>Jobs list <small>Drag the jobs from here, into the shift that you'd like to do them. </small></h3>
-
-
-
-
-        <div id='external-events'>
-
-          {{> render component='schedulingJobsList'}} 
-        </div>
-
-
+    <div class="alert alert-success alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p>When you've completed your forecast for the week, you'll see the jobs listed below. You can drag & drop to create your prep lists. </p>
+      <p>If you need to add a job that hasn't been created using the forecast, simply hit the 'add job' button and you can select from the list. </p>
+      <p><a href="#" class="alert-link">Watch a screencast of how this page works here. </a></p>
+    </div>
+    <a href="#submitJobModal" class="btn btn-primary pull-right" data-toggle="modal">
+      <i class="fa fa-plus"></i> Add job
+    </a>
+    <h3>Jobs list <small>Drag the jobs from here, into the shift that you'd like to do them. </small></h3>
+    
+    <div id='external-events'>
+      {{> render component='schedulingJobsList'}} 
+    </div>
   </div>
   <div class="col-md-12">
     <div class="ibox float-e-margins">
-      <div class="ibox-title">
-        <div class="col-md-4">
-
-          <a href="#submitShiftModal" class="btn btn-xs btn-primary left" data-toggle="modal">
-            <i class="fa fa-plus"></i> Create new shift
-          </a>
-
-        </div>
-        <div class="col-md-4 center">
-          <h5>{{state$date}}</h5>
-        </div>
-        <div class="col-md-4">
-            <div class="pull-right">
-            <button class="btn btn-xs btn-white right prevDay m-r-xs"><i class="fa fa-chevron-left"></i></button>
-            <button class="btn btn-xs btn-white right today m-r-xs">Today</button>
-            <button class="btn btn-xs btn-white right nextDay m-r-xs"><i class="fa fa-chevron-right"></i></button>
-        </div></div>
-      </div>
       <div class="ibox-content">
         <div id="external-events">
           {{> render component='schedulingShiftsList'}}

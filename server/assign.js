@@ -43,7 +43,9 @@ Meteor.methods({
       updateDoc.onshift = shiftId;
       updateDoc.status = "assigned";
       updateDoc.options = {"assigned": new Date()}
-      updateDoc.startAt = startAt;
+      if(startAt) {
+        updateDoc.startAt = startAt;
+      }
 
       //updating new shift
       Shifts.update({"_id": shiftId}, {$addToSet: {"jobs": jobId}});
