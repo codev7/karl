@@ -73,9 +73,9 @@ Template.shiftProfile.events({
     }
   },
 
-  'focus #shiftDate': function(event) {
+  'focus .editShiftDate': function(event) {
     event.preventDefault();
-    $('#shiftDate').datetimepicker({
+    $('.editShiftDate').datetimepicker({
       format: "YYYY-MM-DD"
     });
   },

@@ -63,6 +63,13 @@ component.state.startsOn = function() {
   }
 }
 
+component.state.repeatAt = function() {
+  var item = this.get("job");
+  if(item && item.repeatAt) {
+    return moment(item.repeatAt).format("hh:mm A");
+  }
+}
+
 component.state.endsOn = function() {
   var item = this.get("job");
   var ends = null;
@@ -77,34 +84,6 @@ component.state.endsOn = function() {
       }
     }
     return ends;
-  }
-}
-
-component.state.shelfLife = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.shelfLife;
-  }
-}
-
-component.state.portions = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.portions;
-  }
-}
-
-component.state.repeatAt = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.repeatAt;
-  }
-}
-
-component.state.frequency = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.frequency;
   }
 }
 
