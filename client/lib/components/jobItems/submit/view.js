@@ -208,7 +208,6 @@ Template.submitJobItem.events({
         }
         info.endsOn.lastDate = new Date(lastDate);
       }
-
       var section = $(event.target).find("[name=sections]").val();
       if(!section) {
         return alert("Section should be defined");
@@ -220,16 +219,17 @@ Template.submitJobItem.events({
       if(frequency == "Weekly") {
         var repeatDays = [];
         var repeatOn = $(event.target).find('[name=daysSelected]').get();
-        if(repeatOn.length <= 0) {
-          return alert("Days to be repeated should be defined");
-        }
         repeatOn.forEach(function(doc) {
           if(doc.checked) {
             var value = $(doc).val();
             repeatDays.push(value);
           }
         });
-        info.repeatOn = repeatDays;
+        if(repeatDays.length <= 0) {
+          return alert("Days to be repeated should be defined");
+        } else {
+          info.repeatOn = repeatDays;
+        }
       }
     }
     FlowComponents.callAction('submit', info);

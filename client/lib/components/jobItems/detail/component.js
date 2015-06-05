@@ -104,7 +104,11 @@ component.state.repeatOnDays = function() {
   if(item) {
     if(item.frequency == "Weekly") {
       if(item.repeatOn.length > 0) {
-        repeat = "Every " + item.repeatOn;
+        if(item.repeatOn.length == 7) {
+          repeat = "Everyday";
+        } else {
+          repeat = "Every " + item.repeatOn;
+        }
       }
       return repeat;
     } 

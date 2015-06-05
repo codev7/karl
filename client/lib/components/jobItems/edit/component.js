@@ -136,7 +136,7 @@ component.state.repeatAt = function() {
   if(!this.item.repeatAt) {
     at = "8:00 AM"
   }
-  return at;
+  return moment(at).format("h:mm A");
 }
 
 component.state.startsOn = function() {
@@ -252,7 +252,6 @@ component.state.mySection = function() {
 
 component.state.sectionsWithSelected = function() {
   var sections = Sections.find({"name": {$nin: [this.item.section]}});
-  console.log(sections);
   return sections;
 }
 

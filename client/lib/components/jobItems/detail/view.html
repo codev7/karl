@@ -75,6 +75,17 @@
                 <li class="list-group-item">
                   <span class="pull-right">{{state$job.type}}</span>Type
                 </li>
+                {{#if state$isRecurring}}
+                <li class="list-group-item">
+                  <span class="pull-right">
+                    {{#if state$job.section}}
+                      {{state$job.section}}
+                    {{else}}
+                      Not assigned
+                    {{/if}}
+                  </span>Section
+                </li>
+                {{/if}}
                 <li class="list-group-item">
                   <span class="pull-right">{{secondsToMinutes state$job.activeTime}} mins</span>Active Time
                 </li>
@@ -84,7 +95,7 @@
                   </li>
                   {{#if state$isWeekly}}
                     <li class="list-group-item">
-                      <span class="pull-right">{{state$job.repeatOnDays}}</span>Repeat On
+                      <span class="pull-right">{{state$repeatOnDays}}</span>Repeat On
                     </li>
                   {{/if}}
                   <li class="list-group-item">
@@ -100,13 +111,6 @@
                       <span class="pull-right">{{state$endsOn}}</span>Ends
                     </li>
                   {{/if}}
-                    <li class="list-group-item">
-                      {{#if state$job.section}}
-                        <span class="pull-right">{{state$job.section}}</span>Section
-                      {{else}}
-                        <span class="pull-right">Not assigned</span>Section
-                      {{/if}}
-                    </li>
                 {{/if}}
                 {{#if state$isPrep}}
                 <li class="list-group-item">
