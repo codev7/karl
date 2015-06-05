@@ -49,7 +49,7 @@ Meteor.methods({
       doc.repeatAt = info.repeatAt;
       doc.description = info.description;
       doc.frequency = info.frequency;
-      doc.startsOn = new Date(info.startsOn);
+      doc.startsOn = new Date(info.startsOn).getTime();
       doc.endsOn = info.endsOn;
       if(info.frequency == "Weekly") {
         doc.repeatOn = info.repeatOn;
@@ -182,8 +182,8 @@ Meteor.methods({
         }
       }
       if(info.startsOn) {
-        if(info.startsOn != new Date(job.startsOn)) {
-          updateDoc.startsOn = new Date(info.startsOn);
+        if(info.startsOn != new Date(job.startsOn).getTime()) {
+          updateDoc.startsOn = new Date(info.startsOn).getTime();
         }
       }
       if(info.endsOn) {
