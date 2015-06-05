@@ -20,6 +20,19 @@
           </select>
         </div>
       </div>  
+      {{#if state$isRecurring}}
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Sections</label>
+          <div class="col-sm-10">
+            <select name="sections" class="form-control">
+              <option value="{{state$mySection}}">{{state$mySection}}</option>
+              {{#each state$sectionsWithSelected}}
+              <option value="{{name}}">{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div> 
+      {{/if}}
       <div class="form-group">
         {{#if state$isPrep}} 
         <label class="col-sm-2 control-label">Recipe</label>
@@ -34,10 +47,6 @@
       {{#if state$isPrep}} 
       <div class="form-group">
         <label class="col-sm-2 control-label">Ingredients used
-          <br>
-          <a type="button" id="showIngredientsList" class="btn btn-xs btn-primary margin-right-10">
-            <i class="fa fa-plus"></i>
-          </a>
         </label>
         <div class="col-sm-10">
           <table class="table table-hover thumbnail">
@@ -59,6 +68,8 @@
                 {{> render component='ingredientItemEdit' ingredient=this}}
               {{/each}}
             </tbody>
+            <br>
+            <button id="showIngredientsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add ingredients to prep item</button>
           </table>
         </div>
       </div> 
@@ -138,9 +149,9 @@
           <label class="col-sm-2 control-label">Starts On</label>
           <div class="col-sm-10">
             <div class="input-group">
-              <input type="text" name="startsOn" class="form-control datepicker" value="{{state$startsOn}}">
+              <input type="text" name="startsOn" class="form-control dateselecter" value="{{state$startsOn}}">
               <span class="input-group-addon">
-                <i class="fa fa-clock-o"></i>
+                <i class="fa fa-calendar"></i>
               </span>
             </div>
           </div>
@@ -177,17 +188,6 @@
             {{/if}}
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Sections</label>
-          <div class="col-sm-10">
-            <select name="sections" class="form-control">
-              <option value="{{state$mySection}}">{{state$mySection}}</option>
-              {{#each state$sectionsWithSelected}}
-              <option value="{{name}}">{{name}}</option>
-              {{/each}}
-            </select>
-          </div>
-        </div> 
       {{/if}} 
       <div class="form-group">
         <label class="col-sm-2 control-label">Active Time</label>
@@ -209,7 +209,7 @@
         </div>   
       </div>
       <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 col-sm-offset-2">
           <button class="btn btn-danger deleteJobItem" type="button" data-id="{{state$id}}">Delete</button>
           <button class="btn btn-white cancelEditJobItem" data-id="{{state$id}}" type="button">Cancel</button>
           <button class="btn btn-primary" type="submit">Save Changes</button>

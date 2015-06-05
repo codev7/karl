@@ -1,6 +1,6 @@
 <template name="jobItemDetail">
   <!-- Page heading -->
-  {{>render component="pageHeading" title=state$job.name category='Jobs' id=state$job.id}}
+  {{>render component="pageHeading" title=state$job.name category='Jobs' id=state$job.id name="jobitemdetailed"}}
 
   <div class="wrapper wrapper-content animated">
     <div class="row">
@@ -75,6 +75,17 @@
                 <li class="list-group-item">
                   <span class="pull-right">{{state$job.type}}</span>Type
                 </li>
+                {{#if state$isRecurring}}
+                <li class="list-group-item">
+                  <span class="pull-right">
+                    {{#if state$job.section}}
+                      {{state$job.section}}
+                    {{else}}
+                      Not assigned
+                    {{/if}}
+                  </span>Section
+                </li>
+                {{/if}}
                 <li class="list-group-item">
                   <span class="pull-right">{{secondsToMinutes state$job.activeTime}} mins</span>Active Time
                 </li>
@@ -84,12 +95,12 @@
                   </li>
                   {{#if state$isWeekly}}
                     <li class="list-group-item">
-                      <span class="pull-right">{{state$job.repeatOnDays}}</span>Repeat On
+                      <span class="pull-right">{{state$repeatOnDays}}</span>Repeat On
                     </li>
                   {{/if}}
-                    <li class="list-group-item">
-                      <span class="pull-right">{{state$job.repeatAt}}</span>Repeat At
-                    </li>
+                  <li class="list-group-item">
+                    <span class="pull-right">{{state$repeatAt}}</span>Repeat At
+                  </li>
                   {{#if state$startsOn}}
                     <li class="list-group-item">
                       <span class="pull-right">{{state$startsOn}}</span>Starts On
@@ -100,13 +111,6 @@
                       <span class="pull-right">{{state$endsOn}}</span>Ends
                     </li>
                   {{/if}}
-                    <li class="list-group-item">
-                      {{#if state$job.section}}
-                        <span class="pull-right">{{state$job.section}}</span>Section
-                      {{else}}
-                        <span class="pull-right">Not assigned</span>Section
-                      {{/if}}
-                    </li>
                 {{/if}}
                 {{#if state$isPrep}}
                 <li class="list-group-item">
@@ -125,22 +129,6 @@
                 </li>
                 {{/if}}
               </ul>
-            </div>
-            <div class="row">
-              <div class="col-sm-4 col-sm-offset-2">
-              </div>
-            </div>
-            <div class="col-md-12">
-              <button type="button" class="btn btn-white printJobItemBtn hidden-print"><i class="fa fa-print"></i></button>
-              {{#if state$isManagerOrAdmin}}
-              <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$job.id}}"><i class="fa fa-edit"></i> Edit
-              </button>
-              {{/if}}
-              {{#if state$isSubscribed}}
-              <button type="button" class="btn btn-info unSubscribeJobItemBtn hidden-print"  data-id="{{state$job.id}}">Unsubscribe</button>
-              {{else}}
-              <button type="button" class="btn btn-success subscribeJobItemBtn hidden-print"  data-id="{{state$job.id}}">Subscribe</button>
-              {{/if}}
             </div>
           </div>
         </div>

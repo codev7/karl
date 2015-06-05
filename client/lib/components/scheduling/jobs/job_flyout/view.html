@@ -2,26 +2,68 @@
   <div class="theme-config">
     <div class="theme-config-box">
       <div class="skin-setttings">
-        <div class="title">{{state$name}} Job Details</div>
+        <div class="title">{{state$job.name}} Job Details</div>
         <button class="btn btn-xs pull-right removeAssignedJob" data-id="{{state$id}}">x</button>
+
+        {{#if state$job.section}}
         <div class="setings-item">
-          <span>No. of protions</span>
+          <span>Section</span>
           <div class="switch">
-            <div>{{state$portions}}</div>
+            <div>{{state$job.section}}</div>
           </div>
         </div>
+        {{/if}}
         <div class="setings-item">
           <span>Active Time</span>
           <div class="switch">
             <div>{{state$activeTime}}</div>
           </div>
         </div>
-        <div class="setings-item">
-          <span>Instructions</span>
-          <div class="switch">
-            <div>{{{state$prepRecipe}}}</div>
+
+        {{#if state$instructions}}
+          <div class="setings-item">
+          {{#if state$isPrep}}
+            <span>Recipe</span>
+          {{else}}
+            <span>Description</span>
+          {{/if}}
+            <div class="switch">
+              <div class="ibox-content">{{{state$instructions}}}</div>
+            </div>
           </div>
-        </div>
+        {{/if}}
+
+        {{#if state$isPrep}}
+          <div class="setings-item">
+            <span>No. of protions</span>
+            <div class="switch">
+              <div>{{state$job.portions}}</div>
+            </div>
+          </div>
+          <div class="setings-item">
+            <span>Shelf Life</span>
+            <div class="switch">
+              <div>{{state$job.shelfLife}}</div>
+            </div>
+          </div>
+        {{else}}
+          {{#if state$checklist}}
+          <div class="setings-item m-t-md">
+            <span>Checklist</span>
+            <div class="switch" style="width: 100%">
+              <div class="ibox-content">
+                {{#each state$checklist}}
+                <div class="i-checks">
+                  <label>
+                    <input type="checkbox" value=""> <i></i> {{this}} 
+                  </label>
+                </div>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+          {{/if}}
+        {{/if}}
       </div>
     </div>
   </div>

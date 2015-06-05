@@ -71,6 +71,25 @@ component.state.isMenuDetailed = function() {
   }
 }
 
+component.state.isJobItemDetailed = function() {
+  if(this.type == "jobitemdetailed") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.isJobItemSubscribed = function() {
+  var userId = Meteor.userId();
+  var jobSubs = Subscriptions.findOne({"_id": Session.get("thisJobItem"), "subscribers": userId});
+  if(jobSubs) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 component.state.isJobsList = function() {
   if(this.type == "jobslist") {
     return true;
@@ -91,7 +110,7 @@ component.state.isMenuSubscribed = function() {
   }
 }
 
-component.state.isJobsSubscribed = function() {
+component.state.isJobListSubscribed = function() {
   if(this.type == "jobslist") {
     var result = Subscriptions.findOne({"_id": "joblist", "subscribers": Meteor.userId()});
     if(result) {
@@ -119,12 +138,9 @@ component.state.isCafeForecasting = function() {
 }
 
 component.state.isManagerOrAdmin = function() {
-  if(isAdmin()) {
+  if(isAdmin() || isManager()) {
     return true;
-  } else if(isManager()) {
-    return true; 
   } else {
     return false;
   }
-  
 }

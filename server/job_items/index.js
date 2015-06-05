@@ -49,7 +49,7 @@ Meteor.methods({
       doc.repeatAt = info.repeatAt;
       doc.description = info.description;
       doc.frequency = info.frequency;
-      doc.startsOn = info.startsOn;
+      doc.startsOn = new Date(info.startsOn).getTime();
       doc.endsOn = info.endsOn;
       if(info.frequency == "Weekly") {
         doc.repeatOn = info.repeatOn;
@@ -182,8 +182,8 @@ Meteor.methods({
         }
       }
       if(info.startsOn) {
-        if(info.startsOn != job.startsOn) {
-          updateDoc.startsOn = info.startsOn;
+        if(info.startsOn != new Date(job.startsOn).getTime()) {
+          updateDoc.startsOn = new Date(info.startsOn).getTime();
         }
       }
       if(info.endsOn) {
@@ -292,5 +292,37 @@ Meteor.methods({
 
   jobItemsCount: function() {
     return JobItems.find().count();
+  },
+
+  duplicateJobItem: function(id) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add job items");
+      throw new Meteor.Error(404, "User not permitted to add jobs");
+    }
+    var exist = JobItems.findOne(id);
+    if(!exist) {
+      logger.error('Job should exist to be duplicated');
+      throw new Meteor.Error(404, "Job should exist to be duplicated");
+    }
+    var filter = new RegExp(exist.name, 'i');
+    var count = JobItems.find({"name": filter}).count();
+    
+    var result = delete exist['_id'];
+    if(result) {
+      var duplicate = exist;
+      duplicate.name = exist.name + " - copy " + count;
+      duplicate.createdBy = userId;
+      duplicate.createdOn = Date.now();
+
+      var newId = JobItems.insert(duplicate);
+      logger.info("Duplicate job item added ", {"original": id, "duplicate": newId});
+      return newId;
+    }
   }
 });

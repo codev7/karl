@@ -2,10 +2,23 @@ var subs = new SubsManager();
 var component = FlowComponents.define("jobFlyout", function(props) {
 });
 
-component.state.id = function() {
+component.state.job = function() {
   var id = Session.get("thisJob");
   this.set("id", id);
-  return id;
+  var job = Jobs.findOne(id);
+  if(job) {
+    this.set("job", job);
+    return job;
+  }
+}
+
+component.state.isPrep = function() {
+  var job = this.get("job");
+  if(job && job.type == "Prep") {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 component.state.name = function() {
@@ -45,19 +58,43 @@ component.state.activeTime = function() {
   }
 }
 
-component.state.portions = function() {
+component.state.repeatAt = function() {
   var job = this.get("job");
   if(job) {
-    return job.portions;
+    return moment(job.repeatAt).format("hh:mm A");
   }
 }
 
-component.state.prepRecipe = function() {
+component.state.startsOn = function() {
   var job = this.get("job");
   if(job) {
-    var prep = JobItems.findOne({"name": job.name});
-    if(prep) {
-      return prep.recipe;
+    return moment(job.startsOn).format("YYYY-MM-DD");
+  }
+}
+
+
+component.state.instructions = function() {
+  var job = this.get("job");
+  if(job) {
+    var item = JobItems.findOne(job.ref);
+    if(item) {
+      if(item.type == "Prep") {
+        return item.recipe;
+      } else if(item.type == "Recurring") {
+        return item.description;
+      }
+    }
+  }
+}
+
+component.state.checklist = function() {
+  var job = this.get("job");
+  if(job) {
+    var item = JobItems.findOne(job.ref);
+    if(item && item.checklist) {
+      if(item.checklist.length > 0) {
+        return item.checklist;
+      }
     }
   }
 }

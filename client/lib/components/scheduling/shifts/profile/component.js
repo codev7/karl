@@ -6,7 +6,7 @@ component.state.date = function() {
   var shift = Shifts.findOne(id);
   if(shift) {
     this.set("shift", shift);
-    return shift.shiftDate;
+    return moment(shift.shiftDate).format("YYYY-MM-DD");
   }
 }
 

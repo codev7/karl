@@ -63,6 +63,13 @@ component.state.startsOn = function() {
   }
 }
 
+component.state.repeatAt = function() {
+  var item = this.get("job");
+  if(item && item.repeatAt) {
+    return moment(item.repeatAt).format("hh:mm A");
+  }
+}
+
 component.state.endsOn = function() {
   var item = this.get("job");
   var ends = null;
@@ -77,34 +84,6 @@ component.state.endsOn = function() {
       }
     }
     return ends;
-  }
-}
-
-component.state.shelfLife = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.shelfLife;
-  }
-}
-
-component.state.portions = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.portions;
-  }
-}
-
-component.state.repeatAt = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.repeatAt;
-  }
-}
-
-component.state.frequency = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.frequency;
   }
 }
 
@@ -125,7 +104,11 @@ component.state.repeatOnDays = function() {
   if(item) {
     if(item.frequency == "Weekly") {
       if(item.repeatOn.length > 0) {
-        repeat = "Every " + item.repeatOn;
+        if(item.repeatOn.length == 7) {
+          repeat = "Everyday";
+        } else {
+          repeat = "Every " + item.repeatOn;
+        }
       }
       return repeat;
     } 
@@ -151,16 +134,6 @@ component.state.prepCostPerPortion = function() {
   var item = this.get("job");
   if(item) {
     return item.prepCostPerPortion;
-  }
-}
-
-component.state.isSubscribed = function() {
-  var userId = Meteor.userId();
-  var jobSubs = Subscriptions.findOne({"_id": Session.get("thisJobItem"), "subscribers": userId});
-  if(jobSubs) {
-    return true;
-  } else {
-    return false;
   }
 }
 

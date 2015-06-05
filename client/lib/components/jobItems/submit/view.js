@@ -62,6 +62,9 @@ Template.submitJobItem.events({
     if(!activeTime) {
       return alert("Should have an active time for the job");
     }
+    if(!type) {
+      return alert("Should have an type for the job");
+    }
 
     var info = {
       "name": name,
@@ -71,7 +74,7 @@ Template.submitJobItem.events({
     }
     if(activeTime) {
       activeTime = parseInt(activeTime);
-      if(activeTime == activeTime) {
+      if((activeTime == activeTime) && (activeTime > 0)) {
         info.activeTime = activeTime;
       } else {
         info.activeTime = 0;
@@ -80,7 +83,7 @@ Template.submitJobItem.events({
 
     if(avgWagePerHour) {
       avgWagePerHour = parseFloat(avgWagePerHour);
-      if(avgWagePerHour == avgWagePerHour) {
+      if((avgWagePerHour == avgWagePerHour) && (avgWagePerHour > 0)) {
         info.wagePerHour = Math.round(avgWagePerHour * 100)/100;
       } else {
         info.wagePerHour = 0;
@@ -98,7 +101,7 @@ Template.submitJobItem.events({
         info.portions = 0;
       } else {
         portions = parseFloat(portions);
-        if(portions == portions) {
+        if((portions == portions) && (portions > 0)) {
           info.portions = portions;
         } else {
           info.portions = 0;
@@ -109,7 +112,7 @@ Template.submitJobItem.events({
         info.shelfLife =  0;
       } else {
         shelfLife = parseFloat(shelfLife)
-        if(shelfLife == shelfLife) {
+        if((shelfLife == shelfLife) && (shelfLife > 0)) {
           info.shelfLife = Math.round(shelfLife * 100)/100;
         } else {
           info.shelfLife = 0;
@@ -125,9 +128,10 @@ Template.submitJobItem.events({
       }
 
       var ing_doc = [];
+      var ingIds = [];
       ing.forEach(function(item) {
         var dataid = $(item).attr("data-id");
-        if(dataid && !(ing_doc.hasOwnProperty(dataid))) {
+        if(dataid && (ingIds.indexOf(dataid) < 0)) {
           var quantity = $(item).val();
           var doc = {
             "_id": dataid,
@@ -135,11 +139,12 @@ Template.submitJobItem.events({
           }
           if(quantity) {
             quantity = parseFloat(quantity);
-            if(quantity == quantity) {
+            if((quantity == quantity) && (quantity > 0)) {
               doc.quantity = quantity;
             }
           }
           ing_doc.push(doc);
+          ingIds.push(dataid);
         }
       });
 
@@ -150,6 +155,7 @@ Template.submitJobItem.events({
 
     //if Recurring
     else if(type == "Recurring") {
+
       var description = FlowComponents.child('jobItemEditorSubmit').getState('content');
       if(description) { 
         if($('.note-editable').text() === "Add description here" || $('.note-editable').text() === "") {
@@ -163,10 +169,21 @@ Template.submitJobItem.events({
       info.checklist = listItems;
 
       var frequency = $(event.target).find("[name=frequency]").val();
+      if(!frequency) {
+        return alert("Frequency should be defined");
+      }
       info.frequency = frequency;
+
       var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
-      info.repeatAt = moment(repeatAt, ["h:mm A"]).format();
+      if(!repeatAt) {
+        return alert("Repeat at should be defined");
+      }
+      info.repeatAt = moment(repeatAt, ["hh:mm A"]).format();
+
       var startsOn = $(event.target).find('[name=startsOn]').val();
+      if(!startsOn) {
+        return alert("Starts on should be defined");
+      }
       info.startsOn = new Date(startsOn);
       info.endsOn = {
         "on": null
@@ -175,6 +192,9 @@ Template.submitJobItem.events({
       info.endsOn.on = endsOn;
       if(endsOn == "endsAfter") {
         var after = $(event.target).find("[name=occurrences]").val();
+        if(!after) {
+          return alert("No. of occurrences should be defined");
+        }
         after = parseInt(after);
         if(after == after) {
           info.endsOn.after = after;
@@ -183,9 +203,15 @@ Template.submitJobItem.events({
         }
       } else if(endsOn == "endsOn") {
         var lastDate = $(event.target).find("[name=endsOn]").val();
+        if(!lastDate) {
+          return alert("Date to be ended on should be defined");
+        }
         info.endsOn.lastDate = new Date(lastDate);
       }
       var section = $(event.target).find("[name=sections]").val();
+      if(!section) {
+        return alert("Section should be defined");
+      }
       if(section) {
         info.section = section;
       }
@@ -199,7 +225,11 @@ Template.submitJobItem.events({
             repeatDays.push(value);
           }
         });
-        info.repeatOn = repeatDays;
+        if(repeatDays.length <= 0) {
+          return alert("Days to be repeated should be defined");
+        } else {
+          info.repeatOn = repeatDays;
+        }
       }
     }
     FlowComponents.callAction('submit', info);

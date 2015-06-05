@@ -18,7 +18,20 @@
             <option value="Recurring">Recurring</option>
           </select>
         </div>
-      </div>    
+      </div> 
+      {{#if isRecurring}}
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Sections</label>
+          <div class="col-sm-10">
+            <select name="sections" class="form-control">
+            <option value="" selected="selected">Select Section</option>
+            {{#each state$sections}}
+              <option value="{{name}}">{{name}}</option>
+            {{/each}}
+            </select>
+          </div>
+        </div>    
+      {{/if}}
       <div class="form-group">
         {{#if isPrep}}
           <label class="col-sm-2 control-label">Recipe</label>
@@ -32,12 +45,7 @@
       </div>
       {{#if isPrep}}
       <div class="form-group">
-        <label class="col-sm-2 control-label">Ingredients used
-          <br>
-          <a type="button" id="showIngredientsList" class="btn btn-xs btn-primary margin-right-10">
-            <i class="fa fa-plus"></i>
-          </a>
-        </label>
+        <label class="col-sm-2 control-label">Ingredients used</label>
         <div class="col-sm-10">
           <table class="table table-hover thumbnail">
             <thead>
@@ -55,6 +63,8 @@
                 {{> render component='ingredientItemEdit' ingredient=this}}
               {{/each}}
             </tbody>
+            <br>
+            <button id="showIngredientsList"  class="btn btn-block btn-outline btn-primary" type="button"><i class="fa fa-plus"></i> Add ingredients to prep item</button>
           </table>
         </div>
       </div>
@@ -91,6 +101,7 @@
           <label class="col-sm-2 control-label">Frequency</label>
           <div class="col-sm-10">
             <select name="frequency" class="form-control changeFrequency">
+              <option value="">Select frequency</option>
               <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
             </select>
@@ -129,7 +140,7 @@
             <div class="input-group">
               <input type="text" name="startsOn" class="form-control dateselecter" value="{{state$startsOn}}">
               <span class="input-group-addon">
-                <i class="fa fa-clock-o"></i>
+                <i class="fa fa-calendar"></i>
               </span>
             </div>
           </div>
@@ -151,17 +162,6 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Sections</label>
-          <div class="col-sm-10">
-            <select name="sections" class="form-control">
-            <option value="" selected="selected">Select Section</option>
-            {{#each state$sections}}
-              <option value="{{name}}">{{name}}</option>
-            {{/each}}
-            </select>
-          </div>
-        </div> 
       {{/if}}
       <div class="form-group">
         <label class="col-sm-2 control-label">Active Time</label>
@@ -184,12 +184,10 @@
       </div>
       <div class="row">
         <div class="col-sm-4 col-sm-offset-2">
-        </div>
-      </div>
-        <div class="col-md-12">
           <button class="btn btn-white" type="button">Cancel</button>
           <button class="btn btn-primary" type="submit">Save changes</button>
         </div>
+      </div>
     </form>
     <br>
   </div>
