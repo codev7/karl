@@ -394,8 +394,8 @@ Meteor.methods({
     var userId = Meteor.userId();
     var permitted = isManagerOrAdmin(userId);
     if(!permitted) {
-      logger.error("User not permitted to add job items");
-      throw new Meteor.Error(404, "User not permitted to add jobs");
+      logger.error("User not permitted to add menu items");
+      throw new Meteor.Error(404, "User not permitted to add menus");
     }
     var exist = MenuItems.findOne(id);
     if(!exist) {
@@ -404,22 +404,17 @@ Meteor.methods({
     }
     var filter = new RegExp(exist.name, 'i');
     var count = MenuItems.find({"name": filter}).count();
+    var result = delete exist['_id'];
 
-    var duplicate = {
-      "name": exist.name + " - copy " + count,
-      "category": exist.category,
-      "instructions": exist.instructions,
-      "ingredients": exist.ingredients,
-      "jobItems": exist.jobItems,
-      "salesPrice": parseFloat(exist.salesPrice),
-      "image": exist.image,
-      "createdOn": Date.now(),
-      "createdBy": userId,
-      "status": exist.status
-    };
+    if(result) {
+      var duplicate = exist;
+      duplicate.name = exist.name + " - copy " + count;
+      duplicate.createdBy = userId;
+      duplicate.createdOn = Date.now();
 
-    var id = MenuItems.insert(duplicate);
-    logger.info("Menu items added ", id);
-    return id;
+      var newid = MenuItems.insert(duplicate);
+      logger.info("Duplicate Menu items added ", {"original": id, "duplicate": newid});
+      return newid;
+    }
   }
 });

@@ -1,6 +1,6 @@
 <template name="jobItemDetail">
   <!-- Page heading -->
-  {{>render component="pageHeading" title=state$job.name category='Jobs' id=state$job.id}}
+  {{>render component="pageHeading" title=state$job.name category='Jobs' id=state$job.id name="jobitemdetailed"}}
 
   <div class="wrapper wrapper-content animated">
     <div class="row">
@@ -129,22 +129,6 @@
                 </li>
                 {{/if}}
               </ul>
-            </div>
-            <div class="row">
-              <div class="col-sm-4 col-sm-offset-2">
-              </div>
-            </div>
-            <div class="col-md-12">
-              <button type="button" class="btn btn-white printJobItemBtn hidden-print"><i class="fa fa-print"></i></button>
-              {{#if state$isManagerOrAdmin}}
-              <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$job.id}}"><i class="fa fa-edit"></i> Edit
-              </button>
-              {{/if}}
-              {{#if state$isSubscribed}}
-              <button type="button" class="btn btn-info unSubscribeJobItemBtn hidden-print"  data-id="{{state$job.id}}">Unsubscribe</button>
-              {{else}}
-              <button type="button" class="btn btn-success subscribeJobItemBtn hidden-print"  data-id="{{state$job.id}}">Subscribe</button>
-              {{/if}}
             </div>
           </div>
         </div>

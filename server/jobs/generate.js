@@ -74,7 +74,7 @@ Meteor.methods({
     var endsNever = JobItems.find({
       "type": "Recurring", 
       "endsOn.on": "endsNever",
-      "startsOn": {$gt: new Date(date).getTime()}
+      "startsOn": {$lte: new Date(date).getTime()}
     }).fetch();
     if(endsNever.length > 0) {
       allJobItems = allJobItems.concat(endsNever);
@@ -82,7 +82,7 @@ Meteor.methods({
     //endsOn date
     var endsOn = JobItems.find({
       "type": "Recurring", 
-      "startsOn": {$gt: new Date(date).getTime()},
+      "startsOn": {$lte: new Date(date).getTime()},
       "endsOn.on": "endsOn", 
       "endsOn.lastDate": {$gte: new Date(date)}
     }).fetch();
@@ -93,7 +93,7 @@ Meteor.methods({
     var endsAfter = JobItems.find({
       "type": "Recurring", 
       "endsOn.on": "endsAfter",
-      "startsOn": {$gt: new Date(date).getTime()}
+      "startsOn": {$lte: new Date(date).getTime()}
     }).fetch();
     if(endsAfter.length > 0) {
       endsAfter.forEach(function(job) {

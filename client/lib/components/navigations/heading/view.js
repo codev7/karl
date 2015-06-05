@@ -45,6 +45,21 @@ Template.pageHeading.events({
     }
   },
 
+  'click .copyJobItemBtn': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    if(id) {
+      Meteor.call("duplicateJobItem", id, function(err, id) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        } else {
+          Router.go("jobItemEdit", {"_id": id});
+        }
+      });
+    }
+  },
+
   'click .editMenuItemBtn': function(e) {
     e.preventDefault();
     Router.go("menuItemEdit", {"_id": $(e.target).attr("data-id")})
