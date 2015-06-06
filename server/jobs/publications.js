@@ -12,3 +12,12 @@ Meteor.publish("unAssignedJobs", function() {
   logger.info("Un-assigned jobs publication");
   return cursors;
 });
+
+
+Meteor.publish("jobs", function(ids) {
+  var cursors = [];
+  var jobs = Jobs.find({"_id": {$in: ids}});
+  cursors.push(jobs);
+  logger.info("Jobs publication");
+  return cursors;
+});

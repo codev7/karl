@@ -3428,6 +3428,14 @@ var Grid = fc.Grid = RowRenderer.extend({
             options +
           '</select>' +
         '</div>';
+      } else if(view.name == "agendaDay") {
+        var options = null;
+        if(shift.assignedTo) {
+          var assignedTo = Meteor.users.findOne(shift.assignedTo);
+          if(assignedTo) {
+            select = '<div>' + assignedTo.username + '</div>';
+          }
+        } 
       }
     }
     return '' +

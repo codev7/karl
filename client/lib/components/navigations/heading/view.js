@@ -136,20 +136,20 @@ Template.pageHeading.events({
    'click .todayRoster': function(event) {
     event.preventDefault();
     var date = moment().format("YYYY-MM-DD");
-    Router.go("dailyShiftScheduling", {"date": date});
+    Router.go("dailyRoster", {"date": date});
   },
 
   'click .prevDayRoster': function(event) {
     event.preventDefault();
     var date = Router.current().params.date;
     var yesterday = moment(date).subtract(1, "days").format("YYYY-MM-DD");
-    Router.go("dailyShiftScheduling", {"date": yesterday});
+    Router.go("dailyRoster", {"date": yesterday});
   },
 
   'click .nextDayRoster': function(event) {
     event.preventDefault();
     var date = Router.current().params.date;
     var tomorrow = moment(date).add(1, "days").format("YYYY-MM-DD")
-    Router.go("dailyShiftScheduling", {"date": tomorrow});
+    Router.go("dailyRoster", {"date": tomorrow});
   },
 });
