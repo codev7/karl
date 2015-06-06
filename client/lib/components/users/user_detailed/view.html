@@ -1,6 +1,10 @@
 <template name="userDetailed">
-  <tr>
+  <tr data-id="{{state$id}}">
+    {{#if state$isPermitted}}
+    <td><a href="/user/profile/{{state$id}}">{{state$username}}</a></td>
+    {{else}}
     <td>{{state$username}}</td>
+    {{/if}}
     <td>{{{state$type}}}</td>
     <td>{{state$email}}</td>
     <td>
