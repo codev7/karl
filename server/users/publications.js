@@ -1,5 +1,6 @@
 Meteor.publish('profileUser', function(id) {
   var user = Meteor.users.find({"_id": id}, {fields: {"services.google": 1}});
+  logger.info("User published ", id);
   return user;
 });
 
@@ -14,6 +15,7 @@ Meteor.publish("usersList", function() {
     "services": 1
   };
   var users = Meteor.users.find({}, {fields: options});
+  logger.info("Userlist published");
   return users;
 });
 
