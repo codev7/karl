@@ -42,7 +42,7 @@
                   {{#if state$basic.profile.phone}}
                   {{else}}
                     {{#if state$isNotMe}}
-                      <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a>
+                      <!-- <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a> -->
                     {{/if}}
                   {{/if}}
                 {{else}}
@@ -56,7 +56,7 @@
                   {{#if state$email}}
                   {{else}}
                     {{#if state$isNotMe}}
-                      <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a>
+                      <!-- <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a> -->
                     {{/if}}
                   {{/if}}
                 {{else}}
@@ -66,18 +66,38 @@
               <br>
 
               <h4>Pay rates</h4>  
-              <p>Weekdays: 
+              <p>Weekdays ($): 
+              {{#if state$isAdminOrManager}}
                 <a href="#" id="weekdaysrate" data-type="text" data-pk="{{state$basic._id}}" data-url="/post" data-title="Enter Username" class="editable">{{state$basic.profile.payrates.weekdays}}</a>
+              {{else}}
+                {{state$basic.profile.payrates.weekdays}}
+              {{/if}}
               </p>
-              <p>Saturday: 
+              <p>Saturday ($): 
+               {{#if state$isAdminOrManager}}
                 <a href="#" id="saturdayrate" data-type="text" data-pk="{{state$basic._id}}" data-url="/post" data-title="Enter Username" class="editable">{{state$basic.profile.payrates.saturday}}</a>
+                {{else}}
+                  {{#if state$basic.profile.payrates.saturday}}
+                    {{state$basic.profile.payrates.saturday}}
+                  {{else}}
+                    Not added
+                  {{/if}}
+                {{/if}}
               </p>
-              <p>Sunday:  
+              <p>Sunday ($):  
+               {{#if state$isAdminOrManager}}
                 <a href="#" id="sundayrate" data-type="text" data-pk="{{state$basic._id}}" data-url="/post" data-title="Enter Username" class="editable">{{state$basic.profile.payrates.sunday}}</a>
+                {{else}} 
+                  {{#if state$basic.profile.payrates.sunday}}
+                    {{state$basic.profile.payrates.sunday}}
+                  {{else}}
+                    Not added
+                  {{/if}}
+                {{/if}}
               </p>
               <br>
 
-              <h4>Availability</h4>
+              <!-- <h4>Availability</h4>
               <div class="checkbox">
                 <label>
                   <input type="checkbox" value=""> Monday 
@@ -112,7 +132,7 @@
                 <label>
                   <input type="checkbox" value=""> Sunday 
                 </label>
-              </div>
+              </div> -->
               <br>
 
               <h4>No. of shifts per week</h4>             
@@ -135,7 +155,7 @@
 
             <h4>Next Shifts</h4>
             {{#each state$rosteredForShifts}}
-            <p><a href="{{_id}}">{{dayFormat shiftDate}} {{timeFormat startTime}} - {{timeFormat endTime}}</a></p>
+            <p><a href="/roster/shift/{{_id}}">{{dayFormat shiftDate}} {{timeFormat startTime}} - {{timeFormat endTime}} [{{section}}]</a></p>
             {{else}}
             No shifts rostered yet.
             {{/each}}
@@ -143,7 +163,7 @@
 
             <h4>Open Shifts</h4>
             {{#each state$openedShifts}}
-            <p><a href="{{_id}}">{{dayFormat shiftDate}} {{timeFormat startTime}} - {{timeFormat endTime}}</a></p>
+            <p><a href="/roster/shift/{{_id}}">{{dayFormat shiftDate}} {{timeFormat startTime}} - {{timeFormat endTime}} [{{section}}]</a></p>
             {{else}}
             No shifts opened yet.
             {{/each}}

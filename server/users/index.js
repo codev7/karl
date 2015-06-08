@@ -90,11 +90,20 @@ Meteor.methods({
       throw new Meteor.Error(401, "User not logged in");
     }
     var user = Meteor.user();
-    var permittedTopLevel = user.isAdmin || user.isManager;
-    if(!permittedTopLevel || (user._id != id)) {
+    if(!user) {
+      logger.error('No user has found');
+      throw new Meteor.Error(401, "User not found");
+    }
+    var permittedTopLevel = false;
+    if(user.isAdmin || user.isManager) {
+      permittedTopLevel = true;
+    }
+    var permittedForMe = (user._id == id);
+    if(!permittedForMe && !permittedTopLevel) {
       logger.error("User not permitted to edit users details");
       throw new Meteor.Error(404, "User not permitted to edit users details");
     }
+
     if(!id) {
       logger.error('No user has found');
       throw new Meteor.Error(401, "User not found");

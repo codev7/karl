@@ -66,6 +66,20 @@ Meteor.publish("weekly", function(dates, worker) {
   return cursors;
 });
 
+Meteor.publish("shift", function(id) {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
+  if(!id) {
+    logger.error('Shift id not found : ' + id);
+    this.error(new Meteor.Error(404, "Shift id not found"));
+  }
+  var shift = Shifts.find();
+  logger.info("Shift published", id);
+  return shift;
+});
+
 Meteor.publish("rosteredUsersShifts", function(id) {
   if(!this.userId) {
     logger.error('User not found : ' + this.userId);
