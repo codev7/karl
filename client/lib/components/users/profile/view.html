@@ -42,7 +42,7 @@
                   {{#if state$basic.profile.phone}}
                   {{else}}
                     {{#if state$isNotMe}}
-                      <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a>
+                      <!-- <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a> -->
                     {{/if}}
                   {{/if}}
                 {{else}}
@@ -56,7 +56,7 @@
                   {{#if state$email}}
                   {{else}}
                     {{#if state$isNotMe}}
-                      <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a>
+                      <!-- <a href="#" class="m-l-md">Ask from {{state$basic.username}}</a> -->
                     {{/if}}
                   {{/if}}
                 {{else}}
@@ -66,14 +66,34 @@
               <br>
 
               <h4>Pay rates</h4>  
-              <p>Weekdays: 
+              <p>Weekdays ($): 
+              {{#if state$isAdminOrManager}}
                 <a href="#" id="weekdaysrate" data-type="text" data-pk="{{state$basic._id}}" data-url="/post" data-title="Enter Username" class="editable">{{state$basic.profile.payrates.weekdays}}</a>
+              {{else}}
+                {{state$basic.profile.payrates.weekdays}}
+              {{/if}}
               </p>
-              <p>Saturday: 
+              <p>Saturday ($): 
+               {{#if state$isAdminOrManager}}
                 <a href="#" id="saturdayrate" data-type="text" data-pk="{{state$basic._id}}" data-url="/post" data-title="Enter Username" class="editable">{{state$basic.profile.payrates.saturday}}</a>
+                {{else}}
+                  {{#if state$basic.profile.payrates.saturday}}
+                    {{state$basic.profile.payrates.saturday}}
+                  {{else}}
+                    Not added
+                  {{/if}}
+                {{/if}}
               </p>
-              <p>Sunday:  
+              <p>Sunday ($):  
+               {{#if state$isAdminOrManager}}
                 <a href="#" id="sundayrate" data-type="text" data-pk="{{state$basic._id}}" data-url="/post" data-title="Enter Username" class="editable">{{state$basic.profile.payrates.sunday}}</a>
+                {{else}} 
+                  {{#if state$basic.profile.payrates.sunday}}
+                    {{state$basic.profile.payrates.sunday}}
+                  {{else}}
+                    Not added
+                  {{/if}}
+                {{/if}}
               </p>
               <br>
 
