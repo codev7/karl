@@ -1,39 +1,53 @@
 Template.submitJob.events({
   'submit form': function(event, instance) {
     event.preventDefault();
-    var name = $(event.target).find('[name=name]').val();
     var type = $(event.target).find('[name=type]').val();;
-    var details = $(event.target).find('[name=details]').val();
+    var job = $(event.target).find('[name=job]').val();
     var portions = $(event.target).find('[name=portions]').val();;
     var activeTime = $(event.target).find('[name=activeTime]').val();
-    var ingCost = $(event.target).find('[name=ingCost]').val();
     
-    if(!name || name.trim() == "") {
-      alert("Please add title for your job");
-    } else if(!activeTime || activeTime.trim() == "") {
-      alert("Please add active time for your job");
-    } else {
-      var info = {
-        "name": name,
-        "type": type,
-        "details": details,
-        "portions": portions,
-        "activeTime": activeTime,
-        "ingCost": ingCost,
-      }
-      Meteor.call("createJob", info, function(err, id) {
-        if(err) {
-          return alert(err.reason);
-        } else {
-          $("#submitJobModal").modal("hide");
-        }
-      });
+
+    if(!job || job.trim() == "") {
+      return alert("Please select a job from list");
+
     }
+    if(type == "Prep") {
+      if(!portions || portions <= 0) {
+        return alert("Please add no of portions you need");
+      }
+    }
+    if(!job || job.trim() == "") {
+      return alert("Please select a job from list");
+    }
+    
+    var info = {
+      "type": type,
+      "ref": job,
+      "portions": portions,
+      "activeTime": activeTime,
+    }
+    FlowComponents.callAction("submit", info);
   }
 });
 
-Template.submitJob.helpers({
-  'jobTypes': function() {
-    return JobTypes.find();
+Template.submitJob.events({
+  'change .jobType': function(event) {
+    event.preventDefault();
+    var type = $(event.target).val();
+    $(".textTime").text("");
+    FlowComponents.callAction("onChangeType", type);
+  },
+
+  'change .jobName': function(event) {
+    event.preventDefault();
+    var job = $(event.target).val();
+    $(".textTime").text("");
+    FlowComponents.callAction("onChangeJob", job);
+  },
+
+  'keyup .portions': function(event) {
+    event.preventDefault();
+    var portions = $(event.target).val();
+    FlowComponents.callAction("keyup", portions);
   }
 });

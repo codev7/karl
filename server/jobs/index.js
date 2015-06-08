@@ -1,32 +1,51 @@
 Meteor.methods({
-  'createJob': function(info) {
-    if(!info.name) {
-      logger.error("Name field not found");
-      throw new Meteor.Error(404, "Name field not found");
+  'createNewJob': function(info) {
+    if(!info.ref) {
+      logger.error("Job field not found");
+      throw new Meteor.Error(404, "Job field not found");
     }
-    if(!info.activeTime) {
-      logger.error("Time field not found");
-      throw new Meteor.Error(404, "Time field not found");
+    if(!info.type) {
+      logger.error("Job type field not found");
+      throw new Meteor.Error(404, "Job type field not found");
     }
-    // if(!info.ingredients) {
-    //   logger.error("Ingredients not found");
-    //   throw new Meteor.Error(404, "Ingredients not found");
-    // }
-    var ingCost = 0;
-    // info.ingredients.forEach(function(ingredient) {  
-    //   ingCost += ingredient.cost
-    // });
+    if((info.type == "Prep") && (!info.portions)) {
+      logger.error("No of portions not found for prep type job");
+      throw new Meteor.Error(404, "No of portions not found for prep type job");
+    }
+    if((info.type == "Recurring") && (!info.activeTime)) {
+      logger.error("Active time not found for recurring type job");
+      throw new Meteor.Error(404, "Active time not found for recurring type job");
+    }
+    var job = JobItems.findOne(info.ref);
+    if(!job) {
+      logger.error("Job not found");
+      throw new Meteor.Error(404, "Job not found");
+    }
+
     var doc = {
-      "name": info.name,
-      "ref": null,
-      "type": info.type,
+      "ref": job._id,
+      "type": job.type,
       "status": 'draft',
       "options": [],
       "onshift": null,
-      "portions": info.portions,
-      "activeTime": info.activeTime,
-      "createdOn": new Date().toDateString(),
+      "assignedTo": null,
+      "createdOn": Date.now(),
       "createdBy": Meteor.userId()
+    }
+    doc.name = job.type + " " + job.name;
+    if(job.type == "Prep") {
+      doc.portions = info.portions;
+      var time = parseInt((job.activeTime/job.portions) * info.portions);
+      if(time == time) {
+        doc.activeTime = time;
+      } else {
+        logger.error("Active time not valid");
+        throw new Meteor.Error(404, "Active time not valid");
+      }
+    } else {
+      doc.activeTime = info.activeTime;
+      doc.section = job.section;
+      doc.startAt = job.repeatAt;
     }
     var id = Jobs.insert(doc);
     logger.info("Job inserted", {"jobId": id});
