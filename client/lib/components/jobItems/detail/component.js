@@ -1,35 +1,13 @@
 var component = FlowComponents.define('jobItemDetail', function(props) {
   var id = Router.current().params._id;
-  var item = getPrepItem(id);
-  this.set("job", item);
+  this.id = id;
 });
 
-component.state.id = function() {
-  var item = this.get("job");
-  if(item) {
-    return item._id;
-  }
-}
-
-component.state.name = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.name;
-  }
-}
-
-component.state.type = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.type;
-  }
-}
-
-component.state.section = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.section;
-  }
+component.state.job = function() {
+  var id = this.id;
+  var item = getPrepItem(id);
+  this.set("job", item);
+  return item;
 }
 
 component.state.isPrep = function() {
@@ -63,31 +41,10 @@ component.state.ingExists = function() {
   }
 }
 
-component.state.ingredients = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.ingredients;
-  }
-}
-
-component.state.recipe = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.recipe;
-  }
-}
-
-
-component.state.activeTime = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.activeTime;
-  }
-}
 
 component.state.isChecklist = function() {
   var item = this.get("job");
-  if(item && item.checklist.length > 0) {
+  if(item && item.checklist && item.checklist.length > 0) {
     return true;
   }
 }
@@ -103,6 +60,13 @@ component.state.startsOn = function() {
   var item = this.get("job");
   if(item && item.startsOn) {
     return moment(item.startsOn).format("YYYY-MM-DD");
+  }
+}
+
+component.state.repeatAt = function() {
+  var item = this.get("job");
+  if(item && item.repeatAt) {
+    return moment(item.repeatAt).format("hh:mm A");
   }
 }
 
@@ -123,34 +87,6 @@ component.state.endsOn = function() {
   }
 }
 
-component.state.shelfLife = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.shelfLife;
-  }
-}
-
-component.state.portions = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.portions;
-  }
-}
-
-component.state.repeatAt = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.repeatAt;
-  }
-}
-
-component.state.frequency = function() {
-  var item = this.get("job");
-  if(item) {
-    return item.frequency;
-  }
-}
-
 component.state.isWeekly = function() {
   var item = this.get("job");
   if(item) {
@@ -168,7 +104,11 @@ component.state.repeatOnDays = function() {
   if(item) {
     if(item.frequency == "Weekly") {
       if(item.repeatOn.length > 0) {
-        repeat = "Every " + item.repeatOn;
+        if(item.repeatOn.length == 7) {
+          repeat = "Everyday";
+        } else {
+          repeat = "Every " + item.repeatOn;
+        }
       }
       return repeat;
     } 
@@ -194,16 +134,6 @@ component.state.prepCostPerPortion = function() {
   var item = this.get("job");
   if(item) {
     return item.prepCostPerPortion;
-  }
-}
-
-component.state.isSubscribed = function() {
-  var userId = Meteor.userId();
-  var jobSubs = Subscriptions.findOne({"_id": Session.get("thisJobItem"), "subscribers": userId});
-  if(jobSubs) {
-    return true;
-  } else {
-    return false;
   }
 }
 

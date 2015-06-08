@@ -45,6 +45,21 @@ Template.pageHeading.events({
     }
   },
 
+  'click .copyJobItemBtn': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    if(id) {
+      Meteor.call("duplicateJobItem", id, function(err, id) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        } else {
+          Router.go("jobItemEdit", {"_id": id});
+        }
+      });
+    }
+  },
+
   'click .editMenuItemBtn': function(e) {
     e.preventDefault();
     Router.go("menuItemEdit", {"_id": $(e.target).attr("data-id")})
@@ -116,5 +131,25 @@ Template.pageHeading.events({
     event.preventDefault();
     var week = parseInt(Router.current().params.week) - 1;
     Router.go("cafeSalesForecast", {"week": week});
-  }
+  },
+
+   'click .todayRoster': function(event) {
+    event.preventDefault();
+    var date = moment().format("YYYY-MM-DD");
+    Router.go("dailyRoster", {"date": date});
+  },
+
+  'click .prevDayRoster': function(event) {
+    event.preventDefault();
+    var date = Router.current().params.date;
+    var yesterday = moment(date).subtract(1, "days").format("YYYY-MM-DD");
+    Router.go("dailyRoster", {"date": yesterday});
+  },
+
+  'click .nextDayRoster': function(event) {
+    event.preventDefault();
+    var date = Router.current().params.date;
+    var tomorrow = moment(date).add(1, "days").format("YYYY-MM-DD")
+    Router.go("dailyRoster", {"date": tomorrow});
+  },
 });

@@ -30,6 +30,9 @@ Template.editJobItem.events({
     if(!activeTime) {
       return alert("Should have an active time for the job");
     }
+    if(!type) {
+      return alert("Should have an type for the job");
+    }
 
     var job = JobItems.findOne(id);
     Session.set("updatingJob", job);
@@ -149,24 +152,33 @@ Template.editJobItem.events({
         info.checklist = listItems;
 
         var frequency = $(event.target).find("[name=frequency]").val();
+        if(!frequency) {
+          return alert("Should have an frequency for the job");
+        }
         if(job.frequency != frequency) {
           info.frequency = frequency;
         }
 
         var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
+        if(!repeatAt) {
+          return alert("Should have an time to repeat");
+        }
         if(job.repeatAt != repeatAt) {
-          info.repeatAt = repeatAt;
+          info.repeatAt = moment(repeatAt, ["hh:mm A"]).format();
         }
         var startsOn = $(event.target).find('[name=startsOn]').val();
+        if(!startsOn) {
+          return alert("Should have an date to start job");
+        }
         startsOn = new Date(startsOn);
         if(moment(job.startsOn).format("YYYY-MM-DD") != moment(startsOn).format("YYYY-MM-DD")) {
           info.startsOn = startsOn;
         }
+
         var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
-        info.endsOn = {};
         if(job.endsOn) {
           if(job.endsOn.on != endsOn) {
-            info.endsOn.on = endsOn;
+            info.endsOn = {"on": endsOn};
           }
         } else {
           info.endsOn = {"on": endsOn};
@@ -174,6 +186,9 @@ Template.editJobItem.events({
 
         if(endsOn == "endsAfter") {
           var after = $(event.target).find("[name=occurrences]").val();
+          if(!after) {
+            return alert("Should have No. of occurrences");
+          }
           after = parseInt(after);
           if(after == after) {
             if(job.endsOn.after && job.endsOn.after != after) {
@@ -189,12 +204,18 @@ Template.editJobItem.events({
           }
         } else if(endsOn == "endsOn") {
           var lastDate = $(event.target).find("[name=endsOn]").val();
+          if(!lastDate) {
+            return alert("Should have a date to end");
+          }
           if(job.endsOn && moment(job.endsOn.lastDate).format("YYYY-MM-DD") != lastDate) {
             info.endsOn.on = endsOn;
             info.endsOn['lastDate'] = new Date(lastDate);
           }
         }
         var section = $(event.target).find("[name=sections]").val();
+        if(!section) {
+            return alert("Should have a section");
+          }
         if(job.section && job.section != section) {
           info.section = section;
         }
@@ -218,6 +239,9 @@ Template.editJobItem.events({
               }
             }
           });
+          if(repeatDays.length == 0) {
+            return alert("Should state the days to be repeated on");
+          }
           info.repeatOn = repeatDays;
         }
       }

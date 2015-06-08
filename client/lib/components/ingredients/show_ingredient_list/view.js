@@ -33,4 +33,3 @@ Template.showIngredientsList.events({
     $("#addIngredientModal").modal('show');
   }
 });
-

@@ -80,6 +80,11 @@
   left: 15px !important;
 } 
 
+.showJobProfile,
+.showJobProfile:hover {
+  color: #fff;
+}
+
 .field {
   margin-bottom: 15px;
 }

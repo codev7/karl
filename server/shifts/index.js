@@ -12,6 +12,10 @@ Meteor.methods({
       logger.error("Date field not found");
       throw new Meteor.Error(404, "Date field not found");
     }
+    if(!info.section) {
+      logger.error("Section field not found");
+      throw new Meteor.Error(404, "Section field not found");
+    }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(info.shiftDate) <= yesterday) {
@@ -21,9 +25,9 @@ Meteor.methods({
     var doc = {
       "startTime": info.startTime,
       "endTime": info.endTime,
-      "shiftDate": info.shiftDate,
-      "createdOn": Date.now(),
-      "createdBy": null, //add logged in users id
+      "shiftDate": new Date(info.shiftDate).getTime(),
+      "section": info.section,
+      "createdBy": Meteor.userId(), //add logged in users id
       "assignedTo": null, //update
       "assignedBy": null, //update
       "jobs": []
@@ -51,18 +55,21 @@ Meteor.methods({
     if(info.endTime) {
       updateDoc.endTime = info.endTime;
     }
+    if(info.section) {
+      updateDoc.section = info.section;
+    }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(shift.shiftDate) <= yesterday) {
     //   logger.error("Can not edit shifts on previous days");
     //   throw new Meteor.Error(404, "Can not edit shifts on previous days");
     // }
-    if(shift.shiftDate != info.shiftDate) {
+    if(shift.shiftDate != new Date(info.shiftDate).getTime()) {
       if(shift.assignedTo || shift.jobs.length > 0) {
         logger.error("Can't change the date of an assigned shift ", {"id": info._id});
         throw new Meteor.Error(404, "Can't change the date of shift when you have assigned jobs or workers");
       } else {
-        updateDoc.shiftDate = info.shiftDate;
+        updateDoc.shiftDate = new Date(info.shiftDate).getTime();
       }
     }
     if(Object.keys(updateDoc).length <= 0) {

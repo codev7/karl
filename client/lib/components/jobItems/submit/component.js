@@ -30,8 +30,7 @@ component.state.week = function() {
 }
 
 component.state.sections = function() {
-  var sections = ["Kitchen Hand", "Larder", "Baking", "Hot Section", "Pass"];
-  return sections;
+  return Sections.find();
 }
 
 component.action.submit = function(info) {

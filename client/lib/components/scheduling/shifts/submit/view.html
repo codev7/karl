@@ -1,17 +1,27 @@
-<template name="shiftProfile">
+<template name="submitShift">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Shift Profile [Edit]</h4>
+        <h4 class="modal-title" id="myModalLabel">Submit Shift</h4>
       </div>
-      <form class="form-horizontal" role="form" data-id="{{state$id}}">
+      <form class="form-horizontal" role="form">
         <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Section</label>
+            <div class="col-sm-6">
+              <select class="form-control" name="section">
+                {{#each state$sections}}
+                <option>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-4 control-label">Date</label>
             <div class="col-sm-6">
               <div class="input-group">
-                <input type="text" class="form-control" id="shiftDate" name="dateOfShift" value="{{state$date}}">
+                <input type="text" class="form-control" id="shiftDate" name="dateOfShift" value="{{state$today}}">
                 <span class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </span>
@@ -42,7 +52,6 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger deleteShift" data-id="{{state$id}}">Delete</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>

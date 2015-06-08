@@ -3,7 +3,8 @@ var component = FlowComponents.define('profile', function(props) {
 });
 
 component.state.basic = function() {
-  var user = this.get("user");
+  var id = this.get("id");
+  var user = Meteor.users.findOne(id);
   if(user) {
     return user;
   }
@@ -59,6 +60,7 @@ component.state.isNotMe = function() {
 
 component.prototype.onProfileRendered = function() {
   var id = Router.current().params._id;
+  this.set("id", id);
   var user = Meteor.users.findOne(id);
   if(user) {
     this.set("user", user);

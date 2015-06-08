@@ -1,6 +1,6 @@
 <template name="jobItemDetail">
   <!-- Page heading -->
-  {{>render component="pageHeading" title=state$name category='Jobs' id=state$id}}
+  {{>render component="pageHeading" title=state$job.name category='Jobs' id=state$job.id name="jobitemdetailed"}}
 
   <div class="wrapper wrapper-content animated">
     <div class="row">
@@ -9,24 +9,24 @@
           <div class="row">
             <div class="col-md-8">
               {{#if state$isPrep}}
-                {{#if state$recipe}}
+                {{#if state$job.recipe}}
                 <div class="form-group">
                   <label>Recipe</label>
                   <div class="panel panel-default">
                     <div class="panel-body">
-                      {{{state$recipe}}}
+                      {{{state$job.recipe}}}
                     </div>
                   </div>
                 </div>
                 {{/if}}
               {{/if}}
               {{#if state$isRecurring}}
-                {{#if state$description}}
+                {{#if state$job.description}}
                 <div class="form-group">
                   <label>Description</label>
                   <div class="panel panel-default">
                     <div class="panel-body">
-                      {{{state$description}}}
+                      {{{state$job.description}}}
                     </div>
                   </div>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="form-group">
                   <label>Checklist</label>
                   <ol class="list-group">
-                    {{#each state$checklist}}
+                    {{#each state$job.checklist}}
                       <li class="list-group-item">{{this}}</li>
                     {{/each}}
                   </ol>
@@ -60,7 +60,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          {{#each state$ingredients}}
+                          {{#each state$job.ingredients}}
                             {{> render component='ingredientItemView' ingredient=this}}
                           {{/each}}
                         </tbody>
@@ -73,23 +73,34 @@
             <div class="col-md-3">
               <ul class="list-group clear-list m-t">
                 <li class="list-group-item">
-                  <span class="pull-right">{{state$type}}</span>Type
+                  <span class="pull-right">{{state$job.type}}</span>Type
                 </li>
+                {{#if state$isRecurring}}
                 <li class="list-group-item">
-                  <span class="pull-right">{{secondsToMinutes state$activeTime}} mins</span>Active Time
+                  <span class="pull-right">
+                    {{#if state$job.section}}
+                      {{state$job.section}}
+                    {{else}}
+                      Not assigned
+                    {{/if}}
+                  </span>Section
+                </li>
+                {{/if}}
+                <li class="list-group-item">
+                  <span class="pull-right">{{secondsToMinutes state$job.activeTime}} mins</span>Active Time
                 </li>
                 {{#if state$isRecurring}}
                   <li class="list-group-item">
-                    <span class="pull-right">{{state$frequency}}</span>Repeat Frequency
+                    <span class="pull-right">{{state$job.frequency}}</span>Repeat Frequency
                   </li>
                   {{#if state$isWeekly}}
                     <li class="list-group-item">
                       <span class="pull-right">{{state$repeatOnDays}}</span>Repeat On
                     </li>
                   {{/if}}
-                    <li class="list-group-item">
-                      <span class="pull-right">{{state$repeatAt}}</span>Repeat At
-                    </li>
+                  <li class="list-group-item">
+                    <span class="pull-right">{{state$repeatAt}}</span>Repeat At
+                  </li>
                   {{#if state$startsOn}}
                     <li class="list-group-item">
                       <span class="pull-right">{{state$startsOn}}</span>Starts On
@@ -99,48 +110,25 @@
                     <li class="list-group-item">
                       <span class="pull-right">{{state$endsOn}}</span>Ends
                     </li>
-                    <li class="list-group-item">
-                      {{#if state$section}}
-                        <span class="pull-right">{{state$section}}</span>Section
-                      {{else}}
-                        <span class="pull-right">Not assigned</span>Section
-                      {{/if}}
-                    </li>
                   {{/if}}
                 {{/if}}
                 {{#if state$isPrep}}
                 <li class="list-group-item">
-                  <span class="pull-right">{{state$portions}}</span>Portions
+                  <span class="pull-right">{{state$job.portions}}</span>Portions
                 </li>
                 {{/if}}
                 <li class="list-group-item">
-                  <span class="pull-right">{{state$labourCost}}</span>Labour Cost ($)
+                  <span class="pull-right">{{state$job.labourCost}}</span>Labour Cost ($)
                 </li>
                 {{#if state$isPrep}}
                 <li class="list-group-item">
-                  <span class="pull-right">{{state$prepCostPerPortion}}</span>Cost per Portion ($)
+                  <span class="pull-right">{{state$job.prepCostPerPortion}}</span>Cost per Portion ($)
                 </li>
                 <li class="list-group-item">
-                  <span class="pull-right">{{state$shelfLife}} Days</span>Shelf Life
+                  <span class="pull-right">{{state$job.shelfLife}} Days</span>Shelf Life
                 </li>
                 {{/if}}
               </ul>
-            </div>
-            <div class="row">
-              <div class="col-sm-4 col-sm-offset-2">
-              </div>
-            </div>
-            <div class="col-md-12">
-              <button type="button" class="btn btn-white printJobItemBtn hidden-print"><i class="fa fa-print"></i></button>
-              {{#if state$isManagerOrAdmin}}
-              <button type="button" class="btn btn-primary editJobItemBtn hidden-print" data-id="{{state$id}}"><i class="fa fa-edit"></i> Edit
-              </button>
-              {{/if}}
-              {{#if state$isSubscribed}}
-              <button type="button" class="btn btn-info unSubscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Unsubscribe</button>
-              {{else}}
-              <button type="button" class="btn btn-success subscribeJobItemBtn hidden-print"  data-id="{{state$id}}">Subscribe</button>
-              {{/if}}
             </div>
           </div>
         </div>

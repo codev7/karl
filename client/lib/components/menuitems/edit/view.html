@@ -13,14 +13,14 @@
             <div class="ibox-content">
               <form method="get" class="form-horizontal">
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Name</label>
-                  <div class="col-sm-8">
+                  <label class="col-sm-2 control-label">Name</label>
+                  <div class="col-sm-10">
                     <input type="text" name="name" class="form-control" placeholder="Enter Name for the menu" value="{{state$menu.name}}">
                   </div>
                 </div>  
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Category</label>
-                  <div class="col-sm-8">
+                  <label class="col-sm-2 control-label">Category</label>
+                  <div class="col-sm-10">
                     <select name="category" class="form-control text-capitalize">
                       <option value="{{state$myCategory._id}}" selected='selected'>{{state$myCategory.name}}</option>
                       {{#each state$categoriesList}}
@@ -30,8 +30,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Status</label>
-                  <div class="col-sm-8">
+                  <label class="col-sm-2 control-label">Status</label>
+                  <div class="col-sm-10">
                     <select name="status" class="form-control text-capitalize">
                       <option value="{{state$menu.status}}" selected="selected" >{{state$menu.status}}</option>
                       {{#each state$statusList}}
@@ -41,16 +41,16 @@
                   </div>
                 </div>   
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Instructions</label>
-                  <div class="col-sm-8 panel panel-body">
+                  <label class="col-sm-2 control-label">Instructions</label>
+                  <div class="col-sm-10 panel panel-body">
                     {{> render component = 'textEditor' id='menuItemEditorEdit' 
                     initialHtml=state$initialHTML}}
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Prep items used
+                  <label class="col-sm-2 control-label">Prep items used
                   </label>
-                  <div class="col-sm-8">
+                  <div class="col-sm-10">
                     <table class="table table-hover thumbnail">
                       <thead>
                         <tr>
@@ -76,9 +76,9 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Ingredients used
+                  <label class="col-sm-2 control-label">Ingredients used
                   </label>
-                  <div class="col-sm-8">
+                  <div class="col-sm-10">
                     <table class="table table-hover thumbnail">
                       <thead>
                         <tr>
@@ -103,8 +103,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Sale price</label>
-                  <div class="col-sm-8">
+                  <label class="col-sm-2 control-label">Sale price</label>
+                  <div class="col-sm-10">
                     <div class="input-group m-b">
                       <div class="input-group-addon">$</div>
                       <input type="text" class="form-control" name="salesPrice" placeholder="Sale price" value="{{state$menu.salesPrice}}">     
@@ -112,12 +112,12 @@
                   </div>
                 </div> 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Image</label>
-                  <div class="col-sm-8">
+                  <label class="col-sm-2 control-label">Image</label>
+                  <div class="col-sm-10">
                     <button type="button" class="btn btn-sm btn-info" id="uploadMenuItem">Upload Image</button><br>
                     <div>
                       {{#if state$image}}
-                      <div class="file col-sm-3 uploadedImageDiv">
+                      <div class="file col-sm-2 uploadedImageDiv">
                         <a href="#">
                           <span class="corner"></span>
                           <div class="image">
@@ -126,7 +126,7 @@
                         </a>
                       </div>
                       {{else}}
-                        <div class="file col-sm-3 uploadedNewImageDiv hide">
+                        <div class="file col-sm-2 uploadedNewImageDiv hide">
                         <a href="#">
                           <span class="corner"></span>
                           <div class="image">
@@ -139,7 +139,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-12 col-sm-offset-2">
                     <button type="button" class="btn btn-danger deleteMenuItemBtn" data-id="{{state$menu._id}}">Delete</button>
                     <button class="btn btn-white cancelBtn" data-id="{{state$menu._id}}" type="button">Cancel</button>
                     <button class="btn btn-primary saveBtn" type="submit">Save changes</button>

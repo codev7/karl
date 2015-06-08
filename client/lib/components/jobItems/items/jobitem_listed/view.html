@@ -3,6 +3,12 @@
     <td><a href="" data-toggle="modal" class="editIngredient">{{state$name}}</a></td>
     <td>{{state$activeTime}}</td>
     <td>$ {{state$costPerPortion}}</td>
-    <td><input type="checkbox" data-id="{{state$id}}" class="selectedPrep" name="selectedPrep"></td>
+    <td>
+      <div class="i-checks">
+        <label>
+          <input type="checkbox" value="" data-id="{{state$id}}" data-type="{{state$type}}" class="selectedPrep" name="selectedPrep">
+        </label>
+      </div>
+    </td>
   </tr>
 </template>

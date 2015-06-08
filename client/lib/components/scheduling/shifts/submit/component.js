@@ -18,3 +18,7 @@ component.state.endTime = function() {
   var time = moment(date).set("hours", 5).format("h:mm");
   return time + " PM";
 }
+
+component.state.sections = function() {
+  return Sections.find();
+}

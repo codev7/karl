@@ -1,28 +1,4 @@
 Template.dailyShiftScheduling.events({
-  'click .today': function(event) {
-    event.preventDefault();
-    var date = moment().format("YYYY-MM-DD");
-    Router.go("dailyShiftScheduling", {"date": date});
-  },
-
-  'click .prevDay': function(event) {
-    event.preventDefault();
-    var date = Router.current().params.date;
-    date = new Date(date);
-    date.setDate(date.getDate() - 1);
-    date = moment(date).format("YYYY-MM-DD");
-    Router.go("dailyShiftScheduling", {"date": date});
-  },
-
-  'click .nextDay': function(event) {
-    event.preventDefault();
-    var date = Router.current().params.date;
-    date = new Date(date);
-    date.setDate(date.getDate() + 1);
-    date = moment(date).format("YYYY-MM-DD");
-    Router.go("dailyShiftScheduling", {"date": date});
-  },
-
   'click .editShiftProfile': function(event) {
     event.preventDefault();
     var shiftId = $(event.target).attr("data-id");
@@ -51,14 +27,34 @@ Template.dailyShiftScheduling.events({
         return;
       }
     });
+  },
+
+  'click .generateRecurring': function(event) {
+    event.preventDefault();
+    var date = Router.current().params.date;
+    console.log(date);
+    Meteor.call("generateRecurrings", date, function(err, result) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      } else {
+        console.log(result);
+      }
+    });
   }
 });
 
 Template.dailyShiftScheduling.rendered = function() {
   var routeDate = Router.current().params.date;
   setTimeout(function() {
+    Meteor.call("generateRecurrings", routeDate, function(err, result) {
+      if(err) {
+        console.log(err);
+      }
+    });
+
     var oneDay = 1000 * 3600 * 24;
-    var shifts = Shifts.find({"shiftDate": routeDate});
+    var shifts = Shifts.find({"shiftDate": new Date(routeDate).getTime()});
     var businessStartsAt = 8;
     var businessEndsAt = 5;
     if(shifts) {
@@ -100,9 +96,9 @@ Template.dailyShiftScheduling.rendered = function() {
 
               var jobDoc = Jobs.findOne(job);
               if(jobDoc) {
-                var activeTimeInMins = jobDoc.activeTime/(60);
-                var activeHours = parseInt(activeTimeInMins/60);
-                var activeMins = parseInt(activeTimeInMins%(60));
+                var activeTimeInMiliSecs = jobDoc.activeTime * 1000;
+                var activeHours = moment.duration(activeTimeInMiliSecs).hours()
+                var activeMins = moment.duration(activeTimeInMiliSecs).minutes()
 
                 if(jobDoc.startAt) {
                   hourFix = moment(jobDoc.startAt).format("HH");
@@ -184,9 +180,9 @@ Template.dailyShiftScheduling.rendered = function() {
               // debugger;
               var day = date.date() - 1;
               var shift = TimeToShifts["" + day * oneDay];
-              var job = ui.helper.attr("data-id");
+              var job = ui.helper.attr("data-id").trim();
               var startTime = date.format();
-
+   
               assignJob(job, shift, startTime);
             },
             eventDrop: function(event, duration, revertFunc, ui) {

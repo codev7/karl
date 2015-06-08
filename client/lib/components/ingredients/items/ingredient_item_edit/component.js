@@ -26,5 +26,9 @@ component.state.costPerPortionUsed = function() {
 }
 
 component.state.quantity = function() {
-  return this.ingredient.quantity;
+  if(this.ingredient.quantity) {
+    return this.ingredient.quantity;
+  } else {
+    return 1;
+  }
 }

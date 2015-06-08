@@ -35,7 +35,7 @@
       {{#if state$isMenuDetailed}}
         <div class="title-action">
           {{#if state$isMenuSubscribed}}
-          <a href="/menuItems/all/all" class="btn hidden-print  btn-white unSubscribeMenuItemBtn" data-id="{{state$id}}"><i class="fa fa-lg fa-rss text-info"></i></a>
+          <a href="#" class="btn hidden-print  btn-white unSubscribeMenuItemBtn" data-id="{{state$id}}"><i class="fa fa-lg fa-rss text-info"></i></a>
           {{else}}
           <a href="" class="btn btn-white hidden-print subscribeMenuItemBtn" data-id="{{state$id}}"><i class="fa fa-lg fa-rss text-muted"></i></a>
           {{/if}}
@@ -53,15 +53,36 @@
         </div>
       {{/if}}
 
+      {{#if state$isJobItemDetailed}}
+        <div class="title-action">
+          {{#if state$isJobItemSubscribed}}
+          <a href="#" class="btn hidden-print  btn-white unSubscribeJobItemBtn" data-id="{{state$id}}"><i class="fa fa-lg fa-rss text-info" data-id="{{state$id}}"></i></a>
+          {{else}}
+          <a href="" class="btn btn-white hidden-print subscribeJobItemBtn" data-id="{{state$id}}"><i class="fa fa-lg fa-rss text-muted" data-id="{{state$id}}"></i></a>
+          {{/if}}
+          {{#if state$isManagerOrAdmin}}
+          <a href="" class="btn btn-primary hidden-print editJobItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-edit" data-id="{{state$id}}"></i>Edit
+          </a>
+          <a href="" class="btn btn-white hidden-print copyJobItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-copy" data-id="{{state$id}}"></i>
+          </a>
+          {{/if}}
+          <a href="" class="btn btn-white hidden-print printJobItemBtn" data-id="{{state$id}}">
+            <i class="fa fa-print"></i>
+          </a>
+        </div>
+      {{/if}}
+
       {{#if state$isJobsList}}
       <div class="title-action">
         {{#if state$isManagerOrAdmin}}
          <a href="/jobItem/submit" class="btn btn-primary">Add new job</a>
         {{/if}}
-        {{#if state$isJobsSubscribed}}
-          <a href="#" class="btn btn-info hidden-print unSubscribeJobsList">Unsubscribe</a>
+        {{#if state$isJobListSubscribed}}
+          <a href="#" class="btn btn-white unSubscribeJobsList"><i class="fa fa-lg fa-rss text-info"></i></a>
         {{else}}
-          <a href="#" class="btn btn-success btn-sm subscribeJobsList">Subscribe</a>
+          <a href="#" class="btn btn-white subscribeJobsList"><i class="fa fa-lg fa-rss text-muted"></i></a>
         {{/if}}
       </div>
       {{/if}}
@@ -87,6 +108,19 @@
         <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
         <a href="" class="btn btn-white thisWeek">This Week</a>
         <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
+      </div>
+      {{/if}}
+
+      {{#if state$isDailyRoster}}
+      <div class="title-action">
+        <a href="#submitShiftModal" class="btn btn-primary" data-toggle="modal">
+          Create new shift
+        </a>
+        <!-- <div class=""> -->
+          <button class="btn btn-white right prevDayRoster"><i class="fa fa-chevron-left"></i></button>
+          <button class="btn btn-white right todayRoster">Today</button>
+          <button class="btn btn-white right nextDayRoster"><i class="fa fa-chevron-right"></i></button>
+        <!-- </div> -->
       </div>
       {{/if}}
     </div>

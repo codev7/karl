@@ -6,7 +6,7 @@ component.state.date = function() {
   var shift = Shifts.findOne(id);
   if(shift) {
     this.set("shift", shift);
-    return shift.shiftDate;
+    return moment(shift.shiftDate).format("YYYY-MM-DD");
   }
 }
 
@@ -23,9 +23,28 @@ component.state.startTime = function() {
   }
 }
 
+component.state.mySection = function() {
+  var shift = this.get("shift");
+  if(shift && shift.section) {
+    return shift.section;
+  } 
+}
+
 component.state.endTime = function() {
   var shift = this.get("shift");
   if(shift) {
     return moment(shift.endTime).format("h:mm A");
+  }
+}
+
+component.state.sections = function() {
+  var shift = this.get("shift");
+  if(shift) {
+    var section = shift.section;
+    if(section) {
+      return Sections.find({"name": {$nin: [section]}});
+    } else {
+      return Sections.find();
+    }
   }
 }

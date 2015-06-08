@@ -5,6 +5,12 @@
     <!-- <td>{{unitSize}}</td> -->
     <td>{{state$portionUsed}}</td>
     <td>$ {{state$costPerPortionUsed}}</td>
-    <td><input type="checkbox" data-id="{{state$id}}" class="selectedIng" name="selectedIng"></td>
+    <td>
+      <div class="i-checks">
+        <label>
+          <input type="checkbox" value="" data-id="{{state$id}}" data-type="{{state$type}}" class="selectedIng" name="selectedIng">
+        </label>
+      </div>
+    </td>
   </tr>
 </template>

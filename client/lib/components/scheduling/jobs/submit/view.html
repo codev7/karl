@@ -8,59 +8,56 @@
         <form class="form-horizontal" role="form" id="newJob">
           <div class="modal-body">
             <div class="form-group">
-              <label class="col-sm-4 control-label">Name</label>
-              <div class="col-sm-6">
-                <input type="text" name="name" class="form-control" placeholder="Name">
-              </div>
-            </div>
-            <div class="form-group">
               <label class="col-sm-4 control-label">Type</label>
               <div class="col-sm-6">
                 <div class="dropdown">
-                  <select name="type" class="form-control m-b">
-                    <option selected="selected">Type</option>
-                    {{#each jobTypes}}
-                    <option value="{{type}}">{{type}}</option>
+                  <select name="type" class="form-control m-b jobType">
+                    {{#each state$jobTypes}}
+                    <option value="{{this}}">{{this}}</option>
                     {{/each}}
                   </select>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-4 control-label">Details</label>
+              <label class="col-sm-4 control-label">Job</label>
               <div class="col-sm-6">
-                <textarea type="text" name="details" class="form-control" placeholder="Details"></textarea>
+                <div class="dropdown">
+                  <select name="job" class="form-control m-b jobName">
+                    <option selected="selected" value="">Select Job</option>
+                    {{#each state$jobs}}
+                    <option value="{{_id}}">{{name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
               </div>
             </div>
+            {{#if state$isPrep}}
             <div class="form-group">
               <label class="col-sm-4 control-label">Portions</label>
               <div class="col-sm-6">
-                <input type="text" name="portions" class="form-control" placeholder="No. of Portions">
+                <input type="number" name="portions" class="form-control portions" placeholder="No. of Portions" value="{{state$portions}}">
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-4 control-label">Active Time</label>
+              <div class="col-sm-6 control-label textTime" style="text-align: left">{{#if state$activeTimes}}{{state$activeTimes}}{{else}}No active time{{/if}}</div>
+            </div>
+            {{else}}
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Active Time</label>
               <div class="col-sm-6">
                 <div class="input-group">
-                  <input type="number" name= "activeTime" class="form-control">
+                  <input type="text" name= "activeTime" class="form-control" placeholder="Add time in minutes">
                   <span class="input-group-addon">Mins</span>
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-4 control-label">Total Cost</label>
-              <div class="col-sm-6">
-                <div class="input-group">
-                  <span class="input-group-addon">$</span>
-                  <input type="number" name="ingCost" class="form-control">
-                  <span class="input-group-addon">.00</span>
-                </div>
-              </div>
-            </div>
+            {{/if}}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit"  class="btn btn-primary">Save changes</button>
           </div>
         </form>
       </div>

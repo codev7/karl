@@ -3398,6 +3398,7 @@ var Grid = fc.Grid = RowRenderer.extend({
       endTime = moment(endTime).format("hh:mm A");
       name = startTime + " - " + endTime + " Shift";
       var select = '';
+      var sectionDiv = '<div>' + shift.section + '</div>';
 
       if(view.name == "agendaShifts") {
         var shifts = Shifts.find({"shiftDate": shift.shiftDate}).fetch();
@@ -3427,10 +3428,18 @@ var Grid = fc.Grid = RowRenderer.extend({
             options +
           '</select>' +
         '</div>';
+      } else if(view.name == "agendaDay") {
+        var options = null;
+        if(shift.assignedTo) {
+          var assignedTo = Meteor.users.findOne(shift.assignedTo);
+          if(assignedTo) {
+            select = '<div>' + assignedTo.username + '</div>';
+          }
+        } 
       }
     }
     return '' +
-      '<th class="fc-day-header ' + view.widgetHeaderClass + ' fc-' + dayIDs[date.day()] + '" data-id="' + cell.id + '">' +
+      '<th class="fc-day-header ' + view.widgetHeaderClass + ' fc-' + dayIDs[date.day()] + '" data-id="' + shiftId + '">' + sectionDiv +
         '<a class="editShiftProfile" data-toggle="modal" data-id="' + shiftId + '">' + name + '</a>' +
         select +
       '</th>';
