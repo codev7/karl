@@ -51,7 +51,7 @@ Template.ingsAndPreps.events({
 Template.ingsAndPreps.rendered = function() {
   var menu = Session.get("thisMenuItem");
   if(managerPlusAdminPermission()) {
-    $('.username').editable({
+    $('.quantity').editable({
       success: function(response, newValue) {
         if(newValue) {
           var ing = $(this).data("pk");

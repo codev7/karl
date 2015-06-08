@@ -2,6 +2,10 @@ var component = FlowComponents.define('userDetailed', function(props) {
   this.user = props.user;
 });
 
+component.state.id = function() {
+  return this.user._id;
+}
+
 component.state.username = function() {
   return this.user.username;
 }
@@ -51,9 +55,17 @@ component.state.isWorker = function() {
 
 component.state.ifMe = function() {
   var me = Meteor.user();
-  if(me._id == this.user._id) {
+  if(me && me._id == this.user._id) {
     return false;
   } else {
     return true;
+  }
+}
+
+component.state.isPermitted = function() {
+  if(isAdmin() || isManager()) {
+    return true;
+  } else {
+    return false;
   }
 }
