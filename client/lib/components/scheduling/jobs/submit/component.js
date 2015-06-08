@@ -18,6 +18,18 @@ component.action.onChangeJob = function(job) {
   this.set("jobRef", job);
 }
 
+component.state.portions = function() {
+  var jobId = this.get("jobRef");
+  if(jobId) {
+    var job = JobItems.findOne(jobId);
+    if(job) {
+      var time = job.activeTime;
+      this.set("activeTime", time);
+      return job.portions;
+    }
+  }
+}
+
 component.action.keyup = function(portions) {
   var jobId = this.get("jobRef");
   if(jobId) {
