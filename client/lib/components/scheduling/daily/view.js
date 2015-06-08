@@ -96,9 +96,9 @@ Template.dailyShiftScheduling.rendered = function() {
 
               var jobDoc = Jobs.findOne(job);
               if(jobDoc) {
-                var activeTimeInMins = jobDoc.activeTime/(60);
-                var activeHours = parseInt(activeTimeInMins/60);
-                var activeMins = parseInt(activeTimeInMins%(60));
+                var activeTimeInMiliSecs = jobDoc.activeTime * 1000;
+                var activeHours = moment.duration(activeTimeInMiliSecs).hours()
+                var activeMins = moment.duration(activeTimeInMiliSecs).minutes()
 
                 if(jobDoc.startAt) {
                   hourFix = moment(jobDoc.startAt).format("HH");
