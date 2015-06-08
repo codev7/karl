@@ -8,7 +8,7 @@ Meteor.publish("allIngredients", function() {
   //   logger.error("User not permitted to publish all ingredients");
   //   this.error(new Meteor.Error(404, "User not permitted to publish all ingredients"));
   // }
-  var cursors = Ingredients.find({}, {sort: {'code': 1}});
+  var cursors = Ingredients.find({}, {sort: {'code': 1}, limit: 10});
   return cursors;
 });
 
@@ -25,7 +25,7 @@ Meteor.publish("ingredients", function(ids) {
   var cursors = [];
   var ings = null;
   if(ids.length > 0) {
-    ings = Ingredients.find({"_id": {$in: ids}}, {sort: {'code': 1}});
+    ings = Ingredients.find({"_id": {$in: ids}}, {sort: {'code': 1}, limit: 10});
   } else {
     ings = Ingredients.find({}, {sort: {'code': 1}, limit: 10});
   }
