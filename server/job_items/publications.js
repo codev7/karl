@@ -8,7 +8,7 @@ Meteor.publish('allJobItems', function() {
   //   logger.error("User not permitted to publish all job items");
   //   this.error(new Meteor.Error(404, "User not permitted to publish all jobs"));
   // }
-  var cursors = JobItems.find({}, {sort: {'name': 1}, limit: 10});
+  var cursors = JobItems.find({}, {sort: {'name': 1}});
   return cursors;
 });
 
