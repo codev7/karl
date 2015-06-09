@@ -10,7 +10,7 @@ Meteor.publish("userSubs", function(type, id, subscriber) {
       var listSubscription = Subscriptions.find({"_id": type, "subscribers": subscriber});
       cursor.push(listSubscription);  
     }
-    logger.info("User subscriptions published");
+    logger.info("User subscriptions published", type, id);
     return cursor;
   }
 });
