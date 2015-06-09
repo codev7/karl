@@ -7,7 +7,7 @@ Meteor.publish('jobTypes', function() {
 
 Meteor.publish("unAssignedJobs", function() {
   var cursors = [];
-  var jobs = Jobs.find({"status": "draft"});
+  var jobs = Jobs.find({"status": "draft"}, {limit: 10});
   cursors.push(jobs);
   logger.info("Un-assigned jobs publication");
   return cursors;
@@ -16,7 +16,7 @@ Meteor.publish("unAssignedJobs", function() {
 
 Meteor.publish("jobs", function(ids) {
   var cursors = [];
-  var jobs = Jobs.find({"_id": {$in: ids}});
+  var jobs = Jobs.find({"_id": {$in: ids}}, {limit: 10});
   cursors.push(jobs);
   logger.info("Jobs publication");
   return cursors;

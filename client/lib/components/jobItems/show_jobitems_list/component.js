@@ -51,5 +51,5 @@ component.state.getJobItemsa = function() {
 }
 
 component.action.submit = function() {
-  this.JobItemsSearch.search("");
+  this.JobItemsSearch.search("", {"limit": 10});
 }

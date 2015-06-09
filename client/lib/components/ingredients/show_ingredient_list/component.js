@@ -34,7 +34,7 @@ component.prototype.setIds = function() {
 
 component.prototype.renderShowIngList = function() {
   var ids = this.setIds();
-  this.IngredientsSearch.search("", {"ids": ids});
+  this.IngredientsSearch.search("", {"ids": ids, "limit": 10});
 }
 
 component.state.getIngredients = function() {
@@ -48,9 +48,9 @@ component.state.getIngredients = function() {
 
 component.action.keyup = function(text) {
   var ids = this.setIds();
-  this.IngredientsSearch.search(text, {"ids": ids});
+  this.IngredientsSearch.search(text, {"ids": ids, "limit": 10});
 }
 
 component.action.submit = function() {
-  this.IngredientsSearch.search("");
+  this.IngredientsSearch.search("", {"limit": 10});
 }

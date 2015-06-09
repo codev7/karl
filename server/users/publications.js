@@ -14,7 +14,7 @@ Meteor.publish("usersList", function() {
     "emails": 1,
     "services": 1
   };
-  var users = Meteor.users.find({}, {fields: options});
+  var users = Meteor.users.find({}, {fields: options}, {limit: 10});
   logger.info("Userlist published");
   return users;
 });
