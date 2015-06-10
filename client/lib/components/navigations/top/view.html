@@ -3,31 +3,25 @@
     <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
         <a id="navbar-minimalize" class="minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-        <form role="search" class="navbar-form-custom" action="search_results">
-          <div class="form-group">
-              <!--<input type="text" placeholder="Search..." class="form-control" name="top-search" id="top-search">-->
-            </div>
-          </form>
-        </div>
-        <ul class="nav navbar-top-links navbar-right">
-
-            <li>
-                <a>
-                    <i class="fa fa-check-square-o"></i>
-                </a>
-            </li>
+      </div>
+      <ul class="nav navbar-top-links navbar-right">
+        <li><a><i class="fa fa-check-square-o"></i></a></li>
 
         <li class="dropdown dropdown-notifi">
           <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
             <i class="fa fa-bell"></i>
-            {{#if state$isExistNotifications}}
-              <span class="label label-primary">{{state$notificationsCount}}</span>
+            {{#if state$count}}
+              <span class="label label-primary">{{state$count}}</span>
             {{/if}}
           </a>
           <ul class="dropdown-menu dropdown-alerts">
-            {{#if state$isExistNotifications}}
+            {{#if state$count}}
               {{#each state$notifications}}
-                {{> render component='notificationItem' noti=this}}
+                <li>
+                  {{> render component='notifiText' noti=this}}
+                  {{> render component='notifiButtons' noti=this}}
+                </li>
+                <li class="divider"></li>
               {{/each}}
               <li>
                 <div class="text-center link-block">
@@ -45,8 +39,6 @@
             {{/if}}
           </ul>
         </li>
-
-
       </ul>
     </nav>
   </div>

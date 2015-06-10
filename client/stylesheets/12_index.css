@@ -88,3 +88,11 @@
 .field {
   margin-bottom: 15px;
 }
+
+.m-l-xxxxl {
+  margin-left: 110px;
+}
+
+span {
+  cursor: pointer;
+}

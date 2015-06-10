@@ -124,11 +124,11 @@ Meteor.methods({
   },
 
   'readNotifications': function(id) {
-    if(!Meteor.userId()) {
+    var userId = Meteor.userId();
+    if(!userId) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
     if(!id) {
       logger.error('Notification id not found');
       throw new Meteor.Error(404, "Notification id not found");
