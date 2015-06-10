@@ -8,7 +8,6 @@ var component = FlowComponents.define("notificationsList", function(props) {
 component.state.notifications = function() {
   var state = Session.get("notifiState");
   var notifications = Notifications.find({"read": state, "to": Meteor.userId()}, {sort: {"createdOn": -1}, limit: 10});
-  console.log(notifications.fetch());
   return notifications;
 }
 

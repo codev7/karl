@@ -19,7 +19,7 @@ UI.registerHelper("timeFormattedWithDate", function(time) {
 });
 
 UI.registerHelper("dayFormat", function(date) {
-  var dateFormatted = moment(date).format('dddd Do MMMM');
+  var dateFormatted = moment(date).format('ddd, Do MMMM');
   return dateFormatted;
 });
 
