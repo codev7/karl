@@ -13,7 +13,6 @@ component.action.submit = function(text) {
   while (match = matched.exec(text)) {
     matches.push(match[1]);
   }
-  console.log(matches);
   var taggedUsers = [];
   matches.forEach(function(username) {
     var filter = new RegExp(username, 'i');

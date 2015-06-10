@@ -1,13 +1,13 @@
 <template name="jobItemDetailed">
   <tr>
-    <td><a href="#" data-id="{{state$id}}" data-toggle="modal" class="viewDetail">{{state$name}}</a></td>
-    <td>{{secondsToMinutes state$activeTime}} mins</td>
-    <td>{{state$type}}</td>
-    <td>{{state$shelfLife}} days</td>
-    <td>{{state$portions}}</td>
+    <td><a href="#" data-id="{{state$job._id}}" data-toggle="modal" class="viewDetail">{{{state$job.name}}}</a></td>
+    <td>{{secondsToMinutes state$job.activeTime}} mins</td>
+    <td>{{state$job.type}}</td>
+    <td>{{state$job.shelfLife}} days</td>
+    <td>{{state$job.portions}}</td>
     <td>$ {{state$cost}}</td>
     <td>
-      <button data-id="{{state$id}}" class="btn btn-primary btn-sm viewDetail">View Item</button>
+      <button data-id="{{state$job._id}}" class="btn btn-primary btn-sm viewDetail">View Item</button>
     </td>
   </tr>
 </template>
