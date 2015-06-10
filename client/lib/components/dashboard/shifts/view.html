@@ -13,7 +13,11 @@
               <th class="text-center" style="width: 10%">Time</th>
               <th>Date</th>
               <th class="text-center">Section</th>
-              <th class="text-center">Confirm</th>
+              {{#if state$future}}
+              <!-- <th class="text-center">Confirm</th> -->
+              {{else}}
+              <th class="text-center">Hours</th>
+              {{/if}}
             </tr>
           </thead>
           <tbody>
