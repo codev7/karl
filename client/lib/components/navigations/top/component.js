@@ -1,6 +1,6 @@
 var subs = new SubsManager();
 var component = FlowComponents.define('topNavbar', function(props) {
-  subs.subscribe("newNotifications");
+  return subs.subscribe("newNotifications");
 });
 
 

@@ -31,8 +31,6 @@ component.action.submit = function(text) {
   var textHtml = "<div class='non'>" + text + "</div>"
   taggedUsers.forEach(function(user) {
     textHtml = textHtml.replace(user.user, "<span class='label " + user.class + "'>" + user.user + "</span>");
-    console.log(textHtml);
-
   });
 
   var linkedText = autolinker.link(textHtml);

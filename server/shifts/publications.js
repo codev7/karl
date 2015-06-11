@@ -89,8 +89,10 @@ Meteor.publish("rosteredFutureShifts", function(id) {
     logger.error('User id not found : ' + id);
     this.error(new Meteor.Error(404, "User id not found"));
   }
-  var shifts = Shifts.find({"assignedTo": id, "shiftDate": {$gte: new Date().getTime()}}, {sort: {"shiftDate": 1}});
-  logger.info("Users rostered shifts published", id);
+  var shifts = Shifts.find(
+    {"assignedTo": id, "shiftDate": {$gte: new Date().getTime()}}, 
+    {sort: {"shiftDate": 1}, limit: 10});
+  logger.info("Rostered future shifts for user ", id);
   return shifts;
 });
 
@@ -103,8 +105,10 @@ Meteor.publish("rosteredPastShifts", function(id) {
     logger.error('User id not found : ' + id);
     this.error(new Meteor.Error(404, "User id not found"));
   }
-  var shifts = Shifts.find({"assignedTo": id, "shiftDate": {$lt: new Date().getTime()}}, {sort: {"shiftDate": 1}});
-  logger.info("Users rostered shifts published", id);
+  var shifts = Shifts.find(
+    {"assignedTo": id, "shiftDate": {$lt: new Date().getTime()}}, 
+    {sort: {"shiftDate": -1}, limit: 10});
+  logger.info("Rostered past shifts for user ", id);
   return shifts;
 });
 
@@ -113,7 +117,9 @@ Meteor.publish("openedShifts", function() {
     logger.error('User not found : ' + this.userId);
     this.error(new Meteor.Error(404, "User not found"));
   }
-  var shifts = Shifts.find({"assignedTo": null, "shiftDate": {$gte: new Date().getTime()}}, {sort: {"shiftDate": 1}});
+  var shifts = Shifts.find(
+    {"assignedTo": null, "shiftDate": {$gte: new Date().getTime()}}, 
+    {sort: {"shiftDate": 1}, limit: 10});
   logger.info("Opened shifts published");
   return shifts;
 });
