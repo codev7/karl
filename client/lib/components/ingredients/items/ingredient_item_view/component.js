@@ -1,28 +1,30 @@
 var component = FlowComponents.define('ingredientItemView', function(props) {
   this.ingredient = props.ingredient;
-  var item = getIngredientItem(this.ingredient._id);
-  this.ingredient = item;
-  this.ingredient.quantity = props.ingredient.quantity;
+  this.set("id", this.ingredient._id);
 });
 
-component.state.code = function() {
-  return this.ingredient.code;
-}
-
-component.state.description = function() {
-  return this.ingredient.description;
+component.state.ing = function() {
+  var id = this.get("id");
+  if(id) {
+    var item = getIngredientItem(id);
+    if(item) {
+      this.set("ing", item);
+      return item;
+    }
+  }
 }
 
 component.state.quantity = function() {
-  return this.ingredient.quantity;
-}
-
-component.state.portionUsed = function() {
-  return this.ingredient.portionUsed;
+  if(this.ingredient && this.ingredient.quantity) {
+    return this.ingredient.quantity;
+  }
 }
 
 component.state.cost = function() {
-  var cost = this.ingredient.costPerPortionUsed * this.ingredient.quantity;
-  cost = Math.round(cost * 100)/100;
-  return cost;
+  var ing = this.get("ing");
+  if(ing) {
+    var cost = ing.costPerPortionUsed * this.ingredient.quantity;
+    cost = Math.round(cost * 100)/100;
+    return cost;
+  }
 }

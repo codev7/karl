@@ -4,7 +4,7 @@ var component = FlowComponents.define('commentsPanel', function(props) {
 
 component.state.commentsExist = function() {
   var item = this.referenceId;
-  var count = Comments.find({"reference": item}).count();
+  var count = Comments.find({"reference": item}, {sort: {"createdOn": 1}}).count();
   if(count > 0) {
     return true;
   } else {

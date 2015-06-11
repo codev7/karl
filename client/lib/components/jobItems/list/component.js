@@ -1,5 +1,4 @@
 var component = FlowComponents.define('jobItemsList', function(props) {
-  this.onRendered(this.onJobLitsRendered);
   var options = {
     keepHistory: 1000 * 60 * 5,
     localSearch: true
@@ -7,10 +6,11 @@ var component = FlowComponents.define('jobItemsList', function(props) {
   var fields = ['name'];
 
   this.JobItemsSearch = new SearchSource('jobItemsSearch', fields, options);
+  this.onRendered(this.onJobLitsRendered);
 });
 
 component.action.keyup = function(text) {
-  this.JobItemsSearch.search(text);
+  this.JobItemsSearch.search(text, {limit: 10});
 }
 
 component.action.click = function() {
@@ -29,14 +29,15 @@ component.action.click = function() {
 }
 
 component.state.getJobItems = function() {
-  return this.JobItemsSearch.getData({
+  var data = this.JobItemsSearch.getData({
     transform: function(matchText, regExp) {
       return matchText.replace(regExp, "<b>$&</b>")
     },
     sort: {'name': 1}
   });
+  return data;
 }
 
 component.prototype.onJobLitsRendered = function() {
-  this.JobItemsSearch.search("");
+  this.JobItemsSearch.search("", {limit: 10});
 }

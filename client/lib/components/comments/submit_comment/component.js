@@ -13,7 +13,6 @@ component.action.submit = function(text) {
   while (match = matched.exec(text)) {
     matches.push(match[1]);
   }
-  console.log(matches);
   var taggedUsers = [];
   matches.forEach(function(username) {
     var filter = new RegExp(username, 'i');
@@ -32,8 +31,6 @@ component.action.submit = function(text) {
   var textHtml = "<div class='non'>" + text + "</div>"
   taggedUsers.forEach(function(user) {
     textHtml = textHtml.replace(user.user, "<span class='label " + user.class + "'>" + user.user + "</span>");
-    console.log(textHtml);
-
   });
 
   var linkedText = autolinker.link(textHtml);

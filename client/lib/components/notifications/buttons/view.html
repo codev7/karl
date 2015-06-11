@@ -1,0 +1,8 @@
+<template name="notifiButtons">
+  <div class="m-l-xxxxl">
+  {{#if state$permittedActionType}}
+    <button class="btn btn-primary btn-xs goToItem" data-ref="{{state$notifi.ref}}" data-type="{{state$notifi.type}}" data-id="{{state$notifi._id}}">Go to this {{state$notifi.type}} Item</button>
+  {{/if}}
+    <button class="btn btn-warning btn-xs readNotification" data-id="{{state$notifi._id}}">Mark as read</button>    
+  </div>
+</template>

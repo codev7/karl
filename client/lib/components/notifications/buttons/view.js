@@ -1,4 +1,4 @@
-Template.notificationItem.events({
+Template.notifiButtons.events({
   'click .readNotification': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-id");
@@ -14,7 +14,7 @@ Template.notificationItem.events({
 
   },
 
-  'click .goToItem': function(event) {
+  'click .goToItem': function(event) {    
     event.preventDefault();
     var ref = $(event.target).attr("data-ref");
     var id = $(event.target).attr("data-id");

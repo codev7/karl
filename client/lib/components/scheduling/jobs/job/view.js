@@ -7,6 +7,19 @@ Template.schedulingJob.events({
         return alert(err.reason);
       }
     }); 
+  },
+
+  'click .removeUnassignedJob': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-id");
+    var confirmDelete = confirm("Are you sure you want to permanently delete this item ?");
+    if(confirmDelete) {
+      Meteor.call("deleteJob", id, null, function(err) {
+        if(err) {
+          return alert(err.reason);
+        }
+      }); 
+    }
   }
 });
 

@@ -52,5 +52,5 @@ component.action.keyup = function(text) {
 }
 
 component.action.submit = function() {
-  this.IngredientsSearch.search("", {"limit": 10});
+  this.IngredientsSearch.search("", {limit: 10});
 }

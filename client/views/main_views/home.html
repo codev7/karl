@@ -1,33 +1,40 @@
 <template name="home">
   <div class="wrapper wrapper-content">
-    <div class="col-lg-12">
-      <hr>
-      <div class="jumbotron">
-        <h1>Welcome to Hero Chef.</h1>
-        <p>
-          Thanks for coming {{#if  currentUser}} {{name}} {{/if}}. Kitchen's are complicated workplaces. Hero Chef aims to make
-          running a busy kitchen easy. Taking a lot of the manual tasks and making them quick, easy and
-          accurate.
-        </p>
-        <p>
-          We'll be developing this software over the coming months to help with things like ordering, knowing
-          how much to prep, rostering and much more.
-        </p>
-        <p>All ideas are welcome! -Tom</p>
-        {{#if currentUser}}
-        {{else}}
+    {{#if currentUser}}
+      <div class="row">
+        <div class="col-md-4">
+          <div class="ibox float-e-margins">
+            {{> render component="clock"}}
+            {{> render component="shiftsSummary"}}
+          </div>
+        </div>
+        {{> render component="notificationsList"}}
+        {{> render component="tasks"}}
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="ibox float-e-margins"></div>
+        </div>
+      </div>
+    {{else}}
+      <div class="col-lg-12">
+        <hr>
+        <div class="jumbotron">
+          <h1>Welcome to Hero Chef.</h1>
+          <p>
+            Thanks for coming. Kitchen's are complicated workplaces. Hero Chef aims to make
+            running a busy kitchen easy. Taking a lot of the manual tasks and making them quick, easy and
+            accurate.
+          </p>
+          <p>
+            We'll be developing this software over the coming months to help with things like ordering, knowing
+            how much to prep, rostering and much more.
+          </p>
+          <p>All ideas are welcome! -Tom</p>
           <a href="/signIn" class="btn btn-primary btn-rounded">Sign In</a> Or 
           <a href="/register" class="btn btn-primary btn-rounded">Register</a>
-        {{/if}}
+        </div>
       </div>
-      {{#if currentUser}}
-        {{> render component='homeCountTags'}}
-      {{/if}}
-    </div>
-  </div>
-  <div class="footer">
-    <div>
-      <strong>Copyright</strong> Hero Chef &copy; 2014-2015
-    </div>
+    {{/if}}
   </div>
 </template>

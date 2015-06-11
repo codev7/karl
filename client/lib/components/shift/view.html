@@ -1,0 +1,19 @@
+<template name="shiftItem">
+  <tr class="{{state$confirmed}}">
+    <td class="text-center">{{timeFormat state$shift.startTime}} - {{timeFormat state$shift.endTime}}</td>
+    <td>{{dayFormat state$shift.shiftDate}}</td>
+    <td class="text-center">{{state$shift.section}}</td>
+    <td class="text-center">
+      {{#if state$confirmed}}
+        <!-- <p>Confirmed</p> -->
+      {{else}}
+        {{#if state$isPermitted}}
+          <!-- <a href="#" class="btn btn-primary btn-xs">Confirm</a>
+          <a href="#" class="btn btn-link btn-xs">or Reject</a> -->
+        {{else}}
+          {{state$timeRecorded}} hours recorded
+        {{/if}}
+      {{/if}}
+    </td>
+  </tr>
+</template>

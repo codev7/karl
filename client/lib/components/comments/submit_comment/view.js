@@ -18,7 +18,7 @@ Template.submitComment.helpers({
           token: '@',
           collection: Meteor.users,
           field: "username",
-          template: Template.user
+          template: Template.chatUser
         }
       ]
     };

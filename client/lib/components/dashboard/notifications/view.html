@@ -1,0 +1,16 @@
+<template name="notificationsList">
+  <div class="col-md-4">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <span class="label pull-right readNoti">Read</span>
+        <span class="label pull-right newNoti">New</span>
+        <h5>Notifications</h5>
+      </div>
+      <div class="ibox-content inspinia-timeline">
+        {{#each state$notifications}}
+          {{> render component='notifiText' noti=this}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
