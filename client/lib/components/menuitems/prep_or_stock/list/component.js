@@ -49,13 +49,13 @@ component.prototype.renderList = function() {
   this.JobItemsSearch.search("",{"ids": jobids, "type": "Prep", "limit": 5});
 
   var ingids = this.setIngIds();
-  this.IngredientsSearch.search("", {"ids": ingids});
+  this.IngredientsSearch.search("", {"ids": ingids, "limit": 5});
   
 };
 
 component.action.keyup = function(text) {
   var ingids = this.setIngIds();
-  this.IngredientsSearch.search(text, {"ids": ingids});
+  this.IngredientsSearch.search(text, {"ids": ingids, "limit": 5});
 
   var jobids = this.setJobIds();
   this.JobItemsSearch.search(text, {"ids": jobids, "type": "Prep", "limit": 5});

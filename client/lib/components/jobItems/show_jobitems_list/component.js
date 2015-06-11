@@ -19,12 +19,12 @@ var component = FlowComponents.define('showJobItemsList', function(props) {
 
 component.prototype.onJobLitsRendered = function() {
   var ids = this.setIds();
-  this.JobItemsSearch.search("",{"ids": ids, "limit": 10});
+  this.JobItemsSearch.search("",{"ids": ids, "limit": 10, "type": "Prep"});
 }
 
 component.action.keyup = function(text) {
   var ids = this.setIds();
-  this.JobItemsSearch.search(text, {"ids": ids, "limit": 10});
+  this.JobItemsSearch.search(text, {"ids": ids, "limit": 10, "type": "Prep"});
 }
 
 component.prototype.setIds = function() {
@@ -51,5 +51,5 @@ component.state.getJobItemsa = function() {
 }
 
 component.action.submit = function() {
-  this.JobItemsSearch.search("");
+  this.JobItemsSearch.search("", {"limit": 10, "type": "Prep"});
 }
