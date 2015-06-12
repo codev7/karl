@@ -1,0 +1,13 @@
+<template name="clock">
+  {{#if state$clockInPermission}}
+    {{> render component='clockItem' item=state$clockIn text="Clock In" subText='Shifts starts ' tag='navy-bg' class='clockIn'}}
+  {{/if}}
+  {{#if state$clockOutPermission}}
+    {{> render component='clockItem' item=state$clockOut text="Clock Out" subText='Record ' tag='red-bg' class='clockOut'}}
+  {{/if}}
+  <div style="display: none" class="tip">
+  {{#if state$shiftEnded}}
+    {{> render component='clockItem' item=state$shiftEnded text="Clock Ended" subText="Recorded " tag="lazur-bg" class='clockinfo'}}
+  {{/if}}
+  </div>
+</template>

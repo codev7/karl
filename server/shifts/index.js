@@ -30,7 +30,8 @@ Meteor.methods({
       "createdBy": Meteor.userId(), //add logged in users id
       "assignedTo": null, //update
       "assignedBy": null, //update
-      "jobs": []
+      "jobs": [],
+      "status": "draft"
     }
 
     var id = Shifts.insert(doc);
