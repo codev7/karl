@@ -33,3 +33,12 @@ component.state.timeRecorded = function() {
     }
   }
 }
+
+component.state.activeShift = function() {
+  var shift = this.shift;
+  if(shift && shift.status == "started") {
+    return true;
+  } else {
+    return false;
+  }
+}

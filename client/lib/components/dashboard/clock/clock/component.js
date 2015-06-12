@@ -6,7 +6,7 @@ component.state.clockInPermission = function() {
   var lowerLimit = new Date().getTime() - 2 * 3600 * 1000;
   query['assignedTo'] = Meteor.userId();
   query['status'] = 'draft';
-  query['$or'] = [
+  query['$and'] = [
     {"startTime": {$gte: new Date(lowerLimit)}},
     {"startTime": {$lte: new Date(upplerLimit)}}
   ]

@@ -15,7 +15,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "Shift not found");
     }
     Shifts.update({"_id": id}, {$set: {"status": "started", "startedAt": new Date().getTime()}});
-    logger.info("Shift started", id);
+    logger.info("Shift started", {"shiftId": id, "worker": userId});
   },
 
   'clockOut': function(id) {
@@ -34,6 +34,6 @@ Meteor.methods({
       throw new Meteor.Error(404, "Shift not found");
     }
     Shifts.update({"_id": id}, {$set: {"status": "finished", "finishedAt": new Date().getTime()}});
-    logger.info("Shift ended", id);
+    logger.info("Shift ended", {"shiftId": id, "worker": userId});
   }
 });

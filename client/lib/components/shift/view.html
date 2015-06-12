@@ -14,7 +14,11 @@
           {{#if state$timeRecorded}}
             {{timeDuration state$timeRecorded}} recorded
           {{else}} 
-            No hours recorded
+            {{#if state$activeShift}}
+              <span class="label label-primary">Active</span>
+            {{else}}
+              No hours recorded
+            {{/if}}
           {{/if}}
         {{/if}}
       {{/if}}

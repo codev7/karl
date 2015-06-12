@@ -62,7 +62,7 @@ component.prototype.onClockRendered = function() {
 
     var clock = new Date(this.item.startTime).getTime();
     var timeLeft = function() {
-      if(clock > new Date().getTime()) {
+      if(clock > lowerLimit && clock < upplerLimit) {
         clock--;
         Session.set("timeLeft", clock);
         return;

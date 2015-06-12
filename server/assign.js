@@ -75,6 +75,10 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
+    if(shift.status != "draft") {
+      logger.error("Can't change shift parameters, as shift is active");
+      throw new Meteor.Error(404, "Can't change shift parameters, as shift is active");
+    }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(shift.shiftDate) <= yesterday) {
