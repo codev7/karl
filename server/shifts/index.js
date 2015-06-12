@@ -23,8 +23,8 @@ Meteor.methods({
     //   throw new Meteor.Error(404, "Can't create a shift for a previous date");
     // }
     var doc = {
-      "startTime": info.startTime,
-      "endTime": info.endTime,
+      "startTime": new Date(info.startTime).getTime(),
+      "endTime": new Date(info.endTime).getTime(),
       "shiftDate": new Date(info.shiftDate).getTime(),
       "section": info.section,
       "createdBy": Meteor.userId(), //add logged in users id
@@ -51,10 +51,10 @@ Meteor.methods({
     }
     var updateDoc = {};
     if(info.startTime) {
-      updateDoc.startTime = info.startTime;
+      updateDoc.startTime = new Date(info.startTime).getTime();
     }
     if(info.endTime) {
-      updateDoc.endTime = info.endTime;
+      updateDoc.endTime = new Date(info.endTime).getTime();
     }
     if(info.section) {
       updateDoc.section = info.section;
