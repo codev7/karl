@@ -27,10 +27,8 @@ component.state.isPermitted = function() {
 component.state.timeRecorded = function() {
   if(this.shift && this.shift.shiftDate) {
     if(this.shift.shiftDate < new Date().getTime()) {
-     if(this.shift.startedAt && this.shift.endedAt) {
-        return "9.25";
-      } else {
-        return "No";
+     if(this.shift.startedAt && this.shift.finishedAt) {
+        return this.shift.finishedAt - this.shift.startedAt; 
       }
     }
   }

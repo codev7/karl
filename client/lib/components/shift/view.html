@@ -11,7 +11,11 @@
           <!-- <a href="#" class="btn btn-primary btn-xs">Confirm</a>
           <a href="#" class="btn btn-link btn-xs">or Reject</a> -->
         {{else}}
-          {{state$timeRecorded}} hours recorded
+          {{#if state$timeRecorded}}
+            {{timeDuration state$timeRecorded}} recorded
+          {{else}} 
+            No hours recorded
+          {{/if}}
         {{/if}}
       {{/if}}
     </td>

@@ -17,15 +17,40 @@ component.state.item = function() {
 component.state.timeFromNow = function() {
   if(this.item.text == "Clock In") {
     return Session.get("timeLeft");
-  } else if(this.item.text == "Clock Out"){
+  } else if(this.item.text == "Clock Out") {
     return Session.get("timeSpent");
-  } 
+  } else if(this.item.text == "Clock Ended") {
+    var shiftId = Session.get("newlyEndedShift");
+    var shift = Shifts.findOne(shiftId);
+    var time = 0;
+    if(shift) {
+      time = shift.finishedAt - shift.startedAt;
+      return time;
+    }
+  }
 }
 
 component.state.clockIn = function() {
   if(this.item.text == "Clock In") {
     return true;
-  } else if(this.item.text == "Clock Out"){
+  } else {
+    return false;
+  } 
+}
+
+component.state.clockOut = function() {
+  if(this.item.text == "Clock Out") {
+    return true;
+  } else {
+    return false;
+  } 
+}
+
+
+component.state.clockEnded = function() {
+  if(this.item.text == "Clock Ended") {
+    return true;
+  } else {
     return false;
   } 
 }

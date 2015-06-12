@@ -49,7 +49,6 @@ component.state.clockOut = function() {
 component.state.shiftEnded = function() {
   var shiftId = Session.get("newlyEndedShift");
   var shift = Shifts.findOne(shiftId);
-  console.log(shift);
   if(shift) {
     return shift;
   }
