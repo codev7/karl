@@ -12,13 +12,13 @@ Template.submitComment.helpers({
   settings: function() {
     return {
       position: "top",
-      limit: 5,
+      limit: 10,
       rules: [
         {
           token: '@',
           collection: Meteor.users,
           field: "username",
-          template: Template.chatUser
+          template: Template.user
         }
       ]
     };
