@@ -1,0 +1,10 @@
+<template name="teamHoursItem">
+  <tr class="gradeX">
+    <td>{{state$user.username}}</td>
+    <td>{{timeDurationWithDecimal state$totaltime}}</td>
+    <td>${{state$totalwage}}</td>
+    {{#each state$dailyHours}}
+      <td class="center">{{timeDurationWithDecimal activeHours}}</td>
+    {{/each}}
+  </tr>
+</template>

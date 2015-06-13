@@ -15,9 +15,9 @@ UI.registerHelper('timeDuration', function(time) {
   var text = null;
   if(hours > 0) {
     if(hours == 1) {
-      text = hours + " hour";
+      text = hours + " hour ";
     } else {
-      text = hours + " hours";
+      text = hours + " hours ";
     }
   }
   if(text) {
@@ -33,6 +33,18 @@ UI.registerHelper('timeDuration', function(time) {
     } else {
       text = mins + " minutes";
     }
+  }
+  return text;
+});
+
+UI.registerHelper('timeDurationWithDecimal', function(time) {
+  var hours = moment.duration(time).hours();
+  var mins = moment.duration(time).minutes();
+  var text = null;
+  if(mins < 10) {
+    text = hours + ".0" + mins;
+  } else {
+    text = hours + "." + mins;
   }
   return text;
 });

@@ -5,71 +5,15 @@
         <th>Name</th>
         <th>Total Hours</th>
         <th>Total Wage</th>
-        <th>Monday
-          <br>Date</th>
-        <th>Tuesday
-          <br>Date</th>
-        <th>Wednesday
-          <br>Date</th>
-        <th>Thursday
-          <br>Date</th>
-        <th>Friday
-          <br>Date</th>
-        <th>Saturday
-          <br>Date</th>
-        <th>Sunday
-          <br>Date</th>
+        {{#each state$week}}
+        <th>{{this.day}} <br>{{this.date}}</th>
+        {{/each}}
       </tr>
     </thead>
     <tbody>
-      <tr class="gradeX">
-        <td>Bob</td>
-        <td>40</td>
-        <td>$800</td>
-        <td class="center">5</td>
-        <td class="center">5</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">0</td>
-        <td class="center">0</td>
-      </tr>
-      <tr class="gradeX">
-        <td>Bob</td>
-        <td>40</td>
-        <td>$800</td>
-        <td class="center">5</td>
-        <td class="center">5</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">0</td>
-        <td class="center">0</td>
-      </tr>
-      <tr class="gradeX">
-        <td>Bob</td>
-        <td>40</td>
-        <td>$800</td>
-        <td class="center">5</td>
-        <td class="center">5</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">0</td>
-        <td class="center">0</td>
-      </tr>
-      <tr class="gradeX">
-        <td>Bob</td>
-        <td>40</td>
-        <td>$800</td>
-        <td class="center">5</td>
-        <td class="center">5</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">10</td>
-        <td class="center">0</td>
-        <td class="center">0</td>
-      </tr>
+      {{#each state$users}}
+        {{> render component="teamHoursItem" user=this}}
+      {{/each}}
     </tbody>
   </table>
 </template>
