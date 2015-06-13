@@ -71,7 +71,11 @@ component.state.totalwage = function() {
 
       }
     });
-    return Math.round(totalWage*100)/100;
+    if(totalWage == totalWage) {
+      return Math.round(totalWage*100)/100;
+    } else {
+      return 0;
+    }
   }
 }
 
