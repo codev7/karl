@@ -9,10 +9,14 @@
             <th>Type </th>
             <th>Email Address </th>
             <th>Action</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-        {{#each users}}
+        {{#each state$activeUsers}}
+          {{> render component="userDetailed" user=this}}
+        {{/each}}
+        {{#each state$deactiveUsers}}
           {{> render component="userDetailed" user=this}}
         {{/each}}
         </tbody>
