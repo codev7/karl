@@ -36,32 +36,6 @@ Meteor.publish("weekly", function(dates, worker) {
   //get shifts
   var shiftsCursor = Shifts.find(query);
   cursors.push(shiftsCursor);
-
-  var shifts = shiftsCursor.fetch();
-  var workersList = [];
-  var shiftsList = [];
-  shifts.forEach(function(shift) {
-    if(!worker) {
-      if(shift.assignedTo) {
-        workersList.push(shift.assignedTo);
-      }
-    }
-    shiftsList.push(shift._id);
-  });
-
-  //jobs on each shift
-  if(shiftsList.length > 0) {
-    var jobsCursor = Jobs.find({"onshift": {$in: shiftsList}});
-    cursors.push(jobsCursor);
-  }
-
-  //workers on each shift
-  if(!worker) {
-    if(workersList.length > 0) {
-      var workersOnShifts = Workers.find({_id: {$in: workersList}});
-      cursors.push(workersOnShifts);
-    }
-  }
   logger.info("Weekly shifts detailed publication");
   return cursors;
 });

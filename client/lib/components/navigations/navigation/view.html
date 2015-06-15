@@ -81,23 +81,22 @@
               </li>
             </ul>
           </li>
-          {{/if}}
 
           <li class="{{isActiveRoute regex='dailyShiftScheduling'}}">
             <a href="/scheduling/daily/{{today}}">
               <i class="fa fa-calendar-o"></i>
               <span class="nav-label">Roster</span>
-              <!-- <span class="fa arrow"></span> -->
             </a>
-            <!-- <ul class="nav nav-second-level {{isActiveRoute regex='jobs' className='in'}}">
-              <li class="{{isActiveRoute regex='jobs'}}">
-                <a href="/jobs">Jobs</a>
-              </li>
-              <li class="{{isActiveRoute regex='jobs'}}">
-                <a href="/jobs">Jobs</a>
-              </li>
-            </ul> -->
           </li>
+
+          <li class="{{isActiveRoute regex='teamHours'}}">
+            <a href="/reports/{{week}}">
+              <i class="fa fa-area-chart"></i>
+              <span class="nav-label">Reports</span>
+            </a>
+          </li>
+          {{/if}}
+          
           {{#if state$isAdmin}}
           <li class="{{isActiveRoute regex='admin'}}">
             <a href="/admin"><i class="fa -o fa-cog"></i> <span class="nav-label">Admin</span> </a>

@@ -7,8 +7,8 @@ component.state.clockInPermission = function() {
   query['assignedTo'] = Meteor.userId();
   query['status'] = 'draft';
   query['$and'] = [
-    {"startTime": {$gte: new Date(lowerLimit)}},
-    {"startTime": {$lte: new Date(upplerLimit)}}
+    {"startTime": {$gte: lowerLimit}},
+    {"startTime": {$lte: upplerLimit}}
   ]
   var shift = Shifts.findOne(query, {sort: {"startTime": 1}, limit: 1});
   this.set("inShift", shift)

@@ -118,19 +118,34 @@ Template.pageHeading.events({
   'click .thisWeek': function(event) {
     event.preventDefault();
     var week = moment().format("w");
-    Router.go("cafeSalesForecast", {"week": week});
+    var type = $(event.target).closest("div").attr("data-type");
+    if(type == "teamHoursReport") {
+      Router.go("teamHours", {"week": week});
+    } else if(type == "cafeforecasting") {
+      Router.go("cafeSalesForecast", {"week": week});
+    }
   },
 
   'click .nextWeek': function(event) {
     event.preventDefault();
     var week = parseInt(Router.current().params.week) + 1;
-    Router.go("cafeSalesForecast", {"week": week});
+    var type = $(event.target).closest("div").attr("data-type");
+    if(type == "teamHoursReport") {
+      Router.go("teamHours", {"week": week});
+    } else if(type == "cafeforecasting") {
+      Router.go("cafeSalesForecast", {"week": week});
+    }
   },
 
   'click .previousWeek': function(event) {
     event.preventDefault();
     var week = parseInt(Router.current().params.week) - 1;
-    Router.go("cafeSalesForecast", {"week": week});
+    var type = $(event.target).closest("div").attr("data-type");
+    if(type == "teamHoursReport") {
+      Router.go("teamHours", {"week": week});
+    } else if(type == "cafeforecasting") {
+      Router.go("cafeSalesForecast", {"week": week});
+    }
   },
 
    'click .todayRoster': function(event) {

@@ -33,7 +33,9 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
-    Shifts.update({"_id": id}, {$set: {"status": "finished", "finishedAt": new Date().getTime()}});
+    var finishAt = new Date().getTime();
+    var activeTime = finishAt - shift.startedAt;
+    Shifts.update({"_id": id}, {$set: {"status": "finished", "finishedAt": finishAt, "activeHours": activeTime}});
     logger.info("Shift ended", {"shiftId": id, "worker": userId});
   }
 });
