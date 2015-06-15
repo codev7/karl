@@ -29,9 +29,9 @@
               </a>
               <ul class="dropdown-menu animated m-t-xs">
                 <li><a href="/user/profile/{{state$id}}">Profile</a></li>
-                {{#if state$isAdmin}}
+               <!--  {{#if state$isAdmin}}
                 <li><a href="/users">Users</a></li>
-                {{/if}}
+                {{/if}} -->
                 <li class="divider"></li>
                 <li><a href="" id="signOutButton">Logout</a></li>
               </ul>
@@ -98,6 +98,11 @@
               </li>
             </ul> -->
           </li>
+          {{#if state$isAdmin}}
+          <li class="{{isActiveRoute regex='admin'}}">
+            <a href="/admin"><i class="fa -o fa-cog"></i> <span class="nav-label">Admin</span> </a>
+          </li>
+          {{/if}}
           <!-- {{/if}} -->
 
           <!-- <li class="{{isActiveRoute regex='cafeSalesForecast'}}">
