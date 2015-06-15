@@ -13,31 +13,43 @@ component.state.users = function() {
 }
 
 component.prototype.onListRendered = function() {
-  $('.dataTables-example').dataTable({
+  $.fn.editable.defaults.mode = 'inline';
+  $.fn.editable.defaults.showbuttons = false;
+
+  var datatable = $('.dataTables-example').dataTable({
     responsive: true,
     "dom": 'T<"clear">lfrtip',
     "tableTools": {
-        "sSwfPath": "js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
+      "sSwfPath": "js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
     }
   });
-                            
-  /* Init DataTables */
-  var oTable = $('#editable').dataTable();
+                          
+  datatable.$('td').editable({
+    success: function(response, newValue) {
+      if(newValue) {
+        console.log("...........reason", response);
+        console.log("...........reason", newValue);
 
-  /* Apply the jEditable handlers to the table */
-  oTable.$('td').editable( '../example_ajax.php', {
-    callback: function( sValue, y ) {
-      var aPos = oTable.fnGetPosition( this );
-      oTable.fnUpdate( sValue, aPos[0], aPos[1] );
-    },
-    submitdata: function ( value, settings ) {
-      return {
-        "row_id": this.parentNode.getAttribute('id'),
-        "column": oTable.fnGetPosition( this )[2]
-      };
-    },
-
-    "width": "90%",
-    "height": "100%"
+        // var ing = $(this).data("pk");
+        // var type = $(this).data("itemtype");
+        // if(type == "ings") {
+        //   Meteor.call("addIngredients", menu, [{"_id": ing, "quantity": newValue}], function(err) {
+        //     if(err) {
+        //       console.log(err);
+        //       return alert(err.reason);
+        //     }
+        //     return;
+        //   });
+        // } else if(type == "prep") {
+        //   Meteor.call("addJobItem", menu, [{"_id": ing, "quantity": newValue}], function(err) {
+        //     if(err) {
+        //       console.log(err);
+        //       return alert(err.reason);
+        //     }
+        //     return;
+        //   });
+        // }
+      }
+    }
   });
 }

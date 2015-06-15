@@ -49,6 +49,9 @@ Template.ingsAndPreps.events({
 });
 
 Template.ingsAndPreps.rendered = function() {
+  $.fn.editable.defaults.mode = 'popup';
+  $.fn.editable.defaults.showbuttons = true;
+
   var menu = Session.get("thisMenuItem");
   if(managerPlusAdminPermission()) {
     $('.quantity').editable({

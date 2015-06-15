@@ -4,7 +4,7 @@
     <td>{{timeDurationWithDecimal state$totaltime}}</td>
     <td>${{state$totalwage}}</td>
     {{#each state$dailyHours}}
-      <td class="center">{{timeDurationWithDecimal activeHours}}</td>
+      <td class="center activeTime">{{timeDurationWithDecimal activeHours}}</td>
     {{/each}}
   </tr>
 </template>
