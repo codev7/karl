@@ -28,7 +28,11 @@
     <td>
     {{#if state$permissionLevel1}}
       {{#if state$ifMe}}
-      <a href="" class="archiveUser"><i class="fa fa-trash"></i></a>
+        {{#if state$user.isActive}} 
+          <a href="" class="archiveUser"><i class="fa fa-archive"></i></a>
+        {{else}}
+          <a href="" class="archiveUser"><i class="fa fa-exclamation-traingle"></i></a>
+        {{/if}}
       {{/if}}
     {{/if}}
     </td>
