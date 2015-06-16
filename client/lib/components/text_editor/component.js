@@ -36,6 +36,7 @@ component.prototype.renderTextEditor = function() {
       });
     }
   });
+  $(".summernote").code(this.initialHtml);
 };
 
 component.state.content = function() {
