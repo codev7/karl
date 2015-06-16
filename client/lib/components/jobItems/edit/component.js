@@ -262,44 +262,7 @@ component.action.submit = function(id, info) {
       return alert(err.reason);
     } else {
       var jobBefore = Session.get("updatingJob");
-      var desc = null;
-      if(jobBefore) {
-        for (var key in info) {
-          if (info.hasOwnProperty(key)) {
-            if(key != "checklist" && key != "ingredients") {
-              if(key == "type") {
-                if(jobBefore.type != info.type) {
-                  var str =  key;
-                  if(jobBefore[key]) {
-                    str += " changed from '" + JSON.stringify(jobBefore[key]) + "' to '" + JSON.stringify(info[key]) + "'.<br>";
-                  } else {
-                    str += " updated to be " + JSON.stringify(info[key]) + "'.<br>";  
-                  }
-                }
-              } else if(key == "recipe" || key == "description") {
-                var str =  key;
-                if(jobBefore[key]) {
-                  str += " changed from '" + jobBefore[key] + "' to '" + info[key] + "'<br>";
-                } else {
-                  str += " updated to be " + info[key] + "'<br>";  
-                }
-              } else {
-                var str =  key;
-                if(jobBefore[key]) {
-                  str += " changed from '" + JSON.stringify(jobBefore[key]) + "' to '" + JSON.stringify(info[key]) + "'.<br>";
-                } else {
-                  str += " updated to be " + JSON.stringify(info[key]) + "'.<br>";  
-                }
-              }
-              if(desc) {
-                desc = desc + str;
-              } else {
-                desc = str;
-              }
-            }
-          }
-        }
-      }
+      var desc = createNotificationText("job", id, jobBefore, info);
 
       var options = {
         "type": "edit",
