@@ -16,25 +16,19 @@ component.state.totaltime = function() {
     var weekNo = Router.current().params.week;
     var week = getDatesFromWeekNumber(weekNo);
     week.forEach(function(day) {
-      var date = day.date;
-      //check payroll data
-      var payroll = Payroll.findOne({"user": userId, "date": new Date(date).getTime()});
-      if(payroll) {
-        total += payroll.hours;
-      } else {
-        var shift = Shifts.findOne({"assignedTo": userId, "shiftDate": new Date(date).getTime(), "status": "finished"})
-        if(shift) {
-          if(shift.activeHours) {
-            total += shift.activeHours;
-          } else if(shift.finishedAt && shift.startedAt){
-            total += (shift.finishedAt - shift.startedAt);
-          } else {
-            total += 0;
-          }  
-        } else {
-          total += 0;
-        }     
-      }
+    var date = day.date;
+      var shift = Shifts.findOne({
+        "assignedTo": userId, 
+        "shiftDate": new Date(date).getTime(), 
+        $or: [{"status": "finished"}, {"status": "started"}]
+      });
+      if(shift) {
+        if(shift.finishedAt && shift.startedAt){
+          total += (shift.finishedAt - shift.startedAt);
+        } else if(shift.startedAt) {
+          total += (new Date().getTime() - shift.startedAt);
+        }
+      }  
     });
     return total;
   }
@@ -48,26 +42,24 @@ component.state.totalwage = function() {
     var week = getDatesFromWeekNumber(weekNo);
     week.forEach(function(day) {
       var date = day.date;
-      //check payroll data
-      var payroll = Payroll.findOne({"user": user._id, "date": new Date(date).getTime()});
-      if(payroll) {
-        totalWage += payroll.rate * (payroll.hours/(3600*1000));
-      } else {
-        var time = 0;
-        var shift = Shifts.findOne({"assignedTo": user._id, "shiftDate": new Date(date).getTime(), "status": "finished"})
-        if(shift) {
-          if(shift.activeHours) {
-            time = shift.activeHours;
-          } else if(shift.finishedAt && shift.startedAt){
-            time = (shift.finishedAt - shift.startedAt);
-          } else {
-            time = 0;
-          }  
-        } else {
-          time = 0;
-        } 
+      var time = 0;
+      var shift = Shifts.findOne(
+        {"assignedTo": user._id, 
+        "shiftDate": new Date(date).getTime(), 
+        $or: [{"status": "finished"}, {"status": "started"}]
+      });
+      if(shift) {
+        if(shift.finishedAt && shift.startedAt){
+          time = (shift.finishedAt - shift.startedAt);
+        } else if(shift.startedAt) {
+          time = (new Date().getTime() - shift.startedAt);
+        }  
+      } 
 
+      if(time > 0) {
+        time = Math.round(time/100) * 100;
         var timeindecimalhours = time/(1000 * 3600);
+
         if(user.profile && user.profile.payrates) {
           var wageDoc = user.profile.payrates;
           if(day.day == "Sunday") {
@@ -79,10 +71,8 @@ component.state.totalwage = function() {
           }
         } 
       }
-
-
     });
-    if(totalWage == totalWage) {
+    if(totalWage > 0 && totalWage == totalWage) {
       return Math.round(totalWage*100)/100;
     } else {
       return 0;
@@ -100,18 +90,20 @@ component.state.dailyHours = function() {
       var doc = {}
       var date = day.date;
       doc["date"] = date;
-      var shift = Shifts.findOne({"assignedTo": userId, "shiftDate": new Date(date).getTime(), "status": "finished"})
+      var shift = Shifts.findOne({
+        "assignedTo": userId, 
+        "shiftDate": new Date(date).getTime(),
+        $or: [{"status": "finished"}, {"status": "started"}]
+      })
       if(shift) {
-        if(shift.activeHours) {
-          doc['activeHours'] = shift.activeHours;
-        } else if(shift.finishedAt && shift.startedAt){
-          doc["activeHours"] = (shift.finishedAt - shift.startedAt);
+        if(shift.startedAt && shift.finishedAt) {
+          doc["activeTime"] = (shift.finishedAt - shift.startedAt);
+        } else if(shift.startedAt) {
+          doc['activeTime'] = (new Date().getTime() - shift.startedAt);
         } else {
-          doc["activeHours"] = 0;
-        }  
-      } else {
-        doc['activeHours'] = 0;
-      }      
+          doc['activeTime'] = 0;
+        }
+      }  
       hours.push(doc);
     });
     return hours;
@@ -128,7 +120,11 @@ component.state.dailyShifts = function() {
       var doc = {}
       var date = day.date;
       doc["date"] = date;
-      var shift = Shifts.findOne({"assignedTo": userId, "shiftDate": new Date(date).getTime()})
+      var shift = Shifts.findOne({
+        "assignedTo": userId, 
+        "shiftDate": new Date(date).getTime(),
+        $or: [{"status": "finished"}, {"status": "started"}]
+      })
       if(shift) {
         doc["shift"] = shift._id;
         if(shift.startedAt) {
@@ -137,9 +133,7 @@ component.state.dailyShifts = function() {
         if(shift.finishedAt){
           doc["finishedAt"] = shift.finishedAt;
         } 
-      } else {
-        doc = "No shift";
-      }   
+      } 
       shifts.push(doc); 
     });
     return shifts;

@@ -17,7 +17,11 @@
       {{/each}}
       {{else}}
       {{#each state$dailyHours}}
-        <td class="center activeTime">{{timeDurationWithDecimal activeHours}}</td>
+        {{#if activeTime}}
+          <td class="center activeTime">{{timeDurationWithDecimal activeTime}}</td>
+        {{else}}
+          <td class="center activeTime">-</td>
+        {{/if}}
       {{/each}}
       {{/if}}
   </tr>

@@ -120,7 +120,12 @@ Template.pageHeading.events({
     var week = moment().format("w");
     var type = $(event.target).closest("div").attr("data-type");
     if(type == "teamHoursReport") {
-      Router.go("teamHours", {"week": week});
+      var sessionHash = Session.get("reportHash");
+      var hash = "shifts";
+      if(sessionHash) {
+        hash = sessionHash;
+      }
+      Router.go("teamHours", {"week": week}, {"hash": hash});
     } else if(type == "cafeforecasting") {
       Router.go("cafeSalesForecast", {"week": week});
     }
@@ -131,7 +136,12 @@ Template.pageHeading.events({
     var week = parseInt(Router.current().params.week) + 1;
     var type = $(event.target).closest("div").attr("data-type");
     if(type == "teamHoursReport") {
-      Router.go("teamHours", {"week": week});
+      var sessionHash = Session.get("reportHash");
+      var hash = "shifts";
+      if(sessionHash) {
+        hash = sessionHash;
+      }
+      Router.go("teamHours", {"week": week}, {"hash": hash});
     } else if(type == "cafeforecasting") {
       Router.go("cafeSalesForecast", {"week": week});
     }
@@ -142,7 +152,12 @@ Template.pageHeading.events({
     var week = parseInt(Router.current().params.week) - 1;
     var type = $(event.target).closest("div").attr("data-type");
     if(type == "teamHoursReport") {
-      Router.go("teamHours", {"week": week});
+      var sessionHash = Session.get("reportHash");
+      var hash = "shifts";
+      if(sessionHash) {
+        hash = sessionHash;
+      }
+      Router.go("teamHours", {"week": week}, {"hash": hash});
     } else if(type == "cafeforecasting") {
       Router.go("cafeSalesForecast", {"week": week});
     }
