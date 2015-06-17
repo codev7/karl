@@ -8,6 +8,9 @@ Template.jobFlyout.events({
       }
       $(".theme-config-box").toggleClass("show");
     });
+  },
+  'click .theme-config-close-btn': function(evt) {
+    $(".theme-config-box").removeClass("show");
   }
 });
 
@@ -15,5 +18,11 @@ Template.jobFlyout.rendered = function() {
   $('.i-checks').iCheck({
     checkboxClass: 'icheckbox_square-green',
     radioClass: 'iradio_square-green'
+  });
+  $('input').on('ifToggled', function(event){
+    $(this).closest('.i-checks').addClass('checked');
+  });
+  $('input').on('ifUnchecked', function(event){
+    $(this).closest('.i-checks').removeClass('checked');
   });
 }

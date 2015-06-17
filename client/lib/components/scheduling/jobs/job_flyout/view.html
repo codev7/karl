@@ -1,10 +1,8 @@
 <template name="jobFlyout">
-  <div class="theme-config">
+  <div class="theme-config flyout-container">
     <div class="theme-config-box">
       <div class="skin-setttings">
-        <div class="title">{{state$job.name}} Job Details</div>
-        <button class="btn btn-xs pull-right removeAssignedJob" data-id="{{state$id}}">x</button>
-
+        <div class="title clearfix"><a href="" class="theme-config-close-btn"><i class="fa fa-angle-right"></i></a>{{state$job.name}} Job Details</div>
         {{#if state$job.section}}
         <div class="setings-item">
           <span>Section</span>
@@ -27,7 +25,7 @@
           {{else}}
             <span>Description</span>
           {{/if}}
-            <div class="switch">
+            <div class="switch full">
               <div class="ibox-content">{{{state$instructions}}}</div>
             </div>
           </div>
@@ -50,12 +48,14 @@
           {{#if state$checklist}}
           <div class="setings-item m-t-md">
             <span>Checklist</span>
-            <div class="switch" style="width: 100%">
-              <div class="ibox-content">
+            <div class="switch full">
+              <div class="ibox-content checklist-content">
                 {{#each state$checklist}}
                 <div class="i-checks">
                   <label>
-                    <input type="checkbox" value=""> <i></i> {{this}} 
+                    <input type="checkbox" value="">
+                    <i class="custom-checkbox"></i>
+                    <span class="label-text"> {{this}}</span>
                   </label>
                 </div>
                 {{/each}}
@@ -65,6 +65,7 @@
           {{/if}}
         {{/if}}
       </div>
+      <button class="btn btn-xs pull-right removeAssignedJob" data-id="{{state$id}}">Remove</button>
     </div>
   </div>
 </template>
