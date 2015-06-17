@@ -96,3 +96,13 @@
 span {
   cursor: pointer;
 }
+
+.notifi-ul {
+  padding-left: 16px !important;
+}
+
+li > img {
+  display: block !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
