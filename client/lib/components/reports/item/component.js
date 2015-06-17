@@ -97,34 +97,60 @@ component.state.dailyHours = function() {
     var weekNo = Router.current().params.week;
     var week = getDatesFromWeekNumber(weekNo);
     week.forEach(function(day) {
-      //check payroll data
-      var payroll = Payroll.findOne({"user": userId, "date": new Date(date).getTime()});
-      if(payroll) {
-        var doc = {
-          "date": date,
-          "activeHours": payroll.hours
-        }
-        hours.push(doc);
-      } else {
-        var doc = {}
-        var date = day.date;
-        doc["date"] = date;
-        var shift = Shifts.findOne({"assignedTo": userId, "shiftDate": new Date(date).getTime(), "status": "finished"})
-        if(shift) {
-          if(shift.activeHours) {
-            doc['activeHours'] = shift.activeHours;
-          } else if(shift.finishedAt && shift.startedAt){
-            doc["activeHours"] = (shift.finishedAt - shift.startedAt);
-          } else {
-            doc["activeHours"] = 0;
-          }  
+      var doc = {}
+      var date = day.date;
+      doc["date"] = date;
+      var shift = Shifts.findOne({"assignedTo": userId, "shiftDate": new Date(date).getTime(), "status": "finished"})
+      if(shift) {
+        if(shift.activeHours) {
+          doc['activeHours'] = shift.activeHours;
+        } else if(shift.finishedAt && shift.startedAt){
+          doc["activeHours"] = (shift.finishedAt - shift.startedAt);
         } else {
-          doc['activeHours'] = 0;
-        }      
-        hours.push(doc); 
-      }
-
+          doc["activeHours"] = 0;
+        }  
+      } else {
+        doc['activeHours'] = 0;
+      }      
+      hours.push(doc);
     });
     return hours;
+  }
+}
+
+component.state.dailyShifts = function() {
+  var shifts = [];
+  if(this.user) {
+    var userId = this.user._id;
+    var weekNo = Router.current().params.week;
+    var week = getDatesFromWeekNumber(weekNo);
+    week.forEach(function(day) {
+      var doc = {}
+      var date = day.date;
+      doc["date"] = date;
+      var shift = Shifts.findOne({"assignedTo": userId, "shiftDate": new Date(date).getTime()})
+      if(shift) {
+        doc["shift"] = shift._id;
+        if(shift.startedAt) {
+          doc['startedAt'] = shift.startedAt;
+        }
+        if(shift.finishedAt){
+          doc["finishedAt"] = shift.finishedAt;
+        } 
+      } else {
+        doc = "No shift";
+      }   
+      shifts.push(doc); 
+    });
+    return shifts;
+  }
+}
+
+component.state.activeState = function() {
+  var hash = Session.get("reportHash");
+  if(hash == "shifts") {
+    return true;
+  } else {
+    return false;
   }
 }

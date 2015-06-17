@@ -3,8 +3,22 @@
     <td>{{state$user.username}}</td>
     <td>{{timeDurationWithDecimal state$totaltime}}</td>
     <td>${{state$totalwage}}</td>
-    {{#each state$dailyHours}}
-      <td class="center activeTime">{{timeDurationWithDecimal activeHours}}</td>
-    {{/each}}
+    {{#if state$activeState}}
+      {{#each state$dailyShifts}}
+        {{#if startedAt}}
+          {{#if finishedAt}}
+            <td class="center activeTime" data-shift="{{shift}}">{{timeFormat startedAt}} - {{timeFormat finishedAt}}</td>
+          {{else}}
+            <td class="center activeTime" data-shift="{{shift}}">{{timeFormat startedAt}} - NOW</td>
+          {{/if}}
+        {{else}}
+        <td class="center activeTime">-</td>
+        {{/if}}
+      {{/each}}
+      {{else}}
+      {{#each state$dailyHours}}
+        <td class="center activeTime">{{timeDurationWithDecimal activeHours}}</td>
+      {{/each}}
+      {{/if}}
   </tr>
 </template>
