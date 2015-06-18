@@ -2,7 +2,7 @@
   <div class="theme-config flyout-container">
     <div class="theme-config-box">
       <div class="skin-setttings">
-        <div class="title clearfix"><a href="" class="theme-config-close-btn"><i class="fa fa-angle-right"></i></a>{{state$job.name}} Job Details</div>
+        <div class="title clearfix"><a href="" class="theme-config-close-btn"><i class="fa fa-angle-right"></i></a>{{state$job.name}}</div>
         {{#if state$job.section}}
         <div class="setings-item">
           <span>Section</span>
@@ -51,7 +51,7 @@
             <div class="switch full">
               <div class="ibox-content checklist-content">
                 {{#each state$checklist}}
-                <div class="i-checks">
+                <div class="checklist-check">
                   <label>
                     <input type="checkbox" value="">
                     <i class="custom-checkbox"></i>
@@ -65,7 +65,7 @@
           {{/if}}
         {{/if}}
       </div>
-      <button class="btn btn-xs pull-right removeAssignedJob" data-id="{{state$id}}">Remove</button>
+      <button class="btn btn-xs pull-right removeAssignedJob" data-id="{{state$id}}">Remove From Roster</button>
     </div>
   </div>
 </template>

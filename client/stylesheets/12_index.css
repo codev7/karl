@@ -162,14 +162,14 @@
   background-color: transparent;
   padding: 0;
 }
-.checklist-content .i-checks{
+.checklist-content .checklist-check{
   background-color: #fff;
   padding: 0;
   border-bottom: 1px solid #d6d6d7;
   position: relative;
   padding: 14px 30px;
 }
-.checklist-content .i-checks.checked{
+.checklist-content .checklist-check.checked{
   background-color: #f9f9fa;
 }
 .checklist-content label{
@@ -180,7 +180,17 @@
   -ms-user-select: none;
   user-select: none;
 }
-.checklist-content .icheckbox_square-green{
+.checklist-content input[type="checkbox"]{
+  display: none;
+}
+.checklist-content input[type="checkbox"]:checked ~ .custom-checkbox{
+  background: #50c7c7;
+}
+.checklist-content input[type="checkbox"]:checked ~ .custom-checkbox:after{
+  visibility: visible;
+  opacity: 1;
+}
+.checklist-content .custom-checkbox{
   display: inline-block;
   vertical-align: middle;
   margin-right: 17px;
@@ -199,7 +209,7 @@
   cursor: pointer;
   background: 0;
 }
-.checklist-content .icheckbox_square-green:after{
+.checklist-content .custom-checkbox:after{
   content: "\f00c";
   display: inline-block;
   color: #fff;
@@ -215,6 +225,7 @@
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
+
 .checklist-content .icheckbox_square-green.checked{
   background-color: #50c7c7;
 }
