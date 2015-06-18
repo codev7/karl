@@ -107,8 +107,12 @@
   background-color: #e8e8e8;
   font-size: 13px;
   color: #696969;
+  position: relative;
 }
 .flyout-container .skin-setttings .title .theme-config-close-btn{
+  position: absolute;
+  left: 0;
+  top: 0;
   height: 61px;
   text-decoration: none;
   padding: 0 20px;
@@ -120,10 +124,21 @@
   color: #696969;
 }
 .flyout-container .theme-config-box{
-  margin-left: -484px;
+  margin: 0;
+  -webkit-transform: translateX(484px);
+  -moz-transform: translateX(484px);
+  transform: translateX(484px);
+  -webkit-transition-duration: 0s;
+  -moz-transition-duration: 0s;
+  transition-duration: 0s;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 .flyout-container .theme-config-box.show{
-  margin-left: 0;
+  -webkit-transform: translateX(0);
+   -moz-transform: translateX(0);
+   transform: translateX(0);
 }
 .flyout-container .theme-config-box .removeAssignedJob{
   position: absolute;
