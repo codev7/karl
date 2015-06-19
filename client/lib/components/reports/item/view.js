@@ -1,49 +1,3 @@
-Template.teamHoursItem.rendered = function() {
-  $('.editShiftStart').editable({
-    type: 'combodate',
-    title: 'Select time',
-    template: "HH:mm",
-    viewformat: "hh:mm",
-    format: "YYYY-MM-DD HH:mm",
-    url: '/post',
-    showbuttons: true,
-    success: function(response, newValue) {
-      var id = $(this).data("pk");
-      var time = $(this).data("time");
-      var newTime = shiftWorkTimeUpdate(id, newValue, time);
-      newTime = moment(newTime).format("YYYY-MM-DD HH:mm");
-      Meteor.call("editClock", id, {"startedAt": new Date(newTime).getTime()}, function(err) { 
-        if(err) {
-          console.log(err);
-          return alert(err.reason);
-        }
-      });
-    }
-  });
-
-  $('.editShiftEnd').editable({
-    type: 'combodate',
-    title: 'Select time',
-    template: "HH:mm",
-    viewformat: "hh:mm",
-    format: "YYYY-MM-DD HH:mm",
-    url: '/post',
-    showbuttons: true,
-    success: function(response, newValue) {
-      var id = $(this).data("pk");
-      var time = $(this).data("time");
-      var newTime = shiftWorkTimeUpdate(id, newValue, time);
-      newTime = moment(newTime).format("YYYY-MM-DD HH:mm");
-      Meteor.call("editClock", id, {"finishedAt": new Date(newTime).getTime()}, function(err) { 
-        if(err) {
-          console.log(err);
-          return alert(err.reason);
-        }
-      });
-    }
-  });
-}
-
 function shiftWorkTimeUpdate(id, newValue, time) {
   var shift = Shifts.findOne(id);
   if(shift && newValue) {
@@ -57,3 +11,62 @@ function shiftWorkTimeUpdate(id, newValue, time) {
     
   }
 }
+
+Template.teamHoursItem.events({
+  "mouseenter .activeTime": function(event) {
+    event.preventDefault();
+    $('.editShiftStart').editable({
+      type: 'combodate',
+      title: 'Select time',
+      template: "HH:mm",
+      viewformat: "hh:mm",
+      format: "YYYY-MM-DD HH:mm",
+      url: '/post',
+      display: false,
+      showbuttons: true,
+      success: function(response, newValue) {
+        var self = this;
+        var id = $(self).data("shift");
+        var time = $(self).data("time");
+        var newTime = shiftWorkTimeUpdate(id, newValue, time);
+        newTime = moment(newTime).format("YYYY-MM-DD HH:mm");
+        Meteor.call("editClock", id, {"startedAt": new Date(newTime).getTime()}, function(err) { 
+          if(err) {
+            console.log(err);
+            return alert(err.reason);
+          } else {
+            $(self).removeClass('editable-unsaved');
+            return;
+          }
+        });
+      }
+    });
+
+    $('.editShiftEnd').editable({
+      type: 'combodate',
+      title: 'Select time',
+      template: "HH:mm",
+      viewformat: "hh:mm",
+      format: "YYYY-MM-DD HH:mm",
+      url: '/post',
+      display: false,
+      showbuttons: true,
+      success: function(response, newValue) {
+        var self = this;
+        var id = $(self).data("shift");
+        var time = $(self).data("time");
+        var newTime = shiftWorkTimeUpdate(id, newValue, time);
+        newTime = moment(newTime).format("YYYY-MM-DD HH:mm");
+        Meteor.call("editClock", id, {"finishedAt": new Date(newTime).getTime()}, function(err) { 
+          if(err) {
+            console.log(err);
+            return alert(err.reason);
+          } else {
+            $(self).removeClass('editable-unsaved');
+            return;
+          }
+        });
+      }
+    });
+  }
+});
