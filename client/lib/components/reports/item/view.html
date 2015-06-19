@@ -7,9 +7,9 @@
       {{#each state$dailyShifts}}
         {{#if startedAt}}
           {{#if finishedAt}}
-            <td class="center activeTime" data-shift="{{shift}}">{{timeFormat startedAt}} - {{timeFormat finishedAt}}</td>
+            <td class="center activeTime" data-shift="{{shift}}"><a href="#" class="editShiftStart" data-pk="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="editShiftEnd" data-pk="{{shift}}" data-time="{{finishedAt}}">{{time finishedAt}}</a></td>
           {{else}}
-            <td class="center activeTime" data-shift="{{shift}}">{{timeFormat startedAt}} - NOW</td>
+            <td class="center activeTime" data-shift="{{shift}}"><a href="#" class="editShiftStart" data-pk="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="editShiftEnd" data-pk="{{shift}}" data-time="null">NOW</a></td>
           {{/if}}
         {{else}}
         <td class="center activeTime">-</td>

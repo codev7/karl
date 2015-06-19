@@ -3,6 +3,11 @@ UI.registerHelper('timeFormat', function(time) {
   return moment(time).format("hh:mm A");
 });
 
+//Formatted time with AM PM
+UI.registerHelper('time', function(time) {
+  return moment(time).format("hh:mm");
+});
+
 //Formatted time with Ago 
 UI.registerHelper('timeFromNow', function(time) {
   return moment(time).fromNow();
