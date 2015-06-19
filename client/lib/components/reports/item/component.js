@@ -122,17 +122,21 @@ component.state.dailyShifts = function() {
       doc["date"] = date;
       var shift = Shifts.findOne({
         "assignedTo": userId, 
-        "shiftDate": new Date(date).getTime(),
-        $or: [{"status": "finished"}, {"status": "started"}]
+        "shiftDate": new Date(date).getTime()
       })
       if(shift) {
         doc["shift"] = shift._id;
-        if(shift.startedAt) {
-          doc['startedAt'] = shift.startedAt;
+        if(shift.status == "finished" || status == "started") {
+          if(shift.startedAt) {
+            doc['startedAt'] = shift.startedAt;
+          } 
+          if(shift.finishedAt){
+            doc["finishedAt"] = shift.finishedAt;
+          } 
+        } else if(shift.status == "draft" && shift.shiftDate < new Date().getTime()) {
+          doc['startedAt'] = null;
+          doc['notStarted'] = true;
         }
-        if(shift.finishedAt){
-          doc["finishedAt"] = shift.finishedAt;
-        } 
       } 
       shifts.push(doc); 
     });

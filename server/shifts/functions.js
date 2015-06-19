@@ -71,14 +71,22 @@ Meteor.methods({
       throw new Meteor.Error(404, "Shift has started. Can't change time till it's finished");
     }
     var updateDoc = {};
-    if(info.startedAt) {
-      if(info.startedAt != shift.startedAt) {
-        updateDoc.startedAt = info.startedAt;
+    if(info.startDraft) {
+      if(!shift.startedAt) {
+        updateDoc.startedAt = info.startDraft;
+        updateDoc.finishedAt = info.startDraft + 1000*60*60;
+        updateDoc.status = "finished";
       }
-    }
-    if(info.finishedAt) {
-      if(info.finishedAt != shift.finishedAt) {
-        updateDoc.finishedAt = info.finishedAt;
+    } else {
+      if(info.startedAt) {
+        if(info.startedAt != shift.startedAt) {
+          updateDoc.startedAt = info.startedAt;
+        }
+      }
+      if(info.finishedAt) {
+        if(info.finishedAt != shift.finishedAt) {
+          updateDoc.finishedAt = info.finishedAt;
+        }
       }
     }
     Shifts.update({'_id': id}, {$set: updateDoc});

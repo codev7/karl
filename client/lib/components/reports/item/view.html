@@ -12,10 +12,14 @@
             <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="stopShift" data-shift="{{shift}}" data-time="null">NOW</a></td>
           {{/if}}
         {{else}}
-        <td class="center activeTime">-</td>
+          {{#if notStarted}}
+            <td class="center activeTime"><a href="#" class="startShiftDraft" data-shift="{{shift}}" data-time="">Start</a></td>
+          {{else}}
+            <td class="center activeTime">-</td>
+          {{/if}}
         {{/if}}
       {{/each}}
-      {{else}}
+    {{else}}
       {{#each state$dailyHours}}
         {{#if activeTime}}
           <td class="center activeTime">{{timeDurationWithDecimal activeTime}}</td>
@@ -23,6 +27,6 @@
           <td class="center activeTime">-</td>
         {{/if}}
       {{/each}}
-      {{/if}}
+    {{/if}}
   </tr>
 </template>
