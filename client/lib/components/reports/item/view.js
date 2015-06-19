@@ -68,5 +68,19 @@ Template.teamHoursItem.events({
         });
       }
     });
+  }, 
+
+  'click .stopShift': function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr("data-shift");
+    var confirmClockout = confirm("Are you sure you want to clockout this shift ?");
+    if(confirmClockout && id) {
+      Meteor.call("clockOut", id, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
+    }
   }
 });

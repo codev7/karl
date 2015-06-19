@@ -9,7 +9,7 @@
           {{#if finishedAt}}
             <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="editShiftEnd" data-shift="{{shift}}" data-time="{{finishedAt}}">{{time finishedAt}}</a></td>
           {{else}}
-            <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="editShiftEnd" data-shift="{{shift}}" data-time="null">NOW</a></td>
+            <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="stopShift" data-shift="{{shift}}" data-time="null">NOW</a></td>
           {{/if}}
         {{else}}
         <td class="center activeTime">-</td>
