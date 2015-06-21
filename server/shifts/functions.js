@@ -14,8 +14,6 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
-    console.log(shift.assignedTo != user._id)
-    console.log(user.isWorker == true)
     if(shift.assignedTo != user._id && user.isWorker == true) {
       logger.error("You don't have permission to clock in");
       throw new Meteor.Error(404, "You don't have permission to clock in");
@@ -39,8 +37,6 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
-    console.log(shift.assignedTo != user._id)
-    console.log(user.isWorker == true)
     if(shift.assignedTo != user._id && user.isWorker == true) {
       logger.error("You don't have permission to clock out");
       throw new Meteor.Error(404, "You don't have permission to clock out");
