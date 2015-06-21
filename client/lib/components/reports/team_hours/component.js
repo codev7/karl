@@ -16,40 +16,11 @@ component.prototype.onListRendered = function() {
   $.fn.editable.defaults.mode = 'inline';
   $.fn.editable.defaults.showbuttons = false;
 
-  var datatable = $('.dataTables-example').dataTable({
+  $('.dataTables-example').dataTable({
     responsive: true,
     "dom": 'T<"clear">lfrtip',
     "tableTools": {
-      "sSwfPath": "js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
-    }
-  });
-                          
-  datatable.$('td').editable({
-    success: function(response, newValue) {
-      if(newValue) {
-        console.log("...........reason", response);
-        console.log("...........reason", newValue);
-
-        // var ing = $(this).data("pk");
-        // var type = $(this).data("itemtype");
-        // if(type == "ings") {
-        //   Meteor.call("addIngredients", menu, [{"_id": ing, "quantity": newValue}], function(err) {
-        //     if(err) {
-        //       console.log(err);
-        //       return alert(err.reason);
-        //     }
-        //     return;
-        //   });
-        // } else if(type == "prep") {
-        //   Meteor.call("addJobItem", menu, [{"_id": ing, "quantity": newValue}], function(err) {
-        //     if(err) {
-        //       console.log(err);
-        //       return alert(err.reason);
-        //     }
-        //     return;
-        //   });
-        // }
-      }
+      "sSwfPath": "/swf/copy_csv_xls_pdf.swf"
     }
   });
 }
