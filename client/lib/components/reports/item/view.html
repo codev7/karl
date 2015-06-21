@@ -1,0 +1,32 @@
+<template name="teamHoursItem">
+  <tr class="gradeX">
+    <td>{{state$user.username}}</td>
+    <td>{{timeDurationWithDecimal state$totaltime}}</td>
+    <td>${{state$totalwage}}</td>
+    {{#if state$activeState}}
+      {{#each state$dailyShifts}}
+        {{#if startedAt}}
+          {{#if finishedAt}}
+            <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="editShiftEnd" data-shift="{{shift}}" data-time="{{finishedAt}}">{{time finishedAt}}</a></td>
+          {{else}}
+            <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="stopShift" data-shift="{{shift}}" data-time="null">NOW</a></td>
+          {{/if}}
+        {{else}}
+          {{#if notStarted}}
+            <td class="center activeTime"><a href="#" class="startShiftDraft" data-shift="{{shift}}" data-time="">Start</a></td>
+          {{else}}
+            <td class="center activeTime">-</td>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+    {{else}}
+      {{#each state$dailyHours}}
+        {{#if activeTime}}
+          <td class="center activeTime">{{timeDurationWithDecimal activeTime}}</td>
+        {{else}}
+          <td class="center activeTime">-</td>
+        {{/if}}
+      {{/each}}
+    {{/if}}
+  </tr>
+</template>

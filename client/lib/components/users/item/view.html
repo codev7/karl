@@ -1,13 +1,14 @@
 <template name="userDetailed">
-  <tr data-id="{{state$id}}">
-    {{#if state$isPermitted}}
-    <td><a href="/user/profile/{{state$id}}">{{state$username}}</a></td>
+  <tr data-id="{{state$user._id}}">
+    {{#if state$permissionLevel2}}
+    <td><a href="/user/profile/{{state$user._id}}">{{state$user.username}}</a></td>
     {{else}}
-    <td>{{state$username}}</td>
+    <td>{{state$user.username}}</td>
     {{/if}}
     <td>{{{state$type}}}</td>
     <td>{{state$email}}</td>
     <td>
+      {{#if state$user.isActive}}
       {{#if state$isAdmin}}
         {{#if state$ifMe}}
         <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
@@ -22,6 +23,18 @@
       <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
       <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
       {{/if}}
+      {{/if}}
+    </td>
+    <td>
+    {{#if state$permissionLevel1}}
+      {{#if state$ifMe}}
+        {{#if state$user.isActive}} 
+          <a href="" class="archiveUser"><i class="fa fa-archive"></i></a>
+        {{else}}
+          <a href="" class="archiveUser"><i class="fa fa-exclamation-circle"></i></a>
+        {{/if}}
+      {{/if}}
+    {{/if}}
     </td>
   </tr>
 </template>

@@ -12,8 +12,19 @@ Template.dailyShiftScheduling.events({
     var shiftId = $(event.target).attr("data-shift");
     Session.set("thisJob", id);
     Session.set("shiftId", shiftId);
-    $(".theme-config-box").toggleClass("show");
-    // $("#jobProfile").modal();
+    if($(".theme-config-box").hasClass("show")) {
+      $(".theme-config-box").removeClass("show").animate({
+        width: 0,
+        done: function(){
+          $(".flyout-container").css("z-index", -1);
+        }
+      }, 100);
+    } else {
+      $(".flyout-container").css("z-index", 1020);
+      $(".theme-config-box").addClass("show").animate({
+        width: 500
+      }, 100);
+    }
   },
 
   'change .selectWorkers': function(event) {

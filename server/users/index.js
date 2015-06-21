@@ -1,5 +1,6 @@
 Accounts.onCreateUser(function(options, user){
   user.profile = options.profile || {};
+  user.isActive = true;
   if(user.services.google) {
       user.emails = [{ "address": null}];
       user.emails[0].address = user.services.google.email;
@@ -144,5 +145,28 @@ Meteor.methods({
     logger.info("Users details updated ", editDetails);
   },
 
-
+  changeStatus: function(userId) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var user = Meteor.users.findOne(userId);
+    if(!user) {
+      logger.error('No user has found');
+      throw new Meteor.Error(401, "User not found");
+    }
+    var query = {};
+    if(user.isActive) {
+      query.isActive = false;
+    } else {
+      query.isActive = true;
+    }
+    Meteor.users.update({"_id": userId}, {$set: query});
+    if(query.isActive) {
+      logger.info("User status activated", userId);
+    } else {
+      logger.info("User status de-activated", userId);
+    }
+  }
 });
+

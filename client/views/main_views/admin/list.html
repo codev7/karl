@@ -1,0 +1,40 @@
+<template name="adminMainView">
+   <!-- Page heading -->
+  {{> render component="pageHeading" title="Admin" }}
+
+  <div class="wrapper wrapper-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel-options">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#usersList" data-toggle="tab">Users</a>
+            </li>
+            <li class="">
+              <a href="#details" data-toggle="tab">Details</a>
+            </li>
+            <li class="">
+              <a href="#suppliers" data-toggle="tab">Suppliers</a>
+            </li>
+          </ul>
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="usersList">
+                <strong>Users List</strong>
+                {{> render component = 'usersList'}}
+              </div>
+              <div class="tab-pane" id="details">
+                <strong>Details</strong>
+                <p>Coming soon...!</p>
+              </div>
+              <div class="tab-pane" id="suppliers">
+                <strong>Suppliers</strong>
+                <p>Coming soon...!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

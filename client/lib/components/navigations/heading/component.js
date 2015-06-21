@@ -9,6 +9,10 @@ component.state.title = function() {
   return this.title;
 } 
 
+component.state.type = function() {
+  return this.type;
+} 
+
 component.state.category = function() {
   return this.category;
 }
@@ -129,8 +133,8 @@ component.state.isIngredientsList = function() {
   }
 }
 
-component.state.isCafeForecasting = function() {
-  if(this.type == "cafeforecasting") {
+component.state.weeklyNavigation = function() {
+  if(this.type == "cafeforecasting" || this.type == "teamHoursReport") {
     return true; 
   } else {
     return false;

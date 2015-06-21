@@ -118,19 +118,49 @@ Template.pageHeading.events({
   'click .thisWeek': function(event) {
     event.preventDefault();
     var week = moment().format("w");
-    Router.go("cafeSalesForecast", {"week": week});
+    var type = $(event.target).closest("div").attr("data-type");
+    if(type == "teamHoursReport") {
+      var sessionHash = Session.get("reportHash");
+      var hash = "shifts";
+      if(sessionHash) {
+        hash = sessionHash;
+      }
+      Router.go("teamHours", {"week": week}, {"hash": hash});
+    } else if(type == "cafeforecasting") {
+      Router.go("cafeSalesForecast", {"week": week});
+    }
   },
 
   'click .nextWeek': function(event) {
     event.preventDefault();
     var week = parseInt(Router.current().params.week) + 1;
-    Router.go("cafeSalesForecast", {"week": week});
+    var type = $(event.target).closest("div").attr("data-type");
+    if(type == "teamHoursReport") {
+      var sessionHash = Session.get("reportHash");
+      var hash = "shifts";
+      if(sessionHash) {
+        hash = sessionHash;
+      }
+      Router.go("teamHours", {"week": week}, {"hash": hash});
+    } else if(type == "cafeforecasting") {
+      Router.go("cafeSalesForecast", {"week": week});
+    }
   },
 
   'click .previousWeek': function(event) {
     event.preventDefault();
     var week = parseInt(Router.current().params.week) - 1;
-    Router.go("cafeSalesForecast", {"week": week});
+    var type = $(event.target).closest("div").attr("data-type");
+    if(type == "teamHoursReport") {
+      var sessionHash = Session.get("reportHash");
+      var hash = "shifts";
+      if(sessionHash) {
+        hash = sessionHash;
+      }
+      Router.go("teamHours", {"week": week}, {"hash": hash});
+    } else if(type == "cafeforecasting") {
+      Router.go("cafeSalesForecast", {"week": week});
+    }
   },
 
    'click .todayRoster': function(event) {

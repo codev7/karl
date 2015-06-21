@@ -1,0 +1,17 @@
+<template name="clockItem">
+  <div class="widget style1 {{state$item.tag}}">
+    <div class="row vertical-align">
+      <div class="col-xs-3">
+        <i class="fa umbs-up fa-3x fa-clock-o {{state$item.class}}" data-id="{{state$item._id}}"></i>
+      </div>
+      <div class="col-xs-9 text-right">
+        <h2 class="font-bold">{{state$item.text}}</h2>
+        {{#if state$clockIn}}
+        <p>{{state$item.subText}} {{timeFromNow state$timeFromNow}}</p>
+        {{else}}
+        <p>{{state$item.subText}} {{timeDuration state$timeFromNow}}</p>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</template>

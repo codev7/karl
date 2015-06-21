@@ -18,6 +18,7 @@ Template.submitComment.helpers({
           token: '@',
           collection: Meteor.users,
           field: "username",
+          filter: { "_id": {$nin: [Meteor.userId()]}, "isActive": true},
           template: Template.user
         }
       ]

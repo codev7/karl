@@ -16,7 +16,7 @@ component.state.profileImage = function() {
 }
 
 component.state.isAdmin = function() {
-  return isAdmin();
+  return Meteor.user().isAdmin;
 }
 
 component.state.userType = function() {

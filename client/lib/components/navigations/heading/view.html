@@ -103,8 +103,8 @@
       </div>
       {{/if}}
 
-      {{#if state$isCafeForecasting}}
-      <div class="title-action">
+      {{#if state$weeklyNavigation}}
+      <div class="title-action" data-type="{{state$type}}">
         <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
         <a href="" class="btn btn-white thisWeek">This Week</a>
         <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
