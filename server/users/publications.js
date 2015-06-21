@@ -21,7 +21,7 @@ Meteor.publish("usersList", function() {
     "emails": 1,
     "isActive": 1
   };
-  var users = Meteor.users.find({}, {fields: options});
+  var users = Meteor.users.find({"isActive": true}, {fields: options});
   logger.info("Userlist published");
   return users;
 });
