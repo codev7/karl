@@ -13,12 +13,19 @@ Meteor.publish("daily", function(date, worker) {
   var shifts = shiftsCursor.fetch();
   
   var shiftsList = [];
+  var workers = [];
   shifts.forEach(function(shift) {
     shiftsList.push(shift._id);
+    if(shift.assignedTo) {
+      workers.push(shift.assignedTo);
+    }
   });
   if(shiftsList.length > 0) {
     var jobsCursor = Jobs.find({"onshift": {$in: shiftsList}});
     cursors.push(jobsCursor);
+  }
+  if(workers.length > 0) {
+    cursors.push(Meteor.users.find({"_id": {$in: workers}}));
   }
   logger.info("Daily shift detailed publication");;
   return cursors;
