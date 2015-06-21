@@ -70,7 +70,7 @@
 .flyout-container{
     position: fixed;
     top: 0 !important;
-    z-index: 1020;
+    z-index: -1;
 }
 .flyout-container .skin-setttings {
   margin-left: 0;
