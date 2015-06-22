@@ -11,7 +11,6 @@ Template.calendar.rendered = function() {
       $(".active").closest("tr").addClass("active");
       var weekNo = moment(result.date).week();
       var week = getDatesFromWeekNumber(weekNo)
-      console.log("...........", week);
       $("tr.active").find("td").addClass('active');
       Session.set("templateToWeek", week);
     }
