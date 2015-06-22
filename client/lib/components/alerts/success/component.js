@@ -11,9 +11,9 @@ component.state.isDailyRoster = function() {
 }
 
 
-component.state.isWeeklyRoster = function() {
+component.state.isTemplateWeeklyRoster = function() {
   var route =  Router.current().route.getName();
-  if(route == "weeklyRoster") {
+  if(route == "templateWeeklyRoster") {
     return true;
   } else {
     return false;

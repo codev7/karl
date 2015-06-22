@@ -23,7 +23,7 @@ Template.calendar.events({
     var week = Session.get("templateToWeek");
     week.forEach(function(obj) {
       var index = week.indexOf(obj);
-      var shifts = LocalShifts.find({"shiftDate": index}).fetch();
+      var shifts = TemplateShifts.find({"shiftDate": index}).fetch();
       if(shifts.length > 0) {
         shifts.forEach(function(shift) {
           var startHour = moment(shift.startTime).hour();

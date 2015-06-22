@@ -82,17 +82,17 @@
             </ul>
           </li>
 
-          <li class="{{isActiveRoute regex='dailyShiftScheduling|weeklyRosterMainView'}}">
+          <li class="{{isActiveRoute regex='dailyShiftScheduling|templateWeeklyRoster'}}">
             <a href="#">
               <i class="fa fa-calendar-o"></i>
               <span class="nav-label">Roster</span>
             </a>
-            <ul class="nav nav-second-level {{isActiveRoute regex='dailyShiftScheduling|weeklyRosterMainView' className='in'}}">
+            <ul class="nav nav-second-level {{isActiveRoute regex='dailyShiftScheduling|templateWeeklyRoster' className='in'}}">
               <li class="{{isActiveRoute regex='dailyShiftScheduling'}}">
                 <a href="/scheduling/daily/{{today}}">Daily Roster</a>
               </li>
-              <li class="{{isActiveRoute regex='weeklyRosterMainView'}}">
-                <a href="/roster/weekly">Weekly Template</a>
+              <li class="{{isActiveRoute regex='templateWeeklyRoster'}}">
+                <a href="/roster/template/weekly">Template</a>
               </li>
             </ul>
           </li>

@@ -8,5 +8,5 @@ component.state.name = function() {
 
 component.state.shifts = function() {
   var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  return LocalShifts.find({"shiftDate": daysOfWeek.indexOf(this.name)});
+  return TemplateShifts.find({"shiftDate": daysOfWeek.indexOf(this.name)});
 }

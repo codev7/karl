@@ -14,7 +14,7 @@ component.state.assignedTo = function() {
 
 component.prototype.itemRendered = function() {
   var alreadtAssigned = [];
-  var shifts = LocalShifts.find({"shiftDate": this.shift.shiftDate, "assignedTo": {$exists: true}});
+  var shifts = TemplateShifts.find({"shiftDate": this.shift.shiftDate, "assignedTo": {$exists: true}});
   shifts.forEach(function(shift) {
     if(shift.assignedTo) {
       alreadtAssigned.push(shift.assignedTo);
@@ -32,9 +32,10 @@ component.prototype.itemRendered = function() {
     title: 'Select worker to assign',
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
-      var shift = LocalShifts.findOne(shiftId);
+      var shift = TemplateShifts.findOne(shiftId);
       if(shift) {
-        LocalShifts.update({"_id": shiftId}, {$set: {"assignedTo": newValue}})
+        var obj = {"_id": shiftId, "assignedTo": newValue}
+        editShift(obj);
       }
     }
   });
@@ -45,14 +46,15 @@ component.prototype.itemRendered = function() {
     sectionsObj.push({"value": section.name, "text": section.name});
   });
   $('.section').editable({
-      value: 2,    
-      source: sectionsObj,
-      title: "Select section to assign",
-      success: function(response, newValue) {
-        var shiftId = $(this).closest("li").attr("data-id");
-        var shift = LocalShifts.findOne(shiftId);
-        if(shift) {
-        LocalShifts.update({"_id": shiftId}, {$set: {"section": newValue}})
+    value: 2,    
+    source: sectionsObj,
+    title: "Select section to assign",
+    success: function(response, newValue) {
+      var shiftId = $(this).closest("li").attr("data-id");
+      var shift = TemplateShifts.findOne(shiftId);
+      if(shift) {
+        var obj = {"_id": shiftId, "section": newValue}
+        editShift(obj);
       }
     }
   });
@@ -68,9 +70,10 @@ component.prototype.itemRendered = function() {
     showbuttons: true,
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
-      var shift = LocalShifts.findOne(shiftId);
+      var shift = TemplateShifts.findOne(shiftId);
       if(shift) {
-        LocalShifts.update({"_id": shiftId}, {$set: {"startTime": new Date(newValue._d).getTime()}})
+        var obj = {"_id": shiftId, "startTime": new Date(newValue._d).getTime()}
+        editShift(obj);
       }
     }
   });
@@ -86,10 +89,20 @@ component.prototype.itemRendered = function() {
     showbuttons: true,
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
-      var shift = LocalShifts.findOne(shiftId);
+      var shift = TemplateShifts.findOne(shiftId);
       if(shift) {
-        LocalShifts.update({"_id": shiftId}, {$set: {"endTime": new Date(newValue._d).getTime()}})
+        var obj = {"_id": shiftId, "endTime": new Date(newValue._d).getTime()};
+        editShift(obj);
       }
+    }
+  });
+}
+
+function editShift(obj) {
+  Meteor.call("editTemplateShift", obj, function(err) {
+    if(err) {
+      console.log(err);
+      return alert(err.reason);
     }
   });
 }

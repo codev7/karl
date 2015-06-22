@@ -2,7 +2,12 @@ Template.shiftBasic.events({
   'click .removeRosterBox': function(event) {
     event.preventDefault();
     var delElementId = $(event.target).closest('li').attr("data-id");
-    LocalShifts.remove({_id: delElementId});
+    Meteor.call("deleteTemplateShift", delElementId, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    });
   },
 
   'mouseenter li.success-element': function(event) {
@@ -15,5 +20,3 @@ Template.shiftBasic.events({
     $(event.target).find('.box-wrapper').hide();
   }
 });
-
-Template.shiftBasic.rendered = function() {}
