@@ -11,6 +11,9 @@
           </span>
         </div>
         <ul class="sortable-list connectList agile-list">
+          {{#each state$shifts}}
+            {{> render component="shiftBasic" shift=this}}
+          {{/each}}
         </ul>
       </div>
     </div>

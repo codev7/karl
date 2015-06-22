@@ -85,8 +85,10 @@ Meteor.methods({
         }
       }
     }
-    Shifts.update({'_id': id}, {$set: updateDoc});
-    logger.info("Shift clock details updated", {"shiftId": id});
-    return;
+    if(Object.keys(updateDoc).length > 0) {
+      Shifts.update({'_id': id}, {$set: updateDoc});
+      logger.info("Shift clock details updated", {"shiftId": id});
+      return;
+    }
   }
 });

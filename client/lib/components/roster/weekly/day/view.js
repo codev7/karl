@@ -1,15 +1,17 @@
 Template.weeklyRosterDay.events({
   'click .addShiftBox': function(event) {
+    var day = $(event.target).attr("data-day");
+    var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     event.preventDefault();
-    var inbox =  $(event.target).closest(".ibox-content");
-    var mainUl = $(inbox).find("ul");
-    var hiddenBox = $("#hidden-success-box").children().clone();
-    $(mainUl).append(hiddenBox);
-    $("li.success-element").mouseenter(function(){
-      $(event.target).find('.box-wrapper').show();
-    }).mouseleave(function(){
-      $(event.target).find('.box-wrapper').hide();
-    })
+    var doc = {
+      "section": "Kitchen hand",
+      "startTime": new Date().setHours(8, 0),
+      "endTime": new Date().setHours(5, 0),
+      "shiftDate": daysOfWeek.indexOf(day),
+      "assignedTo": null,
+    }
+    LocalShifts.insert(doc);
+
     // initEditable();
     // mouseOverCrossToggle();
   }

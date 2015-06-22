@@ -1,20 +1,20 @@
 <template name="shiftBasic">
   <div id="hidden-success-box">
-    <li class="success-element" data-pg-collapsed="">
+    <li class="success-element" data-id="{{state$shift._id}}">
       <div class="box-wrapper" style="display: none;">
-        <span class="box-remove glyphicon glyphicon-remove" onclick="removeRosterBox(this);"></span>
+        <span class="box-remove glyphicon glyphicon-remove removeRosterBox"></span>
       </div>
       <div class="agile-detail">
         <i class="fa fa-user"></i>
-        <a href="#" class="select-worker" data-type="select" data-pk="1" data-value="0" data-title="Select country"></a>
+        <a href="#" class="select-worker" data-type="select" data-pk="1" data-value="0" data-title="Worker">{{state$shift.assignedTo}}</a>
       </div>
       <div class="agile-detail">
         <i class="fa fa-clock-o"></i>
-        <a href="#" class="duty_time" data-type="datetime" data-pk="1" title="Select date & time">8am to 5pm</a>
+        <a href="#" class="shiftStartTime" data-pk="1">{{timeFormat state$shift.startTime}}</a> to <a href="#" class="shiftEndTime" data-pk="1">{{timeFormat state$shift.endTime}}</a>
       </div>
       <div class="agile-detail">
         <i class="fa fa-angle-double-right"></i>
-        <a href="#" class="company_name" data-type="text" data-pk="1">Kitchen Hand</a>
+        <a href="#" class="section" data-type="select" data-pk="1">{{state$shift.section}}</a>
       </div>
     </li>
   </div>

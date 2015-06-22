@@ -33,6 +33,9 @@ Meteor.methods({
       "jobs": [],
       "status": "draft"
     }
+    if(info.assignedTo) {
+      doc.assignedTo = info.assignedTo;
+    }
 
     var id = Shifts.insert(doc);
     logger.info("Shift inserted", {"shiftId": id, "date": info.shiftDate});
