@@ -148,3 +148,11 @@ component.state.isManagerOrAdmin = function() {
     return false;
   }
 }
+
+component.state.isWeeklyTemplate = function() {
+  if(this.type == "templateweeklyroster") {
+    return true;
+  } else {
+    return false;
+  }
+}
