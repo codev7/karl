@@ -82,20 +82,21 @@
             </ul>
           </li>
 
-          <li class="{{isActiveRoute regex='dailyShiftScheduling'}}">
-            <a href="/scheduling/daily/{{today}}">
+          <li class="{{isActiveRoute regex='dailyShiftScheduling|weeklyRosterMainView'}}">
+            <a href="#">
               <i class="fa fa-calendar-o"></i>
               <span class="nav-label">Roster</span>
             </a>
+            <ul class="nav nav-second-level {{isActiveRoute regex='dailyShiftScheduling|weeklyRosterMainView' className='in'}}">
+              <li class="{{isActiveRoute regex='dailyShiftScheduling'}}">
+                <a href="/scheduling/daily/{{today}}">Daily Roster</a>
+              </li>
+              <li class="{{isActiveRoute regex='weeklyRosterMainView'}}">
+                <a href="/roster/weekly">Weekly Template</a>
+              </li>
+            </ul>
           </li>
-
-          <li class="{{isActiveRoute regex='weeklyRosterMainView'}}">
-            <a href="/roster/weekly">
-              <i class="fa fa-calendar-o"></i>
-              <span class="nav-label">Weekly Template</span>
-            </a>
-          </li>
-
+          
           <li class="{{isActiveRoute regex='teamHours'}}">
             <a href="/reports/{{week}}#shifts">
               <i class="fa fa-area-chart"></i>
