@@ -1,5 +1,5 @@
 Template.calendar.rendered = function() {
-  $('#calendar').datetimepicker({
+  $('#calendarForModal').datetimepicker({
     inline: true,
     sideBySide: false,
     showTodayButton: true,
@@ -28,7 +28,6 @@ Template.calendar.events({
         shifts.forEach(function(shift) {
           var startHour = moment(shift.startTime).hour();
           var endHour = moment(shift.endTime).hour();
-          console.log(".........startHour...............", startHour, endHour);
           var info = {
             "startTime": new Date(moment(obj.date).set('hour', startHour)),
             "endTime": new Date(moment(obj.date).set('hour', endHour)),
@@ -36,7 +35,6 @@ Template.calendar.events({
             "section": shift.section,
             "assignedTo": shift.assignedTo,
           }
-          console.log("......info.........", info);
           Meteor.call("createShift", info, function(err) {
             if(err) {
               console.log(err);
@@ -45,9 +43,6 @@ Template.calendar.events({
           });
         });
       }
-
-      console.log("...............");
-
     });
   }
 });

@@ -6,13 +6,10 @@ Template.weeklyRosterDay.events({
     var doc = {
       "section": "Kitchen hand",
       "startTime": new Date().setHours(8, 0),
-      "endTime": new Date().setHours(5, 0),
+      "endTime": new Date().setHours(17, 0),
       "shiftDate": daysOfWeek.indexOf(day),
       "assignedTo": null,
     }
     LocalShifts.insert(doc);
-
-    // initEditable();
-    // mouseOverCrossToggle();
   }
 });

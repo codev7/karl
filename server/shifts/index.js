@@ -34,7 +34,10 @@ Meteor.methods({
       "status": "draft"
     }
     if(info.assignedTo) {
-      doc.assignedTo = info.assignedTo;
+      var alreadyAssigned = Shifts.findOne({"assignedTo": info.assignedTo, "shiftDate": new Date(info.shiftDate).getTime()});
+      if(!alreadyAssigned) {
+        doc.assignedTo = info.assignedTo;
+      }
     }
 
     var id = Shifts.insert(doc);

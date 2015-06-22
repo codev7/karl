@@ -1,12 +1,12 @@
 <template name="shiftBasic">
   <div id="hidden-success-box">
     <li class="success-element" data-id="{{state$shift._id}}">
-      <div class="box-wrapper" style="display: none;">
+      <div class="box-wrapper pull-right" style="display: none;">
         <span class="box-remove glyphicon glyphicon-remove removeRosterBox"></span>
       </div>
       <div class="agile-detail">
         <i class="fa fa-user"></i>
-        <a href="#" class="select-worker" data-type="select" data-pk="1" data-value="0" data-title="Worker">{{state$shift.assignedTo}}</a>
+        <a href="#" class="select-worker" data-type="select" data-pk="1" data-value="0">{{state$assignedTo.username}}</a>
       </div>
       <div class="agile-detail">
         <i class="fa fa-clock-o"></i>

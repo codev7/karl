@@ -1,3 +1,3 @@
 Template.weeklyShiftRoster.rendered = function() {
-   $.fn.editable.defaults.mode = 'popup';
+  $.fn.editable.defaults.mode = 'popup';
 }
