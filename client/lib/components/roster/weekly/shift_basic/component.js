@@ -14,7 +14,7 @@ component.state.assignedTo = function() {
 
 component.prototype.itemRendered = function() {
   var alreadtAssigned = [];
-  var shifts = LocalShifts.find({"assignedTo": {$exists: true}});
+  var shifts = LocalShifts.find({"shiftDate": this.shift.shiftDate, "assignedTo": {$exists: true}});
   shifts.forEach(function(shift) {
     if(shift.assignedTo) {
       alreadtAssigned.push(shift.assignedTo);
