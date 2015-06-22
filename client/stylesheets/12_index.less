@@ -64,12 +64,14 @@
     -moz-transition: all 0.5s ease;
     transition: all 0.5s ease;
     z-index: 1020;
-    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    visibility: hidden;
     &.show{
       -webkit-transform: translateX(0);
       -moz-transform: translateX(0);
       transform: translateX(0);
+      -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+      box-shadow: 0 6px 12px rgba(0,0,0,.175);
+      visibility: visible;
     }
 
     .theme-config-box {
@@ -185,6 +187,8 @@
     }
     label {
         margin-bottom: 0;
+        display: block;
+        cursor: pointer;
         font-weight: 600;
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -284,6 +288,38 @@ span {
 @media (max-width: 768px){
   .flyout-container{
     width: 100%;
+
+    .setings-item{
+      padding: 8px 10px;
+      &.m-t-md{
+         & > span{
+           padding: 8px 10px;
+         }
+       }
+    }
+
+    .checklist-content{
+      .checklist-check{
+        padding: 8px 10px;
+      }
+    }
+
+    .theme-config-box{
+      .removeAssignedJob{
+        width: 80%;
+        left: 10%;
+        right: 10%;
+      }
+    }
+    .skin-setttings{
+      .title {
+        i.fa{
+          &:before{
+              content: "\f00d";
+          }
+        }
+      }
+    }
   }
 }
 

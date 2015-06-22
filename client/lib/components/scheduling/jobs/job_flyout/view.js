@@ -28,16 +28,4 @@ Template.jobFlyout.rendered = function() {
           flyout.removeClass('show');
       }
   });
-
-
-  // $('.i-checks').iCheck({
-  //   checkboxClass: 'icheckbox_square-green',
-  //   radioClass: 'iradio_square-green'
-  // });
-  // $('input').on('ifChecked', function(event){
-  //   $(this).closest('.i-checks').addClass('checked');
-  // });
-  // $('input').on('ifUnchecked', function(event){
-  //   $(this).closest('.i-checks').removeClass('checked');
-  // });
 }
