@@ -7,24 +7,18 @@ Template.dailyShiftScheduling.events({
   },
 
   'click .fc-title': function(event) {
-    event.preventDefault();
+    event.stopPropagation();
     var id = $(event.target).attr("data-id");
     var shiftId = $(event.target).attr("data-shift");
     Session.set("thisJob", id);
     Session.set("shiftId", shiftId);
-    if($(".theme-config-box").hasClass("show")) {
-      $(".theme-config-box").removeClass("show").animate({
-        width: 0,
-        done: function(){
-          $(".flyout-container").css("z-index", -1);
-        }
-      }, 100);
+    if($(".flyout-container").hasClass("show")) {
+      $(".flyout-container").removeClass("show");
     } else {
-      $(".flyout-container").css("z-index", 1020);
-      $(".theme-config-box").addClass("show").animate({
-        width: 500
-      }, 100);
+      $(".flyout-container").addClass("show");
     }
+
+    return false;
   },
 
   'change .selectWorkers': function(event) {
@@ -91,10 +85,10 @@ Template.dailyShiftScheduling.rendered = function() {
 
           var startTime = parseInt(moment(shift.startTime).format("hh"));
           var endTime = parseInt(moment(shift.endTime).format("hh"));
-          
+
           if(businessStartsAt > startTime) {
             businessStartsAt = startTime;
-          } 
+          }
 
           if(businessEndsAt < endTime) {
             businessEndsAt = endTime;
@@ -193,7 +187,7 @@ Template.dailyShiftScheduling.rendered = function() {
               var shift = TimeToShifts["" + day * oneDay];
               var job = ui.helper.attr("data-id").trim();
               var startTime = date.format();
-   
+
               assignJob(job, shift, startTime);
             },
             eventDrop: function(event, duration, revertFunc, ui) {
@@ -210,8 +204,8 @@ Template.dailyShiftScheduling.rendered = function() {
               }
             },
             events: events
-          });    
-        }       
+          });
+        }
       });
     }
   }, 1000);

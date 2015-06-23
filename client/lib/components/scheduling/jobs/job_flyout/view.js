@@ -6,18 +6,12 @@ Template.jobFlyout.events({
       if(err) {
         console.log(err);
       }
-      $(".theme-config-box").toggleClass("show");
-      setTimeout(function() {
-        $(".flyout-container").css("z-index", -1);
-      }, 1000);
+      $(".flyout-container").toggleClass("show");
     });
   },
 
-  'click .theme-config-close-btn': function(evt) {
-    $(".theme-config-box").removeClass("show");
-    setTimeout(function() {
-      $(".flyout-container").css("z-index", -1);
-    }, 1000);
+  'click .theme-config-close-btn': function(event) {
+    $(".flyout-container").removeClass("show");
   },
 
   'click .checklist-check input': function(event) {
@@ -27,14 +21,11 @@ Template.jobFlyout.events({
 });
 
 Template.jobFlyout.rendered = function() {
-  // $('.i-checks').iCheck({
-  //   checkboxClass: 'icheckbox_square-green',
-  //   radioClass: 'iradio_square-green'
-  // });
-  // $('input').on('ifChecked', function(event){
-  //   $(this).closest('.i-checks').addClass('checked');
-  // });
-  // $('input').on('ifUnchecked', function(event){
-  //   $(this).closest('.i-checks').removeClass('checked');
-  // });
+
+  $('html').click(function (event) {
+      var flyout = $(".flyout-container");
+      if (!flyout.is(event.target) && flyout.has(event.target).length === 0){
+          flyout.removeClass('show');
+      }
+  });
 }
