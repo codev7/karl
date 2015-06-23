@@ -31,7 +31,7 @@ Template.calendar.events({
           var info = {
             "startTime": new Date(moment(obj.date).set('hour', startHour)),
             "endTime": new Date(moment(obj.date).set('hour', endHour)),
-            "shiftDate": obj.date,
+            "shiftDate": moment(obj.date).format("YYYY-MM-DD"),
             "section": shift.section,
             "assignedTo": shift.assignedTo,
           }

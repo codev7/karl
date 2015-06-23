@@ -2,12 +2,7 @@ Template.shiftBasic.events({
   'click .removeRosterBox': function(event) {
     event.preventDefault();
     var delElementId = $(event.target).closest('li').attr("data-id");
-    Meteor.call("deleteTemplateShift", delElementId, function(err) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      }
-    });
+    FlowComponents.callAction("deleteShift", delElementId);
   },
 
   'mouseenter li.success-element': function(event) {

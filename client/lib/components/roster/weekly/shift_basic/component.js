@@ -1,5 +1,7 @@
 var component = FlowComponents.define("shiftBasic", function(props) {
   this.shift = props.shift;
+  origin = props.origin;
+  this.set("origin", origin);
   this.onRendered(this.itemRendered);
 });
 
@@ -12,9 +14,34 @@ component.state.assignedTo = function() {
   return Meteor.users.findOne(worker);
 }
 
+component.action.deleteShift = function(id) {
+  var origin = this.get("origin");
+  if(origin == "weeklyrostertemplate") {
+    Meteor.call("deleteTemplateShift", id, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    });
+  } else if(origin == "weeklyroster") {
+    Meteor.call("deleteShift", id, function(err) {
+      if(err) {
+        console.log(err);
+        return alert(err.reason);
+      }
+    });
+  }
+}
+
 component.prototype.itemRendered = function() {
   var alreadtAssigned = [];
-  var shifts = TemplateShifts.find({"shiftDate": this.shift.shiftDate, "assignedTo": {$exists: true}});
+  var origin = this.get("origin");
+  var shifts = null;
+  if(origin == "weeklyrostertemplate") {
+    shifts = TemplateShifts.find({"shiftDate": this.shift.shiftDate, "assignedTo": {$exists: true}}).fetch();
+  } else if(origin == "weeklyroster") {
+    shifts = Shifts.find({"shiftDate": this.shift.shiftDate}).fetch();
+  }
   shifts.forEach(function(shift) {
     if(shift.assignedTo) {
       alreadtAssigned.push(shift.assignedTo);
@@ -32,10 +59,18 @@ component.prototype.itemRendered = function() {
     title: 'Select worker to assign',
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
-      var shift = TemplateShifts.findOne(shiftId);
-      if(shift) {
-        var obj = {"_id": shiftId, "assignedTo": newValue}
-        editShift(obj);
+      var obj = {"_id": shiftId, "assignedTo": newValue}
+      var shift = null;
+      if(origin == "weeklyrostertemplate") {
+        shift = TemplateShifts.findOne(shiftId);
+        if(shift) {
+          editTemplateShift(obj);
+        }
+      } else if(origin == "weeklyroster") {
+        shift = Shifts.findOne(shiftId);
+        if(shift) {
+          editShift(obj);
+        }
       }
     }
   });
@@ -51,10 +86,18 @@ component.prototype.itemRendered = function() {
     title: "Select section to assign",
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
-      var shift = TemplateShifts.findOne(shiftId);
-      if(shift) {
-        var obj = {"_id": shiftId, "section": newValue}
-        editShift(obj);
+      var obj = {"_id": shiftId, "section": newValue}
+      var shift = null;
+      if(origin == "weeklyrostertemplate") {
+        shift = TemplateShifts.findOne(shiftId);
+        if(shift) {
+          editTemplateShift(obj);
+        }
+      } else if(origin == "weeklyroster") {
+        shift = Shifts.findOne(shiftId);
+        if(shift) {
+          editShift(obj);
+        }
       }
     }
   });
@@ -70,10 +113,18 @@ component.prototype.itemRendered = function() {
     showbuttons: true,
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
-      var shift = TemplateShifts.findOne(shiftId);
-      if(shift) {
-        var obj = {"_id": shiftId, "startTime": new Date(newValue._d).getTime()}
-        editShift(obj);
+      var obj = {"_id": shiftId, "startTime": new Date(newValue._d).getTime()}
+      var shift = null;
+      if(origin == "weeklyrostertemplate") {
+        shift = TemplateShifts.findOne(shiftId);
+        if(shift) {
+          editTemplateShift(obj);
+        }
+      } else if(origin == "weeklyroster") {
+        shift = Shifts.findOne(shiftId);
+        if(shift) {
+          editShift(obj);
+        }
       }
     }
   });
@@ -89,17 +140,34 @@ component.prototype.itemRendered = function() {
     showbuttons: true,
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
-      var shift = TemplateShifts.findOne(shiftId);
-      if(shift) {
-        var obj = {"_id": shiftId, "endTime": new Date(newValue._d).getTime()};
-        editShift(obj);
+      var obj = {"_id": shiftId, "endTime": new Date(newValue._d).getTime()};
+      var shift = null;
+      if(origin == "weeklyrostertemplate") {
+        shift = TemplateShifts.findOne(shiftId);
+        if(shift) {
+          editTemplateShift(obj);
+        }
+      } else if(origin == "weeklyroster") {
+        shift = Shifts.findOne(shiftId);
+        if(shift) {
+          editShift(obj);
+        }
       }
     }
   });
 }
 
-function editShift(obj) {
+function editTemplateShift(obj) {
   Meteor.call("editTemplateShift", obj, function(err) {
+    if(err) {
+      console.log(err);
+      return alert(err.reason);
+    }
+  });
+}
+
+function editShift(obj) {
+  Meteor.call("editShift", obj, function(err) {
     if(err) {
       console.log(err);
       return alert(err.reason);

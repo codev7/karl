@@ -2,17 +2,22 @@
   <div class="col-lg-2 no-padding daysOfweek">
     <div class="ibox">
       <div class="ibox-content">
-        <h3>{{state$name}}</h3>
+        {{#if state$isTemplate}}
+          <h3>{{state$name}}</h3>
+        {{else}}
+          <h3>{{state$name.day}}</h3>
+          <h5>{{state$name.date}}</h5>
+        {{/if}}
         <div class="input-group">
           <span class="input-group-btn">
-            <button type="button" class="btn btn-sm btn-white btn-block addShiftBox" data-day="{{state$name}}">
+            <button type="button" class="btn btn-sm btn-white btn-block addShiftBox" data-day="{{#if state$isTemplate}}{{state$name}}{{else}}{{state$name.date}}{{/if}}">
               <i class="fa fa-plus"></i>Add Shift
             </button>
           </span>
         </div>
         <ul class="sortable-list connectList agile-list">
           {{#each state$shifts}}
-            {{> render component="shiftBasic" shift=this}}
+            {{> render component="shiftBasic" shift=this origin=state$origin}}
           {{/each}}
         </ul>
       </div>
