@@ -16,6 +16,17 @@ Meteor.methods({
       logger.error("Section field not found");
       throw new Meteor.Error(404, "Section field not found");
     }
+    var exsitingAlready = Shifts.findOne({
+      "shiftDate": new Date(info.shiftDate).getTime(),
+      "startTime": new Date(info.startTime).getTime(),
+      "endTime": new Date(info.endTime).getTime(),
+      "section": info.section,
+      "assignedTo": info.assignedTo
+    });
+    if(exsitingAlready) {
+      logger.error("Duplicating shift");
+      throw new Meteor.Error(404, "Duplicating shift");
+    }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(info.shiftDate) <= yesterday) {
