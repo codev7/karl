@@ -127,7 +127,7 @@ component.prototype.itemRendered = function() {
     url: '/post',
     display: false,
     showbuttons: true,
-    mode: 'popup',
+    mode: 'inline',
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
       var obj = {"_id": shiftId, "startTime": new Date(newValue._d).getTime()}
@@ -155,7 +155,7 @@ component.prototype.itemRendered = function() {
     url: '/post',
     display: false,
     showbuttons: true,
-    mode: 'popup',
+    mode: 'inline',
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
       var obj = {"_id": shiftId, "endTime": new Date(newValue._d).getTime()};
