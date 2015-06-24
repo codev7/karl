@@ -33,15 +33,16 @@ Meteor.publish("daily", function(date, worker) {
 
 Meteor.publish("weekly", function(dates, worker) {
   var cursors = [];
-  var firstDate = dates.day1;
-  var lastDate = dates.day7;
+  var firstDate = dates.monday;
+  var lastDate = dates.sunday;
 
   var query = {"shiftDate": {$gte: new Date(firstDate).getTime(), $lte: new Date(lastDate).getTime()}};
   if(worker) {
     query["assignedTo"] = worker
   }
   //get shifts
-  var shiftsCursor = Shifts.find(query);
+  var shiftsCursor = Shifts.find(query, {sort: {"shiftDate": 1}});
+
   cursors.push(shiftsCursor);
   logger.info("Weekly shifts detailed publication");
   return cursors;

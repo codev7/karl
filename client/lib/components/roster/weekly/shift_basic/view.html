@@ -1,0 +1,21 @@
+<template name="shiftBasic">
+  <div id="hidden-success-box">
+    <li class="success-element" data-id="{{state$shift._id}}">
+      <div class="box-wrapper pull-right" style="display: none;">
+        <span class="box-remove glyphicon glyphicon-remove removeRosterBox"></span>
+      </div>
+      <div class="agile-detail">
+        <i class="fa fa-user"></i>
+        <a href="#" class="select-worker" data-pk="{{state$assignedTo._id}}" data-value="{{state$assignedTo._id}}">{{state$assignedTo.username}}</a>
+      </div>
+      <div class="agile-detail">
+        <i class="fa fa-clock-o"></i>
+        <a href="#" class="shiftStartTime" data-pk="1">{{timeFormat state$shift.startTime}}</a> to <a href="#" class="shiftEndTime" data-pk="1">{{timeFormat state$shift.endTime}}</a>
+      </div>
+      <div class="agile-detail">
+        <i class="fa fa-angle-double-right"></i>
+        <a href="#" class="section" data-pk="{{state$shift.section}}" data-value="{{state$shift.section}}">{{state$shift.section}}</a>
+      </div>
+    </li>
+  </div>
+</template>

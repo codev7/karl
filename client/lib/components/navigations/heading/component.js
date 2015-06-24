@@ -134,7 +134,7 @@ component.state.isIngredientsList = function() {
 }
 
 component.state.weeklyNavigation = function() {
-  if(this.type == "cafeforecasting" || this.type == "teamHoursReport") {
+  if(this.type == "cafeforecasting" || this.type == "teamHoursReport" || this.type == "weeklyroster") {
     return true; 
   } else {
     return false;
@@ -143,6 +143,14 @@ component.state.weeklyNavigation = function() {
 
 component.state.isManagerOrAdmin = function() {
   if(isAdmin() || isManager()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.isWeeklyTemplate = function() {
+  if(this.type == "weeklyrostertemplate") {
     return true;
   } else {
     return false;

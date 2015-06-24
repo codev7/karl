@@ -128,6 +128,8 @@ Template.pageHeading.events({
       Router.go("teamHours", {"week": week}, {"hash": hash});
     } else if(type == "cafeforecasting") {
       Router.go("cafeSalesForecast", {"week": week});
+    } else if(type == "weeklyroster") {
+      Router.go("weeklyRoster", {"week": week});
     }
   },
 
@@ -144,6 +146,8 @@ Template.pageHeading.events({
       Router.go("teamHours", {"week": week}, {"hash": hash});
     } else if(type == "cafeforecasting") {
       Router.go("cafeSalesForecast", {"week": week});
+    } else if(type == "weeklyroster") {
+      Router.go("weeklyRoster", {"week": week});
     }
   },
 
@@ -160,10 +164,12 @@ Template.pageHeading.events({
       Router.go("teamHours", {"week": week}, {"hash": hash});
     } else if(type == "cafeforecasting") {
       Router.go("cafeSalesForecast", {"week": week});
+    } else if(type == "weeklyroster") {
+      Router.go("weeklyRoster", {"week": week});
     }
   },
 
-   'click .todayRoster': function(event) {
+  'click .todayRoster': function(event) {
     event.preventDefault();
     var date = moment().format("YYYY-MM-DD");
     Router.go("dailyRoster", {"date": date});

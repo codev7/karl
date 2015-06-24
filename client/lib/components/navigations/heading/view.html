@@ -123,6 +123,14 @@
         <!-- </div> -->
       </div>
       {{/if}}
+
+      {{#if state$isWeeklyTemplate}}
+      <div class="title-action">
+        <a href="#calendarModal" class="btn btn-primary" data-toggle="modal">
+          Copy template shifts to week
+        </a>
+      </div>
+      {{/if}}
     </div>
   </div>
 </template>

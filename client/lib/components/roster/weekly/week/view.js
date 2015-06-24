@@ -1,0 +1,2 @@
+Template.weeklyShiftRoster.rendered = function() {
+}
