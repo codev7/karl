@@ -3,6 +3,8 @@ var component = FlowComponents.define("shiftBasic", function(props) {
   origin = props.origin;
   this.set("origin", origin);
   this.onRendered(this.itemRendered);
+  $.fn.editable.defaults.mode = 'inline';
+  $.fn.editable.defaults.showbuttons = false;
 });
 
 component.state.shift = function() {
@@ -34,29 +36,38 @@ component.action.deleteShift = function(id) {
 }
 
 component.prototype.itemRendered = function() {
-  var alreadtAssigned = [];
   var origin = this.get("origin");
-  var shifts = null;
-  if(origin == "weeklyrostertemplate") {
-    shifts = TemplateShifts.find({"shiftDate": this.shift.shiftDate, "assignedTo": {$exists: true}}).fetch();
-  } else if(origin == "weeklyroster") {
-    shifts = Shifts.find({"shiftDate": this.shift.shiftDate}).fetch();
-  }
-  shifts.forEach(function(shift) {
-    if(shift.assignedTo) {
-      alreadtAssigned.push(shift.assignedTo);
-    }
-  });
-  var workers = Meteor.users.find({"_id": {$nin: alreadtAssigned}, "isActive": true, $or: [{"isWorker": true}, {"isManager": true}]}).fetch();
-  var workersObj = []
-  workers.forEach(function(worker) {
-    workersObj.push({value: worker._id, text: worker.username});
-  });
-
+  var date = this.shift.shiftDate;
+  var worker = this.shift.assignedTo;
   $('.select-worker').editable({
-    value: 2,    
-    source: workersObj,
+    type: "select",
     title: 'Select worker to assign',
+    inputclass: "editableWidth",
+    showbuttons: false,
+    source: function() {
+      var alreadtAssigned = [];
+      var workersObj = []
+      var shifts = null;
+      if(origin == "weeklyrostertemplate") {
+        shifts = TemplateShifts.find({"shiftDate": date, "assignedTo": {$exists: true}}).fetch();
+      } else if(origin == "weeklyroster") {
+        shifts = Shifts.find({"shiftDate": date}).fetch();
+      }
+      shifts.forEach(function(shift) {
+        if(shift.assignedTo) {
+          alreadtAssigned.push(shift.assignedTo);
+        }
+      });
+      var index = alreadtAssigned.indexOf(worker);
+      if(index >=0) {
+        alreadtAssigned.splice(index, 1);
+      }
+      var workers = Meteor.users.find({"_id": {$nin: alreadtAssigned}, "isActive": true, $or: [{"isWorker": true}, {"isManager": true}]}).fetch();
+      workers.forEach(function(worker) {
+        workersObj.push({value: worker._id, text: worker.username});
+      });
+      return workersObj;
+    },
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
       var obj = {"_id": shiftId, "assignedTo": newValue}
@@ -75,15 +86,20 @@ component.prototype.itemRendered = function() {
     }
   });
 
-  var sections = Sections.find().fetch();
-  var sectionsObj = [];
-  sections.forEach(function(section) {
-    sectionsObj.push({"value": section.name, "text": section.name});
-  });
+ 
   $('.section').editable({
-    value: 2,    
-    source: sectionsObj,
+    type: "select",
     title: "Select section to assign",
+    inputclass: "editableWidth",
+    showbuttons: false,    
+    source: function() {
+      var sections = Sections.find().fetch();
+      var sectionsObj = [];
+      sections.forEach(function(section) {
+        sectionsObj.push({"value": section.name, "text": section.name});
+      });
+      return sectionsObj;
+    },
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
       var obj = {"_id": shiftId, "section": newValue}
@@ -111,6 +127,7 @@ component.prototype.itemRendered = function() {
     url: '/post',
     display: false,
     showbuttons: true,
+    mode: 'popup',
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
       var obj = {"_id": shiftId, "startTime": new Date(newValue._d).getTime()}
@@ -138,6 +155,7 @@ component.prototype.itemRendered = function() {
     url: '/post',
     display: false,
     showbuttons: true,
+    mode: 'popup',
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
       var obj = {"_id": shiftId, "endTime": new Date(newValue._d).getTime()};

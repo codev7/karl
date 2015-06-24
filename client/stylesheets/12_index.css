@@ -284,3 +284,11 @@ span {
 .daysOfweek {
   width: 13.99%;
 }
+
+.editableWidth {
+  width: 90% !important;
+}
+
+.success-modal {
+  background-color: #DFF0D8;
+}

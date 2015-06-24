@@ -1,26 +1,14 @@
-Template.calendar.rendered = function() {
-  $('#calendarForModal').datetimepicker({
-    inline: true,
-    sideBySide: false,
-    showTodayButton: true,
-    showClear: true,
-    viewMode: 'days',
-    format: 'DD/MM/YYYY'
-  }).on("dp.change", function(result) {
-    if(result) {
-      $(".active").closest("tr").addClass("active");
-      var weekNo = moment(result.date).week();
-      var week = getDatesFromWeekNumber(weekNo)
-      $("tr.active").find("td").addClass('active');
-      Session.set("templateToWeek", week);
-    }
+Template.weekSelector.rendered = function() {
+  $('.i-checks').iCheck({
+    radioClass: 'iradio_square-green',
   });
 }
 
-Template.calendar.events({
+Template.weekSelector.events({
   'click .saveShifts': function(event) {
     event.preventDefault();
-    var week = Session.get("templateToWeek");
+    var weekNo = Session.get("templateToWeek");
+    var week = getDatesFromWeekNumber(weekNo);
     week.forEach(function(obj) {
       var index = week.indexOf(obj);
       var shifts = TemplateShifts.find({"shiftDate": index}).fetch();
@@ -39,10 +27,17 @@ Template.calendar.events({
             if(err) {
               console.log(err);
               return;
+            } else {
+              $("#notifiModal").modal("show");
             }
           });
         });
       }
     });
+  },
+
+  'click .checklist-content': function(event) {
+    var checked = $(event.target).is(":checked");
+    Session.set("templateToWeek", $(event.target).val())
   }
 });
