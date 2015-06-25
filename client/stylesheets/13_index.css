@@ -1,4 +1,20 @@
+/*.editable-input {
+  vertical-align: top;
+  display: inline !important;
+  width: auto;
+  white-space: normal;
+  zoom: 1;
+}
+*/
 
+.editableWidth {
+  width: 100% !important;
+}
+
+.editableform .control-group {
+  width: auto;
+  white-space: nowrap;
+}
 
 @media (min-width: 1200px) {
   .col-lg-13 {
@@ -7,4 +23,25 @@
   .col-lg-13 {
     width: 13.99999999%;
   }
+  .editable-input {
+    vertical-align: top;
+    display: -webkit-inline-box !important;
+    width: auto;
+    white-space: normal;
+    zoom: 1;
+  }
 }
+
+@media screen and (min-width: 1200px) and (max-width: 1800px) {
+  .editableform .control-group {
+    width: 79%;
+    white-space: pre !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .combodate > select {
+    display: inline !important;
+  }
+}
+

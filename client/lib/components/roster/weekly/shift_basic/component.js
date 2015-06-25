@@ -127,6 +127,7 @@ component.prototype.itemRendered = function() {
     url: '/post',
     display: false,
     showbuttons: true,
+    inputclass: "editable",
     mode: 'inline',
     success: function(response, newValue) {
       var shiftId = $(this).closest("li").attr("data-id");
