@@ -109,6 +109,7 @@ Meteor.methods({
       }
       updateDoc.assignedTo = info.assignedTo;
     }
+
     if(Object.keys(updateDoc).length <= 0) {
       logger.error("Shift has nothing to be updated");
       throw new Meteor.Error(401, "Shift has nothing to be updated");

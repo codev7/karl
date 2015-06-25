@@ -1,7 +1,6 @@
 var component = FlowComponents.define("weeklyRosterDay", function(props) {
   this.name = props.name;
   this.origin = props.origin;
-  this.onRendered(this.onListRendered);
 });
 
 component.state.name = function() {
@@ -65,36 +64,4 @@ component.state.isTemplate = function() {
   } else {
     return false;
   }
-}
-
-component.prototype.onListRendered = function() {
-  var origin = this.origin;
-  $(".sortable-list").sortable({
-    "connectWith": ".sortable-list",
-    receive: function(event, ui) {
-      var id = $(ui.item[0]).attr("data-id");//shiftid
-      var  newDate = $(this).attr("data-date")//date of moved list
-      if(origin == "weeklyrostertemplate") {
-        var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        newDate = parseInt(daysOfWeek.indexOf(newDate));
-      }
-      if(id && newDate) {
-        if(origin == "weeklyroster") {
-          Meteor.call("editShift", {"_id": id, "shiftDate": newDate}, function(err) {
-            if(err) {
-              console.log(err);
-              return alert(err.reason);
-            }
-          });
-        } else if(origin == "weeklyrostertemplate") {
-          Meteor.call("editTemplateShift", {"_id": id, "shiftDate": newDate}, function(err) {
-            if(err) {
-              console.log(err);
-              return alert(err.reason);
-            }
-          });
-        }
-      }
-    }
-  });
 }
