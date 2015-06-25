@@ -1,5 +1,14 @@
 Meteor.methods({
   'createShift': function(info) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("No logged in user");
+      throw new Meteor.Error(404, "No logged in user");
+    }
+    if(user.isWorker) {
+      logger.error("Workers not permitted to create shifts");
+      throw new Meteor.Error(404, "Workers not permitted to create shifts");
+    }
     if(!info.startTime) {
       logger.error("Start time not found");
       throw new Meteor.Error(404, "Start time not found");
@@ -16,6 +25,19 @@ Meteor.methods({
       logger.error("Section field not found");
       throw new Meteor.Error(404, "Section field not found");
     }
+    if(info.assignedTo) {
+      var exsitingAlready = Shifts.findOne({
+        "shiftDate": new Date(info.shiftDate).getTime(),
+        "startTime": new Date(info.startTime).getTime(),
+        "endTime": new Date(info.endTime).getTime(),
+        "section": info.section,
+        "assignedTo": info.assignedTo
+      });
+      if(exsitingAlready) {
+        logger.error("Duplicating shift");
+        throw new Meteor.Error(404, "Duplicating shift");
+      }
+    }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(info.shiftDate) <= yesterday) {
@@ -27,7 +49,7 @@ Meteor.methods({
       "endTime": new Date(info.endTime).getTime(),
       "shiftDate": new Date(info.shiftDate).getTime(),
       "section": info.section,
-      "createdBy": Meteor.userId(), //add logged in users id
+      "createdBy": user._id, //add logged in users id
       "assignedTo": null, //update
       "assignedBy": null, //update
       "jobs": [],
@@ -45,6 +67,15 @@ Meteor.methods({
   },
 
   'editShift': function(info) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("No logged in user");
+      throw new Meteor.Error(404, "No logged in user");
+    }
+    if(user.isWorker) {
+      logger.error("Workers not permitted to edit shifts");
+      throw new Meteor.Error(404, "Workers not permitted to edit shifts");
+    }
     if(!info._id) {
       logger.error("Shift Id not found")
       throw new Meteor.Error(404, "Shift Id field not found");
@@ -70,14 +101,19 @@ Meteor.methods({
     //   logger.error("Can not edit shifts on previous days");
     //   throw new Meteor.Error(404, "Can not edit shifts on previous days");
     // }
-    // if(shift.shiftDate != new Date(info.shiftDate).getTime()) {
-    //   if(shift.assignedTo || shift.jobs.length > 0) {
-    //     logger.error("Can't change the date of an assigned shift ", {"id": info._id});
-    //     throw new Meteor.Error(404, "Can't change the date of shift when you have assigned jobs or workers");
-    //   } else {
-    //     updateDoc.shiftDate = new Date(info.shiftDate).getTime();
-    //   }
-    // }
+    if(info.shiftDate) {
+      if(shift.shiftDate != new Date(info.shiftDate).getTime()) {
+        if(shift.assignedTo) {
+          var existingWorker = Shifts.findOne({"shiftDate": new Date(info.shiftDate).getTime(), "assignedTo": shift.assignedTo});
+
+          if(existingWorker) {
+            logger.error("The worker already has an assigned shift on this date ", {"id": info._id});
+            throw new Meteor.Error(404, "The worker already has an assigned shift on this date");
+          }
+        } 
+        updateDoc.shiftDate = new Date(info.shiftDate).getTime();
+      }
+    }
     if(info.assignedTo) {
       var existInShift = Shifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": info.assignedTo});
       if(existInShift) {
@@ -91,6 +127,7 @@ Meteor.methods({
       }
       updateDoc.assignedTo = info.assignedTo;
     }
+
     if(Object.keys(updateDoc).length <= 0) {
       logger.error("Shift has nothing to be updated");
       throw new Meteor.Error(401, "Shift has nothing to be updated");
@@ -101,6 +138,15 @@ Meteor.methods({
   },
 
   'deleteShift': function(id) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("No logged in user");
+      throw new Meteor.Error(404, "No logged in user");
+    }
+    if(user.isWorker) {
+      logger.error("Workers not permitted to delete shifts");
+      throw new Meteor.Error(404, "Workers not permitted to delete shifts");
+    }
     if(!id) {
       logger.error("Shift Id field not found");
       throw new Meteor.Error(404, "Shift Id field not found");

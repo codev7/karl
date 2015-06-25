@@ -11,6 +11,15 @@ component.state.origin = function() {
   return this.origin;
 }
 
+component.state.isUserPermitted = function() {
+  var user = Meteor.user();
+  if(user.isAdmin || user.isManager) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 component.state.shifts = function() {
   var origin = this.origin;
   if(origin == "weeklyroster") {
