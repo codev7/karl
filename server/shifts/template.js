@@ -1,5 +1,14 @@
 Meteor.methods({
   'createTemplateShift': function(info) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("No logged in user");
+      throw new Meteor.Error(404, "No logged in user");
+    }
+    if(user.isWorker) {
+      logger.error("Workers not permitted to create shift templates");
+      throw new Meteor.Error(404, "Workers not permitted to create shift templates");
+    }
     if(!info.startTime) {
       logger.error("Start time not found");
       throw new Meteor.Error(404, "Start time not found");
@@ -18,7 +27,7 @@ Meteor.methods({
       "endTime": new Date(info.endTime).getTime(),
       "shiftDate": new Date(info.shiftDate).getTime(),
       "section": info.section,
-      "createdBy": Meteor.userId(), //add logged in users id
+      "createdBy": user._id, //add logged in users id
       "assignedTo": null, //update
       "assignedBy": null, //update
       "jobs": [],
@@ -36,6 +45,15 @@ Meteor.methods({
   },
 
   'editTemplateShift': function(info) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("No logged in user");
+      throw new Meteor.Error(404, "No logged in user");
+    }
+    if(user.isWorker) {
+      logger.error("Workers not permitted to edit shift templates");
+      throw new Meteor.Error(404, "Workers not permitted to edit shift templates");
+    }
     if(!info._id) {
       logger.error("Shift template Id not found")
       throw new Meteor.Error(404, "Shift template Id field not found");
@@ -91,6 +109,15 @@ Meteor.methods({
   },
 
   'deleteTemplateShift': function(id) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("No logged in user");
+      throw new Meteor.Error(404, "No logged in user");
+    }
+    if(user.isWorker) {
+      logger.error("Workers not permitted to delete shift templates");
+      throw new Meteor.Error(404, "Workers not permitted to delete shift templates");
+    }
     if(!id) {
       logger.error("Shift template Id field not found");
       throw new Meteor.Error(404, "Shift template Id field not found");
