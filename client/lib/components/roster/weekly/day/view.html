@@ -8,6 +8,7 @@
           <h3>{{state$name.day}}</h3>
           <h5>{{state$name.date}}</h5>
         {{/if}}
+        {{#if state$isUserPermitted}}
         <div class="input-group">
           <span class="input-group-btn">
             <button type="button" class="btn btn-sm btn-white btn-block addShiftBox" data-day="{{#if state$isTemplate}}{{state$name}}{{else}}{{state$name.date}}{{/if}}">
@@ -15,6 +16,7 @@
             </button>
           </span>
         </div>
+        {{/if}}
         <ul class="sortable-list connectList agile-list" data-date="{{#if state$isTemplate}}{{state$name}}{{else}}{{state$name.date}}{{/if}}">
           {{#each state$shifts}}
             {{> render component="shiftBasic" shift=this origin=state$origin}}
