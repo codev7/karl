@@ -16,16 +16,18 @@ Meteor.methods({
       logger.error("Section field not found");
       throw new Meteor.Error(404, "Section field not found");
     }
-    var exsitingAlready = Shifts.findOne({
-      "shiftDate": new Date(info.shiftDate).getTime(),
-      "startTime": new Date(info.startTime).getTime(),
-      "endTime": new Date(info.endTime).getTime(),
-      "section": info.section,
-      "assignedTo": info.assignedTo
-    });
-    if(exsitingAlready) {
-      logger.error("Duplicating shift");
-      throw new Meteor.Error(404, "Duplicating shift");
+    if(info.assignedTo) {
+      var exsitingAlready = Shifts.findOne({
+        "shiftDate": new Date(info.shiftDate).getTime(),
+        "startTime": new Date(info.startTime).getTime(),
+        "endTime": new Date(info.endTime).getTime(),
+        "section": info.section,
+        "assignedTo": info.assignedTo
+      });
+      if(exsitingAlready) {
+        logger.error("Duplicating shift");
+        throw new Meteor.Error(404, "Duplicating shift");
+      }
     }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
@@ -81,14 +83,19 @@ Meteor.methods({
     //   logger.error("Can not edit shifts on previous days");
     //   throw new Meteor.Error(404, "Can not edit shifts on previous days");
     // }
-    // if(shift.shiftDate != new Date(info.shiftDate).getTime()) {
-    //   if(shift.assignedTo || shift.jobs.length > 0) {
-    //     logger.error("Can't change the date of an assigned shift ", {"id": info._id});
-    //     throw new Meteor.Error(404, "Can't change the date of shift when you have assigned jobs or workers");
-    //   } else {
-    //     updateDoc.shiftDate = new Date(info.shiftDate).getTime();
-    //   }
-    // }
+    if(info.shiftDate) {
+      if(shift.shiftDate != new Date(info.shiftDate).getTime()) {
+        if(shift.assignedTo) {
+          var existingWorker = Shifts.findOne({"shiftDate": new Date(info.shiftDate).getTime(), "assignedTo": shift.assignedTo});
+
+          if(existingWorker) {
+            logger.error("The worker already has an assigned shift on this date ", {"id": info._id});
+            throw new Meteor.Error(404, "The worker already has an assigned shift on this date");
+          }
+        } 
+        updateDoc.shiftDate = new Date(info.shiftDate).getTime();
+      }
+    }
     if(info.assignedTo) {
       var existInShift = Shifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": info.assignedTo});
       if(existInShift) {

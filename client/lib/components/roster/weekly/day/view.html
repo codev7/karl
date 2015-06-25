@@ -15,7 +15,7 @@
             </button>
           </span>
         </div>
-        <ul class="sortable-list connectList agile-list">
+        <ul class="sortable-list connectList agile-list" data-date="{{#if state$isTemplate}}{{state$name}}{{else}}{{state$name.date}}{{/if}}">
           {{#each state$shifts}}
             {{> render component="shiftBasic" shift=this origin=state$origin}}
           {{/each}}

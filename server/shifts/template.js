@@ -55,6 +55,19 @@ Meteor.methods({
     if(info.section) {
       updateDoc.section = info.section;
     }
+    if(info.shiftDate) {
+      if(shift.shiftDate != new Date(info.shiftDate).getTime()) {
+        if(shift.assignedTo) {
+          var existingWorker = TemplateShifts.findOne({"shiftDate": new Date(info.shiftDate).getTime(), "assignedTo": shift.assignedTo});
+
+          if(existingWorker) {
+            logger.error("The worker already has an assigned shift on this date ", {"id": info._id});
+            throw new Meteor.Error(404, "The worker already has an assigned shift on this date");
+          }
+        } 
+        updateDoc.shiftDate = new Date(info.shiftDate).getTime();
+      }
+    }
     if(info.assignedTo) {
       var existInShift = TemplateShifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": info.assignedTo});
       if(existInShift) {
