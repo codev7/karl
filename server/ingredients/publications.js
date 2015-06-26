@@ -4,6 +4,7 @@ Meteor.publish("allIngredients", function() {
     this.error(new Meteor.Error(404, "User not found"));
   }
   var cursors = Ingredients.find({"status": "active"}, {sort: {'code': 1}, limit: 10});
+  logger.info("All ingredients published");
   return cursors;
 });
 
@@ -20,5 +21,6 @@ Meteor.publish("ingredients", function(ids) {
     ings = Ingredients.find({}, {sort: {'code': 1}, limit: 10});
   }
   cursors.push(ings);
+  logger.info("Ingredients published", ids);
   return cursors;
 });

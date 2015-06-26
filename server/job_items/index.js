@@ -268,6 +268,37 @@ Meteor.methods({
     return;
   },
 
+  'addIngredientsToJob': function(id, ingredient, quantity) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var permitted = isManagerOrAdmin(user);
+    if(!permitted) {
+      logger.error("User not permitted to update ingredients of job item");
+      throw new Meteor.Error(403, "User not permitted to update ingredients of job");
+    }
+    if(!id) {
+      logger.error("Job item should provide an id");
+      throw new Meteor.Error(404, "Job item should provide an id");
+    }
+    var jobItem = JobItems.findOne(
+      {"_id": id, "ingredients": {$elemMatch: {"_id": ingredient}}}
+    );
+    if(!jobItem) {
+      logger.error("Job item or ingredient does not exist");
+      throw new Meteor.Error(404, "Job item or ingredient does not exist");
+    }
+    
+    var query = {
+      $addToSet: {}
+    };
+    query['$addToSet']['ingredients'] = {"_id": ingredient, "quantity": quantity};
+    JobItems.update({'_id': id}, query);
+    logger.info("Ingredients added to job item", id);
+  },
+
   removeIngredientsFromJob: function(id, ingredient) {
     var user = Meteor.user();
     if(!user) {
@@ -283,29 +314,23 @@ Meteor.methods({
       logger.error("Job item should provide an id");
       throw new Meteor.Error(404, "Job item should provide an id");
     }
-    var jobItem = JobItems.findOne(id);
-    if(!jobItem) {
-      logger.error("Job item does not exist");
-      throw new Meteor.Error(404, "Job item does not exist");
-    }
-    if(jobItem.ingredients.length < 0) {
-      logger.error("Ingredients does not exist for this job item");
-      throw new Meteor.Error(404, "Ingredients does not exist for this job item");
-    }
-    var item = JobItems.findOne(
-      {"_id": id, "ingredients": {$elemMatch: {"id": ingredient}}},
-      {fields: {"ingredients": {$elemMatch: {"id": ingredient}}}}
+    var jobItem = JobItems.findOne(
+      {"_id": id, "ingredients": {$elemMatch: {"_id": ingredient}}},
+      {fields: {"ingredients.$._id": ingredient}}
     );
-    var query = {
-      $pull: {}
-    };
-    if(!item) {
-      logger.error("Ingredients does not exist");
-      throw new Meteor.Error(404, "Ingredients does not exist");
+    if(!jobItem) {
+      logger.error("Job item or ingredient does not exist");
+      throw new Meteor.Error(404, "Job item or ingredient does not exist");
     }
-    query['$pull']['ingredients'] = item.ingredients[0];
-    JobItems.update({'_id': id}, query);
+    if(jobItem.ingredients.length > 0) {
+      var query = {
+        $pull: {
+          "ingredients": jobItem.ingredients[0]
+        }
+      };   
+    }
     logger.info("Ingredients removed from job item", id);
+    return JobItems.update({'_id': id}, query);
   },
 
   jobItemsCount: function() {
