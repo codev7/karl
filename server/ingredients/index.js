@@ -1,14 +1,14 @@
 Meteor.methods({
   createIngredients: function(info) {
-    if(!Meteor.userId()) {
+    var user = Meteor.user();
+    if(!user) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
-    var permitted = isManagerOrAdmin(userId);
+    var permitted = isManagerOrAdmin(user);
     if(!permitted) {
       logger.error("User not permitted to create ingredients");
-      throw new Meteor.Error(404, "User not permitted to create ingredients");
+      throw new Meteor.Error(403, "User not permitted to create ingredients");
     }
     if(!info.code) {
       logger.error("Code field not found");
@@ -31,11 +31,17 @@ Meteor.methods({
         suppliers.push(info.suppliers);
       }
     }
-    if(!info.costPerPortion) {
+    if(!info.costPerPortion || (info.costPerPortion != info.costPerPortion)) {
       info.costPerPortion = 0;
     }
-    if(!info.unitSize) {
+    if(!info.unitSize || (info.unitSize != info.unitSize)) {
       info.unitSize = 0;
+    }
+    if(!info.portionOrdered) {
+      info.portionOrdered = null;
+    }
+    if(!info.portionUsed) {
+      info.portionUsed = null;
     }
     var doc = {
       "code": info.code,
@@ -45,8 +51,9 @@ Meteor.methods({
       "costPerPortion": info.costPerPortion,
       "portionUsed": info.portionUsed,
       "unitSize": parseFloat(info.unitSize),
+      "status": "active",
       "createdOn": Date.now(),
-      "createdBy": userId
+      "createdBy": user._id
     }
     var id = Ingredients.insert(doc);
     logger.info("New ingredient inserted ", id);
@@ -54,15 +61,15 @@ Meteor.methods({
   },
 
   editIngredient: function(id, info) {
-    if(!Meteor.userId()) {
+    var user = Meteor.user();
+    if(!user) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
-    var permitted = isManagerOrAdmin(userId);
+    var permitted = isManagerOrAdmin(user);
     if(!permitted) {
       logger.error("User not permitted to edit ingredients");
-      throw new Meteor.Error(404, "User not permitted to edit ingredients");
+      throw new Meteor.Error(403, "User not permitted to edit ingredients");
     }
     if(!id) {
       logger.error("Id field not found");
@@ -81,9 +88,7 @@ Meteor.methods({
     }
     if(info.description) {
       if(item.description != info.description) {
-        if(info.description != null) {
-          updateDoc.description = info.description;
-        }
+        updateDoc.description = info.description;
       }
     }
     if(info.suppliers) {
@@ -99,9 +104,11 @@ Meteor.methods({
         updateDoc.unitSize = parseFloat(info.unitSize);
       }
     }
-    if(info.costPerPortion || (info.costPerPortion >= 0)) {
-      if(item.costPerPortion != info.costPerPortion) {
-        updateDoc.costPerPortion = parseFloat(info.costPerPortion);
+    if(info.costPerPortion) {
+      if(info.costPerPortion == info.costPerPortion) {
+        if(item.costPerPortion != info.costPerPortion) {
+          updateDoc.costPerPortion = parseFloat(info.costPerPortion);
+        }    
       }
     }
     if(info.portionUsed) {
@@ -111,22 +118,22 @@ Meteor.methods({
     }
     if(Object.keys(updateDoc).length > 0) {
       updateDoc['editedOn'] = Date.now();
-      updateDoc['editedBy'] = userId;
+      updateDoc['editedBy'] = user._id;
       Ingredients.update({'_id': id}, {$set: updateDoc});
       logger.info("Ingredient details updated: ", id);
     }
   },
 
   deleteIngredient: function(id) {
-    if(!Meteor.userId()) {
+    var user = Meteor.user();
+    if(!user) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
-    var permitted = isManagerOrAdmin(userId);
+    var permitted = isManagerOrAdmin(user);
     if(!permitted) {
       logger.error("User not permitted to delete ingredients");
-      throw new Meteor.Error(404, "User not permitted to delete ingredients");
+      throw new Meteor.Error(403, "User not permitted to delete ingredients");
     }
     if(!id) {
       logger.error("Id field not found");
@@ -143,8 +150,9 @@ Meteor.methods({
     );
     if(existInPreps) {
       if(existInPreps.ingredients.length > 0) {
-        logger.error("Item found in Prep jobs, can't delete");
-        throw new Meteor.Error(404, "Item is in use on prep jobs, cannot be deleted."); 
+        logger.error("Item found in Prep jobs, can't delete. Archiving ingredient");
+        Ingredients.update({"_id": id}, {$set: {"status": "archive"}});
+        return;
       }
     }
     var existInMenuItems = MenuItems.findOne(
@@ -153,8 +161,9 @@ Meteor.methods({
     );
     if(existInMenuItems) {
       if(existInMenuItems.ingredients.length > 0) {
-        logger.error("Item found in Menu Items, can't delete");
-        throw new Meteor.Error(404, "Item is in use on menu items, cannot be deleted."); 
+        logger.error("Item found in Menu Items, can't delete. Archiving ingredient", id);
+        Ingredients.update({"_id": id}, {$set: {"status": "archive"}});
+        return;
       }
     }
     Ingredients.remove(id);

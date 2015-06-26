@@ -3,12 +3,7 @@ Meteor.publish("allIngredients", function() {
     logger.error('User not found : ' + this.userId);
     this.error(new Meteor.Error(404, "User not found"));
   }
-  // var permitted = isManagerOrAdmin(this.userId);
-  // if(!permitted) {
-  //   logger.error("User not permitted to publish all ingredients");
-  //   this.error(new Meteor.Error(404, "User not permitted to publish all ingredients"));
-  // }
-  var cursors = Ingredients.find({}, {sort: {'code': 1}});
+  var cursors = Ingredients.find({}, {sort: {'code': 1}, limit: 10});
   return cursors;
 });
 
@@ -17,11 +12,6 @@ Meteor.publish("ingredients", function(ids) {
     logger.error('User not found : ' + this.userId);
     this.error(new Meteor.Error(404, "User not found"));
   }
-  // var permitted = isManagerOrAdmin(this.userId);
-  // if(!permitted) {
-  //   logger.error("User not permitted to publish ingredients");
-  //   this.error(new Meteor.Error(404, "User not permitted to publish ingredients"));
-  // }
   var cursors = [];
   var ings = null;
   if(ids.length > 0) {
