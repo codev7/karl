@@ -3,7 +3,7 @@ Meteor.publish("allIngredients", function() {
     logger.error('User not found : ' + this.userId);
     this.error(new Meteor.Error(404, "User not found"));
   }
-  var cursors = Ingredients.find({}, {sort: {'code': 1}, limit: 10});
+  var cursors = Ingredients.find({"status": "active"}, {sort: {'code': 1}, limit: 10});
   return cursors;
 });
 

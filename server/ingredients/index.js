@@ -80,6 +80,10 @@ Meteor.methods({
       logger.error("Item not found");
       throw new Meteor.Error(404, "Item not found");
     }
+    if(Object.keys(info).length < 0) {
+      logger.error("No editing fields found");
+      throw new Meteor.Error(404, "No editing fields found");
+    }
     var updateDoc = {};
     if(info.code) {
       if(item.code != info.code) {
