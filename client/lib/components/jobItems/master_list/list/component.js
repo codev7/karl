@@ -6,7 +6,7 @@ var component = FlowComponents.define('jobItemsList', function(props) {
   var fields = ['name'];
 
   this.JobItemsSearch = new SearchSource('jobItemsSearch', fields, options);
-  this.onRendered(this.onJobLitsRendered);
+  this.onRendered(this.onJobListRendered);
 });
 
 component.action.keyup = function(text) {
@@ -14,16 +14,14 @@ component.action.keyup = function(text) {
 }
 
 component.action.click = function() {
-  if(this.JobItemsSearch.history) {
-    if(this.JobItemsSearch.history['']) {
-      var dataHistory = this.JobItemsSearch.history[''].data;
-      if(dataHistory.length >= 9) {
-        this.JobItemsSearch.cleanHistory();
-        var count = dataHistory.length;
-        var lastItem = dataHistory[count - 1]['code'];
-        var text = $("#searchJobItemsBox").val().trim();
-        this.JobItemsSearch.search(text, {"limit": count + 10, "endingAt": lastItem});
-      }
+  var text = $("#searchJobItemsBox").val().trim();
+  if(this.JobItemsSearch.history && this.JobItemsSearch.history[text]) {
+    var dataHistory = this.JobItemsSearch.history[text].data;
+    if(dataHistory.length >= 9) {
+      this.JobItemsSearch.cleanHistory();
+      var count = dataHistory.length;
+      var lastItem = dataHistory[count - 1]['code'];
+      this.JobItemsSearch.search(text, {"limit": count + 10, "endingAt": lastItem});
     }
   }
 }
@@ -38,6 +36,6 @@ component.state.getJobItems = function() {
   return data;
 }
 
-component.prototype.onJobLitsRendered = function() {
+component.prototype.onJobListRendered = function() {
   this.JobItemsSearch.search("", {limit: 10});
 }
