@@ -29,7 +29,7 @@ Meteor.methods({
       logger.error("Time field not found");
       throw new Meteor.Error(404, "Time field not found");
     }
-    var activeTime = parseInt(info.activeTime) * 60 * 1000; //seconds
+    var activeTime = parseInt(info.activeTime) * 60; //seconds
     doc.activeTime = activeTime;
     doc.status = "active";
     doc.type = info.type;
@@ -126,7 +126,7 @@ Meteor.methods({
 
     if(info.activeTime && (info.activeTime == info.activeTime)) {
       if(info.activeTime > 0) {
-        var activeTime = parseInt(info.activeTime) * 60 * 1000;
+        var activeTime = parseInt(info.activeTime) * 60;
         if(activeTime != job.activeTime) {
           updateDoc.activeTime = activeTime;
         }

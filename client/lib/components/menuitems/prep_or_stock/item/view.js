@@ -60,7 +60,7 @@ Template.ingsAndPreps.rendered = function() {
           var ing = $(this).data("pk");
           var type = $(this).data("itemtype");
           if(type == "ings") {
-            Meteor.call("addIngredients", menu, [{"_id": ing, "quantity": newValue}], function(err) {
+            Meteor.call("addMenuIngredients", menu, [{"_id": ing, "quantity": newValue}], function(err) {
               if(err) {
                 console.log(err);
                 return alert(err.reason);
@@ -68,7 +68,7 @@ Template.ingsAndPreps.rendered = function() {
               return;
             });
           } else if(type == "prep") {
-            Meteor.call("addJobItem", menu, [{"_id": ing, "quantity": newValue}], function(err) {
+            Meteor.call("addMenuPrepItems", menu, [{"_id": ing, "quantity": newValue}], function(err) {
               if(err) {
                 console.log(err);
                 return alert(err.reason);

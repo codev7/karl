@@ -321,7 +321,7 @@ Meteor.methods({
     }
     var item = MenuItems.findOne(
       {"_id": id, "jobItems": {$elemMatch: {"_id": jobItem}}},
-      {fields: {"jobItems.$._id": prep._id}}
+      {fields: {"jobItems.$._id": jobItem}}
     );
     var query = {
       $pull: {}
