@@ -22,17 +22,16 @@ Accounts.onCreateUser(function(options, user){
 
 Meteor.methods({
   changeUserPermission: function(id, type) {
-    if(!Meteor.userId()) {
+    var user = Meteor.user();
+    if(!user) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
-    var permitted = isAdmin(userId);
-    if(!permitted) {
-      logger.error("User not permitted to promote users");
-      throw new Meteor.Error(404, "User not permitted to promote users");
+    if(!user.isAdmin) {
+      logger.error("User not permitted to promote or demote users");
+      throw new Meteor.Error(403, "User not permitted to promote or demote users");
     }
-    if(userId == id) {
+    if(user._id == id) {
       logger.error("Admin user cannot change your own permission");
       throw new Meteor.Error(404, "Admin user cannot change your own permission");
     }
@@ -55,8 +54,8 @@ Meteor.methods({
     var adminCount = Meteor.users.find({"isAdmin": true}).count();
     if(adminCount < 1) {
       if(type == "manager" || type == "worker") {
-        logger.error("Can't change type, system needs atleast one admin");
-        throw new Meteor.Error(401, "Can't change type, system needs atleast one admin");
+        logger.error("Can't change type, system needs at least one admin");
+        throw new Meteor.Error(401, "Can't change type, system needs at least one admin");
       }
     }
     if(type == "admin") {
@@ -82,29 +81,15 @@ Meteor.methods({
       throw new Meteor.Error(401, "Un-expected type");
     }
     Meteor.users.update({'_id': id}, query);
-    logger.info("User permission updated", {'id': id, 'query': query});
+    logger.info("User permission updated", {'id': id, 'type': type});
   },
 
   editBasicDetails: function(id, editDetails) {
-    if(!Meteor.userId()) {
+    var user = Meteor.user();
+    if(!user) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var user = Meteor.user();
-    if(!user) {
-      logger.error('No user has found');
-      throw new Meteor.Error(401, "User not found");
-    }
-    var permittedTopLevel = false;
-    if(user.isAdmin || user.isManager) {
-      permittedTopLevel = true;
-    }
-    var permittedForMe = (user._id == id);
-    if(!permittedForMe && !permittedTopLevel) {
-      logger.error("User not permitted to edit users details");
-      throw new Meteor.Error(404, "User not permitted to edit users details");
-    }
-
     if(!id) {
       logger.error('No user has found');
       throw new Meteor.Error(401, "User not found");
@@ -118,6 +103,16 @@ Meteor.methods({
       logger.error('Edit details not found');
       throw new Meteor.Error(401, "Edit details not found");
     }
+    var permittedTopLevel = false;
+    if(user.isAdmin || user.isManager) {
+      permittedTopLevel = true;
+    }
+    var permittedForMe = (user._id == id);
+    if(!permittedForMe && !permittedTopLevel) {
+      logger.error("User not permitted to edit users details");
+      throw new Meteor.Error(404, "User not permitted to edit users details");
+    }
+
     var query = {};
     if(editDetails.username) {
       query['username'] = editDetails.username;
@@ -145,14 +140,20 @@ Meteor.methods({
     logger.info("Users details updated ", editDetails);
   },
 
-  changeStatus: function(userId) {
-    if(!Meteor.userId()) {
+  changeStatus: function(id) {
+    var user = Meteor.user();
+    if(!user) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var user = Meteor.users.findOne(userId);
-    if(!user) {
-      logger.error('No user has found');
+    var permitted = isManagerOrAdmin(user);
+    if(!permitted) {
+      logger.error("User not permitted to create job items");
+      throw new Meteor.Error(403, "User not permitted to create jobs");
+    }
+    var userDoc = Meteor.users.findOne(id);
+    if(!userDoc) {
+      logger.error('No user has found', id);
       throw new Meteor.Error(401, "User not found");
     }
     var query = {};
@@ -161,11 +162,11 @@ Meteor.methods({
     } else {
       query.isActive = true;
     }
-    Meteor.users.update({"_id": userId}, {$set: query});
+    Meteor.users.update({"_id": id}, {$set: query});
     if(query.isActive) {
-      logger.info("User status activated", userId);
+      logger.info("User status activated", id);
     } else {
-      logger.info("User status de-activated", userId);
+      logger.info("User status de-activated", id);
     }
   }
 });

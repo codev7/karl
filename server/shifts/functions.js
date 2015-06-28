@@ -41,21 +41,24 @@ Meteor.methods({
       logger.error("You don't have permission to clock out");
       throw new Meteor.Error(404, "You don't have permission to clock out");
     }
-    var finishAt = new Date().getTime();
-    var activeTime = finishAt - shift.startedAt;
-    Shifts.update({"_id": id}, {$set: {"status": "finished", "finishedAt": finishAt, "activeHours": activeTime}});
+    Shifts.update({"_id": id}, {$set: {"status": "finished", "finishedAt": new Date().getTime()}});
     logger.info("Shift ended", {"shiftId": id, "worker": user._id});
   },
 
   'editClock': function(id, info) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("User not found");
+      throw new Meteor.Error(404, "User not found");
+    }
+    var permitted = isManagerOrAdmin(user);
+    if(!permitted) {
+      logger.error("User not permitted to delete shifts");
+      throw new Meteor.Error(403, "User not permitted to delete shifts ");
+    }
     if(!id) {
       logger.error("Shift id not found");
       throw new Meteor.Error(404, "Shift id not found");
-    }
-    var userId = Meteor.userId();
-    if(!userId) {
-      logger.error("User not found");
-      throw new Meteor.Error(404, "User not found");
     }
     var shift = Shifts.findOne({"_id": id});
     if(!shift) {
@@ -75,13 +78,25 @@ Meteor.methods({
       }
     } else {
       if(info.startedAt) {
-        if(info.startedAt != shift.startedAt) {
-          updateDoc.startedAt = info.startedAt;
+        var startTime = new Date(info.startedAt).getTime();
+        if(startTime != shift.startedAt) {
+          if(startTime > shift.finishedAt) {
+            logger.error("Start time should be less than finished time");
+            throw new Meteor.Error(404, "Start time should be less than finished time");   
+          } else {
+            updateDoc.startedAt = info.startedAt;
+          }
         }
       }
       if(info.finishedAt) {
-        if(info.finishedAt != shift.finishedAt) {
-          updateDoc.finishedAt = info.finishedAt;
+        var finishedTime = new Date(info.finishedAt).getTime();
+        if(finishedTime != shift.finishedAt) {
+          if(finishedTime < shift.startedAt) {
+            logger.error("Finish time should be greater than start time");
+            throw new Meteor.Error(404, "Finish time should be greater than start time");    
+          } else {
+            updateDoc.finishedAt = info.finishedAt;
+          }
         }
       }
     }

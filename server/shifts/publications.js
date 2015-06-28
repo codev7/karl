@@ -1,6 +1,9 @@
 Meteor.publish("daily", function(date, worker) {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
   var cursors = [];
-  //get Shifts
   var query = {
     "shiftDate": new Date(date).getTime()
   }
@@ -11,27 +14,21 @@ Meteor.publish("daily", function(date, worker) {
   cursors.push(shiftsCursor);
   
   var shifts = shiftsCursor.fetch();
-  
   var shiftsList = [];
-  var workers = [];
-  shifts.forEach(function(shift) {
-    shiftsList.push(shift._id);
-    if(shift.assignedTo) {
-      workers.push(shift.assignedTo);
-    }
-  });
+
   if(shiftsList.length > 0) {
     var jobsCursor = Jobs.find({"onshift": {$in: shiftsList}});
     cursors.push(jobsCursor);
-  }
-  if(workers.length > 0) {
-    cursors.push(Meteor.users.find({"_id": {$in: workers}}));
   }
   logger.info("Daily shift detailed publication");;
   return cursors;
 });
 
 Meteor.publish("weekly", function(dates, worker) {
+  if(!this.userId) {
+    logger.error('User not found : ' + this.userId);
+    this.error(new Meteor.Error(404, "User not found"));
+  }
   var cursors = [];
   var firstDate = dates.monday;
   var lastDate = dates.sunday;

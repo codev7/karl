@@ -30,16 +30,14 @@ Template.ingredientsList.events({
 
   'click #loadMoreIngs': _.throttle(function(e) {
     e.preventDefault();
-    if(IngredientsListSearch.history) {
-      if(IngredientsListSearch.history['']) {
-        var dataHistory = IngredientsListSearch.history[''].data;
-        if(dataHistory.length >= 9) {
-          IngredientsListSearch.cleanHistory();
-          var count = dataHistory.length;
-          var lastItem = dataHistory[count - 1]['code'];
-          var text = $("#searchIngBox").val().trim();
-          IngredientsListSearch.search(text, {"limit": count + 10, "endingAt": lastItem});
-        }
+    var text = $("#searchIngBox").val().trim();
+    if(IngredientsListSearch.history && IngredientsListSearch.history[text]) {
+      var dataHistory = IngredientsListSearch.history[text].data;
+      if(dataHistory.length >= 9) {
+        IngredientsListSearch.cleanHistory();
+        var count = dataHistory.length;
+        var lastItem = dataHistory[count - 1]['code'];
+        IngredientsListSearch.search(text, {"limit": count + 10, "endingAt": lastItem});
       }
     }
   }, 200)
