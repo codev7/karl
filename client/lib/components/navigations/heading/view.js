@@ -188,4 +188,31 @@ Template.pageHeading.events({
     var tomorrow = moment(date).add(1, "days").format("YYYY-MM-DD")
     Router.go("dailyRoster", {"date": tomorrow});
   },
+
+  'click #publishRoster': function(event) {
+    event.preventDefault();
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false}).fetch();
+    var tobePublished = [];
+    if(shifts.length > 0) {
+      shifts.forEach(function(shift) {
+        tobePublished.push(shift._id);
+      });
+    }
+    if(tobePublished.length > 0) {
+      Meteor.call("publishRoster", tobePublished, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        }
+      });
+    }
+  }
 });

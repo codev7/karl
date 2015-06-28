@@ -156,3 +156,24 @@ component.state.isWeeklyTemplate = function() {
     return false;
   }
 }
+
+component.state.isWeeklyRoster = function() {
+  if(this.type == "weeklyroster") {
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false}).fetch();
+    if(shifts.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+}
