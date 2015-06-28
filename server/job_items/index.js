@@ -308,7 +308,7 @@ Meteor.methods({
     var permitted = isManagerOrAdmin(user);
     if(!permitted) {
       logger.error("User not permitted to update ingredients of job item");
-      throw new Meteor.Error(404, "User not permitted to update ingredients of job");
+      throw new Meteor.Error(403, "User not permitted to update ingredients of job");
     }
     if(!id) {
       logger.error("Job item should provide an id");
@@ -338,15 +338,15 @@ Meteor.methods({
   },
 
   duplicateJobItem: function(id) {
-    if(!Meteor.userId()) {
+    var user = Meteor.user();
+    if(!user) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
-    var permitted = isManagerOrAdmin(userId);
+    var permitted = isManagerOrAdmin(user);
     if(!permitted) {
       logger.error("User not permitted to add job items");
-      throw new Meteor.Error(404, "User not permitted to add jobs");
+      throw new Meteor.Error(403, "User not permitted to add jobs");
     }
     var exist = JobItems.findOne(id);
     if(!exist) {
@@ -360,7 +360,7 @@ Meteor.methods({
     if(result) {
       var duplicate = exist;
       duplicate.name = exist.name + " - copy " + count;
-      duplicate.createdBy = userId;
+      duplicate.createdBy = user._id;
       duplicate.createdOn = Date.now();
 
       var newId = JobItems.insert(duplicate);
