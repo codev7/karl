@@ -1,0 +1,1 @@
+// process.env.MAIL_URL = 'smtp://postmaster%40herochef-test.meteor.com:c14e88a9a08f8a3a664dcf8fc5fe3b65@smtp.mailgun.org:587/';

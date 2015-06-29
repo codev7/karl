@@ -128,6 +128,15 @@ Meteor.methods({
 
   notifyRoster: function(to, title, text, startDate) {
     var user = Meteor.user();
+    if(!user) {
+      logger.error("User not found");
+      throw new Meteor.Error(404, "User not found");
+    }
+    var permitted = isManagerOrAdmin(user);
+    if(!permitted) {
+      logger.error("User not permitted to delete shifts");
+      throw new Meteor.Error(403, "User not permitted to delete shifts ");
+    }
 
     var emailText = "Hi " + to.name + ", \n";
     emailText += "I've just published the roster for the week starting " + startDate + ".\n\n";
@@ -143,6 +152,7 @@ Meteor.methods({
       "subject": title,
       "text": emailText
     });
+    logger.info("Email sent for weekly roster", to._id);
     //notification
     var notifi = {
       "type": "roster",
