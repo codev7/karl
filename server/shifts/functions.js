@@ -107,7 +107,7 @@ Meteor.methods({
     }
   },
 
-  publishRoster: function(shifts) {
+  publishRoster: function(week, shifts) {
     var user = Meteor.user();
     if(!user) {
       logger.error("User not found");
@@ -122,29 +122,39 @@ Meteor.methods({
       logger.error("No shifts to be published");
       throw new Meteor.Error(404, "No shifts to be published");
     }
+    //update shifts
+    Shifts.update({"_id": {$in: shifts}, "assignedTo": {$ne: null}}, {$set: {"published": true}});
+  },
 
-    shifts.forEach(function(shift) {
-      var shiftToPublish = Shifts.findOne(shift);
-      if(shiftToPublish) {
-        Shifts.update({'_id': shiftToPublish._id, "assignedTo": {$exists: true}}, {$set: {'published': true}});
-        logger.info("Shift published", shiftToPublish._id);
-        
-        //send email
-        logger.info("Email sent on publishing roster", {"shift": shiftToPublish._id, "user": shiftToPublish.assignedTo});
+  notifyRoster: function(to, title, text, startDate) {
+    var user = Meteor.user();
 
-
-        var notifi = {
-          "type": "rosterPublish",
-          "title": "New roster published",
-          "read": false,
-          "text": null,
-          "ref": shiftToPublish._id,
-          "to": shiftToPublish.assignedTo
-        }
-        Notifications.insert(notifi);
-        logger.info("Notification sent to user", shiftToPublish.assignedTo);
-        return;
-      }
+    var emailText = "Hi " + to.name + ", \n";
+    emailText += "I've just published the roster for the week starting " + startDate + ".\n\n";
+    emailText += "Here's your shifts\n";
+    emailText += text;
+    emailText += "If there are any problems with the shifts please let me know.";
+    emailText += "Thanks.\n";
+    emailText += user.username;
+    //email
+    Email.send({
+      "to": to.email,
+      "from": user.emails[0].address,
+      "subject": title,
+      "text": emailText
     });
+    //notification
+    var notifi = {
+      "type": "roster",
+      "title": title,
+      "read": false,
+      "text": text,
+      "to": to._id,
+      "createdOn": new Date().getTime(),
+      "createdBy": Meteor.userId()
+    }
+    Notifications.insert(notifi);
+    logger.info("Notification sent for weekly roster", to._id);
+    return;
   }
 });

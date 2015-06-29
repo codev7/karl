@@ -18,6 +18,8 @@ component.state.icon = function() {
       return "cutlery";
     } else if(type == "comment") {
       return "comment";
+    } else if (type == "roster") {
+      return "calendar-o"
     }
   }
 }

@@ -199,18 +199,44 @@ Template.pageHeading.events({
         dates.push(new Date(day.date).getTime())
       }
     });
-    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false}).fetch();
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false, "assignedTo": {$ne: null}}).fetch();
     var tobePublished = [];
+    var users = [];
     if(shifts.length > 0) {
       shifts.forEach(function(shift) {
         tobePublished.push(shift._id);
+        users.push(shift.assignedTo);
       });
     }
+
     if(tobePublished.length > 0) {
-      Meteor.call("publishRoster", tobePublished, function(err) {
+      Meteor.call("publishRoster", weekNo, tobePublished, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);
+        }
+      });
+      users.forEach(function(user) {
+        var to = Meteor.users.findOne(user);
+        var weekStart = moment(dates[0]).format("YYYY-MM-DD");
+        var title = "Weekly roster for week starting from " + weekStart + " published";
+        var text = "\n";
+        var shiftsPublished = Shifts.find({
+          "assignedTo": user,
+          "shiftDate": {$gte: dates[0], $lte: dates[6]}
+        }).fetch();
+        if(shiftsPublished && shiftsPublished.length > 0) {
+          shiftsPublished.forEach(function(shift) {
+            var start =  moment(shift.startTime).format("hh:mm A");
+            var end = moment(shift.endTime).format("hh:mm A");
+            text += "\nOn " + moment(shift.shiftDate).format("YYYY-MM-DD") + " shift from " + start + " - " + end + "<br>";
+          });
+          Meteor.call("notifyRoster", {"_id": to._id, "email": to.emails[0].address, "name": to.username}, title, text, weekStart, function(err) {
+            if(err) {
+              console.log(err);
+              return alert(err.reason);
+            }
+          });
         }
       });
     }
