@@ -136,8 +136,10 @@ Meteor.methods({
     if(editDetails.shiftsPerWeek) {
       query['profile.shiftsPerWeek'] = editDetails.shiftsPerWeek;
     }
-    Meteor.users.update({"_id": id}, {$set: query});
-    logger.info("Users details updated ", editDetails);
+    if(Object.keys(query).length > 0) {
+      Meteor.users.update({"_id": id}, {$set: query});
+      logger.info("Users details updated ", editDetails);
+    }
   },
 
   changeStatus: function(id) {
