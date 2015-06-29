@@ -214,13 +214,15 @@ Template.pageHeading.events({
         if(err) {
           console.log(err);
           return alert(err.reason);
+        } else {
+          console.log("......done publish");
         }
       });
       users.forEach(function(user) {
         var to = Meteor.users.findOne(user);
         var weekStart = moment(dates[0]).format("YYYY-MM-DD");
-        var title = "Weekly roster for week starting from " + weekStart + " published";
-        var text = "\n";
+        var title = "Weekly roster for the week starting from " + weekStart + " published";
+        var text = "";
         var shiftsPublished = Shifts.find({
           "assignedTo": user,
           "shiftDate": {$gte: dates[0], $lte: dates[6]}
@@ -229,12 +231,14 @@ Template.pageHeading.events({
           shiftsPublished.forEach(function(shift) {
             var start =  moment(shift.startTime).format("hh:mm A");
             var end = moment(shift.endTime).format("hh:mm A");
-            text += "\nOn " + moment(shift.shiftDate).format("YYYY-MM-DD") + " shift from " + start + " - " + end + "<br>";
+            text += "\nOn <a href='/'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
           });
           Meteor.call("notifyRoster", {"_id": to._id, "email": to.emails[0].address, "name": to.username}, title, text, weekStart, function(err) {
             if(err) {
               console.log(err);
               return alert(err.reason);
+            } else {
+              console.log("......done notify");
             }
           });
         }

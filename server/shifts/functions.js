@@ -140,17 +140,17 @@ Meteor.methods({
 
     var emailText = "Hi " + to.name + ", \n";
     emailText += "I've just published the roster for the week starting " + startDate + ".\n\n";
-    emailText += "Here's your shifts\n";
+    emailText += "Here's your shifts";
     emailText += text;
-    emailText += "If there are any problems with the shifts please let me know.";
-    emailText += "Thanks.\n";
+    emailText += "\n\nIf there are any problems with the shifts, please let me know.";
+    emailText += "\nThanks.\n";
     emailText += user.username;
     //email
     Email.send({
       "to": to.email,
       "from": user.emails[0].address,
-      "subject": title,
-      "text": emailText
+      "subject": "[Hero Chef] " + title,
+      "html": emailText
     });
     logger.info("Email sent for weekly roster", to._id);
     //notification
