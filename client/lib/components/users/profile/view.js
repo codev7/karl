@@ -40,6 +40,7 @@ Template.profile.rendered = function(){
   });
 
   $('#phone').editable({
+    display: false,
     success: function(response, newValue) {
       if(newValue) {
         var id = $(this).data("pk");
@@ -50,6 +51,7 @@ Template.profile.rendered = function(){
   });
 
   $('#email').editable({
+    display: false,
     success: function(response, newValue) {
       if(newValue) {
         var id = $(this).data("pk");
@@ -60,30 +62,51 @@ Template.profile.rendered = function(){
   });
 
   $('#weekdaysrate').editable({
+    display: false,
     success: function(response, newValue) {
       if(newValue) {
         var id = $(this).data("pk");
-        var editDetail = {"weekdaysrate": newValue};
+        var newRate = parseFloat(newValue);
+        if(newRate && (newRate == newRate)) {
+          newRate = newRate
+        } else {
+          newRate = 0;
+        }
+        var editDetail = {"weekdaysrate": newRate};
         updateBasicDetails(id, editDetail, $('#weekdaysrate'), "profile.payrates.weekdays");
       }
     }
   });
 
   $('#saturdayrate').editable({
+    display: false,
     success: function(response, newValue) {
       if(newValue) {
         var id = $(this).data("pk");
-        var editDetail = {"saturdayrate": newValue};
+        var newRate = parseFloat(newValue);
+        if(newRate && (newRate == newRate)) {
+          newRate = newRate
+        } else {
+          newRate = 0;
+        }
+        var editDetail = {"saturdayrate": newRate};
         updateBasicDetails(id, editDetail, $('#saturdayrate'), "profile.payrates.saturday");
       }
     }
   });
 
   $('#sundayrate').editable({
+    display: false,
     success: function(response, newValue) {
       if(newValue) {
         var id = $(this).data("pk");
-        var editDetail = {"sundayrate": newValue};
+        var newRate = parseFloat(newValue);
+        if(newRate && (newRate == newRate)) {
+          newRate = newRate
+        } else {
+          newRate = 0;
+        }
+        var editDetail = {"sundayrate": newRate};
         updateBasicDetails(id, editDetail, $('#sundayrate'), "profile.payrates.sunday");
       }
     }
@@ -96,7 +119,6 @@ function updateBasicDetails(id, updateDetails, element, type) {
     if(err) {
       console.log(err);
       var user = Meteor.users.findOne(id);
-      console.log(user);
       if(user) {
         $(element).editable('setValue', user[type]);
       } else {
