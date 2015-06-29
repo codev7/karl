@@ -214,9 +214,7 @@ Template.pageHeading.events({
         if(err) {
           console.log(err);
           return alert(err.reason);
-        } else {
-          console.log("......done publish");
-        }
+        } 
       });
       users.forEach(function(user) {
         var to = Meteor.users.findOne(user);
@@ -238,9 +236,7 @@ Template.pageHeading.events({
             if(err) {
               console.log(err);
               return alert(err.reason);
-            } else {
-              console.log("......done notify");
-            }
+            } 
           });
         }
       });
