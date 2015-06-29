@@ -138,12 +138,12 @@ Meteor.methods({
       throw new Meteor.Error(403, "User not permitted to delete shifts ");
     }
 
-    var emailText = "Hi " + to.name + ", \n";
-    emailText += "I've just published the roster for the week starting " + startDate + ".\n\n";
+    var emailText = "Hi " + to.name + ", <br>";
+    emailText += "I've just published the roster for the week starting " + startDate + ".<br><br>";
     emailText += "Here's your shifts";
     emailText += text;
-    emailText += "\n\nIf there are any problems with the shifts, please let me know.";
-    emailText += "\nThanks.\n";
+    emailText += "<br>If there are any problems with the shifts, please let me know.";
+    emailText += "<br>Thanks.<br>";
     emailText += user.username;
     //email
     Email.send({
