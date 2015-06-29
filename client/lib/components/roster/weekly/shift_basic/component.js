@@ -198,7 +198,7 @@ function editTemplateShift(obj) {
 }
 
 function editShift(obj) {
-  Meteor.call("editShift", obj, function(err) {
+  Meteor.call("editShift", obj._id, obj, function(err) {
     if(err) {
       console.log(err);
       return alert(err.reason);

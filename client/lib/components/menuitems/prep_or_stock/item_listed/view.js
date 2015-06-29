@@ -14,7 +14,7 @@ Template.itemListed.rendered = function() {
         "quantity": 1
       }
       if(type == "prep") {
-        Meteor.call("addJobItem", menuId, [doc], function(err) {
+        Meteor.call("addMenuPrepItems", menuId, [doc], function(err) {
           if(err) {
             console.log(err);
             return alert(err.reason);
@@ -23,7 +23,7 @@ Template.itemListed.rendered = function() {
           }
         });
       } else if(type == "ing") {
-        Meteor.call("addIngredients", menuId, [doc], function(err) {
+        Meteor.call("addMenuIngredients", menuId, [doc], function(err) {
           if(err) {
             console.log(err);
             return alert(err.reason);

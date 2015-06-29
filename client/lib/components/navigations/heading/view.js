@@ -188,4 +188,58 @@ Template.pageHeading.events({
     var tomorrow = moment(date).add(1, "days").format("YYYY-MM-DD")
     Router.go("dailyRoster", {"date": tomorrow});
   },
+
+  'click #publishRoster': function(event) {
+    event.preventDefault();
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false, "assignedTo": {$ne: null}}).fetch();
+    var tobePublished = [];
+    var users = [];
+    if(shifts.length > 0) {
+      shifts.forEach(function(shift) {
+        tobePublished.push(shift._id);
+        users.push(shift.assignedTo);
+      });
+    }
+
+    if(tobePublished.length > 0) {
+      Meteor.call("publishRoster", weekNo, tobePublished, function(err) {
+        if(err) {
+          console.log(err);
+          return alert(err.reason);
+        } 
+      });
+      users.forEach(function(user) {
+        var to = Meteor.users.findOne(user);
+        var weekStart = moment(dates[0]).format("YYYY-MM-DD");
+        var title = "Weekly roster for the week starting from " + weekStart + " published";
+        var text = "<br>";
+        var shiftsPublished = Shifts.find({
+          "assignedTo": user,
+          "shiftDate": {$gte: dates[0], $lte: dates[6]}
+        }).fetch();
+        if(shiftsPublished && shiftsPublished.length > 0) {
+          shiftsPublished.forEach(function(shift) {
+            var start =  moment(shift.startTime).format("hh:mm A");
+            var end = moment(shift.endTime).format("hh:mm A");
+
+            text += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
+          });
+          Meteor.call("notifyRoster", {"_id": to._id, "email": to.emails[0].address, "name": to.username}, title, text, weekStart, function(err) {
+            if(err) {
+              console.log(err);
+              return alert(err.reason);
+            } 
+          });
+        }
+      });
+    }
+  }
 });

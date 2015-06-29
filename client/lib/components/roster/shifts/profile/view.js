@@ -38,13 +38,12 @@ Template.shiftProfile.events({
       return;
     } else {
       var info = {
-        "_id": shiftId,
         "shiftDate": dateOfShift,
         "startTime": dateObj_start,
         "endTime": dateObj_end,
         "section": section
       }
-      Meteor.call("editShift", info, function(err, id) {
+      Meteor.call("editShift", shiftId, info, function(err, id) {
         if(err) {
           return alert(err.reason);
         } else {

@@ -40,7 +40,7 @@ component.prototype.onListRendered = function() {
       }
       if(id && newDate) {
         if(origin == "weeklyroster") {
-          Meteor.call("editShift", {"_id": id, "shiftDate": newDate}, function(err) {
+          Meteor.call("editShift", id, {"shiftDate": newDate}, function(err) {
             if(err) {
               console.log(err);
               $(ui.sender[0]).sortable('cancel');;

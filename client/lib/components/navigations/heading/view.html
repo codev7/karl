@@ -104,11 +104,14 @@
       {{/if}}
 
       {{#if state$weeklyNavigation}}
-      <div class="title-action" data-type="{{state$type}}">
-        <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
-        <a href="" class="btn btn-white thisWeek">This Week</a>
-        <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
-      </div>
+        <div class="title-action" data-type="{{state$type}}">
+          {{#if state$isWeeklyRoster}}
+          <button class="btn btn-primary" id="publishRoster">Publish Roster</button>
+          {{/if}}
+          <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
+          <a href="" class="btn btn-white thisWeek">This Week</a>
+          <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
+        </div>
       {{/if}}
 
       {{#if state$isDailyRoster}}
