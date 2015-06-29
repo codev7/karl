@@ -33,8 +33,15 @@
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1800px) {
-  .editableform .control-group {
+  .col-lg-13 .editableform .control-group {
     width: 79%;
+    white-space: pre !important;
+  }
+}
+
+@media screen and (min-width: 901px) and (max-width: 1120px) {
+  .profile-content .editableform .control-group {
+    width: 99%;
     white-space: pre !important;
   }
 }
