@@ -12,7 +12,7 @@ Template.profile.events({
 });
 
 Template.profile.rendered = function(){
-
+  $.fn.editable.defaults.mode = 'inline';
   // Set options for peity charts
   $(".line").peity("line",{
       fill: '#1ab394',
@@ -29,6 +29,7 @@ Template.profile.rendered = function(){
   });
 
   $('#username').editable({
+    display: false,
     success: function(response, newValue) {
       if(newValue) {
         var id = $(this).data("pk");

@@ -5,7 +5,6 @@ var component = FlowComponents.define("shiftBasic", function(props) {
   this.set("user", Meteor.user());
   this.onRendered(this.itemRendered);
   $.fn.editable.defaults.mode = 'inline';
-  $.fn.editable.defaults.showbuttons = false;
 });
 
 component.state.shift = function() {
@@ -138,7 +137,7 @@ component.prototype.itemRendered = function() {
       url: '/post',
       display: false,
       showbuttons: true,
-      inputclass: "editable",
+      inputclass: "editableTime",
       mode: 'inline',
       success: function(response, newValue) {
         var shiftId = $(this).closest("li").attr("data-id");
@@ -167,6 +166,7 @@ component.prototype.itemRendered = function() {
       url: '/post',
       display: false,
       showbuttons: true,
+      inputclass: "editableTime",
       mode: 'inline',
       success: function(response, newValue) {
         var shiftId = $(this).closest("li").attr("data-id");
