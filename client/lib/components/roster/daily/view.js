@@ -83,17 +83,16 @@ Template.dailyShiftScheduling.rendered = function() {
           var thisMonth = thisDate.getMonth();
           var thisYear = thisDate.getFullYear();
 
-          var startTime = parseInt(moment(shift.startTime).format("hh"));
-          var endTime = parseInt(moment(shift.endTime).format("hh"));
+          var startTime = parseInt(moment(shift.startTime).format("HH"));
+          var endTime = parseInt(moment(shift.endTime).format("HH"));
 
-          if(businessStartsAt > startTime) {
+          // if(businessStartsAt > startTime) {
             businessStartsAt = startTime;
-          }
+          // }
 
-          if(businessEndsAt < endTime) {
+          // if(businessEndsAt < endTime) {
             businessEndsAt = endTime;
-          }
-
+          // }
           if(shift.jobs.length > 0) {
             shift.jobs.forEach(function(job) {
               var hourFix = 0;
@@ -174,7 +173,7 @@ Template.dailyShiftScheduling.rendered = function() {
             },
             businessHours: {
               "start": businessStartsAt + ":00",
-              "end": (businessEndsAt + 12) + ":00",
+              "end": (businessEndsAt + 1) + ":00",
               "dow": [ 0, 1, 2, 3, 4, 5, 6 ]
             },
             allDaySlot: false,
