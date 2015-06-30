@@ -1,10 +1,10 @@
 Meteor.methods({
   'sendNotifications': function(itemId, type, options) {
-    if(!Meteor.userId()) {
+    var userId = Meteor.userId();
+    if(!userId) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
 
     var item = null;
     var info = {};
