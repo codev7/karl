@@ -10,7 +10,13 @@
         <p class="m-b-xs">
           <strong>{{{state$notifi.title}}}</strong>
         </p>
-        <p>{{{state$notifi.text}}}&nbsp;</p>
+        <p>
+          <ul class="notifi-ul">
+            {{#each state$notifi.text}}
+              <li>{{{this}}}</li>
+            {{/each}}
+          </ul>
+        </p>
       </div>
     </div>
   </div>
