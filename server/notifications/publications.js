@@ -7,7 +7,7 @@ Meteor.publish("newNotifications", function() {
   var cursors = [];
   var notifi = Notifications.find(
     {"to": userId, "read": false}, 
-    {fileds: {'_id': 1, "read": 1, "to": 1, "createdOn": 1}},
+    {fileds: {'_id': 1, "read": 1, "to": 1, "createdOn": -1}},
     {sort: {"createdOn": -1}}
   );
   cursors.push(notifi);
@@ -24,7 +24,7 @@ Meteor.publish("readNotifications", function() {
   var cursors = [];
   var notifi = Notifications.find(
     {"to": userId, "read": true}, 
-    {fileds: {'_id': 1, "read": 1, "to": 1, "createdOn": 1}},
+    {fileds: {'_id': 1, "read": 1, "to": 1, "createdOn": -1}},
     {sort: {"createdOn": -1}, limit: 10}
   );
   cursors.push(notifi);

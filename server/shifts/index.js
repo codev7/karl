@@ -87,7 +87,7 @@ Meteor.methods({
     var shift = Shifts.findOne(id);
     if(!shift) {
       logger.error("Shift not found");
-      throw new Meteor.Error(404, "Shift not found---");
+      throw new Meteor.Error(404, "Shift not found");
     }
     var updateDoc = {};
     if(info.startTime) {
