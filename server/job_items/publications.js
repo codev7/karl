@@ -16,9 +16,9 @@ Meteor.publish("jobItems", function(ids) {
   var cursors = [];
   var jobsItems = null;
   if(ids.length > 0) {
-    jobsItems = JobItems.find({"_id": {$in: ids}}, {sort: {'code': 1}});
+    jobsItems = JobItems.find({"_id": {$in: ids}}, {sort: {'name': 1}});
   } else {
-    jobsItems = JobItems.find({}, {sort: {'code': 1}, limit: 10});
+    jobsItems = JobItems.find({}, {sort: {'name': 1}, limit: 10});
   }
   cursors.push(jobsItems);
   logger.info("Job items published", ids);

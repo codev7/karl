@@ -124,47 +124,5 @@ Meteor.methods({
     }
     //update shifts
     Shifts.update({"_id": {$in: shifts}, "assignedTo": {$ne: null}}, {$set: {"published": true}});
-  },
-
-  notifyRoster: function(to, title, text, startDate) {
-    var user = Meteor.user();
-    if(!user) {
-      logger.error("User not found");
-      throw new Meteor.Error(404, "User not found");
-    }
-    var permitted = isManagerOrAdmin(user);
-    if(!permitted) {
-      logger.error("User not permitted to delete shifts");
-      throw new Meteor.Error(403, "User not permitted to delete shifts ");
-    }
-
-    var emailText = "Hi " + to.name + ", <br>";
-    emailText += "I've just published the roster for the week starting " + startDate + ".<br><br>";
-    emailText += "Here's your shifts";
-    emailText += text;
-    emailText += "<br>If there are any problems with the shifts, please let me know.";
-    emailText += "<br>Thanks.<br>";
-    emailText += user.username;
-    //email
-    Email.send({
-      "to": to.email,
-      "from": user.emails[0].address,
-      "subject": "[Hero Chef] " + title,
-      "html": emailText
-    });
-    logger.info("Email sent for weekly roster", to._id);
-    //notification
-    var notifi = {
-      "type": "roster",
-      "title": title,
-      "read": false,
-      "text": text,
-      "to": to._id,
-      "createdOn": new Date().getTime(),
-      "createdBy": Meteor.userId()
-    }
-    Notifications.insert(notifi);
-    logger.info("Notification sent for weekly roster", to._id);
-    return;
   }
 });
