@@ -305,6 +305,6 @@ Template.submitJobItem.rendered = function() {
 
 Tracker.autorun(function() {
   if(Session.get("thisJobItem") == null) {
-    return Meteor.subscribe("ingredients", []);
+    // return Meteor.subscribe("ingredients", []);
   }
 });

@@ -107,7 +107,7 @@ Meteor.methods({
     }
   },
 
-  publishRoster: function(week, shifts) {
+  publishRoster: function(shifts) {
     var user = Meteor.user();
     if(!user) {
       logger.error("User not found");
@@ -123,6 +123,8 @@ Meteor.methods({
       throw new Meteor.Error(404, "No shifts to be published");
     }
     //update shifts
-    Shifts.update({"_id": {$in: shifts}, "assignedTo": {$ne: null}}, {$set: {"published": true}});
+    Shifts.update({"_id": {$in: shifts}, "assignedTo": {$ne: null}}, {$set: {"published": true}}, {"multi": true});
+    logger.info("Roster shifts published");
+    return;
   }
 });

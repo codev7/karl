@@ -5,7 +5,7 @@ var component = FlowComponents.define('editIngredientItem', function(props) {
 
 component.state.id = function() {
   var id = Session.get("thisIngredientId");
-  subs.subscribe("ingredients", [id]);
+  // subs.subscribe("ingredients", [id]);
   var ing = Ingredients.findOne(id);
   return id;
 }
