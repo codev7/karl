@@ -1,10 +1,10 @@
 Meteor.methods({
   'sendNotifications': function(itemId, type, options) {
-    if(!Meteor.userId()) {
+    var userId = Meteor.userId();
+    if(!userId) {
       logger.error('No user has logged in');
       throw new Meteor.Error(401, "User not logged in");
     }
-    var userId = Meteor.userId();
 
     var item = null;
     var info = {};
@@ -48,7 +48,7 @@ Meteor.methods({
         item = MenuItems.findOne(itemId);
         if(options.type == "create") {
           info.createdOn = item.createdOn;
-          info.text = item.name;
+          info.text = [item.name];
         } else if(options.type == "edit") {
           info.createdOn = item.editedOn;
         }
@@ -74,7 +74,7 @@ Meteor.methods({
         item = JobItems.findOne(itemId);
         if(options.type == "create") {
           info.createdOn = item.createdOn;
-          info.text = item.name;
+          info.text = [item.name];
         } else if(options.type == "edit") {
           info.createdOn = item.editedOn;
         }
@@ -88,7 +88,7 @@ Meteor.methods({
       info.refType = options.type;
       var comment = Comments.findOne(options.commentId);
       if(comment) {
-        info.text = comment.text;
+        info.text = [comment.text];
         info.createdOn = comment.createdOn;
         info.ref = comment.reference;
       }

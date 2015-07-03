@@ -139,14 +139,13 @@ Template.editJobItem.events({
       //if Recurring
       else if(type == "Recurring") {
         var description = FlowComponents.child('jobItemEditorEdit').getState('content');
-        if(job.description != description) {
+        if(job.description != description.trim()) {
           if($('.note-editable').text() === "Add description here" || $('.note-editable').text() === "") {
             info.description = "";
           } else {
             info.description = description;
           }
         }
-
         //checklist
         var listItems = Session.get("checklist");
         info.checklist = listItems;
@@ -176,47 +175,50 @@ Template.editJobItem.events({
         }
 
         var endsOn = $(event.target).find('[type=radio]:checked').attr("data-doc");
-        if(job.endsOn) {
-          if(job.endsOn.on != endsOn) {
-            info.endsOn = {"on": endsOn};
-          }
-        } else {
-          info.endsOn = {"on": endsOn};
-        }
-
-        if(endsOn == "endsAfter") {
-          var after = $(event.target).find("[name=occurrences]").val();
-          if(!after) {
-            return alert("Should have No. of occurrences");
-          }
-          after = parseInt(after);
-          if(after == after) {
-            if(job.endsOn.after && job.endsOn.after != after) {
-              info.endsOn.on = endsOn;
-              info.endsOn.after = after;
-            } else {
-              info.endsOn.on = endsOn;
-              info.endsOn['after'] = 10;
+        if(endsOn) {
+          if(job.endsOn) {
+            if(job.endsOn.on != endsOn) {
+              info.endsOn = {"on": endsOn};
             }
           } else {
-            info.endsOn.on = endsOn;
-            info.endsOn['after'] = 1;
+            info.endsOn = {"on": endsOn};
           }
-        } else if(endsOn == "endsOn") {
-          var lastDate = $(event.target).find("[name=endsOn]").val();
-          if(!lastDate) {
-            return alert("Should have a date to end");
-          }
-          if(job.endsOn && moment(job.endsOn.lastDate).format("YYYY-MM-DD") != lastDate) {
-            info.endsOn.on = endsOn;
-            info.endsOn['lastDate'] = new Date(lastDate);
+
+          if(endsOn == "endsAfter") {
+            var after = $(event.target).find("[name=occurrences]").val();
+            if(!after) {
+              return alert("Should have No. of occurrences");
+            }
+            after = parseInt(after);
+            if(after == after) {
+              if(job.endsOn.after && job.endsOn.after != after) {
+                info.endsOn = {"on": endsOn};
+                info.endsOn['after'] = after;
+              } else {
+                info.endsOn = {'on': endsOn};
+                info.endsOn['after'] = 10;
+              }
+            } else {
+              info.endsOn.on = endsOn;
+              info.endsOn['after'] = 1;
+            }
+          } else if(endsOn == "endsOn") {
+            var lastDate = $(event.target).find("[name=endsOn]").val();
+            if(!lastDate) {
+              return alert("Should have a date to end");
+            }
+            if(job.endsOn && moment(job.endsOn.lastDate).format("YYYY-MM-DD") != lastDate) {
+              info.endsOn.on = endsOn;
+              info.endsOn['lastDate'] = new Date(lastDate);
+            }
           }
         }
+        console.log()
         var section = $(event.target).find("[name=sections]").val();
         if(!section) {
-            return alert("Should have a section");
-          }
-        if(job.section && job.section != section) {
+          return alert("Should have a section");
+        }
+        if(job.section != section) {
           info.section = section;
         }
 

@@ -262,11 +262,11 @@ component.action.submit = function(id, info) {
       return alert(err.reason);
     } else {
       var jobBefore = Session.get("updatingJob");
-      var desc = createNotificationText("job", id, jobBefore, info);
+      var desc = createNotificationText(id, jobBefore, info);
 
       var options = {
         "type": "edit",
-        "title": jobBefore.name + " has been updated",
+        "title": jobBefore.name + " " + jobBefore.type + " job has been updated",
         "text": desc
       }
       Meteor.call("sendNotifications", id, "job", options, function(err) {
