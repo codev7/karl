@@ -32,6 +32,8 @@ Template.notifiButtons.events({
           Router.go("jobItemDetailed", {"_id": ref});  
         }
       }
+    } else if(type == "roster") {
+      Router.go("shift", {"_id": ref});
     }
   }
 });

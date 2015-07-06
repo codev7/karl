@@ -4,24 +4,33 @@ var component = FlowComponents.define("shiftsSummary", function(props) {
 
 component.prototype.onListRendered = function() {
   var state = Session.get("shiftState");
-  if(state) {
+  if(state == "future") {
     $(".futureShifts").addClass("label-primary");
-  } else {
+  } else if(state == "past") {
     $(".pastShifts").addClass("label-primary");
+  } else if(state == "open") {
+    $(".openShifts").addClass("label-primary");
   }
 }
 
 component.state.shifts = function() {
   var state = Session.get("shiftState");
   var shifts = [];
-  if(state) {
+  if(state == "future") {
     shifts = Shifts.find({"assignedTo": Meteor.userId(), "shiftDate": {$gte: Date.now()}}, {sort: {'shiftDate': 1}});
-  } else {
+  } else if(state == "past") {
     shifts = Shifts.find({"assignedTo": Meteor.userId(), "shiftDate": {$lt: Date.now()}}, {sort: {'shiftDate': -1}});
+  } else if(state == "open") {
+    shifts = Shifts.find({"assignedTo": null, "shiftDate": {$gte: Date.now()}}, {sort: {'shiftDate': 1}});
   }
   return shifts;
 }
 
-component.state.future = function() {
-  return Session.get("shiftState");
+component.state.past = function() {
+  var state = Session.get("shiftState");
+  if(state == "past") {
+    return true;
+  } else {
+    return false;
+  }
 }

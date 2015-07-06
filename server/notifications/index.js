@@ -14,7 +14,7 @@ Meteor.methods({
     info.createdBy = userId;
     var allSubscribers = [];
 
-    if(type != "comment") {
+    if(type != "comment" || type != "roster") {
       if(!itemId) {
         logger.error('ItemId should have a value');
         throw new Meteor.Error(404, "ItemId should have a value");
@@ -92,8 +92,36 @@ Meteor.methods({
         info.createdOn = comment.createdOn;
         info.ref = comment.reference;
       }
+    } else if(type == "roster") {
+      info.actionType = options.type;
+      info.ref = itemId;
+      info.createdOn = Date.now();
+      var text = "";
+      var shift = Shifts.findOne(itemId);
+      if(shift) {
+        if(options.type == "claim") {
+          if(shift.claimedBy && shift.claimedBy.length > 0) {
+            var claimedUsers = Meteor.users.find({"_id": {$in: shift.claimedBy}}).fetch();
+            claimedUsers.forEach(function(user) {
+              var index = claimedUsers.indexOf(user);
+              text += "<br>" + (index+1) + "). " + user.username + " <a href='#' class='confirmClaim' data-id='" + user._id + "' data-shift='" + itemId + "'>Confirm</a>";
+            });
+          }
+          var users = Meteor.users.find({$or: [{"isManager": true}, {"isAdmin": true}]}).fetch();
+          if(users && users.length > 0) {
+            users.forEach(function(user) {
+              allSubscribers.push(user._id);
+            });
+          }
+        } else if(options.type == "confirm") {
+          allSubscribers.push(shift.assignedTo);
+        }
+      }
+      info.text = text;
     }
-    if(type == "job" || type == "menu") {
+
+
+    if(type == "job" || type == "menu" || type == "roster") {
       allSubscribers.forEach(function(subscriber) {
         if(subscriber != userId) {
           var doc = info;
