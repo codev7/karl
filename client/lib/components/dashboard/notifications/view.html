@@ -9,6 +9,8 @@
       <div class="ibox-content inspinia-timeline">
         {{#each state$notifications}}
           {{> render component='notifiText' noti=this}}
+        {{else}}
+          No notifications
         {{/each}}
       </div>
     </div>

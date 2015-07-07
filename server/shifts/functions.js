@@ -107,7 +107,7 @@ Meteor.methods({
     }
   },
 
-  publishRoster: function(week, shifts) {
+  publishRoster: function(shifts) {
     var user = Meteor.user();
     if(!user) {
       logger.error("User not found");

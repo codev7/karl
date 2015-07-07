@@ -210,7 +210,7 @@ Template.pageHeading.events({
     }
 
     if(tobePublished.length > 0) {
-      Meteor.call("publishRoster", weekNo, tobePublished, function(err) {
+      Meteor.call("publishRoster", tobePublished, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);
