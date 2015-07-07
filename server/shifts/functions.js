@@ -122,9 +122,8 @@ Meteor.methods({
       logger.error("No shifts to be published");
       throw new Meteor.Error(404, "No shifts to be published");
     }
-    Shifts.update({"_id": {$in: shifts}, "assignedTo": {$ne: null}}, {$set: {"published": true}});
+    Shifts.update({"_id": {$in: shifts}, "assignedTo": {$ne: null}}, {$set: {"published": true}}, {multi: true});
     logger.info("Weekly roster published", week);
-
   },
 
   claimShift: function(shiftId) {

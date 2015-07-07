@@ -150,7 +150,7 @@ Meteor.methods({
     }  
   },
 
-  notifyRoster: function(to, title, text, startDate) {
+  notifyRoster: function(to, info) {
     var user = Meteor.user();
     if(!user) {
       logger.error("User not found");
@@ -163,9 +163,13 @@ Meteor.methods({
     }
 
     var emailText = "Hi " + to.name + ", <br>";
-    emailText += "I've just published the roster for the week starting " + startDate + ".<br><br>";
+    emailText += "I've just published the roster for the week starting " + info.startDate + ".<br><br>";
     emailText += "Here's your shifts";
-    emailText += text;
+    emailText += info.text;
+    if(info.openShifts) {
+      emailText += "<br><br>And check open shifts. You can claim them from the dashboard.";
+      emailText += info.openShifts;
+    }
     emailText += "<br>If there are any problems with the shifts, please let me know.";
     emailText += "<br>Thanks.<br>";
     emailText += user.username;
@@ -173,22 +177,35 @@ Meteor.methods({
     Email.send({
       "to": to.email,
       "from": user.emails[0].address,
-      "subject": "[Hero Chef] " + title,
+      "subject": "[Hero Chef] " + info.title,
       "html": emailText
     });
     logger.info("Email sent for weekly roster", to._id);
+    
     //notification
     var notifi = {
       "type": "roster",
-      "title": title,
+      "title": info.title + ". Checkout your shifts",
       "read": false,
-      "text": [text],
+      "text": [info.text],
       "to": to._id,
       "createdOn": new Date().getTime(),
       "createdBy": user._id
     }
     Notifications.insert(notifi);
     logger.info("Notification sent for weekly roster", to._id);
+
+    var notifiOpen = {
+      "type": "roster",
+      "title": info.title + ". Checkout open shifts",
+      "read": false,
+      "text": [info.openShifts],
+      "to": to._id,
+      "createdOn": new Date().getTime(),
+      "createdBy": user._id
+    }
+    Notifications.insert(notifiOpen);
+    logger.info("Notification sent for open shifts on weekly roster", to._id);
     return;
   },
 

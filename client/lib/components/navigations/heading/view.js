@@ -221,18 +221,41 @@ Template.pageHeading.events({
         var weekStart = moment(dates[0]).format("YYYY-MM-DD");
         var title = "Weekly roster for the week starting from " + weekStart + " published";
         var text = "<br>";
+        var open = "<br>";
         var shiftsPublished = Shifts.find({
           "assignedTo": user,
           "shiftDate": {$gte: dates[0], $lte: dates[6]}
         }).fetch();
-        if(shiftsPublished && shiftsPublished.length > 0) {
-          shiftsPublished.forEach(function(shift) {
-            var start =  moment(shift.startTime).format("hh:mm A");
-            var end = moment(shift.endTime).format("hh:mm A");
+        var openShifts = Shifts.find({
+          "assignedTo": null,
+          "shiftDate": {$gte: dates[0], $lte: dates[6]}
+        }).fetch();
+        if(shiftsPublished && openShifts) {
+          if(shiftsPublished.length > 0) {
+            shiftsPublished.forEach(function(shift) {
+              var start =  moment(shift.startTime).format("hh:mm A");
+              var end = moment(shift.endTime).format("hh:mm A");
 
-            text += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
-          });
-          Meteor.call("notifyRoster", {"_id": to._id, "email": to.emails[0].address, "name": to.username}, title, text, weekStart, function(err) {
+              text += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
+            });
+          }
+
+          if(openShifts.length > 0) {
+            openShifts.forEach(function(shift) {
+              var start =  moment(shift.startTime).format("hh:mm A");
+              var end = moment(shift.endTime).format("hh:mm A");
+
+              open += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
+            });
+          }
+
+          var info = {
+            "title": title, 
+            "text": text, 
+            "weekStart": weekStart,
+            "openShifts": open
+          }
+          Meteor.call("notifyRoster", {"_id": to._id, "email": to.emails[0].address, "name": to.username}, info, function(err) {
             if(err) {
               console.log(err);
               return alert(err.reason);
