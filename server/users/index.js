@@ -159,7 +159,7 @@ Meteor.methods({
       throw new Meteor.Error(401, "User not found");
     }
     var query = {};
-    if(user.isActive) {
+    if(userDoc.isActive) {
       query.isActive = false;
     } else {
       query.isActive = true;

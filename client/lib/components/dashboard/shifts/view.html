@@ -2,6 +2,7 @@
   <div class="ibox-title">
     <span class="label pull-right pastShifts">Past</span>
     <span class="label pull-right futureShifts">Future</span>
+    <span class="label pull-right openShifts">Open</span>
     <h5>Your shifts</h5>
   </div>
   <div class="ibox-content">
@@ -13,10 +14,8 @@
               <th class="text-center" style="width: 10%">Time</th>
               <th>Date</th>
               <th class="text-center">Section</th>
-              {{#if state$future}}
-              <!-- <th class="text-center">Confirm</th> -->
-              {{else}}
-              <th class="text-center">Hours</th>
+              {{#if state$past}}
+                <th class="text-center">Hours</th>
               {{/if}}
             </tr>
           </thead>

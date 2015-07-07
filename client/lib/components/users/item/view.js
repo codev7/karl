@@ -14,6 +14,7 @@ Template.userDetailed.events({
   'click .archiveUser': function(event) {
     event.preventDefault();
     var userId = $(event.target).closest("tr").attr("data-id");
+    console.log(userId);
     var user = Meteor.users.findOne(userId);
     if(user) {
       var state = "de-activate";
@@ -23,11 +24,12 @@ Template.userDetailed.events({
         state = "activate";
       }
       var confirmChange = confirm("Are you sure you want to " + state + " this user");
+      console.log(confirmChange);
       if(confirmChange) {
         Meteor.call("changeStatus", userId, function(err) {
           if(err) {
             console.log(err);
-            alert(err.reason);
+            return alert(err.reason);
           }
         });
       }
