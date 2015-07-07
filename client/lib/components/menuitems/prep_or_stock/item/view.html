@@ -1,16 +1,18 @@
 <template name="ingsAndPreps">
-  <tr>
-    {{#if state$isPermitted}}
-    <td>
-      <a class="btn btn-primary btn-xs view-{{state$type}}" data-id="{{state$id}}" href="#"><i class="fa fa-edit fa-fw"></i>Edit </a>
-    </td>
-    {{/if}}
-    <td>{{state$name}}</td>
-    <td>{{state$type}}</td>
-    <td><a href="#" class="quantity" data-type="text" data-pk="{{state$id}}" data-url="/post" data-title="Enter quantity" data-itemtype="{{state$type}}">{{state$quantity}}</a></td>
-    <td>{{state$measure}}</td>
-    {{#if state$isPermitted}}
-    <td><span class="remove-{{state$type}}" data-id="{{state$id}}" data-type="{{state$type}}">remove</span></td>
-    {{/if}}
-  </tr>
+  {{#if state$item}}
+    <tr>
+      {{#if state$isPermitted}}
+      <td>
+        <a class="btn btn-primary btn-xs view-{{state$type}}" data-id="{{state$item._id}}" href="#"><i class="fa fa-edit fa-fw"></i>Edit </a>
+      </td>
+      {{/if}}
+      <td>{{state$name}}</td>
+      <td>{{state$type}}</td>
+      <td><a href="#" class="quantity" data-type="text" data-pk="{{state$item._id}}" data-url="/post" data-title="Enter quantity" data-itemtype="{{state$type}}">{{state$quantity}}</a></td>
+      <td>{{state$measure}}</td>
+      {{#if state$isPermitted}}
+      <td><span class="remove-{{state$type}}" data-id="{{state$item._id}}" data-type="{{state$type}}">remove</span></td>
+      {{/if}}
+    </tr>
+  {{/if}}
 </template>

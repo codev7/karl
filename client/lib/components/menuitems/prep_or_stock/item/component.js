@@ -1,13 +1,30 @@
+var subs = new SubsManager();
+
 var component = FlowComponents.define("ingsAndPreps", function(props) {
   this.type = props.type;
-  if(this.type == "prep") {
-    this.item = JobItems.findOne(props.item._id);
-    this.quantity = props.item.quantity;
-  } else if(this.type == "ings") {
-    this.item = Ingredients.findOne(props.item._id);
-    this.quantity = props.item.quantity;
-  }
+  this.id = props.item._id;
+  this.quantity = props.item.quantity;
+  this.onRendered(this.onItemRendered);
 });
+
+component.prototype.onItemRendered = function() {
+  if(this.type == "prep") {
+    subs.subscribe("jobItems", [this.id]);
+  } else if(this.type == "ings") {
+    subs.subscribe("ingredients", [this.id]);
+  }
+}
+
+component.state.item = function() {
+  if(this.type == "prep") {
+    this.item = JobItems.findOne(this.id);
+  } else if(this.type == "ings") {
+    this.item = Ingredients.findOne(this.id);
+  }
+  if(this.item) {
+    return this.item;
+  }
+}
 
 component.state.name = function() {
   if(this.item) {
