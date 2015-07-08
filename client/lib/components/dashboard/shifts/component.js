@@ -43,7 +43,7 @@ component.state.shiftsCount = function() {
   } else if(state == "past") {
     shifts = Shifts.find({"assignedTo": Meteor.userId(), "shiftDate": {$lt: Date.now()}}).fetch();
   } else if(state == "open") {
-    shifts = Shifts.find({"assignedTo": null, "shiftDate": {$gte: Date.now()}}, {sort: {'shiftDate': 1}});
+    shifts = Shifts.find({"assignedTo": null, "shiftDate": {$gte: Date.now()}}, {sort: {'shiftDate': 1}}).fetch();
   }
   if(shifts.length > 0) {
     return true;
