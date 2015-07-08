@@ -210,7 +210,7 @@ Template.pageHeading.events({
     }
 
     if(tobePublished.length > 0) {
-      Meteor.call("publishRoster", tobePublished, function(err) {
+      Meteor.call("publishRoster", weekNo, tobePublished, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);
@@ -235,7 +235,6 @@ Template.pageHeading.events({
             shiftsPublished.forEach(function(shift) {
               var start =  moment(shift.startTime).format("hh:mm A");
               var end = moment(shift.endTime).format("hh:mm A");
-
               text += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
             });
           }
@@ -244,7 +243,6 @@ Template.pageHeading.events({
             openShifts.forEach(function(shift) {
               var start =  moment(shift.startTime).format("hh:mm A");
               var end = moment(shift.endTime).format("hh:mm A");
-
               open += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
             });
           }
@@ -252,7 +250,7 @@ Template.pageHeading.events({
           var info = {
             "title": title, 
             "text": text, 
-            "weekStart": weekStart,
+            "startDate": weekStart,
             "openShifts": open
           }
           Meteor.call("notifyRoster", {"_id": to._id, "email": to.emails[0].address, "name": to.username}, info, function(err) {
