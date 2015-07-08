@@ -1,3 +1,5 @@
+var subs = new SubsManager();
+
 var component = FlowComponents.define('editMenuItem', function(props) {
   this.id = Router.current().params._id;
   this.onRendered(this.onMenuRendered);
@@ -45,6 +47,7 @@ component.state.jobItemsList = function() {
   var jobItems = Session.get("selectedJobItems");
   if(jobItems) {
     if(jobItems.length > 0) {
+      subs.subscribe("jobItems", jobItems);
       var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
       return jobItemsList;
     }
@@ -55,7 +58,7 @@ component.state.ingredientsList = function() {
   var ing = Session.get("selectedIngredients");
   if(ing) {
     if(ing.length > 0) {
-      Meteor.subscribe("ingredients", ing);
+      subs.subscribe("ingredients", ing);
       var ingredientsList = Ingredients.find({'_id': {$in: ing}}).fetch();
       return ingredientsList;
     }

@@ -1,0 +1,14 @@
+<template name="jobItemListed">
+  <tr>
+    <td><a href="" data-toggle="modal" class="editIngredient">{{{state$item.name}}}</a></td>
+    <td>{{secondsToMinutes state$item.activeTime}}</td>
+    <td>$ {{state$costPerPortion}}</td>
+    <td>
+      <div class="i-checks">
+        <label>
+          <input type="checkbox" value="" data-id="{{state$item._id}}" data-type="{{state$item.type}}" class="selectedPrep" name="selectedPrep">
+        </label>
+      </div>
+    </td>
+  </tr>
+</template>

@@ -13,18 +13,20 @@
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Active Time</th>
+                  <th>Active Time (mins)</th>
                   <th>Cost per Portion ($)</th>
                   <th>Action</th>
                 </tr>
               </thead>
              <tbody>
-                {{#each state$getJobItemsa}}
+                {{#each state$getJobItems}}
                   {{> render component='jobItemListed' jobitem=this}}
                 {{/each}}
               </tbody>
             </table>
-              <div class="alert alert-warning">If your job is not in the list, <a href="#" id="addNewJobItem" class="alert-link">click here</a> to add it. Once you save it, it will appear next time you search.</div>
+            <div class="alert alert-warning">If your job is not in the list, 
+              <a href="#" id="addNewJobItem" class="alert-link">click here</a> to add it. Once you save it, it will appear next time you search.
+            </div>
           </div>
         </div>
         <div class="modal-footer">

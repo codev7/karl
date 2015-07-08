@@ -3,8 +3,8 @@
     <td><a href="#" data-toggle="modal" class="viewDetail">{{{state$job.name}}}</a></td>
     <td>{{secondsToMinutes state$job.activeTime}} mins</td>
     <td>{{state$job.type}}</td>
-    <td>{{state$job.shelfLife}} days</td>
-    <td>{{state$job.portions}}</td>
+    <td>{{#if state$job.shelfLife}}{{state$job.shelfLife}} days {{else}} -NA- {{/if}}</td>
+    <td>{{#if state$job.portions}} {{state$job.portions}} {{else}} -NA- {{/if}}</td>
     <td>$ {{state$cost}}</td>
     <td>
       <button class="btn btn-primary btn-sm viewDetail">View Item</button>
