@@ -5,7 +5,7 @@
     <td>{{state$job.type}}</td>
     <td>{{#if state$job.shelfLife}}{{state$job.shelfLife}} days {{else}} -NA- {{/if}}</td>
     <td>{{#if state$job.portions}} {{state$job.portions}} {{else}} -NA- {{/if}}</td>
-    <td>$ {{state$cost}}</td>
+    <td>{{#if state$isPrep}} $ {{state$cost}} {{else}} -NA-{{/if}}</td>
     <td>
       <button class="btn btn-primary btn-sm viewDetail">View Item</button>
     </td>

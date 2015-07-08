@@ -1,0 +1,14 @@
+<template name="ingredientItemEdit">
+  <tr>
+    <td>{{state$item.code}}</td>
+    <td>{{state$item.description}}</td>
+    <td>{{state$item.portionUsed}}</td>
+    <td>$ {{state$item.costPerPortionUsed}}</td>
+    <td><input name="ing_qty" data-id="{{state$item._id}}" value="{{state$quantity}}" type="text"/></td>
+    <td>
+      <button type="button" class="btn btn-outline btn-xs btn-danger removeIng" data-id="{{state$item._id}}">
+        <i class="fa fa-times"></i>
+      </button>
+    </td>
+  </tr>
+</template>
