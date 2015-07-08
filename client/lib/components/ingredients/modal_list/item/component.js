@@ -2,20 +2,8 @@ var component = FlowComponents.define('ingredientItemListed', function(props) {
   this.ingredient = props.ingredient;
 });
 
-component.state.code = function() {
-  return this.ingredient.code;
-}
-
-component.state.id = function() {
-  return this.ingredient._id;
-}
-
-component.state.description = function() {
-  return this.ingredient.description;
-}
-
-component.state.portionUsed = function() {
-  return this.ingredient.portionUsed;
+component.state.item = function() {
+  return this.ingredient;
 }
 
 component.state.costPerPortionUsed = function() {

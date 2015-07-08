@@ -17,35 +17,45 @@ component.state.job = function() {
   return this.jobitem;
 }
 
-component.state.cost = function() {
-  var totalCost = 0;
-  var costPerPortion = 0;
-  var labourCost = 0;
-  if(this.jobitem && this.jobitem.ingredients) {
-    var ings = this.jobitem.ingredients;
-    if(ings.length > 0) {
-      ings.forEach(function(ing) {
-        var ingre = Ingredients.findOne(ing._id);
-        if(ingre) {
-          totalCost += (ingre.costPerPortion/ingre.unitSize) * ing.quantity;
-        }
-      });
-    }
-    if(this.jobitem.activeTime > 0 && this.jobitem.wagePerHour) {
-      labourCost = (this.jobitem.wagePerHour/60) * (this.jobitem.activeTime/60);
-    }
-    if(this.jobitem.portions > 0) {
-      costPerPortion = (totalCost + labourCost)/this.jobitem.portions;
-      costPerPortion = Math.round(costPerPortion * 100)/100;
-      if(costPerPortion == costPerPortion) {
-        return costPerPortion;
-      } else {
-        return 0;
-      }
-    } else {
-      return 0;
-    }
+component.state.isPrep = function() {
+  if(this.jobitem.type == "Prep") {
+    return true;
   } else {
-    return 0;
+    return false;
+  }
+}
+
+component.state.cost = function() {
+  var jobItem = this.jobitem;
+  var id = this.jobitem._id;
+  if(jobItem) {
+    jobItem.totalIngCost = 0;
+    jobItem.prepCostPerPortion = 0;
+    if(!jobItem.wagePerHour) {
+      jobItem.labourCost = 0;
+    } else {
+      var activeTimeInMins = parseInt(jobItem.activeTime/60);
+      jobItem.labourCost = (parseFloat(jobItem.wagePerHour)/60) * activeTimeInMins;
+    }
+    if(jobItem.ingredients) {
+      if(jobItem.ingredients.length > 0) {
+        jobItem.ingredients.forEach(function(ing) {
+          var ingItem = getIngredientItem(ing._id);
+          if(ingItem) {
+            ingItem.totalCost = parseFloat(ingItem.costPerPortionUsed) * parseFloat(ing.quantity);
+            jobItem.totalIngCost += parseFloat(ingItem.totalCost);
+          }
+        });
+        jobItem.totalIngCost = jobItem.totalIngCost;
+      }
+    }
+    var totalCost = (jobItem.labourCost + jobItem.totalIngCost);
+    if(totalCost > 0 && jobItem.portions > 0) {
+      jobItem.prepCostPerPortion = Math.round((totalCost/jobItem.portions) * 100)/100;
+    } else {
+      jobItem.prepCostPerPortion = 0;
+    }
+    jobItem.labourCost = Math.round(jobItem.labourCost * 100)/100;
+    return jobItem.prepCostPerPortion;
   }
 }

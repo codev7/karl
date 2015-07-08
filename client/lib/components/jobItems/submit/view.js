@@ -302,9 +302,3 @@ Template.submitJobItem.rendered = function() {
   Session.set("frequency", "Daily");
   Session.set("checklist", []);
 }
-
-Tracker.autorun(function() {
-  if(Session.get("thisJobItem") == null) {
-    // return Meteor.subscribe("ingredients", []);
-  }
-});

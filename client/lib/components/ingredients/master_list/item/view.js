@@ -6,7 +6,3 @@ Template.ingredientItemDetailed.events({
     $("#editIngredientModal").modal("show");
   }
 });
-
-Template.ingredientItemDetailed.rendered = function() {
-  // $('[data-toggle="tooltip"]').tooltip();
-}

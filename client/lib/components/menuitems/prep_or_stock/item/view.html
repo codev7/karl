@@ -8,8 +8,14 @@
       {{/if}}
       <td>{{state$name}}</td>
       <td>{{state$type}}</td>
-      <td><a href="#" class="quantity" data-type="text" data-pk="{{state$item._id}}" data-url="/post" data-title="Enter quantity" data-itemtype="{{state$type}}">{{state$quantity}}</a></td>
-      <td>{{state$measure}}</td>
+      <td>
+        {{#if state$isPermitted}}
+          <a href="#" class="quantity" data-type="text" data-pk="{{state$item._id}}" data-url="/post" data-title="Enter quantity" data-itemtype="{{state$type}}">{{state$quantity}}</a>
+        {{else}}
+          {{state$quantity}}
+        {{/if}}
+      </td>
+      <td>{{#if state$measure}} {{state$measure}} {{else}} -NA- {{/if}}</td>
       {{#if state$isPermitted}}
       <td><span class="remove-{{state$type}}" data-id="{{state$item._id}}" data-type="{{state$type}}">remove</span></td>
       {{/if}}

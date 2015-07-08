@@ -40,14 +40,13 @@ component.prototype.setIds = function() {
   return ids;
 }
 
-component.state.getJobItemsa = function() {
-  var data = this.JobItemsSearch.getData({
+component.state.getJobItems = function() {
+  return this.JobItemsSearch.getData({
     transform: function(matchText, regExp) {
       return matchText.replace(regExp, "<b>$&</b>")
     },
     sort: {'name': 1}
   });
-  return data;
 }
 
 component.action.submit = function() {
