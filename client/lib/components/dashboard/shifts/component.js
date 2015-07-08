@@ -38,10 +38,12 @@ component.state.past = function() {
 component.state.shiftsCount = function() {
   var state = Session.get("shiftState");
   var shifts = [];
-  if(state) {
+  if(state == "future") {
     shifts = Shifts.find({"assignedTo": Meteor.userId(), "shiftDate": {$gte: Date.now()}}).fetch();
-  } else {
+  } else if(state == "past") {
     shifts = Shifts.find({"assignedTo": Meteor.userId(), "shiftDate": {$lt: Date.now()}}).fetch();
+  } else if(state == "open") {
+    shifts = Shifts.find({"assignedTo": null, "shiftDate": {$gte: Date.now()}}, {sort: {'shiftDate': 1}});
   }
   if(shifts.length > 0) {
     return true;
