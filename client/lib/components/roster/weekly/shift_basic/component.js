@@ -59,7 +59,7 @@ component.prototype.itemRendered = function() {
       inputclass: "editableWidth",
       showbuttons: false,
       emptytext: 'Open',
-      autotext: 'auto',
+      autotext: 'always',
       source: function() {
         var alreadtAssigned = [];
         var workersObj = []
@@ -87,7 +87,10 @@ component.prototype.itemRendered = function() {
       },
       success: function(response, newValue) {
         var shiftId = $(this).closest("li").attr("data-id");
-        console.log(newValue);
+        if(newValue == "Open") {
+          newValue = null;
+        }
+        var obj = {"_id": shiftId, "assignedTo": newValue}
         var shift = null;
         if(origin == "weeklyrostertemplate") {
           shift = TemplateShifts.findOne(shiftId);
@@ -97,9 +100,6 @@ component.prototype.itemRendered = function() {
         } else if(origin == "weeklyroster") {
           shift = Shifts.findOne(shiftId);
           if(shift) {
-            if(newValue == "Open") {
-              newValue = null;
-            }
             assignWorkerToShift(newValue, shiftId);
           }
         }
