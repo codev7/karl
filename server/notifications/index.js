@@ -228,6 +228,13 @@ Meteor.methods({
       logger.error('Notification not found');
       throw new Meteor.Error(404, "Notification not found");
     }
+    if((notification.type == "roster") && (notification.actionType == "claim")) {
+      var shift = Shifts.findOne(notification.ref);
+      if(shift && (shift.assignedTo == null)) {
+        logger.error("Shift has not been assigned to any worker yet. Can't mark read");
+        throw new Meteor.Error(404, "Shift has not been assigned to any worker yet. Can't mark read");
+      }
+    }
     Notifications.update({'_id': id, 'to': userId}, {$set: {"read": true}});
     logger.info("Notification read", {"user": userId, "notification": id});
   }
