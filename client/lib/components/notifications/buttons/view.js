@@ -33,7 +33,7 @@ Template.notifiButtons.events({
         }
       }
     } else if(type == "roster") {
-      Router.go("shift", {"_id": ref});
+      Router.go("weeklyRoster", {"week": ref});
     }
   }
 });

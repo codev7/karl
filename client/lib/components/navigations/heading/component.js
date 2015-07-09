@@ -167,7 +167,7 @@ component.state.isWeeklyRoster = function() {
         dates.push(new Date(day.date).getTime())
       }
     });
-    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false}).fetch();
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "assignedTo": {$ne: null}, "published": false}).fetch();
     if(shifts.length > 0) {
       return true;
     } else {
