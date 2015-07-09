@@ -4,7 +4,6 @@ var component = FlowComponents.define("shiftBasic", function(props) {
   this.set("origin", origin);
   this.set("user", Meteor.user());
   this.onRendered(this.itemRendered);
-  $.fn.editable.defaults.mode = 'inline';
 });
 
 component.state.shift = function() {
@@ -13,7 +12,9 @@ component.state.shift = function() {
 
 component.state.assignedTo = function() {
   var worker = this.shift.assignedTo;
-  return Meteor.users.findOne(worker);
+  if(worker) {
+    return Meteor.users.findOne(worker);
+  }
 }
 
 component.state.isUserPermitted = function() {
@@ -45,6 +46,8 @@ component.action.deleteShift = function(id) {
 }
 
 component.prototype.itemRendered = function() {
+  $.fn.editable.defaults.mode = 'inline';
+
   var user = this.get("user");
   if(user && user.isAdmin || user.isManager) {
     var origin = this.get("origin");
@@ -55,6 +58,8 @@ component.prototype.itemRendered = function() {
       title: 'Select worker to assign',
       inputclass: "editableWidth",
       showbuttons: false,
+      emptytext: 'Open',
+      autotext: 'always',
       source: function() {
         var alreadtAssigned = [];
         var workersObj = []
@@ -73,6 +78,7 @@ component.prototype.itemRendered = function() {
         if(index >=0) {
           alreadtAssigned.splice(index, 1);
         }
+        workersObj.push({value: "Open", text: "Open"});
         var workers = Meteor.users.find({"_id": {$nin: alreadtAssigned}, "isActive": true, $or: [{"isWorker": true}, {"isManager": true}]}).fetch();
         workers.forEach(function(worker) {
           workersObj.push({value: worker._id, text: worker.username});
@@ -81,6 +87,9 @@ component.prototype.itemRendered = function() {
       },
       success: function(response, newValue) {
         var shiftId = $(this).closest("li").attr("data-id");
+        if(newValue == "Open") {
+          newValue = null;
+        }
         var obj = {"_id": shiftId, "assignedTo": newValue}
         var shift = null;
         if(origin == "weeklyrostertemplate") {
@@ -91,7 +100,7 @@ component.prototype.itemRendered = function() {
         } else if(origin == "weeklyroster") {
           shift = Shifts.findOne(shiftId);
           if(shift) {
-            editShift(obj);
+            assignWorkerToShift(newValue, shiftId);
           }
         }
       }
@@ -199,6 +208,15 @@ function editTemplateShift(obj) {
 
 function editShift(obj) {
   Meteor.call("editShift", obj._id, obj, function(err) {
+    if(err) {
+      console.log(err);
+      return alert(err.reason);
+    }
+  });
+}
+
+function assignWorkerToShift(worker, shift) {
+  Meteor.call("assignWorker", worker, shift, function(err) {
     if(err) {
       console.log(err);
       return alert(err.reason);

@@ -190,7 +190,9 @@ Meteor.methods({
       "text": [info.text],
       "to": to._id,
       "createdOn": new Date().getTime(),
-      "createdBy": user._id
+      "createdBy": user._id,
+      "ref": info.week,
+      "actionType": "publish"
     }
     Notifications.insert(notifi);
     logger.info("Notification sent for weekly roster", to._id);
@@ -202,7 +204,9 @@ Meteor.methods({
       "text": [info.openShifts],
       "to": to._id,
       "createdOn": new Date().getTime(),
-      "createdBy": user._id
+      "createdBy": user._id,
+      "ref": info.week,
+      "actionType": "publish"
     }
     Notifications.insert(notifiOpen);
     logger.info("Notification sent for open shifts on weekly roster", to._id);

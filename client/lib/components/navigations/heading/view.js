@@ -247,13 +247,20 @@ Template.pageHeading.events({
             });
           }
 
+          var to = {
+            "_id": to._id,
+            "email": to.emails[0].address,
+            "name": to.username
+          }
+
           var info = {
             "title": title, 
             "text": text, 
             "startDate": weekStart,
-            "openShifts": open
+            "openShifts": open,
+            "week": weekNo
           }
-          Meteor.call("notifyRoster", {"_id": to._id, "email": to.emails[0].address, "name": to.username}, info, function(err) {
+          Meteor.call("notifyRoster", to, info, function(err) {
             if(err) {
               console.log(err);
               return alert(err.reason);

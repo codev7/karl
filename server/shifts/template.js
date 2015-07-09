@@ -86,23 +86,28 @@ Meteor.methods({
         updateDoc.shiftDate = new Date(info.shiftDate).getTime();
       }
     }
-    if(info.assignedTo) {
-      var existInShift = TemplateShifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": info.assignedTo});
-      if(existInShift) {
-        logger.error("User already exist in a shift", {"date": shift.shiftDate});
-        throw new Meteor.Error(404, "Worker has already been assigned to a shift");
+    if(info.hasOwnProperty('assignedTo')) {
+      if(info.assignedTo) {
+        var existInShift = TemplateShifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": info.assignedTo});
+        if(existInShift) {
+          logger.error("User already exist in a shift", {"date": shift.shiftDate});
+          throw new Meteor.Error(404, "Worker has already been assigned to a shift");
+        }
+        var worker = Meteor.users.findOne(info.assignedTo);
+        if(!worker) {
+          logger.error("Worker not found");
+          throw new Meteor.Error(404, "Worker not found");
+        }
+        updateDoc.assignedTo = info.assignedTo;
+      } else {
+        updateDoc.assignedTo = null;
       }
-      var worker = Meteor.users.findOne(info.assignedTo);
-      if(!worker) {
-        logger.error("Worker not found");
-        throw new Meteor.Error(404, "Worker not found");
-      }
-      updateDoc.assignedTo = info.assignedTo;
     }
     if(Object.keys(updateDoc).length <= 0) {
       logger.error("Shift template has nothing to be updated");
       throw new Meteor.Error(401, "Shift template has nothing to be updated");
     }
+
     TemplateShifts.update({'_id': info._id}, {$set: updateDoc});
     logger.info("Shift template details updated", {"shiftId": info._id});
     return;
