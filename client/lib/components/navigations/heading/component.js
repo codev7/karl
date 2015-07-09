@@ -17,6 +17,14 @@ component.state.category = function() {
   return this.category;
 }
 
+component.state.publishedOn = function() {
+  var date = localStorage.getItem("publishedOn-" + Session.get("thisWeek"));
+  console.log(date);
+  if(date) {
+    return parseInt(date);
+  }
+}
+
 component.state.id = function() {
   if(this.id) {
     return this.id;
@@ -173,7 +181,24 @@ component.state.isWeeklyRoster = function() {
     } else {
       return false;
     }
-  } else {
-    return false;
+  } 
+}
+
+component.state.isWeeklyRosterPublished = function() {
+  if(this.type == "weeklyroster") {
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": true}).fetch();
+    if(shifts.length > 0 && localStorage.getItem("publishedOn-" + Session.get("thisWeek"))) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

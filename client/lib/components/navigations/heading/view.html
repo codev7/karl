@@ -107,6 +107,10 @@
         <div class="title-action" data-type="{{state$type}}">
           {{#if state$isWeeklyRoster}}
           <button class="btn btn-primary" id="publishRoster">Publish Roster</button>
+          {{else}}
+            {{#if state$isWeeklyRosterPublished}}
+            <button class="btn btn-primary" disabled="disabled">Published Roster on {{dayFormat state$publishedOn}}</button>
+            {{/if}}
           {{/if}}
           <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
           <a href="" class="btn btn-white thisWeek">This Week</a>

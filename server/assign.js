@@ -86,7 +86,8 @@ Meteor.methods({
     //   throw new Meteor.Error(404, "Shift cannot be assigned, date is passed");
     // }
     var updateDoc = {
-      "assignedTo": null
+      "assignedTo": null,
+      "published": false
     };
     if(workerId) {
       var existInShift = Shifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": workerId});
