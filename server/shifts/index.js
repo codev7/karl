@@ -141,7 +141,8 @@ Meteor.methods({
     if(Object.keys(updateDoc).length <= 0) {
       logger.error("Shift has nothing to be updated");
       throw new Meteor.Error(401, "Shift has nothing to be updated");
-    }
+    } 
+    updateDoc.published = false;
     Shifts.update({'_id': id}, {$set: updateDoc});
     logger.info("Shift details updated", {"shiftId": id});
     return;

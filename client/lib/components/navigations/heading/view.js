@@ -215,6 +215,9 @@ Template.pageHeading.events({
           console.log(err);
           return alert(err.reason);
         } 
+        var weekItem = "publishedOn-"+ Session.get("thisWeek");
+        localStorage.setItem(weekItem, new Date().getTime());
+        // $(event.target).text("Published Roster on");
       });
       users.forEach(function(user) {
         var to = Meteor.users.findOne(user);
