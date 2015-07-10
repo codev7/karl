@@ -19,6 +19,17 @@ component.state.hasClaimed = function() {
   }
 }
 
+component.state.hadBeenRejected = function() {
+  var shift = this.shift;
+  if(shift && shift.rejectedFor) {
+    if(shift.rejectedFor.indexOf(Meteor.userId()) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 component.state.confirmed = function() {
   if(this.shift && this.shift.confirmed) {
     return "success";

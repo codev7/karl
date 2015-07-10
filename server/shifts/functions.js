@@ -180,8 +180,37 @@ Meteor.methods({
       logger.error("User already has a shift on this day");
       throw new Meteor.Error(404, "User already has a shift on this day"); 
     }
-    Shifts.update({"_id": shiftId}, {$set: {"assignedTo": userId}});
+    Shifts.update({"_id": shiftId}, {$set: {"assignedTo": userId}, $pull: {"claimedBy": userId}});
     logger.info("Shift claim confirmed ", {"shiftId": shiftId, "user": userId});
+    return;
+  },
+
+  rejectClaim: function(shiftId, userId) {
+    var user = Meteor.user();
+    if(!user) {
+      logger.error("User not found");
+      throw new Meteor.Error(404, "User not found");
+    }
+    var permitted = isManagerOrAdmin(user);
+    if(!permitted) {
+      logger.error("User does not have permission to confirm a shift claim");
+      throw new Meteor.Error(403, "User does not have permission to confirm a shift claim");
+    }
+    var shift = Shifts.findOne(shiftId);
+    if(!shift) {
+      logger.error("Shift not found");
+      throw new Meteor.Error(404, "Shift not found");
+    }
+    if(shift.assignedTo == userId) {
+      logger.error("User has been assigned to this shift");
+      throw new Meteor.Error(404, "User has been assigned to this shift");
+    }
+    if(shift.claimedBy.indexOf(userId) < 0) {
+      logger.error("User has not claimed the shift");
+      throw new Meteor.Error(404, "User has not claimed the shift");
+    }
+    Shifts.update({"_id": shiftId}, {$pull: {"claimedBy": userId}, $push: {"rejectedFor": userId}});
+    logger.info("Shift claim rejected ", {"shiftId": shiftId, "user": userId});
     return;
   }
 });

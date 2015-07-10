@@ -1,5 +1,8 @@
+var subs = new SubsManager();
+
 var component = FlowComponents.define("notifiText", function(props) {
   this.notification = props.noti;
+  this.onRendered(this.onItemRendered);
 });
 
 component.state.notifi = function() {
@@ -21,5 +24,11 @@ component.state.icon = function() {
     } else if (type == "roster") {
       return "calendar-o"
     }
+  }
+}
+
+component.prototype.onItemRendered = function() {
+  if(this.notification.type == "roster") {
+    subs.subscribe("shift", this.notification.ref);
   }
 }
