@@ -1,6 +1,7 @@
 var component = FlowComponents.define("pageHeading", function(props) {
   this.title = props.title;
   this.category = props.category;
+  this.subCategory = props.subCategory;
   this.type = props.name;
   this.id = props.id;
 });
@@ -15,6 +16,10 @@ component.state.type = function() {
 
 component.state.category = function() {
   return this.category;
+}
+
+component.state.subCategory = function() {
+  return this.subCategory;
 }
 
 component.state.publishedOn = function() {
