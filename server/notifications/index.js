@@ -105,6 +105,7 @@ Meteor.methods({
             claimedUsers.forEach(function(user) {
               var index = claimedUsers.indexOf(user);
               text += "<br>" + (index+1) + "). " + user.username + " <a href='#' class='confirmClaim' data-id='" + user._id + "' data-shift='" + itemId + "'>Confirm</a>";
+              text += " <a href='#' class='rejectClaim' data-id='" + user._id + "' data-shift='" + itemId + "'>Reject</a>";
             });
           }
           var users = Meteor.users.find({$or: [{"isManager": true}, {"isAdmin": true}]}).fetch();
@@ -115,7 +116,18 @@ Meteor.methods({
           }
         } else if(options.type == "confirm") {
           allSubscribers.push(shift.assignedTo);
+        } else if(options.type == "reject") {
+          var existInShift = Shifts.findOne({"shiftDate": shift.shiftDate, "assignedTo": options.rejected})
+          if(shift.assignedTo) {
+            text = "Shift assigned to another worker";
+          } else if(existInShift) {
+            text = "You already have an assigned shift for this date";
+          } else {
+            text = "Contact " + Meteor.user().username + " for more information";
+          }
+          allSubscribers.push(options.rejected);
         }
+
       }
       info.text = text;
     }
@@ -230,7 +242,7 @@ Meteor.methods({
     }
     if((notification.type == "roster") && (notification.actionType == "claim")) {
       var shift = Shifts.findOne(notification.ref);
-      if(shift && (shift.assignedTo == null)) {
+      if(shift && (shift.assignedTo == null && shift.claimedBy.length > 0)) {
         logger.error("Shift has not been assigned to any worker yet. Can't mark read");
         throw new Meteor.Error(404, "Shift has not been assigned to any worker yet. Can't mark read");
       }

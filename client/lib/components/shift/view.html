@@ -8,7 +8,11 @@
         {{#if state$hasClaimed}}
         <a href="#" class="btn btn-default btn-xs">Claimed</a>
         {{else}}
-        <a href="#" class="btn btn-primary btn-xs claimShift">Claim</a>
+          {{#if state$hadBeenRejected}}
+            <a href="#" class="btn btn-danger btn-xs">Rejected</a>
+          {{else}}
+            <a href="#" class="btn btn-primary btn-xs claimShift">Claim</a>
+          {{/if}}
         {{/if}}
       {{/if}}
       {{#if state$past}}
