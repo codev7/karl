@@ -1,5 +1,6 @@
 <template name="pageHeading">
   <div class="row wrapper border-bottom white-bg page-heading">
+    <!-- BREADCRUMBS -->
     <div class="col-xs-6">
       <h2>
         {{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}
@@ -10,7 +11,12 @@
         </li>
         {{#if state$category}}
         <li>
-          <a>{{state$category}}</a>
+          <a href="#" class="breadcrumbCategory" data-category="{{state$category}}">{{state$category}}</a>
+        </li>
+        {{/if}}
+        {{#if state$subCategory}}
+        <li>
+          <a href="#" class="breadcrumbSubCategory" data-category="{{state$category}}" data-id="{{state$id}}">{{state$subCategory}}</a>
         </li>
         {{/if}}
         <li class="active">
@@ -18,6 +24,8 @@
         </li>
       </ol>
     </div>
+    <!-- /BREADCRUMBS -->
+
     <div class="col-xs-6">
       {{#if state$isMenuList}}
       <div class="title-action">

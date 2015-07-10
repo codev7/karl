@@ -4,6 +4,27 @@ Template.pageHeading.helpers({
 });
 
 Template.pageHeading.events({
+  'click .breadcrumbCategory': function(event) {
+    event.preventDefault();
+    var category = $(event.target).attr("data-category");
+    if(category == "Jobs") {
+      Router.go("jobItemsMaster");
+    } else if(category == "Menus") {
+      Router.go("menuItemsMaster", {"category": Session.get("category"), "status": Session.get("status")});
+    }
+  },
+
+  'click .breadcrumbSubCategory': function(event) {
+    event.preventDefault();
+    var category = $(event.target).attr("data-category");
+    var id = $(event.target).attr("data-id");
+    if(category == "Jobs") {
+      Router.go("jobItemDetailed", {"_id": id});
+    } else if(category == "Menus") {
+      Router.go("menuItemDetail", {"_id": id});
+    }
+  },
+
   'click #submitMenuItem': function(event) {
     event.preventDefault();
     Router.go("submitMenuItem");
