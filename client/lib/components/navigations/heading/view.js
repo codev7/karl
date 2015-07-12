@@ -220,7 +220,7 @@ Template.pageHeading.events({
         dates.push(new Date(day.date).getTime())
       }
     });
-    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false, "assignedTo": {$ne: null}}).fetch();
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false}).fetch();
     var tobePublished = [];
     var users = [];
     if(shifts.length > 0) {
@@ -241,54 +241,56 @@ Template.pageHeading.events({
       });
       users.forEach(function(user) {
         var to = Meteor.users.findOne(user);
-        var weekStart = moment(dates[0]).format("YYYY-MM-DD");
-        var title = "Weekly roster for the week starting from " + weekStart + " published";
-        var text = "<br>";
-        var open = "<br>";
-        var shiftsPublished = Shifts.find({
-          "assignedTo": user,
-          "shiftDate": {$gte: dates[0], $lte: dates[6]}
-        }).fetch();
-        var openShifts = Shifts.find({
-          "assignedTo": null,
-          "shiftDate": {$gte: dates[0], $lte: dates[6]}
-        }).fetch();
-        if(shiftsPublished && openShifts) {
-          if(shiftsPublished.length > 0) {
-            shiftsPublished.forEach(function(shift) {
-              var start =  moment(shift.startTime).format("hh:mm A");
-              var end = moment(shift.endTime).format("hh:mm A");
-              text += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
+        if(to) {
+          var weekStart = moment(dates[0]).format("YYYY-MM-DD");
+          var title = "Weekly roster for the week starting from " + weekStart + " published";
+          var text = "<br>";
+          var open = "<br>";
+          var shiftsPublished = Shifts.find({
+            "assignedTo": user,
+            "shiftDate": {$gte: dates[0], $lte: dates[6]}
+          }).fetch();
+          var openShifts = Shifts.find({
+            "assignedTo": null,
+            "shiftDate": {$gte: dates[0], $lte: dates[6]}
+          }).fetch();
+          if(shiftsPublished && openShifts) {
+            if(shiftsPublished.length > 0) {
+              shiftsPublished.forEach(function(shift) {
+                var start =  moment(shift.startTime).format("hh:mm A");
+                var end = moment(shift.endTime).format("hh:mm A");
+                text += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
+              });
+            }
+
+            if(openShifts.length > 0) {
+              openShifts.forEach(function(shift) {
+                var start =  moment(shift.startTime).format("hh:mm A");
+                var end = moment(shift.endTime).format("hh:mm A");
+                open += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
+              });
+            }
+
+            var to = {
+              "_id": to._id,
+              "email": to.emails[0].address,
+              "name": to.username
+            }
+
+            var info = {
+              "title": title, 
+              "text": text, 
+              "startDate": weekStart,
+              "openShifts": open,
+              "week": weekNo
+            }
+            Meteor.call("notifyRoster", to, info, function(err) {
+              if(err) {
+                console.log(err);
+                return alert(err.reason);
+              } 
             });
           }
-
-          if(openShifts.length > 0) {
-            openShifts.forEach(function(shift) {
-              var start =  moment(shift.startTime).format("hh:mm A");
-              var end = moment(shift.endTime).format("hh:mm A");
-              open += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
-            });
-          }
-
-          var to = {
-            "_id": to._id,
-            "email": to.emails[0].address,
-            "name": to.username
-          }
-
-          var info = {
-            "title": title, 
-            "text": text, 
-            "startDate": weekStart,
-            "openShifts": open,
-            "week": weekNo
-          }
-          Meteor.call("notifyRoster", to, info, function(err) {
-            if(err) {
-              console.log(err);
-              return alert(err.reason);
-            } 
-          });
         }
       });
     }

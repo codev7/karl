@@ -23,10 +23,19 @@ component.state.subCategory = function() {
 }
 
 component.state.publishedOn = function() {
-  var date = localStorage.getItem("publishedOn-" + Session.get("thisWeek"));
-  console.log(date);
-  if(date) {
-    return parseInt(date);
+  if(this.type == "weeklyroster") {
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shift = Shifts.findOne({"shiftDate": {$in: dates}, "published": true});
+    if(shift && shift.publishedOn) {
+      return shift.publishedOn;
+    }
   }
 }
 
@@ -170,7 +179,7 @@ component.state.isWeeklyTemplate = function() {
   }
 }
 
-component.state.isWeeklyRoster = function() {
+component.state.isWeeklyRosterCreated = function() {
   if(this.type == "weeklyroster") {
     var weekNo = Session.get("thisWeek");
     var week = getDatesFromWeekNumber(parseInt(weekNo));
@@ -180,13 +189,13 @@ component.state.isWeeklyRoster = function() {
         dates.push(new Date(day.date).getTime())
       }
     });
-    var shifts = Shifts.find({"shiftDate": {$in: dates}, "assignedTo": {$ne: null}, "published": false}).fetch();
+    var shifts = Shifts.find({"shiftDate": {$in: dates}}).fetch();
     if(shifts.length > 0) {
       return true;
     } else {
       return false;
     }
-  } 
+  }
 }
 
 component.state.isWeeklyRosterPublished = function() {
@@ -200,7 +209,7 @@ component.state.isWeeklyRosterPublished = function() {
       }
     });
     var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": true}).fetch();
-    if(shifts.length > 0 && localStorage.getItem("publishedOn-" + Session.get("thisWeek"))) {
+    if(shifts.length > 0) {
       return true;
     } else {
       return false;

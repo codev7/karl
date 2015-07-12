@@ -34,7 +34,7 @@ Template.notifiButtons.events({
       } else if(type == "roster") {
         if(notifi.actionType == "publish") {
           Router.go("weeklyRoster", {"week": ref});
-        } else if(notifi.actionType == "confirm" || notifi.actionType == "claim") {
+        } else if(notifi.actionType == "confirm" || notifi.actionType == "claim" || notifi.actionType == "update") {
           Router.go("shift", {"_id": ref});
         }
       }
