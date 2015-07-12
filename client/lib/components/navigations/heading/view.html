@@ -1,5 +1,6 @@
 <template name="pageHeading">
   <div class="row wrapper border-bottom white-bg page-heading">
+    <!-- BREADCRUMBS -->
     <div class="col-xs-6">
       <h2>
         {{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}
@@ -10,7 +11,12 @@
         </li>
         {{#if state$category}}
         <li>
-          <a>{{state$category}}</a>
+          <a href="#" class="breadcrumbCategory" data-category="{{state$category}}">{{state$category}}</a>
+        </li>
+        {{/if}}
+        {{#if state$subCategory}}
+        <li>
+          <a href="#" class="breadcrumbSubCategory" data-category="{{state$category}}" data-id="{{state$id}}">{{state$subCategory}}</a>
         </li>
         {{/if}}
         <li class="active">
@@ -18,11 +24,13 @@
         </li>
       </ol>
     </div>
+    <!-- /BREADCRUMBS -->
+
     <div class="col-xs-6">
       {{#if state$isMenuList}}
       <div class="title-action">
         {{#if state$isManagerOrAdmin}}
-        <a href="/menuItem/submit" class="btn btn-primary">Add new menu</a>
+        <a href="/menuItems/submit" class="btn btn-primary">Add new menu</a>
         {{/if}}
         {{#if state$isMenuListSubscribed}}
           <a href="#" class="btn btn-white unSubscribeMenuList"><i class="fa fa-lg fa-rss text-info"></i></a>
@@ -104,11 +112,18 @@
       {{/if}}
 
       {{#if state$weeklyNavigation}}
-      <div class="title-action" data-type="{{state$type}}">
-        <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
-        <a href="" class="btn btn-white thisWeek">This Week</a>
-        <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
-      </div>
+        <div class="title-action" data-type="{{state$type}}">
+          {{#if state$isWeeklyRosterCreated}}
+            {{#if state$isWeeklyRosterPublished}}
+              <button class="btn btn-primary" disabled="disabled">Published Roster on {{dayFormat state$publishedOn}}</button>
+            {{else}}
+              <button class="btn btn-primary" id="publishRoster">Publish Roster</button>
+            {{/if}}
+          {{/if}}
+          <a href="" class="btn btn-white previousWeek"><i class="fa fa-chevron-left"></i></a>
+          <a href="" class="btn btn-white thisWeek">This Week</a>
+          <a href="" class="btn btn-white nextWeek"><i class="fa fa-chevron-right"></i></a>
+        </div>
       {{/if}}
 
       {{#if state$isDailyRoster}}
@@ -116,11 +131,17 @@
         <a href="#submitShiftModal" class="btn btn-primary" data-toggle="modal">
           Create new shift
         </a>
-        <!-- <div class=""> -->
-          <button class="btn btn-white right prevDayRoster"><i class="fa fa-chevron-left"></i></button>
-          <button class="btn btn-white right todayRoster">Today</button>
-          <button class="btn btn-white right nextDayRoster"><i class="fa fa-chevron-right"></i></button>
-        <!-- </div> -->
+        <button class="btn btn-white right prevDayRoster"><i class="fa fa-chevron-left"></i></button>
+        <button class="btn btn-white right todayRoster">Today</button>
+        <button class="btn btn-white right nextDayRoster"><i class="fa fa-chevron-right"></i></button>
+      </div>
+      {{/if}}
+
+      {{#if state$isWeeklyTemplate}}
+      <div class="title-action">
+        <a href="#calendarModal" class="btn btn-primary" data-toggle="modal">
+          Copy template shifts to week
+        </a>
       </div>
       {{/if}}
     </div>

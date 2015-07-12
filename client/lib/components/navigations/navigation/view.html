@@ -43,6 +43,26 @@
             <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
           </li>
 
+          <li class="{{isActiveRoute regex='weeklyRoster|dailyRoster|templateWeeklyRoster'}}">
+            <a href="#">
+              <i class="fa fa-calendar-o"></i>
+              <span class="nav-label">Roster</span>
+            </a>
+            <ul class="nav nav-second-level {{isActiveRoute regex='dailyRoster|weeklyRoster|templateWeeklyRoster' className='in'}}">
+              <li class="{{isActiveRoute regex='weeklyRoster'}}">
+                <a href="/roster/weekly/{{week}}">Weekly</a>
+              </li>
+              <li class="{{isActiveRoute regex='dailyRoster'}}">
+                <a href="/roster/daily/{{today}}">Daily</a>
+              </li>
+              {{#if state$isManagerOrAdmin}}
+              <li class="{{isActiveRoute regex='templateWeeklyRoster'}}">
+                <a href="/roster/template/weekly">Template</a>
+              </li>
+              {{/if}}  
+            </ul>
+          </li>
+
           <li class="{{isActiveRoute regex='menuItemsMaster'}}">
             <a href="/menuItems/{{state$category}}/{{state$status}}"><i class="fa fa-cutlery"></i> <span class="nav-label">Menu</span></a>
           </li>
@@ -54,6 +74,7 @@
           <li class="{{isActiveRoute regex='ingredientsList'}}">
             <a href="/ingredients"><i class="fa fa-list"></i> <span class="nav-label">Ingredients</span></a>
           </li>
+
           {{#if state$isManagerOrAdmin}}
           <li class="{{isActiveRoute regex='salesCalibration|actualSales|cafeSalesForecast|weeklySalesForecastMenusList'}}">
             <a href="#">
@@ -80,13 +101,6 @@
                 </ul>
               </li>
             </ul>
-          </li>
-
-          <li class="{{isActiveRoute regex='dailyShiftScheduling'}}">
-            <a href="/scheduling/daily/{{today}}">
-              <i class="fa fa-calendar-o"></i>
-              <span class="nav-label">Roster</span>
-            </a>
           </li>
 
           <li class="{{isActiveRoute regex='teamHours'}}">

@@ -27,7 +27,7 @@ Template.userDetailed.events({
         Meteor.call("changeStatus", userId, function(err) {
           if(err) {
             console.log(err);
-            alert(err.reason);
+            return alert(err.reason);
           }
         });
       }

@@ -8,6 +8,28 @@ component.state.shift = function() {
   }
 }
 
+component.state.hasClaimed = function() {
+  var shift = this.shift;
+  if(shift && shift.claimedBy) {
+    if(shift.claimedBy.indexOf(Meteor.userId()) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.hadBeenRejected = function() {
+  var shift = this.shift;
+  if(shift && shift.rejectedFor) {
+    if(shift.rejectedFor.indexOf(Meteor.userId()) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 component.state.confirmed = function() {
   if(this.shift && this.shift.confirmed) {
     return "success";
@@ -37,6 +59,24 @@ component.state.timeRecorded = function() {
 component.state.activeShift = function() {
   var shift = this.shift;
   if(shift && shift.status == "started") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.open = function() {
+  var state = Session.get("shiftState");
+  if(state == "open") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.past = function() {
+  var state = Session.get("shiftState");
+  if(state == "past") {
     return true;
   } else {
     return false;

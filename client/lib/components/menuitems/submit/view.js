@@ -1,9 +1,11 @@
+var subs = new SubsManager();
+
 Template.submitMenuItem.helpers({
   ingredientsList: function() {
     var ing = Session.get("selectedIngredients");
     if(ing) {
       if(ing.length > 0) {
-        Meteor.subscribe("ingredients", ing);
+        subs.subscribe("ingredients", ing);
         var ingredientsList = Ingredients.find({'_id': {$in: ing}});
         return ingredientsList;
       }
@@ -14,6 +16,7 @@ Template.submitMenuItem.helpers({
     var jobItems = Session.get("selectedJobItems");
     if(jobItems) {
       if(jobItems.length > 0) {
+        subs.subscribe("jobItems", jobItems);
         var jobItemsList = JobItems.find({'_id': {$in: jobItems}}).fetch();
         return jobItemsList
       }

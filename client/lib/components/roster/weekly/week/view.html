@@ -1,0 +1,7 @@
+<template name="weeklyShiftRoster">
+  <div class="row">
+    {{#each state$week}}
+      {{> render component="weeklyRosterDay" name=this origin=state$origin}}
+    {{/each}}
+  </div>
+</template>

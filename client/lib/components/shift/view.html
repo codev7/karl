@@ -1,27 +1,35 @@
 <template name="shiftItem">
-  <tr class="{{state$confirmed}}">
-    <td class="text-center">{{timeFormat state$shift.startTime}} - {{timeFormat state$shift.endTime}}</td>
+  <tr class="{{state$confirmed}}" data-id="{{state$shift._id}}">
+    <td class="text-left">
+      {{timeFormat state$shift.startTime}} - {{timeFormat state$shift.endTime}}
+    </td>
     <td>{{dayFormat state$shift.shiftDate}}</td>
     <td class="text-center">{{state$shift.section}}</td>
-    <td class="text-center">
-      {{#if state$confirmed}}
-        <!-- <p>Confirmed</p> -->
-      {{else}}
-        {{#if state$isPermitted}}
-          <!-- <a href="#" class="btn btn-primary btn-xs">Confirm</a>
-          <a href="#" class="btn btn-link btn-xs">or Reject</a> -->
+    {{#if state$open}}
+      <td class="text-center">
+        {{#if state$hasClaimed}}
+        <a href="#" class="btn btn-default btn-xs">Claimed</a>
         {{else}}
-          {{#if state$timeRecorded}}
-            {{timeDuration state$timeRecorded}} recorded
-          {{else}} 
-            {{#if state$activeShift}}
-              <span class="label label-primary">Active</span>
-            {{else}}
-              No hours recorded
-            {{/if}}
+          {{#if state$hadBeenRejected}}
+            <a href="#" class="btn btn-danger btn-xs">Rejected</a>
+          {{else}}
+            <a href="#" class="btn btn-primary btn-xs claimShift">Claim</a>
           {{/if}}
         {{/if}}
-      {{/if}}
-    </td>
+      </td>
+    {{/if}}
+    {{#if state$past}}
+      <td class="text-center">
+        {{#if state$timeRecorded}}
+          {{timeDuration state$timeRecorded}} recorded
+        {{else}} 
+          {{#if state$activeShift}}
+            <span class="label label-primary">Active</span>
+          {{else}}
+            No hours recorded
+          {{/if}}
+        {{/if}}
+      </td>
+    {{/if}}
   </tr>
 </template>

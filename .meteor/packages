@@ -9,7 +9,6 @@ meteorhacks:npm
 
 
 npm-container
-anti:gagarin
 meteorhacks:flow-components
 meteorhacks:search-source
 meteorhacks:fast-render
@@ -33,3 +32,5 @@ zimme:iron-router-active
 jquery
 okgrow:iron-router-autoscroll
 dbarrett:dropzonejs
+anti:gagarin
+email

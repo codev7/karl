@@ -21,7 +21,7 @@ Template.menuItemDetail.events({
         var options = {
           "type": "edit",
           "title": "Instructions on " + menu.name + " has been updated",
-          "text": text
+          "text": ""
         }
         Meteor.call("sendNotifications", menuId, "menu", options, function(err) {
           if(err) {

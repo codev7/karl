@@ -3,5 +3,5 @@ var sub = new SubsManager();
 Meteor.startup(function () {
   sub.subscribe("profileUser", Meteor.userId());
   Session.set("notifiState", false);
-  Session.set("shiftState", true);  
+  Session.set("shiftState", "future");  
 });

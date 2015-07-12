@@ -1,0 +1,12 @@
+<template name="ingredientItemDetailed">
+  <tr data-id="{{state$item._id}}">
+    <td><a href="" data-toggle="modal" class="editIngredient">{{{state$item.code}}}</a></td>
+    <td>{{{state$item.description}}}</td>
+    <td>{{{state$item.suppliers}}}</td>
+    <td>{{state$item.portionOrdered}}</td>
+    <td>$ {{state$item.costPerPortion}}</td>
+    <td>{{state$item.portionUsed}}</td>
+    <td><p data-toggle="tooltip" data-placement="top" title="How many {{state$item.portionUsed}}s in a {{state$item.portionOrdered}}">{{state$item.unitSize}}</p></td>
+    <td><a data-toggle="modal" class="btn btn-primary btn-sm editIngredient">View Item</a></td>
+  </tr>
+</template>

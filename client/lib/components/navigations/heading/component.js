@@ -1,6 +1,7 @@
 var component = FlowComponents.define("pageHeading", function(props) {
   this.title = props.title;
   this.category = props.category;
+  this.subCategory = props.subCategory;
   this.type = props.name;
   this.id = props.id;
 });
@@ -15,6 +16,27 @@ component.state.type = function() {
 
 component.state.category = function() {
   return this.category;
+}
+
+component.state.subCategory = function() {
+  return this.subCategory;
+}
+
+component.state.publishedOn = function() {
+  if(this.type == "weeklyroster") {
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shift = Shifts.findOne({"shiftDate": {$in: dates}, "published": true});
+    if(shift && shift.publishedOn) {
+      return shift.publishedOn;
+    }
+  }
 }
 
 component.state.id = function() {
@@ -134,7 +156,7 @@ component.state.isIngredientsList = function() {
 }
 
 component.state.weeklyNavigation = function() {
-  if(this.type == "cafeforecasting" || this.type == "teamHoursReport") {
+  if(this.type == "cafeforecasting" || this.type == "teamHoursReport" || this.type == "weeklyroster") {
     return true; 
   } else {
     return false;
@@ -146,5 +168,51 @@ component.state.isManagerOrAdmin = function() {
     return true;
   } else {
     return false;
+  }
+}
+
+component.state.isWeeklyTemplate = function() {
+  if(this.type == "weeklyrostertemplate") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.isWeeklyRosterCreated = function() {
+  if(this.type == "weeklyroster") {
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shifts = Shifts.find({"shiftDate": {$in: dates}}).fetch();
+    if(shifts.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+component.state.isWeeklyRosterPublished = function() {
+  if(this.type == "weeklyroster") {
+    var weekNo = Session.get("thisWeek");
+    var week = getDatesFromWeekNumber(parseInt(weekNo));
+    var dates = [];
+    week.forEach(function(day) {
+      if(day && day.date) {
+        dates.push(new Date(day.date).getTime())
+      }
+    });
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": true}).fetch();
+    if(shifts.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -1,6 +1,6 @@
 //Formatted time with AM PM
 UI.registerHelper('timeFormat', function(time) {
-  return moment(time).format("hh:mm A");
+  return moment(time).format("hh:mma");
 });
 
 //Formatted time with AM PM

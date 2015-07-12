@@ -1,5 +1,5 @@
 <template name="notifiText">
-  <div class="timeline-item">
+  <div class="timeline-item" data-shift="{{state$notifi._id}}">
     <div class="row">
       <div class="col-xs-3 date">
         <i class="fa fa-{{state$icon}}"></i>{{timeFormat state$notifi.createdOn}}
@@ -10,7 +10,9 @@
         <p class="m-b-xs">
           <strong>{{{state$notifi.title}}}</strong>
         </p>
-        <p>{{{state$notifi.text}}}&nbsp;</p>
+        <p>
+          {{{state$notifi.text}}}
+        </p>
       </div>
     </div>
   </div>
