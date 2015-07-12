@@ -21,7 +21,7 @@
       <div class="agile-detail">
         <i class="fa fa-clock-o"></i>
         {{#if state$isUserPermitted}}
-          <a href="#" class="shiftStartTime" data-pk="1">{{timeFormat state$shift.startTime}}</a> to <a href="#" class="shiftEndTime" data-pk="1">{{timeFormat state$shift.endTime}}</a>
+          <a href="#" class="shiftStartTime" data-pk="1">{{timeFormat state$shift.startTime}}</a> - <a href="#" class="shiftEndTime" data-pk="1">{{timeFormat state$shift.endTime}}</a>
         {{else}}
           {{timeFormat state$shift.startTime}} - {{timeFormat state$shift.endTime}}
         {{/if}}

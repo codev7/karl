@@ -128,8 +128,13 @@ Meteor.methods({
           allSubscribers.push(options.rejected);
         }
 
+        if(options.type == "confirm" || options.type == "reject" || options.type == "claim") {
+          info.text = text;
+        } else if(options.type == "update") {
+          info.text = options.text;
+          allSubscribers.push(options.to);
+        }
       }
-      info.text = text;
     }
 
 

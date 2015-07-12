@@ -48,6 +48,11 @@ Meteor.methods({
       "type": null,
       "published": false
     }
+    var alreadyPublished = Shifts.findOne({"shiftDate": {$in: info.week}, "published": true});
+    if(alreadyPublished) {
+      doc.published = true;
+      doc.publishedOn = alreadyPublished.publishedOn;
+    }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(info.shiftDate) <= yesterday) {
@@ -142,7 +147,6 @@ Meteor.methods({
       logger.error("Shift has nothing to be updated");
       throw new Meteor.Error(401, "Shift has nothing to be updated");
     } 
-    updateDoc.published = false;
     Shifts.update({'_id': id}, {$set: updateDoc});
     logger.info("Shift details updated", {"shiftId": id});
     return;

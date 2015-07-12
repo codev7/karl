@@ -32,7 +32,7 @@ component.state.shifts = function() {
   }
 }
 
-component.action.addShift = function(day) {
+component.action.addShift = function(day, dates) {
   if(this.origin == "weeklyroster") {
     var doc = {
       "section": "Kitchen hand",
@@ -40,6 +40,7 @@ component.action.addShift = function(day) {
       "endTime": new Date(day).setHours(17, 0),
       "shiftDate": moment(new Date(day)).format("YYYY-MM-DD"),
       "assignedTo": null,
+      "week": dates
     }
 
     Meteor.call("createShift", doc, function(err, id) {

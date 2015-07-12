@@ -97,7 +97,7 @@ Meteor.publish("openedShifts", function() {
     this.error(new Meteor.Error(404, "User not found"));
   }
   var shifts = Shifts.find(
-    {"shiftDate": {$gte: new Date().getTime()}, "assignedTo": null}, 
+    {"shiftDate": {$gte: new Date().getTime()}, "assignedTo": null, "published": true}, 
     {sort: {"shiftDate": 1}, limit: 10});
   logger.info("Opened shifts published");
   return shifts;

@@ -90,6 +90,7 @@ component.prototype.itemRendered = function() {
         if(newValue == "Open") {
           newValue = null;
         }
+
         var obj = {"_id": shiftId, "assignedTo": newValue}
         var shift = null;
         if(origin == "weeklyrostertemplate") {
@@ -100,6 +101,12 @@ component.prototype.itemRendered = function() {
         } else if(origin == "weeklyroster") {
           shift = Shifts.findOne(shiftId);
           if(shift) {
+            if(shift.assignedTo && shift.published) {
+              //notify old user
+              var title =  "Update on shift dated " + moment(shift.shiftDate).format("YYYY-MM-DD");
+              var text = "You have been removed from this assigned shift";
+              sendNotification(shiftId, shift.assignedTo, title, text);
+            }
             assignWorkerToShift(newValue, shiftId);
           }
         }
@@ -211,12 +218,53 @@ function editShift(obj) {
     if(err) {
       console.log(err);
       return alert(err.reason);
+    } else {
+      var shift = Shifts.findOne(obj._id);
+      if(shift.published && shift.assignedTo) {
+        //notify new user
+        var title = "Update on shift dated " + moment(shift.shiftDate).format("YYYY-MM-DD");
+        var text = null;
+        if(obj.hasOwnProperty("endTime")) {
+          text = "Shift end time has been updated";
+        }
+        if(obj.hasOwnProperty("startTime")) {
+          text = "Shift start time has been updated";
+        }
+        if(obj.hasOwnProperty("section")) {
+          text = "Shift section has been updated";
+        }
+        sendNotification(obj._id, shift.assignedTo, title, text);
+      }
     }
   });
 }
 
-function assignWorkerToShift(worker, shift) {
-  Meteor.call("assignWorker", worker, shift, function(err) {
+function assignWorkerToShift(worker, shiftId) {
+  Meteor.call("assignWorker", worker, shiftId, function(err) {
+    if(err) {
+      console.log(err);
+      return alert(err.reason);
+    } else {
+      var shift = Shifts.findOne(shiftId);
+      if(shift.published) {
+        //notify new user
+        var title = "Update on shift dated " + moment(shift.shiftDate).format("YYYY-MM-DD");
+        var text = "You have been assigned to this shift";
+        sendNotification(shiftId, worker, title, text);
+      }
+    }
+  });
+}
+
+function sendNotification(itemId, to, title, text) {
+  var type = "roster";
+  var options = {
+    "title": title,
+    "type": "update",
+    "text": text,
+    "to": to
+  }
+  Meteor.call("sendNotifications", itemId, type, options, function(err) {
     if(err) {
       console.log(err);
       return alert(err.reason);
