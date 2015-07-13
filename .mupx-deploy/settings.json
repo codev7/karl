@@ -1,5 +1,16 @@
 {
   "public": {
+    "intercom": {
+      "id": "rc6uoqw0"
+    }
+  },
 
+  "intercom": {
+    "secret": "fF3c2THd9ILbXpPuvNs7Q-_UpisGchsbjMj2W4Y-"
+  },
+
+  "kadira": { 
+    "appId": "yttgRhnyuAwmNCCH5", 
+    "appSecret": "84f8883c-8ac7-45a4-b65b-fdce88ee8f69" 
   }
 }
