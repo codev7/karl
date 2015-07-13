@@ -63,7 +63,7 @@ component.prototype.itemRendered = function() {
         emptytext: 'Open',
         defaultValue: "Open",
         source: function() {
-          var alreadtAssigned = [];
+          var alreadyAssigned = [];
           var workersObj = []
           var shifts = null;
           if(origin == "weeklyrostertemplate") {
@@ -71,17 +71,23 @@ component.prototype.itemRendered = function() {
           } else if(origin == "weeklyroster") {
             shifts = Shifts.find({"shiftDate": date}).fetch();
           }
+
           shifts.forEach(function(shift) {
             if(shift.assignedTo) {
-              alreadtAssigned.push(shift.assignedTo);
+              alreadyAssigned.push(shift.assignedTo);
             }
           });
-          var index = alreadtAssigned.indexOf(worker);
+
+          var index = alreadyAssigned.indexOf(worker);
           if(index >=0) {
-            alreadtAssigned.splice(index, 1);
+            alreadyAssigned.splice(index, 1);
           }
           workersObj.push({value: "Open", text: "Open"});
-          var workers = Meteor.users.find({"_id": {$nin: alreadtAssigned}, "isActive": true, $or: [{"isWorker": true}, {"isManager": true}]}).fetch();
+          var workers = Meteor.users.find({
+            "_id": {$nin: alreadyAssigned}, 
+            "isActive": true, 
+            $or: [{"isWorker": true}, {"isManager": true}]
+          }, {sort: {"username": 1}}).fetch();
           workers.forEach(function(worker) {
             workersObj.push({value: worker._id, text: worker.username});
           });
