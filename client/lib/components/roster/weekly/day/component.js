@@ -35,7 +35,7 @@ component.state.shifts = function() {
 component.action.addShift = function(day, dates) {
   if(this.origin == "weeklyroster") {
     var doc = {
-      "section": "Kitchen hand",
+      "section": null,
       "startTime": new Date(day).setHours(8, 0),
       "endTime": new Date(day).setHours(17, 0),
       "shiftDate": moment(new Date(day)).format("YYYY-MM-DD"),

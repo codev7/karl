@@ -22,10 +22,10 @@ Meteor.methods({
       logger.error("Date field not found");
       throw new Meteor.Error(404, "Date field not found");
     }
-    if(!info.section) {
-      logger.error("Section field not found");
-      throw new Meteor.Error(404, "Section field not found");
-    }
+    // if(!info.section) {
+    //   logger.error("Section field not found");
+    //   throw new Meteor.Error(404, "Section field not found");
+    // }
     var startTime = new Date(info.startTime).getTime();
     var endTime = new Date(info.endTime).getTime()
     if(startTime && endTime) {
