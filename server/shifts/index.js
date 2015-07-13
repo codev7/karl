@@ -101,7 +101,7 @@ Meteor.methods({
     if(info.endTime) {
       updateDoc.endTime = new Date(info.endTime).getTime();
     }
-    if(info.section) {
+    if(info.hasOwnProperty("section")) {
       updateDoc.section = info.section;
     }
     // var yesterday = new Date();

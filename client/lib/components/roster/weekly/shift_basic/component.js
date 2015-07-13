@@ -125,16 +125,22 @@ component.prototype.itemRendered = function() {
         type: "select",
         title: "Select section to assign",
         inputclass: "editableWidth",
-        showbuttons: false,    
+        showbuttons: false,
+        emptytext: 'Open',
+        defaultValue: "Open",    
         source: function() {
           var sections = Sections.find().fetch();
           var sectionsObj = [];
+          sectionsObj.push({value: "Open", text: "Open"});
           sections.forEach(function(section) {
             sectionsObj.push({"value": section.name, "text": section.name});
           });
           return sectionsObj;
         },
         success: function(response, newValue) {
+          if(newValue == "Open") {
+            newValue = null;
+          }
           var shiftId = $(this).closest("li").attr("data-id");
           var obj = {"_id": shiftId, "section": newValue}
           var shift = null;
