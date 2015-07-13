@@ -11,7 +11,7 @@
   ],
 
   // Install MongoDB in the server, does not destroy local MongoDB on future setup
-  "setupMongo": true,
+  "setupMongo": false,
 
   // Application name (No spaces)
   "appName": "herochef",
