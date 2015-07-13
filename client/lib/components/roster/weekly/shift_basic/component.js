@@ -61,6 +61,7 @@ component.prototype.itemRendered = function() {
         inputclass: "editableWidth",
         showbuttons: false,
         emptytext: 'Open',
+        defaultValue: "Open",
         source: function() {
           var alreadtAssigned = [];
           var workersObj = []
