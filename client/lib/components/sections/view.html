@@ -1,0 +1,38 @@
+<template name="sections">
+  <div class="ibox-content col-lg-12">
+    <form class="form-horizontal">
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <input class="form-control" name="sectionName" placeholder="Add section name here..."/>
+        </div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-primary" id="addSection" style="width: 100%">Add</button>
+        </div>
+      </div>  
+    </form>
+
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each state$sections}}
+          <tr data-id="{{_id}}">
+            <td>
+              <a href="#" class="editSection">{{name}}</a>
+            </td>
+            <td>
+              <i class="fa fa-trash deleteSection"></i>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

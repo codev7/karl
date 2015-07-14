@@ -3398,7 +3398,12 @@ var Grid = fc.Grid = RowRenderer.extend({
       endTime = moment(endTime).format("hh:mm A");
       name = startTime + " - " + endTime + " Shift";
       var select = '';
-      var sectionDiv = '<div>' + shift.section + '</div>';
+      var section = Sections.findOne(shift.section);
+      var assignedSection = "Not assigned";
+      if(section) {
+        assignedSection = section.name;
+      }
+      var sectionDiv = '<div>' + assignedSection + '</div>';
 
       if(view.name == "agendaShifts") {
         var shifts = Shifts.find({"shiftDate": shift.shiftDate}).fetch();

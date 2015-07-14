@@ -29,7 +29,7 @@
       <div class="agile-detail">
         <i class="fa fa-angle-double-right"></i>
         {{#if state$isUserPermitted}}
-          <a href="#" class="section" data-pk="{{state$shift.section}}" data-value="{{state$shift.section}}">{{state$shift.section}}</a>
+          <a href="#" class="section" data-pk="{{state$section._id}}" data-value="{{state$section._id}}">{{state$section.name}}</a>
         {{else}}
           {{state$shift.section}}
         {{/if}}

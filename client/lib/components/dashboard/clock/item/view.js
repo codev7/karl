@@ -1,7 +1,7 @@
 Template.clockItem.events({
   'click .clockIn': function(event) {
     event.preventDefault();
-    var id = $(event.target).attr("data-id");
+    var id = $(event.target).closest("div.widget").attr("data-id");
     if(id) {
       Meteor.call("clockIn", id, function(err) {
         if(err) {
@@ -14,7 +14,7 @@ Template.clockItem.events({
 
   'click .clockOut': function(event) {
     event.preventDefault();
-    var id = $(event.target).attr("data-id");
+    var id = $(event.target).closest("div.widget").attr("data-id");
     if(id) {
       Meteor.call("clockOut", id, function(err) {
         if(err) {

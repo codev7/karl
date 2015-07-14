@@ -4,6 +4,11 @@ Meteor.publish("allSections", function() {
 
 });
 
+Meteor.publish("section", function(id) {
+  logger.info("Sections published");
+  return Sections.find({"_id": id});
+});
+
 Meteor.publish("allCategories", function() {
   if(!this.userId) {
     logger.error('User not found : ' + this.userId);

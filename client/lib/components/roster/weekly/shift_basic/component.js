@@ -10,6 +10,12 @@ component.state.shift = function() {
   return this.shift;
 }
 
+component.state.section = function() {
+  if(this.shift && this.shift.section) {
+    return Sections.findOne(this.shift.section);
+  }
+}
+
 component.state.assignedTo = function() {
   var worker = this.shift.assignedTo;
   if(worker) {
@@ -121,7 +127,7 @@ component.prototype.itemRendered = function() {
           var sectionsObj = [];
           sectionsObj.push({value: "Open", text: "Open"});
           sections.forEach(function(section) {
-            sectionsObj.push({"value": section.name, "text": section.name});
+            sectionsObj.push({"value": section._id, "text": section.name});
           });
           return sectionsObj;
         },

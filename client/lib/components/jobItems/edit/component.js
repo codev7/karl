@@ -52,12 +52,8 @@ component.state.isRecurring = function() {
 }
 
 
-component.state.id = function() {
-  return this.item._id;
-}
-
-component.state.name = function() {
-  return this.item.name;
+component.state.item = function() {
+  return this.item;
 }
 
 component.state.ingredients = function() {
@@ -80,18 +76,6 @@ component.state.typesWithSelected = function() {
     }
   });
   return types;
-}
-
-component.state.activeTime = function() {
-  return this.item.activeTime;
-}
-
-component.state.portions = function() {
-  return this.item.portions;
-}
-
-component.state.shelfLife = function() {
-  return this.item.shelfLife;
 }
 
 component.state.frequencyWithSelected = function() {
@@ -247,11 +231,16 @@ component.state.wagePerHour = function() {
 }
 
 component.state.mySection = function() {
-  return this.item.section;
+  var section = Sections.findOne(this.item.section);
+  if(section) {
+    return section;
+  } else {
+    return {"name": this.item.section, "_id": this.item.section};
+  }
 }
 
-component.state.sectionsWithSelected = function() {
-  var sections = Sections.find({"name": {$nin: [this.item.section]}});
+component.state.sectionsWithOutSelected = function() {
+  var sections = Sections.find({"_id": {$nin: [this.item.section]}});
   return sections;
 }
 

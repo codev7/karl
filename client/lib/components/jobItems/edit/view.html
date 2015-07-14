@@ -1,20 +1,20 @@
 <template name="editJobItem">
   <!-- Page heading -->
-  {{> render component="pageHeading" title='Edit Job' category='Jobs' name="jobedit" subCategory=state$name id=state$id}}
+  {{> render component="pageHeading" title='Edit Job' category='Jobs' name="jobedit" subCategory=state$item.name id=state$item.id}}
 
   <div class="wrapper wrapper-content animated">
     <div class="row">
       <div class="col-lg-12">
         <div class="ibox float-e-margins">
           <div class="ibox-title">
-            <h5>Edit job - {{state$name}}</h5>
+            <h5>Edit job - {{state$item.name}}</h5>
           </div>
           <div class="ibox-content">
             <form method="get" class="form-horizontal">
               <div class="form-group">
                 <label class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" class="form-control" placeholder="Enter Name for the job" value="{{state$name}}">
+                  <input type="text" name="name" class="form-control" placeholder="Enter Name for the job" value="{{state$item.name}}">
                 </div>
               </div>    
               <div class="form-group">
@@ -32,9 +32,9 @@
                   <label class="col-sm-2 control-label">Sections</label>
                   <div class="col-sm-10">
                     <select name="sections" class="form-control">
-                      <option value="{{state$mySection}}">{{state$mySection}}</option>
-                      {{#each state$sectionsWithSelected}}
-                      <option value="{{name}}">{{name}}</option>
+                      <option value="{{state$mySection._id}}">{{state$mySection.name}}</option>
+                      {{#each state$sectionsWithOutSelected}}
+                      <option value="{{_id}}">{{name}}</option>
                       {{/each}}
                     </select>
                   </div>
@@ -85,7 +85,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Portions</label>
                 <div class="col-sm-10">
-                  <input type="number" name="portions" class="form-control" placeholder="No. of Portions" value="{{state$portions}}">
+                  <input type="number" name="portions" class="form-control" placeholder="No. of Portions" value="{{state$item.portions}}">
                 </div>
               </div>
               {{/if}}
@@ -94,7 +94,7 @@
                 <label class="col-sm-2 control-label">Shelf Life</label>
                 <div class="col-sm-10">
                   <div class="input-group m-b">
-                    <input type="text" name="shelfLife" class="form-control" placeholder="Shelf Life" value="{{state$shelfLife}}">
+                    <input type="text" name="shelfLife" class="form-control" placeholder="Shelf Life" value="{{state$item.shelfLife}}">
                     <span class="input-group-addon">Days</span> 
                   </div>
                 </div>
@@ -200,7 +200,7 @@
                 <label class="col-sm-2 control-label">Active Time</label>
                 <div class="col-sm-10">
                   <div class="input-group m-b">
-                    <input type="number" name="activeTime" class="form-control" placeholder="Active Time" value="{{secondsToMinutes state$activeTime}}">
+                    <input type="number" name="activeTime" class="form-control" placeholder="Active Time" value="{{secondsToMinutes state$item.activeTime}}">
                     <span class="input-group-addon">mins</span> 
                   </div>
                 </div>
@@ -210,15 +210,15 @@
                 <div class="col-sm-10">
                   <div class="input-group m-b">
                     <span class="input-group-addon">$</span>
-                    <input type="text" name="avgWagePerHour" class="form-control" placeholder="Average Wage of a Worker per Hour" value="{{state$wagePerHour}}">
+                    <input type="text" name="avgWagePerHour" class="form-control" placeholder="Average Wage of a Worker per Hour" value="{{state$item.wagePerHour}}">
                     <span class="input-group-addon">/ hour</span>
                   </div>
                 </div>   
               </div>
               <div class="row">
                 <div class="col-md-5 col-sm-offset-2">
-                  <button class="btn btn-danger deleteJobItem" type="button" data-id="{{state$id}}">Delete</button>
-                  <button class="btn btn-white cancelEditJobItem" data-id="{{state$id}}" type="button">Cancel</button>
+                  <button class="btn btn-danger deleteJobItem" type="button" data-id="{{state$item.id}}">Delete</button>
+                  <button class="btn btn-white cancelEditJobItem" data-id="{{state$item.id}}" type="button">Cancel</button>
                   <button class="btn btn-primary" type="submit">Save Changes</button>
                 </div>
               </div>
