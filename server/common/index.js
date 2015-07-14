@@ -44,4 +44,27 @@ Meteor.methods({
     }
     return Statuses.insert({"name": name.toLowerCase()});
   },
+
+  'createSection': function(name) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add job items");
+      throw new Meteor.Error(404, "User not permitted to add jobs");
+    }
+    if(!name) {
+      logger.error("Section should have a name");
+      return new Meteor.Error(404, "Section should have a name");
+    }
+    var exist = Sections.findOne({"name": name});
+    if(exist) {
+      logger.error('Section name should be unique', exist);
+      throw new Meteor.Error(404, "Section name should be unique");
+    }
+    return Sections.insert({"name": name});
+  },
 });

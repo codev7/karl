@@ -1,0 +1,25 @@
+<template name="sections">
+  <div class="ibox-content">
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each state$sections}}
+          <tr>
+            <td>{{name}}</td>
+            <td>
+              <i class="fa fa-trash" data-id="{{_id}}"></i>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
