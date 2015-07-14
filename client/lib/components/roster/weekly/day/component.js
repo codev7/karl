@@ -25,47 +25,39 @@ component.state.shifts = function() {
   if(origin == "weeklyroster") {
     var week = Session.get("thisWeek");
     var date = this.name.date;
-    return Shifts.find({"shiftDate": new Date(date).getTime()});
+    return Shifts.find({"shiftDate": new Date(date).getTime(), "type": null});
   } else if(origin == "weeklyrostertemplate") {
     var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    return TemplateShifts.find({"shiftDate": daysOfWeek.indexOf(this.name)});
+    return Shifts.find({"shiftDate": daysOfWeek.indexOf(this.name), "type": "template"});
   }
 }
 
 component.action.addShift = function(day, dates) {
+  var doc = {
+    "assignedTo": null,
+    "week": dates
+  }
   if(this.origin == "weeklyroster") {
-    var doc = {
-      "section": "Kitchen hand",
-      "startTime": new Date(day).setHours(8, 0),
-      "endTime": new Date(day).setHours(17, 0),
-      "shiftDate": moment(new Date(day)).format("YYYY-MM-DD"),
-      "assignedTo": null,
-      "week": dates
-    }
-
-    Meteor.call("createShift", doc, function(err, id) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      }
-    });
-
+    doc.startTime = new Date(day).setHours(8, 0);
+    doc.endTime = new Date(day).setHours(17, 0);
+    doc.shiftDate = moment(new Date(day)).format("YYYY-MM-DD");
+    doc.section = null;
+    doc.type = null;
   } else if(this.origin == "weeklyrostertemplate") {
     var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    var doc = {
-      "section": "Kitchen hand",
-      "startTime": new Date().setHours(8, 0),
-      "endTime": new Date().setHours(17, 0),
-      "shiftDate": new Date(daysOfWeek.indexOf(day)),
-      "assignedTo": null,
-    }
-    Meteor.call("createTemplateShift", doc, function(err, id) {
-      if(err) {
-        console.log(err);
-        return alert(err.reason);
-      }
-    });
+    doc.startTime = new Date().setHours(8, 0);
+    doc.endTime = new Date().setHours(17, 0);
+    doc.shiftDate = new Date(daysOfWeek.indexOf(day));
+    doc.section = "Kitchen hand";
+    doc.type = "template";
   }
+
+  Meteor.call("createShift", doc, function(err, id) {
+    if(err) {
+      console.log(err);
+      return alert(err.reason);
+    }
+  });
 }
 
 component.state.isTemplate = function() {
