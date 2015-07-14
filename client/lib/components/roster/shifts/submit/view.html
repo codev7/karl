@@ -12,7 +12,7 @@
             <div class="col-sm-6">
               <select class="form-control" name="section">
                 {{#each state$sections}}
-                <option>{{this.name}}</option>
+                <option value="{{this._id}}">{{this.name}}</option>
                 {{/each}}
               </select>
             </div>
