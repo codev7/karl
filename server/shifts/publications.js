@@ -5,7 +5,8 @@ Meteor.publish("daily", function(date, worker) {
   }
   var cursors = [];
   var query = {
-    "shiftDate": new Date(date).getTime()
+    "shiftDate": new Date(date).getTime(),
+    "type": null
   }
   if(worker) {
     query.assignedTo = worker
@@ -24,24 +25,29 @@ Meteor.publish("daily", function(date, worker) {
   return cursors;
 });
 
-Meteor.publish("weekly", function(dates, worker) {
+Meteor.publish("weekly", function(dates, worker, type) {
   if(!this.userId) {
     logger.error('User not found : ' + this.userId);
     this.error(new Meteor.Error(404, "User not found"));
   }
+  var query = {
+    "type": type
+  };
+  
   var cursors = [];
-  var firstDate = dates.monday;
-  var lastDate = dates.sunday;
-
-  var query = {"shiftDate": {$gte: new Date(firstDate).getTime(), $lte: new Date(lastDate).getTime()}};
+  if(dates && !type) {
+    var firstDate = dates.monday;
+    var lastDate = dates.sunday;
+    query = {"shiftDate": {$gte: new Date(firstDate).getTime(), $lte: new Date(lastDate).getTime()}};
+  }
   if(worker) {
-    query["assignedTo"] = worker
+    query["assignedTo"] = worker;
   }
   //get shifts
   var shiftsCursor = Shifts.find(query, {sort: {"shiftDate": 1}});
 
   cursors.push(shiftsCursor);
-  logger.info("Weekly shifts detailed publication");
+  logger.info("Weekly shifts detailed publication", {"type": type});
   return cursors;
 });
 
@@ -69,7 +75,7 @@ Meteor.publish("rosteredFutureShifts", function(id) {
     this.error(new Meteor.Error(404, "User id not found"));
   }
   var shifts = Shifts.find(
-    {"shiftDate": {$gte: new Date().getTime()}, "assignedTo": id}, 
+    {"shiftDate": {$gte: new Date().getTime()}, "assignedTo": id, "type": null}, 
     {sort: {"shiftDate": 1}, limit: 10});
   logger.info("Rostered future shifts for user ", id);
   return shifts;
@@ -84,8 +90,12 @@ Meteor.publish("rosteredPastShifts", function(id) {
     logger.error('User id not found : ' + id);
     this.error(new Meteor.Error(404, "User id not found"));
   }
-  var shifts = Shifts.find(
-    {"shiftDate": {$lt: new Date().getTime()}, "assignedTo": id}, 
+  var shifts = Shifts.find({
+    "shiftDate": {$lt: new Date().getTime()}, 
+    "assignedTo": id, 
+    "type": null,
+    "endTime": {$lt: new Date().getTime()}
+  }, 
     {sort: {"shiftDate": -1}, limit: 10});
   logger.info("Rostered past shifts for user ", id);
   return shifts;
@@ -97,7 +107,7 @@ Meteor.publish("openedShifts", function() {
     this.error(new Meteor.Error(404, "User not found"));
   }
   var shifts = Shifts.find(
-    {"shiftDate": {$gte: new Date().getTime()}, "assignedTo": null, "published": true}, 
+    {"shiftDate": {$gte: new Date().getTime()}, "assignedTo": null, "published": true, "type": null}, 
     {sort: {"shiftDate": 1}, limit: 10});
   logger.info("Opened shifts published");
   return shifts;

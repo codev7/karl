@@ -22,10 +22,10 @@ Meteor.methods({
       logger.error("Date field not found");
       throw new Meteor.Error(404, "Date field not found");
     }
-    if(!info.section) {
-      logger.error("Section field not found");
-      throw new Meteor.Error(404, "Section field not found");
-    }
+    // if(!info.section) {
+    //   logger.error("Section field not found");
+    //   throw new Meteor.Error(404, "Section field not found");
+    // }
     var startTime = new Date(info.startTime).getTime();
     var endTime = new Date(info.endTime).getTime()
     if(startTime && endTime) {
@@ -33,6 +33,10 @@ Meteor.methods({
         logger.error("Start and end times invalid");
         throw new Meteor.Error(404, "Start and end times invalid");
       }
+    }
+    var type = null;
+    if(info.hasOwnProperty("type")) {
+      type = info.type;
     }
 
     var doc = {
@@ -45,13 +49,15 @@ Meteor.methods({
       "assignedBy": null, //update
       "jobs": [],
       "status": "draft",
-      "type": null,
+      "type": type,
       "published": false
     }
-    var alreadyPublished = Shifts.findOne({"shiftDate": {$in: info.week}, "published": true});
-    if(alreadyPublished) {
-      doc.published = true;
-      doc.publishedOn = alreadyPublished.publishedOn;
+    if(info.hasOwnProperty("week") && info.week.length > 0) {
+      var alreadyPublished = Shifts.findOne({"shiftDate": {$in: info.week}, "published": true});
+      if(alreadyPublished) {
+        doc.published = true;
+        doc.publishedOn = alreadyPublished.publishedOn;
+      }
     }
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
@@ -70,7 +76,7 @@ Meteor.methods({
       }
     }
     var id = Shifts.insert(doc);
-    logger.info("Shift inserted", {"shiftId": id, "date": info.shiftDate});
+    logger.info("Shift inserted", {"shiftId": id, "date": info.shiftDate, "type": type});
     return id;
   },
 
@@ -95,15 +101,56 @@ Meteor.methods({
       throw new Meteor.Error(404, "Shift not found");
     }
     var updateDoc = {};
-    if(info.startTime) {
-      updateDoc.startTime = new Date(info.startTime).getTime();
+
+    if(info.hasOwnProperty("startTime") && info.hasOwnProperty("endTime")) {
+      var startTime = new Date(info.startTime).getTime();
+      var endTime = new Date(info.endTime).getTime();
+      if(startTime && endTime) {
+        if(startTime >= endTime) {
+          logger.error("Start and end times invalid");
+          throw new Meteor.Error(404, "Start and end times invalid");
+        } else {
+          updateDoc.startTime = new Date(info.startTime).getTime();
+          updateDoc.endTime = new Date(info.endTime).getTime();
+        }
+      }  
+    } else if(info.hasOwnProperty("startTime")) {
+      var startTime = new Date(info.startTime).getTime();
+      var endTime = new Date(shift.endTime).getTime();
+
+      if(startTime && endTime) {
+        if(startTime > endTime) {
+          logger.error("Start time invalid");
+          throw new Meteor.Error(404, "Start time invalid");
+        } else {
+          updateDoc.startTime = new Date(info.startTime).getTime();
+        }
+      }  
+    } else if(info.hasOwnProperty("endTime")) {
+      var startTime = new Date(shift.startTime).getTime();
+      var endTime = new Date(info.endTime).getTime();
+
+      if(startTime && endTime) {
+        if(startTime > endTime) {
+          logger.error("End time invalid");
+          throw new Meteor.Error(404, "End time invalid");
+        } else {
+          updateDoc.endTime = new Date(info.endTime).getTime();
+        }
+      }  
     }
-    if(info.endTime) {
-      updateDoc.endTime = new Date(info.endTime).getTime();
-    }
-    if(info.section) {
+
+    // if(info.startTime) {
+    //   updateDoc.startTime = new Date(info.startTime).getTime();
+    // }
+    // if(info.endTime) {
+    //   updateDoc.endTime = new Date(info.endTime).getTime();
+    // }
+    if(info.hasOwnProperty("section")) {
       updateDoc.section = info.section;
     }
+
+    
     // var yesterday = new Date();
     // yesterday.setDate(yesterday.getDate() - 1);
     // if(new Date(shift.shiftDate) <= yesterday) {

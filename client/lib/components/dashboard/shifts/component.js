@@ -19,7 +19,11 @@ component.state.shifts = function() {
   if(state == "future") {
     shifts = Shifts.find({"assignedTo": Meteor.userId(), "shiftDate": {$gte: Date.now()}}, {sort: {'shiftDate': 1}});
   } else if(state == "past") {
-    shifts = Shifts.find({"assignedTo": Meteor.userId(), "shiftDate": {$lt: Date.now()}}, {sort: {'shiftDate': -1}});
+    shifts = Shifts.find({
+      "assignedTo": Meteor.userId(), 
+      "shiftDate": {$lt: Date.now()},
+      "endTime": {$lt: new Date().getTime()}
+    }, {sort: {'shiftDate': -1}});
   } else if(state == "open") {
     shifts = Shifts.find({"assignedTo": null, "shiftDate": {$gte: Date.now()}}, {sort: {'shiftDate': 1}});
   }

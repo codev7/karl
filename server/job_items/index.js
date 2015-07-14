@@ -79,6 +79,7 @@ Meteor.methods({
   },
   
   'editJobItem': function(id, info) {
+
     var user = Meteor.user();
     if(!user) {
       logger.error('No user has logged in');
@@ -194,9 +195,9 @@ Meteor.methods({
       if(info.frequency) {
         if(info.frequency != job.frequency) {
           updateDoc.frequency = info.frequency;
-          if(info.frequency == "Weekly") {
-            updateDoc.repeatOn = info.repeatOn;
-          }
+        }
+        if(info.frequency == "Weekly") {
+          updateDoc.repeatOn = info.repeatOn;
         }
       }
       if(info.startsOn) {

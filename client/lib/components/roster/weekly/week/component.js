@@ -39,23 +39,13 @@ component.prototype.onListRendered = function() {
         newDate = parseInt(daysOfWeek.indexOf(newDate));
       }
       if(id && newDate) {
-        if(origin == "weeklyroster") {
-          Meteor.call("editShift", id, {"shiftDate": newDate}, function(err) {
-            if(err) {
-              console.log(err);
-              $(ui.sender[0]).sortable('cancel');;
-              return alert(err.reason);
-            }
-          });
-        } else if(origin == "weeklyrostertemplate") {
-          Meteor.call("editTemplateShift", {"_id": id, "shiftDate": newDate}, function(err) {
-            if(err) {
-              console.log(err);
-              $(ui.sender[0]).sortable('cancel');;
-              return alert(err.reason);
-            }
-          });
-        }
+        Meteor.call("editShift", id, {"shiftDate": newDate}, function(err) {
+          if(err) {
+            console.log(err);
+            $(ui.sender[0]).sortable('cancel');;
+            return alert(err.reason);
+          }
+        });
       }
     });
   } else {

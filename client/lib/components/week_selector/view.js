@@ -11,14 +11,18 @@ Template.weekSelector.events({
     var week = getDatesFromWeekNumber(weekNo);
     week.forEach(function(obj) {
       var index = week.indexOf(obj);
-      var shifts = TemplateShifts.find({"shiftDate": index}).fetch();
+      var shifts = Shifts.find({"shiftDate": index, "type": "template"}).fetch();
       if(shifts.length > 0) {
         shifts.forEach(function(shift) {
           var startHour = moment(shift.startTime).hour();
+          var startMin = moment(shift.startTime).minute();
+
           var endHour = moment(shift.endTime).hour();
+          var endMin = moment(shift.endTime).minute();
+
           var info = {
-            "startTime": new Date(moment(obj.date).set('hour', startHour)),
-            "endTime": new Date(moment(obj.date).set('hour', endHour)),
+            "startTime": new Date(moment(obj.date).set('hour', startHour).set("minute", startMin)),
+            "endTime": new Date(moment(obj.date).set('hour', endHour).set("minute", endMin)),
             "shiftDate": moment(obj.date).format("YYYY-MM-DD"),
             "section": shift.section,
             "assignedTo": shift.assignedTo,
