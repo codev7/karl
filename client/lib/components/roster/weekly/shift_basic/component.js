@@ -196,15 +196,6 @@ component.prototype.itemRendered = function() {
   }
 }
 
-function editTemplateShift(obj) {
-  Meteor.call("editTemplateShift", obj, function(err) {
-    if(err) {
-      console.log(err);
-      return alert(err.reason);
-    }
-  });
-}
-
 function editShift(obj) {
   Meteor.call("editShift", obj._id, obj, function(err) {
     if(err) {
