@@ -220,7 +220,7 @@ Template.pageHeading.events({
         dates.push(new Date(day.date).getTime())
       }
     });
-    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false}).fetch();
+    var shifts = Shifts.find({"shiftDate": {$in: dates}, "published": false, "type": null}).fetch();
     var tobePublished = [];
     var users = [];
     if(shifts.length > 0) {
