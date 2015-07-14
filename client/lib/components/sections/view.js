@@ -16,7 +16,7 @@ Template.sections.events({
 
   'click .deleteSection': function(event) {
     event.preventDefault();
-    var id = $(event.target).attr("data-id");
+    var id = $(event.target).closest("tr").attr("data-id");
     var confirmDelete = confirm("Are you sure you want to delete this section?");
     if(confirmDelete) {
       if(id) {
@@ -30,3 +30,24 @@ Template.sections.events({
     }
   }
 });
+
+Template.sections.rendered = function() {
+  $('.editSection').editable({
+    type: "text",
+    title: 'Edit section name',
+    showbuttons: true,
+    display: false,
+    mode: 'inline',
+    success: function(response, newValue) {
+      var id = $(this).closest("tr").attr("data-id");
+      if(id) {
+        Meteor.call("editSection", id, newValue, function(err) {
+          if(err) {
+            console.log(err);
+            return alert(err.reason);
+          }
+        });
+      }
+    }
+  });
+}

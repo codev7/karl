@@ -10,6 +10,13 @@ component.state.job = function() {
   return item;
 }
 
+component.state.section = function() {
+  var item = this.get("job");
+  if(item) {
+    return Sections.findOne(item.section).name;
+  }
+}
+
 component.state.isPrep = function() {
   var item = this.get("job");
   if(item) {

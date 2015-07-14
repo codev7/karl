@@ -101,4 +101,25 @@ Meteor.methods({
     logger.info("Section removed", id);
     return;
   },
+
+  'editSection': function(id, name) {
+    if(!Meteor.userId()) {
+      logger.error('No user has logged in');
+      throw new Meteor.Error(401, "User not logged in");
+    }
+    var userId = Meteor.userId();
+    var permitted = isManagerOrAdmin(userId);
+    if(!permitted) {
+      logger.error("User not permitted to add job items");
+      throw new Meteor.Error(404, "User not permitted to add jobs");
+    }
+    var exist = Sections.findOne(id);
+    if(!exist) {
+      logger.error('Section does not exist');
+      throw new Meteor.Error(404, "Section does not exist");
+    }
+    Sections.update({"_id": id}, {$set: {"name": name}});
+    logger.info("Section name updated", id);
+    return;
+  },
 });

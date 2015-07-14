@@ -22,10 +22,12 @@
         </thead>
         <tbody>
           {{#each state$sections}}
-          <tr>
-            <td>{{name}}</td>
+          <tr data-id="{{_id}}">
             <td>
-              <i class="fa fa-trash deleteSection" data-id="{{_id}}"></i>
+              <a href="#" class="editSection">{{name}}</a>
+            </td>
+            <td>
+              <i class="fa fa-trash deleteSection"></i>
             </td>
           </tr>
           {{/each}}
