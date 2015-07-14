@@ -154,9 +154,7 @@ Template.editJobItem.events({
         if(!frequency) {
           return alert("Should have an frequency for the job");
         }
-        if(job.frequency != frequency) {
-          info.frequency = frequency;
-        }
+        info.frequency = frequency;
 
         var repeatAt = $(event.target).find('[name=repeatAt]').val().trim();
         if(!repeatAt) {
@@ -213,7 +211,6 @@ Template.editJobItem.events({
             }
           }
         }
-        console.log()
         var section = $(event.target).find("[name=sections]").val();
         if(!section) {
           return alert("Should have a section");
@@ -228,19 +225,12 @@ Template.editJobItem.events({
           repeatOn.forEach(function(doc) {
             if(doc.checked) {
               var value = $(doc).val();
-              if(job.repeatOn) {
-                if(job.repeatOn.indexOf(value) < 0) {
-                  if(repeatDays.indexOf(value) < 0) {
-                    repeatDays.push(value);
-                  }
-                }
-              } else {
-                if(repeatDays.indexOf(value) < 0) {
-                  repeatDays.push(value);
-                }
-              }
+              if(repeatDays.indexOf(value) < 0) {
+                repeatDays.push(value);
+              }             
             }
           });
+
           if(repeatDays.length == 0) {
             return alert("Should state the days to be repeated on");
           }
@@ -305,6 +295,7 @@ Template.editJobItem.events({
   'change .changeFrequency': function(event) {
     event.preventDefault();
     var frequency = $(event.target).val();
+    $(".repeatOn").prop('checked', false); 
     Session.set("frequency", frequency);
   },
 
