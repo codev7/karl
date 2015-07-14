@@ -6,11 +6,9 @@ component.state.clockInPermission = function() {
   var lowerLimit = new Date().getTime() - 2 * 3600 * 1000;
   query['assignedTo'] = Meteor.userId();
   query['status'] = 'draft';
-  query['$and'] = [
-    {"startTime": {$gte: lowerLimit}},
-    {"startTime": {$lte: upplerLimit}}
-  ]
-  var shift = Shifts.findOne(query, {sort: {"startTime": 1}, limit: 1});
+  query['startTime'] = {$gte: lowerLimit, $lte: upplerLimit}
+
+  var shift = Shifts.findOne(query, {sort: {"startTime": 1}});
   this.set("inShift", shift)
   if(shift) {
     return true;
@@ -36,6 +34,15 @@ component.state.clockIn = function() {
   var shift = this.get("inShift");
   if(shift) {
     return shift;
+  }
+}
+
+component.state.subText = function() {
+  var inshift = this.get("inShift");
+  if(inshift && inshift.startTime <= Date.now()) {
+    return "Today shift started ";
+  } else {
+    return "Today shift starts ";
   }
 }
 
