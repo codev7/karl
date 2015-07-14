@@ -90,8 +90,12 @@ Meteor.publish("rosteredPastShifts", function(id) {
     logger.error('User id not found : ' + id);
     this.error(new Meteor.Error(404, "User id not found"));
   }
-  var shifts = Shifts.find(
-    {"shiftDate": {$lt: new Date().getTime()}, "assignedTo": id, "type": null}, 
+  var shifts = Shifts.find({
+    "shiftDate": {$lt: new Date().getTime()}, 
+    "assignedTo": id, 
+    "type": null,
+    "endTime": {$lt: new Date().getTime()}
+  }, 
     {sort: {"shiftDate": -1}, limit: 10});
   logger.info("Rostered past shifts for user ", id);
   return shifts;
