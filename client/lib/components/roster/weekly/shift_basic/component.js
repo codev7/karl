@@ -10,6 +10,10 @@ component.state.shift = function() {
   return this.shift;
 }
 
+component.state.thisorigin = function() {
+  return this.get("origin");
+}
+
 component.state.section = function() {
   if(this.shift && this.shift.section) {
     return Sections.findOne(this.shift.section);
@@ -43,14 +47,11 @@ component.action.deleteShift = function(id) {
 
 component.prototype.itemRendered = function() {
   $.fn.editable.defaults.mode = 'inline';
-
   var user = this.get("user");
   if(user) {
     var origin = this.get("origin");
-    var date = this.shift.shiftDate;
-    var worker = this.shift.assignedTo;
 
-    setTimeout(function() {
+    setTimeout(function() {      
       $('.select-worker').editable({
         type: "select",
         title: 'Select worker to assign',
@@ -59,11 +60,14 @@ component.prototype.itemRendered = function() {
         emptytext: 'Open',
         defaultValue: "Open",
         source: function() {
+          var shiftId = $(this).closest("li").attr("data-id");
+          var thisShift = Shifts.findOne(shiftId);
+
           var alreadyAssigned = [];
           var workersObj = []
           var shifts = null;
           var query = {
-            "shiftDate": date
+            "shiftDate": thisShift.shiftDate
           }
           if(origin == "weeklyrostertemplate") {
             query['type'] = "template";
@@ -78,16 +82,18 @@ component.prototype.itemRendered = function() {
             }
           });
 
-          var index = alreadyAssigned.indexOf(worker);
+          var index = alreadyAssigned.indexOf(thisShift.assignedTo);
           if(index >=0) {
             alreadyAssigned.splice(index, 1);
           }
+
           workersObj.push({value: "Open", text: "Open"});
           var workers = Meteor.users.find({
             "_id": {$nin: alreadyAssigned}, 
             "isActive": true, 
             $or: [{"isWorker": true}, {"isManager": true}]
           }, {sort: {"username": 1}}).fetch();
+
           workers.forEach(function(worker) {
             workersObj.push({value: worker._id, text: worker.username});
           });
@@ -228,7 +234,7 @@ function editShift(obj) {
   });
 }
 
-function assignWorkerToShift(worker, shiftId, target) {
+assignWorkerToShift = function(worker, shiftId, target) {
   var shift = Shifts.findOne(shiftId);
   if(shift) {
     Meteor.call("assignWorker", worker, shiftId, function(err) {
@@ -248,6 +254,7 @@ function assignWorkerToShift(worker, shiftId, target) {
     });
   }
 }
+
 
 function sendNotification(itemId, to, title, text) {
   var type = "roster";
