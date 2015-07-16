@@ -1,6 +1,6 @@
 <template name="shiftBasic">
-  <div class="hidden-success-box" data-id="{{state$shift._id}}">
-    <li class="success-element" data-id="{{state$shift._id}}">
+  <div class="hidden-success-box">
+    <li class="success-element" data-id="{{state$shift._id}}" data-origin="{{state$thisorigin}}">
       {{#if state$isUserPermitted}}
       <div class="box-wrapper pull-right" style="display: none;">
         <span class="box-remove glyphicon glyphicon-remove removeRosterBox"></span>
