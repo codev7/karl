@@ -1,7 +1,16 @@
 <template name="menuItemsList">
+  <div class="row">
+    <div class="col-sm-12">
+      <input type="text" name="searchMenuItems"  id="searchMenuItemsBox" class="form-control col-sm-8" placeholder="Search from Name">
+    </div>
+  </div>
+  <hr>
   <div class="list-group">
-  {{#each state$list}}
+  {{#each state$getMenuItems}}
     {{> render component='menuItem' menuitem=this}}
   {{/each}}
   </div>
+  <p>
+    <a  href="#" class="btn btn-block btn-outline btn-primary" id="loadMoreMenuItems">Load More</a>
+  </p>
 </template>
