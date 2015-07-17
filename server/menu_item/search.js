@@ -1,4 +1,4 @@
-SearchSource.defineSource('menuItems', function(searchText, options) {
+SearchSource.defineSource('menuItemsSearch', function(searchText, options) {
   var optionFileds = {sort: {'name': 1}};
   var docs = [];
   var selector = {};
@@ -8,6 +8,9 @@ SearchSource.defineSource('menuItems', function(searchText, options) {
         {'name': {$gt: options.endingAt}},
         {'name': {$lte: options.endingAt}}
       ]
+    }
+    if(options.filter) {
+      selector['$and'] = options.filter;
     }
     if(options.limit) {
       optionFileds['limit'] = options.limit;

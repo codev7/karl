@@ -20,7 +20,7 @@ component.action.click = function() {
     if(dataHistory.length >= 9) {
       this.JobItemsSearch.cleanHistory();
       var count = dataHistory.length;
-      var lastItem = dataHistory[count - 1]['code'];
+      var lastItem = dataHistory[count - 1]['name'];
       this.JobItemsSearch.search(text, {"limit": count + 10, "endingAt": lastItem});
     }
   }
