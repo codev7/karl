@@ -9,7 +9,8 @@ Meteor.publish('profileUser', function(id) {
     "isWorker": 1,
     "isManager": 1,
     "isActive": 1,
-    "profile": 1
+    "profile": 1,
+    "username": 1
   }
   var user = Meteor.users.find({"_id": id}, {fields: options});
   logger.info("User published ", id);
@@ -42,5 +43,6 @@ Meteor.publish("workers", function() {
   }
   var cursors = [];
   cursors.push(Meteor.users.find({"isActive": true, $or: [{"isWorker": true}, {"isManager": true}]}));
+
   return cursors;
 });
