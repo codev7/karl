@@ -261,7 +261,8 @@ Meteor.methods({
     if(existInMenuItems) {
       if(existInMenuItems.jobItems.length > 0) {
         logger.error("Item found in Menu Items, can't delete. Archiving job item");
-        return JobItems.update({'_id': id}, {$set: {"status": 'archive'}})
+        throw new Meteor.Error(404, "Delete not permitted");
+        // return JobItems.update({'_id': id}, {$set: {"status": 'archive'}})
       }
     }
     logger.info("Job Item removed", {"id": id});

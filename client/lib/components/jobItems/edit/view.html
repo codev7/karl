@@ -1,6 +1,6 @@
 <template name="editJobItem">
   <!-- Page heading -->
-  {{> render component="pageHeading" title='Edit Job' category='Jobs' name="jobedit" subCategory=state$item.name id=state$item.id}}
+  {{> render component="pageHeading" title='Edit Job' category='Jobs' name="jobedit" subCategory=state$item.name id=state$item._id}}
 
   <div class="wrapper wrapper-content animated">
     <div class="row">
@@ -217,8 +217,8 @@
               </div>
               <div class="row">
                 <div class="col-md-5 col-sm-offset-2">
-                  <button class="btn btn-danger deleteJobItem" type="button" data-id="{{state$item.id}}">Delete</button>
-                  <button class="btn btn-white cancelEditJobItem" data-id="{{state$item.id}}" type="button">Cancel</button>
+                  <button class="btn btn-danger deleteJobItem" type="button" data-id="{{state$item._id}}">Delete</button>
+                  <button class="btn btn-white cancelEditJobItem" data-id="{{state$item._id}}" type="button">Cancel</button>
                   <button class="btn btn-primary" type="submit">Save Changes</button>
                 </div>
               </div>
