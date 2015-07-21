@@ -28,7 +28,7 @@ component.state.icon = function() {
 }
 
 component.prototype.onItemRendered = function() {
-  if(this.notification.type == "roster") {
+  if(this.notification.type == "roster" && this.notification.actionType != "publish") {
     subs.subscribe("shift", this.notification.ref);
   }
 }

@@ -1,4 +1,6 @@
-var component = FlowComponents.define("clock", function(props) {});
+var component = FlowComponents.define("clock", function(props) {
+  Meteor.subscribe("daily", moment().format("YYYY-MM-DD"), Meteor.userId());
+});
 
 component.state.clockInPermission = function() {
   var query = {};
