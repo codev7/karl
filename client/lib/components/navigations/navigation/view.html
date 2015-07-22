@@ -111,7 +111,7 @@
           </li>
           {{/if}}
           
-          {{#if state$isAdmin}}
+          {{#if state$isManagerOrAdmin}}
           <li class="{{isActiveRoute regex='admin'}}">
             <a href="/admin"><i class="fa -o fa-cog"></i> <span class="nav-label">Settings</span> </a>
           </li>

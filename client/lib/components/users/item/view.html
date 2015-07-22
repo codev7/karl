@@ -1,32 +1,34 @@
 <template name="userDetailed">
   <tr data-id="{{state$user._id}}">
-    {{#if state$permissionLevel2}}
+    {{#if state$permittedManagerAndAdmin}}
     <td><a href="/user/profile/{{state$user._id}}">{{state$user.username}}</a></td>
     {{else}}
     <td>{{state$user.username}}</td>
     {{/if}}
     <td>{{{state$type}}}</td>
     <td>{{state$email}}</td>
-    <td>
-      {{#if state$user.isActive}}
-      {{#if state$isAdmin}}
-        {{#if state$ifMe}}
-        <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
-        <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+    {{#if state$permittedAdmin}}
+      <td>
+        {{#if state$user.isActive}}
+          {{#if state$isAdmin}}
+            {{#if state$ifMe}}
+            <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
+            <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+            {{/if}}
+          {{/if}}
+          {{#if state$isManager}}
+            <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
+            <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
+          {{/if}}
+          {{#if state$isWorker}}
+            <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
+            <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
+          {{/if}}
         {{/if}}
-      {{/if}}
-      {{#if state$isManager}}
-      <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
-      <button class="btn btn-xs changeUserPermission" data-type="worker">Worker</button>
-      {{/if}}
-      {{#if state$isWorker}}
-      <button class="btn btn-xs changeUserPermission btn-danger" data-type="admin">Admin</button>
-      <button class="btn btn-xs changeUserPermission btn-warning" data-type="manager">Manager</button>
-      {{/if}}
-      {{/if}}
-    </td>
+      </td>
+    {{/if}}
     <td>
-    {{#if state$permissionLevel1}}
+    {{#if state$permittedManagerAndAdmin}}
       {{#if state$ifMe}}
         {{#if state$user.isActive}} 
           <a href="" class="archiveUser"><i class="fa fa-archive"></i></a>

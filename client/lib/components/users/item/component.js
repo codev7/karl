@@ -22,8 +22,8 @@ component.state.type = function() {
   return type;
 }
 
-component.state.isAdmin = function() {
-  if(this.user.isAdmin) {
+component.state.isAdminOrManager = function() {
+  if(this.user.isAdmin || this.user.isManager) {
     return true;
   } else {
     return false;
@@ -55,7 +55,7 @@ component.state.ifMe = function() {
   }
 }
 
-component.state.permissionLevel2 = function() {
+component.state.permittedManagerAndAdmin = function() {
   var user = Meteor.user();
   if(user.isAdmin || user.isManager) {
     return true;
@@ -64,7 +64,7 @@ component.state.permissionLevel2 = function() {
   }
 }
 
-component.state.permissionLevel1 = function() {
+component.state.permittedAdmin = function() {
   var user = Meteor.user();
   if(user.isAdmin) {
     return true;
