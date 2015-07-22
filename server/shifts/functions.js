@@ -65,16 +65,15 @@ Meteor.methods({
       logger.error("Shift not found");
       throw new Meteor.Error(404, "Shift not found");
     }
-    if(shift.status == "started") {
-      logger.error("Shift has started. Can't change time till it's finished");
-      throw new Meteor.Error(404, "Shift has started. Can't change time till it's finished");
-    }
+    // if(shift.status == "started") {
+    //   logger.error("Shift has started. Can't change time till it's finished");
+    //   throw new Meteor.Error(404, "Shift has started. Can't change time till it's finished");
+    // }
     var updateDoc = {};
     if(info.startDraft) {
       if(!shift.startedAt) {
         updateDoc.startedAt = info.startDraft;
-        updateDoc.finishedAt = info.startDraft + 1000*60*60;
-        updateDoc.status = "finished";
+        updateDoc.status = "started";
       }
     } else {
       if(info.startedAt) {
@@ -85,6 +84,9 @@ Meteor.methods({
             throw new Meteor.Error(404, "Start time should be less than finished time");   
           } else {
             updateDoc.startedAt = info.startedAt;
+            if(shift.status == "draft") {
+              updateDoc.status = "started";
+            }
           }
         }
       }
@@ -96,6 +98,9 @@ Meteor.methods({
             throw new Meteor.Error(404, "Finish time should be greater than start time");    
           } else {
             updateDoc.finishedAt = info.finishedAt;
+            if(shift.status != "finished") {
+              updateDoc.status = "finished";
+            }
           }
         }
       }

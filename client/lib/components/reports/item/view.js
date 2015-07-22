@@ -1,4 +1,5 @@
 function shiftWorkTimeUpdate(id, newValue, time) {
+  console.log(".............", id, newValue, time);
   var shift = Shifts.findOne(id);
   if(shift && newValue) {
     if(!moment(time).isValid()) {
@@ -19,11 +20,11 @@ Template.teamHoursItem.events({
       type: 'combodate',
       title: 'Select time',
       template: "HH:mm",
-      viewformat: "hh:mm",
+      viewformat: "HH:mm",
       format: "YYYY-MM-DD HH:mm",
-      url: '/post',
       display: false,
       showbuttons: true,
+      mode: 'inline',
       success: function(response, newValue) {
         var self = this;
         var id = $(self).data("shift");
@@ -46,11 +47,12 @@ Template.teamHoursItem.events({
       type: 'combodate',
       title: 'Select time',
       template: "HH:mm",
-      viewformat: "hh:mm",
+      viewformat: "HH:mm",
       format: "YYYY-MM-DD HH:mm",
       url: '/post',
       display: false,
       showbuttons: true,
+      mode: 'inline',
       success: function(response, newValue) {
         var self = this;
         var id = $(self).data("shift");
@@ -68,36 +70,9 @@ Template.teamHoursItem.events({
         });
       }
     });
-
-    $('.startShiftDraft').editable({
-      type: 'combodate',
-      title: 'Select time',
-      template: "HH:mm",
-      viewformat: "hh:mm",
-      format: "YYYY-MM-DD HH:mm",
-      url: '/post',
-      display: false,
-      showbuttons: true,
-      success: function(response, newValue) {
-        var self = this;
-        var id = $(self).data("shift");
-        var time = $(self).data("time");
-        var newTime = shiftWorkTimeUpdate(id, newValue, time);
-        newTime = moment(newTime).format("YYYY-MM-DD HH:mm");
-        Meteor.call("editClock", id, {"startDraft": new Date(newTime).getTime()}, function(err) { 
-          if(err) {
-            console.log(err);
-            return alert(err.reason);
-          } else {
-            $(self).removeClass('editable-unsaved');
-            return;
-          }
-        });
-      }
-    });
   }, 
 
-  'click .stopShift': function(event) {
+  'click .stopCurrentShift': function(event) {
     event.preventDefault();
     var id = $(event.target).attr("data-shift");
     var confirmClockout = confirm("Are you sure you want to clockout this shift ?");
