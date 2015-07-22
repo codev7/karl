@@ -9,14 +9,16 @@ component.state.shift = function() {
 }
 
 component.state.section = function() {
-  if(this.shift && this.shift.section) {
-    var section = Sections.findOne(this.shift.section);
-    if(section) {
-      return section.name;
+  if(this.shift) {
+    if(this.shift.section) {
+      var section = Sections.findOne(this.shift.section);
+      if(section) {
+        return section.name;
+      } 
     } else {
       return "Open";
     }
-  } 
+  }
 }
 
 component.state.hasClaimed = function() {

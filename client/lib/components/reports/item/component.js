@@ -126,17 +126,6 @@ component.state.dailyShifts = function() {
       })
       if(shift) {
         doc["shift"] = shift._id;
-        if(shift.status == "finished" || status == "started") {
-          if(shift.startedAt) {
-            doc['startedAt'] = shift.startedAt;
-          } 
-          if(shift.finishedAt){
-            doc["finishedAt"] = shift.finishedAt;
-          } 
-        } else if(shift.status == "draft" && shift.shiftDate < new Date().getTime()) {
-          doc['startedAt'] = null;
-          doc['notStarted'] = true;
-        }
       } 
       shifts.push(doc); 
     });
