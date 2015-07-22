@@ -111,11 +111,19 @@
           <br>
 
           <h4>No. of shifts per week</h4>             
-          <select class="form-control shiftsPerWeek" data-id="{{state$basic._id}}">
-          {{#each state$shiftsPerWeek}}
-            <option selected="{{this.selected}}">{{this.shift}}</option>
-          {{/each}}
-          </select>
+          {{#if state$isAdminPermitted}}
+            <select class="form-control shiftsPerWeek" data-id="{{state$basic._id}}">
+            {{#each state$shiftsPerWeek}}
+              <option selected="{{this.selected}}">{{this.shift}}</option>
+            {{/each}}
+            </select>
+          {{else}}
+            {{#if state$basic.profile.shiftsPerWeek}}
+              {{state$basic.profile.shiftsPerWeek}}
+            {{else}}
+              Not added
+            {{/if}}
+          {{/if}}
         </div>
       </div>
     </div>

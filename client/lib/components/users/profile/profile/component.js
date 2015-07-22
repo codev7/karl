@@ -1,5 +1,5 @@
 var component = FlowComponents.define('profile', function(props) {
-  this.onRendered(this.onProfileRendered);
+  this.set("id", props.id);
 });
 
 component.state.basic = function() {
@@ -52,19 +52,6 @@ component.state.isAdminPermitted = function() {
   }
 }
 
-component.state.isNotMe = function() {
-  var user = this.get("user");
-  if(user._id != Meteor.userId()) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-component.prototype.onProfileRendered = function() {
-  var id = Router.current().params._id;
-  this.set("id", id);
-}
 
 component.state.shiftsPerWeek = function() {
   var user = this.get("user");
@@ -85,16 +72,5 @@ component.state.shiftsPerWeek = function() {
     formattedShifts.push(doc);
   });
   return formattedShifts;
-}
-
-component.state.rosteredForShifts = function() {
-  var user = this.get("user");
-  if(user) {
-    return Shifts.find({"assignedTo": user._id, "shiftDate": {$gte: new Date().getTime()}}, {sort: {"shiftDate": 1}});
-  }
-}
-
-component.state.openedShifts = function() {
-  return Shifts.find({"assignedTo": null, "shiftDate": {$gte: new Date().getTime()}}, {sort: {"shiftDate": 1}});
 }
 
