@@ -6,6 +6,9 @@ component.state.basic = function() {
   var id = this.get("id");
   var user = Meteor.users.findOne(id);
   if(user) {
+    if(user.profile.phone) {
+      user['phone'] = "";
+    }
     return user;
   }
 }

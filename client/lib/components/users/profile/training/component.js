@@ -1,0 +1,1 @@
+var component = FlowComponents.define("training", function(props) {});

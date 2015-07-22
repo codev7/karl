@@ -1,0 +1,26 @@
+<template name="rosteredShifts">
+  <div class="col-md-8">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Rostered Shifts</h5>
+      </div>
+      <div class="ibox-content">
+
+        <h4>Next Shifts</h4>
+        {{#each state$rosteredForShifts}}
+        <p><a href="/roster/shift/{{_id}}">{{dayFormat shiftDate}} {{timeFormat startTime}} - {{timeFormat endTime}} [{{section}}]</a></p>
+        {{else}}
+        No shifts rostered yet.
+        {{/each}}
+        <br><br>
+
+        <h4>Open Shifts</h4>
+        {{#each state$openedShifts}}
+        <p><a href="/roster/shift/{{_id}}">{{dayFormat shiftDate}} {{timeFormat startTime}} - {{timeFormat endTime}} [{{section}}]</a></p>
+        {{else}}
+        No shifts opened yet.
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
