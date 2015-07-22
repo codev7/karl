@@ -11,6 +11,8 @@ Template.pageHeading.events({
       Router.go("jobItemsMaster");
     } else if(category == "Menus") {
       Router.go("menuItemsMaster", {"category": Session.get("category"), "status": Session.get("status")});
+    } else if(category == "Settings") {
+      Router.go("admin");
     }
   },
 

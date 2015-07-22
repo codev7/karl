@@ -9,9 +9,7 @@ component.state.item = function() {
 component.state.section = function() {
   var shift = this.get("shift");
   if(shift && shift.section) {
-    console.log("shift..", shift);
     var section = Sections.findOne(shift.section);
-    console.log("..........", section)
     if(section) {
       return section.name;
     }
