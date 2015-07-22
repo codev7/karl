@@ -104,7 +104,7 @@ Meteor.methods({
       throw new Meteor.Error(401, "Edit details not found");
     }
     var permittedTopLevel = false;
-    if(user.isAdmin) {
+    if(user.isAdmin || user.isManager) {
       permittedTopLevel = true;
     }
     var permittedForMe = (user._id == id);

@@ -38,7 +38,7 @@
 
           <h4>Pay rates</h4>  
           <p>Weekdays ($): 
-          {{#if state$isAdminPermitted}}
+          {{#if state$isAdminAndManagerPermitted}}
             <a href="#" id="weekdaysrate" data-id="{{state$basic._id}}" class="editable">{{state$basic.profile.payrates.weekdays}}</a>
           {{else}}
             {{#if state$basic.profile.payrates.weekdays}}
@@ -49,7 +49,7 @@
           {{/if}}
           </p>
           <p>Saturday ($): 
-           {{#if state$isAdminPermitted}}
+           {{#if state$isAdminAndManagerPermitted}}
             <a href="#" id="saturdayrate" data-id="{{state$basic._id}}" class="editable">{{state$basic.profile.payrates.saturday}}</a>
             {{else}}
               {{#if state$basic.profile.payrates.saturday}}
@@ -60,7 +60,7 @@
             {{/if}}
           </p>
           <p>Sunday ($):  
-           {{#if state$isAdminPermitted}}
+           {{#if state$isAdminAndManagerPermitted}}
             <a href="#" id="sundayrate" data-id="{{state$basic._id}}" class="editable">{{state$basic.profile.payrates.sunday}}</a>
             {{else}} 
               {{#if state$basic.profile.payrates.sunday}}
@@ -111,7 +111,7 @@
           <br>
 
           <h4>No. of shifts per week</h4>             
-          {{#if state$isAdminPermitted}}
+          {{#if state$isAdminAndManagerPermitted}}
             <select class="form-control shiftsPerWeek" data-id="{{state$basic._id}}">
             {{#each state$shiftsPerWeek}}
               <option selected="{{this.selected}}">{{this.shift}}</option>

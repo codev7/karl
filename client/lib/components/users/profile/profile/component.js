@@ -44,8 +44,9 @@ component.state.isEditPermitted = function() {
 }
 
 //permitted for admin only
-component.state.isAdminPermitted = function() {
-  if(isAdmin()) {
+component.state.isAdminAndManagerPermitted = function() {
+  var user = Meteor.user();
+  if(user.isAdmin || user.isManager) {
     return true;
   } else {
     return false;
