@@ -16,9 +16,7 @@ component.state.thisorigin = function() {
 component.state.section = function() {
   if(this.shift && this.shift.section) {
     return Sections.findOne(this.shift.section);
-  } else {
-    return {"name": "Open"};
-  }
+  } 
 }
 
 component.state.assignedTo = function() {

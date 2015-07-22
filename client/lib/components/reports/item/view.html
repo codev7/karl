@@ -5,19 +5,9 @@
     <td>${{state$totalwage}}</td>
     {{#if state$activeState}}
       {{#each state$dailyShifts}}
-        {{#if startedAt}}
-          {{#if finishedAt}}
-            <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="editShiftEnd" data-shift="{{shift}}" data-time="{{finishedAt}}">{{time finishedAt}}</a></td>
-          {{else}}
-            <td class="center activeTime"><a href="#" class="editShiftStart" data-shift="{{shift}}" data-time="{{startedAt}}">{{time startedAt}}</a> - <a href="#" class="stopShift" data-shift="{{shift}}" data-time="null">NOW</a></td>
-          {{/if}}
-        {{else}}
-          {{#if notStarted}}
-            <td class="center activeTime"><a href="#" class="startShiftDraft" data-shift="{{shift}}" data-time="">Start</a></td>
-          {{else}}
-            <td class="center activeTime">-</td>
-          {{/if}}
-        {{/if}}
+        <td class="center activeTime">
+          {{> render component='reportData' shift=this}}    
+        </td>
       {{/each}}
     {{else}}
       {{#each state$dailyHours}}
