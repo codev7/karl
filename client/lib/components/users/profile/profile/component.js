@@ -5,18 +5,16 @@ var component = FlowComponents.define('profile', function(props) {
 component.state.basic = function() {
   var id = this.get("id");
   var user = Meteor.users.findOne(id);
+  this.set("user", user);
   if(user) {
-    if(user.profile.phone) {
-      user['phone'] = "";
-    }
     return user;
   }
 }
 
 component.state.email = function() {
   var user = this.get("user");
-  if(user) {
-    return user.emails[0].address;
+  if(user && user.emails) {
+    return user.emails[0].address;;
   }
 }
 
@@ -31,6 +29,7 @@ component.state.image = function() {
   }
 }
 
+//permitted for profile owner and admins
 component.state.isEditPermitted = function() {
   var user = this.get("user");
   if(user) {
@@ -44,8 +43,9 @@ component.state.isEditPermitted = function() {
   }
 }
 
-component.state.isAdminOrManager = function() {
-  if(isAdmin() || isManager()) {
+//permitted for admin only
+component.state.isAdminPermitted = function() {
+  if(isAdmin()) {
     return true;
   } else {
     return false;
@@ -64,10 +64,6 @@ component.state.isNotMe = function() {
 component.prototype.onProfileRendered = function() {
   var id = Router.current().params._id;
   this.set("id", id);
-  var user = Meteor.users.findOne(id);
-  if(user) {
-    this.set("user", user);
-  }
 }
 
 component.state.shiftsPerWeek = function() {
