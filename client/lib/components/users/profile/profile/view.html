@@ -1,0 +1,131 @@
+<template name="profile">
+  <div class="col-md-4">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Profile Detail</h5>
+      </div>
+      <div>
+        <div class="ibox-content no-padding border-left-right">
+          <img alt="image" class="img-responsive" src="{{state$image}}">
+        </div>
+        <div class="ibox-content profile-content">
+          <h4>
+            <strong>
+              {{#if state$isEditPermitted}}
+                <a href="#" id="username" data-id="{{state$basic._id}}" class="editable">{{state$basic.username}}</a>
+              {{else}}
+                {{state$basic.username}}
+              {{/if}}
+            </strong>
+          </h4>
+
+          <p><i class="fa fa-mobile-phone m-r-xs"></i>
+            {{#if state$isEditPermitted}}
+              <a href="#" id="phone" data-id="{{state$basic._id}}" class="editable">{{state$basic.profile.phone}}</a>
+            {{else}}
+              {{state$basic.profile.phone}}
+            {{/if}}
+          </p>
+
+          <p><i class="fa fa-envelope m-r-xs"></i>
+            {{#if state$isEditPermitted}}
+              <a href="#" id="email" data-id="{{state$basic._id}}" class="editable">{{state$email}}</a>
+            {{else}}
+              {{state$email}}
+            {{/if}}
+          </p>
+          <br>
+
+          <h4>Pay rates</h4>  
+          <p>Weekdays ($): 
+          {{#if state$isAdminAndManagerPermitted}}
+            <a href="#" id="weekdaysrate" data-id="{{state$basic._id}}" class="editable">{{state$basic.profile.payrates.weekdays}}</a>
+          {{else}}
+            {{#if state$basic.profile.payrates.weekdays}}
+              {{state$basic.profile.payrates.weekdays}}
+            {{else}}
+              Not added
+            {{/if}}
+          {{/if}}
+          </p>
+          <p>Saturday ($): 
+           {{#if state$isAdminAndManagerPermitted}}
+            <a href="#" id="saturdayrate" data-id="{{state$basic._id}}" class="editable">{{state$basic.profile.payrates.saturday}}</a>
+            {{else}}
+              {{#if state$basic.profile.payrates.saturday}}
+                {{state$basic.profile.payrates.saturday}}
+              {{else}}
+                Not added
+              {{/if}}
+            {{/if}}
+          </p>
+          <p>Sunday ($):  
+           {{#if state$isAdminAndManagerPermitted}}
+            <a href="#" id="sundayrate" data-id="{{state$basic._id}}" class="editable">{{state$basic.profile.payrates.sunday}}</a>
+            {{else}} 
+              {{#if state$basic.profile.payrates.sunday}}
+                {{state$basic.profile.payrates.sunday}}
+              {{else}}
+                Not added
+              {{/if}}
+            {{/if}}
+          </p>
+          <br>
+
+          <!-- <h4>Availability</h4>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Monday 
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Tuesday 
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Wednesday 
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Thursday 
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Friday 
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Saturday 
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Sunday 
+            </label>
+          </div> -->
+          <br>
+
+          <h4>No. of shifts per week</h4>             
+          {{#if state$isAdminAndManagerPermitted}}
+            <select class="form-control shiftsPerWeek" data-id="{{state$basic._id}}">
+            {{#each state$shiftsPerWeek}}
+              <option selected="{{this.selected}}">{{this.shift}}</option>
+            {{/each}}
+            </select>
+          {{else}}
+            {{#if state$basic.profile.shiftsPerWeek}}
+              {{state$basic.profile.shiftsPerWeek}}
+            {{else}}
+              Not added
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

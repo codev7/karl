@@ -1,0 +1,25 @@
+<template name="rosteredShifts">
+  <div class="col-md-4">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Rostered Shifts</h5>
+      </div>
+      <div class="ibox-content">
+        <h4>Next Shifts</h4>
+        {{#each state$rosteredForShifts}}
+          {{> render component='rosteredShiftItem' shift=this}}
+        {{else}}
+        No shifts rostered yet.
+        {{/each}}
+        <br><br>
+
+        <h4>Open Shifts</h4>
+        {{#each state$openedShifts}}
+          {{> render component='rosteredShiftItem' shift=this}}
+        {{else}}
+        No shifts opened yet.
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>

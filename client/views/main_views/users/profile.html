@@ -1,3 +1,15 @@
 <template name="profileMainView">
-  {{> render component="profile"}}
+   <!-- Page heading -->
+   {{#if me}}
+      {{> render component="pageHeading" title='Profile'}}
+   {{else}}
+      {{> render component="pageHeading" title=name category="Settings"}}
+   {{/if}}
+  <div class="wrapper wrapper-content">
+    <div class="row animated">
+      {{> render component="profile" id=id}}
+      {{> render component="rosteredShifts" id=id}}
+      {{> render component="training" id=id}}
+    </div>
+  </div>
 </template>

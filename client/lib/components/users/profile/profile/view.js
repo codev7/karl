@@ -13,59 +13,73 @@ Template.profile.events({
 
 Template.profile.rendered = function(){
   $.fn.editable.defaults.mode = 'inline';
-  // Set options for peity charts
-  $(".line").peity("line",{
-      fill: '#1ab394',
-      stroke:'#169c81'
-  })
-
-  $(".bar").peity("bar", {
-      fill: ["#1ab394", "#d7d7d7"]
-  })
-
   $('#datepicker').datepicker({
     todayBtn: true,
     todayHighlight: true
   });
 
   $('#username').editable({
+    type: 'text',
+    title: 'Edit username',
     display: false,
+    showbuttons: true,
+    mode: 'inline',
     success: function(response, newValue) {
+      var self = this;
       if(newValue) {
-        var id = $(this).data("pk");
-        var editDetail = {"username": newValue};
-        updateBasicDetails(id, editDetail, $('#username'), "username");
+        var id = $(self).attr("data-id");
+        var editDetail = {"username": newValue.trim()};
+        updateBasicDetails(id, editDetail, "username");
       }
     }
   });
 
   $('#phone').editable({
-    display: false,
+    type: 'text',
+    title: 'Edit Phone Number',
+    showbuttons: true,
+    mode: 'inline',
+    emptytext: 'Empty',
     success: function(response, newValue) {
+      var self = this;
       if(newValue) {
-        var id = $(this).data("pk");
+        var id = $(self).attr("data-id");
         var editDetail = {"phone": newValue};
-        updateBasicDetails(id, editDetail, $('#phone'), "profile.phone");
+        updateBasicDetails(id, editDetail, "profile.phone");
       }
+    },
+    display: function(value, sourceData) {
     }
   });
 
   $('#email').editable({
-    display: false,
+    type: 'text',
+    title: 'Edit Email Address',
+    showbuttons: true,
+    mode: 'inline',
+    emptytext: 'Empty',
     success: function(response, newValue) {
+      var self = this;
       if(newValue) {
-        var id = $(this).data("pk");
+        var id = $(self).attr("data-id");
         var editDetail = {"email": newValue};
-        updateBasicDetails(id, editDetail, $('#phone'), "profile.emails.address");
+        updateBasicDetails(id, editDetail, "profile.emails.address");
       }
+    },
+    display: function(value, sourceData) {
     }
   });
 
   $('#weekdaysrate').editable({
-    display: false,
+    type: 'text',
+    title: 'Edit Weekday rate',
+    showbuttons: true,
+    mode: 'inline',
+    emptytext: 'Empty',
     success: function(response, newValue) {
+      var self = this;
       if(newValue) {
-        var id = $(this).data("pk");
+        var id = $(self).attr("data-id");
         var newRate = parseFloat(newValue);
         if(newRate && (newRate == newRate)) {
           newRate = newRate
@@ -73,16 +87,23 @@ Template.profile.rendered = function(){
           newRate = 0;
         }
         var editDetail = {"weekdaysrate": newRate};
-        updateBasicDetails(id, editDetail, $('#weekdaysrate'), "profile.payrates.weekdays");
+        updateBasicDetails(id, editDetail, "profile.payrates.weekdays");
       }
+    },
+    display: function(value, sourceData) {
     }
   });
 
   $('#saturdayrate').editable({
-    display: false,
+    type: 'text',
+    title: 'Edit Saturday rate',
+    showbuttons: true,
+    mode: 'inline',
+    emptytext: 'Empty',
     success: function(response, newValue) {
+      var self = this;
       if(newValue) {
-        var id = $(this).data("pk");
+        var id = $(self).attr("data-id");
         var newRate = parseFloat(newValue);
         if(newRate && (newRate == newRate)) {
           newRate = newRate
@@ -90,16 +111,23 @@ Template.profile.rendered = function(){
           newRate = 0;
         }
         var editDetail = {"saturdayrate": newRate};
-        updateBasicDetails(id, editDetail, $('#saturdayrate'), "profile.payrates.saturday");
+        updateBasicDetails(id, editDetail, "profile.payrates.saturday");
       }
+    },
+    display: function(value, sourceData) {
     }
   });
 
   $('#sundayrate').editable({
-    display: false,
+    type: 'text',
+    title: 'Edit Sunday rate',
+    showbuttons: true,
+    mode: 'inline',
+    emptytext: 'Empty',
     success: function(response, newValue) {
+      var self = this;
       if(newValue) {
-        var id = $(this).data("pk");
+        var id = $(self).attr("data-id");
         var newRate = parseFloat(newValue);
         if(newRate && (newRate == newRate)) {
           newRate = newRate
@@ -107,23 +135,19 @@ Template.profile.rendered = function(){
           newRate = 0;
         }
         var editDetail = {"sundayrate": newRate};
-        updateBasicDetails(id, editDetail, $('#sundayrate'), "profile.payrates.sunday");
+        updateBasicDetails(id, editDetail, "profile.payrates.sunday");
       }
+    },
+    display: function(value, sourceData) {
     }
   });
 
 };
 
-function updateBasicDetails(id, updateDetails, element, type) {
+function updateBasicDetails(id, updateDetails, type) {
   Meteor.call("editBasicDetails", id, updateDetails, function(err) {
     if(err) {
       console.log(err);
-      var user = Meteor.users.findOne(id);
-      if(user) {
-        $(element).editable('setValue', user[type]);
-      } else {
-        $(element).editable('setValue', null);
-      }
       return alert(err.reason);
     }
   });
