@@ -16,7 +16,7 @@ component.state.totaltime = function() {
     var weekNo = Router.current().params.week;
     var week = getDatesFromWeekNumber(weekNo);
     week.forEach(function(day) {
-    var date = day.date;
+      var date = day.date;
       var shift = Shifts.findOne({
         "assignedTo": userId, 
         "shiftDate": new Date(date).getTime(), 
@@ -34,7 +34,7 @@ component.state.totaltime = function() {
   }
 }
 
-component.state.totalwage = function() {
+component.state.wage = function() {
   var totalWage = 0;
   if(this.user) {
     var user = this.user;
@@ -57,22 +57,26 @@ component.state.totalwage = function() {
       } 
 
       if(time > 0) {
-        time = Math.round(time/100) * 100;
-        var timeindecimalhours = time/(1000 * 3600);
+        var timeindecimalhours = Math.round(time*100)/100;
+        var hours = moment.duration(timeindecimalhours).hours();
+        var mins = moment.duration(timeindecimalhours).minutes();
 
         if(user.profile && user.profile.payrates) {
           var wageDoc = user.profile.payrates;
+          var rate = 0;
           if(day.day == "Sunday") {
-            totalWage += (parseInt(wageDoc['sunday']) * timeindecimalhours);
+            rate = parseInt(wageDoc['sunday']);
           } else if(day.day == "Saturday") {
-            totalWage += (parseInt(wageDoc['saturday']) * timeindecimalhours);
+            rate = parseInt(wageDoc['saturday']);
           } else {
-            totalWage += (parseInt(wageDoc['weekdays']) * timeindecimalhours);
+            rate = parseInt(wageDoc['weekdays']);
           }
+          totalWage += rate * parseInt(hours);
+          totalWage += (rate/60) * parseInt(mins);
         } 
       }
     });
-    if(totalWage > 0 && totalWage == totalWage) {
+    if(totalWage > 0 && (totalWage == totalWage)) {
       return Math.round(totalWage*100)/100;
     } else {
       return 0;
