@@ -46,6 +46,14 @@ component.state.isWorker = function() {
   }
 }
 
+component.state.isAdmin = function() {
+  if(this.user.isAdmin) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 component.state.ifMe = function() {
   var me = Meteor.user();
   if(me && me._id == this.user._id) {
