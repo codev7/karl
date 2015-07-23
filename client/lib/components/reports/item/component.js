@@ -26,7 +26,9 @@ component.state.totaltime = function() {
         if(shift.finishedAt && shift.startedAt){
           total += (shift.finishedAt - shift.startedAt);
         } else if(shift.startedAt) {
-          total += (new Date().getTime() - shift.startedAt);
+          if(moment(shift.shiftDate).format("YYYY-MM-DD") == moment().format("YYYY-MM-DD")) {
+            total += (new Date().getTime() - shift.startedAt);
+          }
         }
       }  
     });
@@ -52,7 +54,9 @@ component.state.wage = function() {
         if(shift.finishedAt && shift.startedAt){
           time = (shift.finishedAt - shift.startedAt);
         } else if(shift.startedAt) {
-          time = (new Date().getTime() - shift.startedAt);
+          if(moment(shift.shiftDate).format("YYYY-MM-DD") == moment().format("YYYY-MM-DD")) {
+            time += (new Date().getTime() - shift.startedAt);
+          }
         }  
       } 
 
