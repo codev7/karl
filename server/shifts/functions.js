@@ -93,7 +93,8 @@ Meteor.methods({
       if(info.finishedAt) {
         var finishedTime = new Date(info.finishedAt).getTime();
         if(finishedTime != shift.finishedAt) {
-          if(finishedTime < shift.startedAt) {
+
+          if(finishedTime <= shift.startedAt) {
             logger.error("Finish time should be greater than start time");
             throw new Meteor.Error(404, "Finish time should be greater than start time");    
           } else {
