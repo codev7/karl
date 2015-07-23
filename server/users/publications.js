@@ -27,7 +27,8 @@ Meteor.publish("usersList", function() {
     "isManager": 1,
     "username": 1,
     "emails": 1,
-    "isActive": 1
+    "isActive": 1,
+    "profile.payrates": 1
   };
   var users = Meteor.users.find({}, {fields: options});
   logger.info("Userlist published");
