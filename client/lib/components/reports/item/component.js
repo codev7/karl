@@ -10,7 +10,8 @@ component.state.user = function() {
 }
 
 component.state.totaltime = function() {
-  var total = 0;
+  var totalhours = 0;
+  var totalmins = 0;
   if(this.user) {
     var userId = this.user._id;
     var weekNo = Router.current().params.week;
@@ -23,16 +24,23 @@ component.state.totaltime = function() {
         $or: [{"status": "finished"}, {"status": "started"}]
       });
       if(shift) {
+        var diff = 0;
         if(shift.finishedAt && shift.startedAt){
-          total += (shift.finishedAt - shift.startedAt);
+          diff = (shift.finishedAt - shift.startedAt);
         } else if(shift.startedAt) {
           if(moment(shift.shiftDate).format("YYYY-MM-DD") == moment().format("YYYY-MM-DD")) {
-            total += (new Date().getTime() - shift.startedAt);
+            diff =  (new Date().getTime() - shift.startedAt);
           }
         }
+        totalhours += moment.duration(diff).hours();
+        totalmins += moment.duration(diff).minutes();
       }  
     });
-    return total;
+    if(totalmins >= 60) {
+      totalhours +=  Math.floor(totalmins/60);
+      totalmins = (totalmins%60);
+    }
+    return totalhours + "." + totalmins;
   }
 }
 
@@ -43,8 +51,10 @@ component.state.wage = function() {
     var weekNo = Router.current().params.week;
     var week = getDatesFromWeekNumber(weekNo);
     week.forEach(function(day) {
+      var totalhours = 0;
+      var totalmins = 0;
       var date = day.date;
-      var time = 0;
+      var diff = 0;
       var shift = Shifts.findOne(
         {"assignedTo": user._id, 
         "shiftDate": new Date(date).getTime(), 
@@ -52,18 +62,17 @@ component.state.wage = function() {
       });
       if(shift) {
         if(shift.finishedAt && shift.startedAt){
-          time = (shift.finishedAt - shift.startedAt);
+          diff = (shift.finishedAt - shift.startedAt);
         } else if(shift.startedAt) {
           if(moment(shift.shiftDate).format("YYYY-MM-DD") == moment().format("YYYY-MM-DD")) {
-            time += (new Date().getTime() - shift.startedAt);
+            diff += (new Date().getTime() - shift.startedAt);
           }
         }  
       } 
 
-      if(time > 0) {
-        var timeindecimalhours = Math.round(time*100)/100;
-        var hours = moment.duration(timeindecimalhours).hours();
-        var mins = moment.duration(timeindecimalhours).minutes();
+      if(diff > 0) {
+        totalhours = moment.duration(diff).hours();
+        totalmins = moment.duration(diff).minutes();
 
         if(user.profile && user.profile.payrates) {
           var wageDoc = user.profile.payrates;
@@ -75,8 +84,8 @@ component.state.wage = function() {
           } else {
             rate = parseInt(wageDoc['weekdays']);
           }
-          totalWage += rate * parseInt(hours);
-          totalWage += (rate/60) * parseInt(mins);
+          totalWage += rate * parseInt(totalhours);
+          totalWage += (rate/60) * parseInt(totalmins);
         } 
       }
     });
