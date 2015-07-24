@@ -40,7 +40,19 @@ component.state.totaltime = function() {
       totalhours +=  Math.floor(totalmins/60);
       totalmins = (totalmins%60);
     }
-    return totalhours + "." + totalmins;
+    var time = null;
+    if(totalhours < 10) {
+      time = "0" + totalhours;
+    } else {
+      time = totalhours;
+    }
+
+    if(totalmins < 10) {
+      time += ".0" + totalmins;
+    } else {
+      time += "." + totalmins;
+    }
+    return time;
   }
 }
 
