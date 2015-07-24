@@ -50,6 +50,7 @@ Template.dailyShiftScheduling.events({
 });
 
 Template.dailyShiftScheduling.rendered = function() {
+  var subs = new SubsManager();
   var routeDate = Router.current().params.date;
   setTimeout(function() {
     Meteor.call("generateRecurrings", routeDate, function(err, result) {
@@ -59,7 +60,16 @@ Template.dailyShiftScheduling.rendered = function() {
     });
 
     var oneDay = 1000 * 3600 * 24;
-    var shifts = Shifts.find({"shiftDate": new Date(routeDate).getTime()});
+    var shifts = Shifts.find({"shiftDate": new Date(routeDate).getTime()}, {sort: {"startTime": 1}});
+    console.log(shifts.fetch());
+    if(shifts.fetch().length > 0) {
+      var jobs = [];
+      shifts.forEach(function(shift) {
+        if(shift.jobs.length > 0) {
+          subs.subscribe("jobs", shift.jobs);
+        }
+      });
+    }
     var businessStartsAt = 8;
     var businessEndsAt = 5;
     if(shifts) {
@@ -174,7 +184,7 @@ Template.dailyShiftScheduling.rendered = function() {
             businessHours: {
               "start": businessStartsAt + ":00",
               "end": (businessEndsAt + 1) + ":00",
-              "dow": [ 0, 1, 2, 3, 4, 5, 6 ]
+              // "dow": [ 0, 1, 2, 3, 4, 5, 6 ]
             },
             allDaySlot: false,
             editable: true,

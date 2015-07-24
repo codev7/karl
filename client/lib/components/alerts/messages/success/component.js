@@ -1,4 +1,4 @@
-var component = FlowComponents.define("successAlert", function(props) {
+var component = FlowComponents.define("alertSuccess", function(props) {
 });
 
 component.state.isDailyRoster = function() {
