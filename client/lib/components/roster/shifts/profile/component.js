@@ -26,7 +26,10 @@ component.state.startTime = function() {
 component.state.mySection = function() {
   var shift = this.get("shift");
   if(shift && shift.section) {
-    return shift.section;
+    var section = Sections.findOne(shift.section);
+    if(section) {
+      return section;
+    }
   } 
 }
 
@@ -42,9 +45,23 @@ component.state.sections = function() {
   if(shift) {
     var section = shift.section;
     if(section) {
-      return Sections.find({"name": {$nin: [section]}});
+      return Sections.find({"_id": {$nin: [section]}});
     } else {
       return Sections.find();
     }
   }
+}
+
+component.action.submit = function(info) {
+  var self = this;
+  var id = self.get("id");
+  Meteor.call("editShift", id, info, function(err, id) {
+    if(err) {
+      return alert(err.reason);
+    } else {
+      var shift = Shifts.findOne(id);
+      self.set("shift", shift)
+      $("#shiftProfile").modal("hide");
+    }
+  });
 }
