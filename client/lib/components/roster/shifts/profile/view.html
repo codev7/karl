@@ -12,12 +12,12 @@
             <div class="col-sm-6">
               <select class="form-control" name="section">
                 {{#if state$mySection}}
-                  <option selected="selected" value="{{state$mySection}}">{{state$mySection}}</option>
+                  <option selected="selected" value="{{state$mySection._id}}">{{state$mySection.name}}</option>
                 {{else}}
                   <option value="">Select a section</option>
                 {{/if}}
                 {{#each state$sections}}
-                <option>{{name}}</option>
+                <option value="{{_id}}">{{name}}</option>
                 {{/each}}
               </select>
             </div>

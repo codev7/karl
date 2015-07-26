@@ -6,7 +6,9 @@ component.state.shiftsList = function() {
 }
 
 component.state.shiftsCount = function() {
-  var count = Shifts.find().count();
+  var date = Session.get("thisDate");
+  date = new Date(date).getTime();
+  var count = Shifts.find({"shiftDate": date}).count();
   if(count > 0) {
     return true;
   } else {
