@@ -16,6 +16,11 @@ Meteor.publish("daily", function(date, worker) {
   
   var shifts = shiftsCursor.fetch();
   var shiftsList = [];
+  shifts.forEach(function(shift) {
+    if(shiftsList.indexOf(shift._id) < 0) {
+      shiftsList.push(shift._id);
+    }
+  });
 
   if(shiftsList.length > 0) {
     var jobsCursor = Jobs.find({"onshift": {$in: shiftsList}});
