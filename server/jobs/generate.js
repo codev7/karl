@@ -177,6 +177,7 @@ function createNewJob(info, time, portions, maxTime, maxPortions) {
     var id = Jobs.insert(doc);
     if(jobIds.indexOf(id) < 0) {
       jobIds.push(id);
+      logger.info("New recurring job inserted", id);
       return id;
     }
   }
@@ -184,7 +185,11 @@ function createNewJob(info, time, portions, maxTime, maxPortions) {
 
 
 createNewRecurringJob = function(name, ref, type, time, section, startAt, date) {
-  var shifts = Shifts.find({"shiftDate": new Date(date).getTime(), "section": section}).fetch();
+  var thisDate = new Date(date);
+  var startAtDate = new Date(startAt);
+  var shifts = Shifts.find({"shiftDate": thisDate.getTime(), "section": section}).fetch();
+
+  var starting = new Date(thisDate.getFullYear(), thisDate.getMonth(), thisDate.getDate(), startAtDate.getHours(), startAtDate.getMinutes());
 
   if(shifts.length > 0) {
     shifts.forEach(function(shift) {
@@ -199,7 +204,7 @@ createNewRecurringJob = function(name, ref, type, time, section, startAt, date) 
         "assignedTo": null,
         "section": section,
         "createdOn": new Date(date).toDateString(),
-        "startAt": startAt
+        "startAt": new Date(starting).getTime()
       }
 
       var existingJob = Jobs.find(doc).fetch();
