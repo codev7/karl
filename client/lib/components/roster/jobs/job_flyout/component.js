@@ -1,4 +1,3 @@
-var subs = new SubsManager();
 var component = FlowComponents.define("jobFlyout", function(props) {
 });
 
@@ -7,6 +6,14 @@ component.state.job = function() {
   this.set("id", id);
   var job = Jobs.findOne(id);
   if(job) {
+    if(job.section) {
+      var section = Sections.findOne(job.section);
+      if(section) {
+        job.sectionName = section.name;
+      } else {
+        job.sectionName = "Not assigned";
+      }
+    }
     this.set("job", job);
     return job;
   }

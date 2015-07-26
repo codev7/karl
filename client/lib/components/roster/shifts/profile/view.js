@@ -43,13 +43,7 @@ Template.shiftProfile.events({
         "endTime": dateObj_end,
         "section": section
       }
-      Meteor.call("editShift", shiftId, info, function(err, id) {
-        if(err) {
-          return alert(err.reason);
-        } else {
-          $("#shiftProfile").modal("hide");
-        }
-      });
+      FlowComponents.callAction("submit", info);
     }
   },
 
