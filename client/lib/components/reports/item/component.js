@@ -5,7 +5,7 @@ var component = FlowComponents.define("teamHoursItem", function(props) {
 
 component.state.user = function() {
   if(this.user) {
-    return this.user;
+      return this.user;
   }
 }
 
@@ -36,6 +36,7 @@ component.state.totaltime = function() {
         totalmins += moment.duration(diff).minutes();
       }  
     });
+
     if(totalmins >= 60) {
       totalhours +=  Math.floor(totalmins/60);
       totalmins = (totalmins%60);
@@ -126,17 +127,17 @@ component.state.dailyHours = function() {
       })
       if(shift) {
         if(shift.startedAt && shift.finishedAt) {
-          doc["activeTime"] = (shift.finishedAt - shift.startedAt);
-        } else if(shift.startedAt) {
-          doc['activeTime'] = (new Date().getTime() - shift.startedAt);
-        } else {
-          doc['activeTime'] = 0;
-        }
-      }  
-      hours.push(doc);
-    });
-    return hours;
-  }
+        doc["activeTime"] = (shift.finishedAt - shift.startedAt);
+      } else if(shift.startedAt) {
+        doc['activeTime'] = (new Date().getTime() - shift.startedAt);
+      } else {
+        doc['activeTime'] = 0;
+      }
+    }
+    hours.push(doc);
+  });
+  return hours;
+}
 }
 
 component.state.dailyShifts = function() {
@@ -150,7 +151,7 @@ component.state.dailyShifts = function() {
       var date = day.date;
       doc["date"] = date;
       var shift = Shifts.findOne({
-        "assignedTo": userId, 
+        "assignedTo": userId,
         "shiftDate": new Date(date).getTime()
       })
       if(shift) {
@@ -162,9 +163,31 @@ component.state.dailyShifts = function() {
   }
 }
 
-component.state.activeState = function() {
+component.state.activeShifts = function() {
   var hash = Session.get("reportHash");
-  if(hash == "shifts") {
+  if((hash == "shifts")||(hash == "shiftsall")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.activeView = function() {
+  var hash = Session.get("reportHash");
+  if((hash == "hours")||(hash == "hoursall")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.activeWage = function() {
+  var hash = Session.get("reportHash");
+  if(hash===null){
+    hash="shifts";
+    Session.set("reportHash", "shifts");
+  }
+  if((component.state.wage>0)||((hash == "shiftsall")||(hash == "hoursall"))) {
     return true;
   } else {
     return false;
