@@ -182,7 +182,6 @@ component.state.activeView = function() {
 }
 
 component.state.activeWage = function() {
-<<<<<<< HEAD
   var totalWage = 0;
   if(this.user) {
     var user = this.user;
@@ -235,19 +234,14 @@ component.state.activeWage = function() {
   }
 
 
-=======
->>>>>>> 779f96a00df8b5baf09ced6cfa900f9d713fa7c9
   var hash = Session.get("reportHash");
   if(hash===null){
     hash="shifts";
     Session.set("reportHash", "shifts");
   }
-<<<<<<< HEAD
+
   console.log(totalWage);
   if((parseFloat(totalWage)>0)||(hash == "shiftsall")||(hash == "hoursall")) {
-=======
-  if((component.state.wage>0)||((hash == "shiftsall")||(hash == "hoursall"))) {
->>>>>>> 779f96a00df8b5baf09ced6cfa900f9d713fa7c9
     return true;
   } else {
     return false;
