@@ -2,8 +2,9 @@
   <div class="pull-right m-l-md m-t-xs">
     <span class="label label-warning shiftView">Shifts</span>
     <span class="label label-info hoursView">Hours</span>
+    <span class="label label-success showallView" id="showall_hideempty">Show All</span>
   </div>
-  <table class="dataTables-example table table-hover table-striped">
+  <table class="dataTables-example table table-hover table-striped" id="dataTablesEx">
     <thead>
       <tr>
         <th>Name</th>
@@ -16,7 +17,7 @@
     </thead>
     <tbody>
       {{#each state$users}}
-        {{> render component="teamHoursItem" user=this}}
+          {{> render component="teamHoursItem" user=this}}
       {{/each}}
     </tbody>
   </table>

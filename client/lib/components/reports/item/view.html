@@ -1,15 +1,17 @@
 <template name="teamHoursItem">
+  {{#if state$activeWage}}
   <tr class="gradeX">
     <td>{{state$user.username}}</td>
     <td>{{state$totaltime}}</td>
     <td>${{state$wage}}</td>
-    {{#if state$activeState}}
+    {{#if state$activeShifts}}
       {{#each state$dailyShifts}}
         <td class="center activeTime">
           {{> render component='reportData' shift=this}}    
         </td>
       {{/each}}
-    {{else}}
+    {{/if}}
+    {{#if state$activeView}}
       {{#each state$dailyHours}}
         {{#if activeTime}}
           <td class="center activeTime">{{timeDurationWithDecimal activeTime}}</td>
@@ -19,4 +21,5 @@
       {{/each}}
     {{/if}}
   </tr>
+  {{/if}}
 </template>
