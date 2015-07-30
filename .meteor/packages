@@ -21,9 +21,6 @@ service-configuration
 useraccounts:bootstrap
 meteorhacks:aggregate
 mizzao:autocomplete
-meteorhacks:kadira
-meteorhacks:kadira-profiler
-percolate:intercom
 konecty:autolinker
 less
 fortawesome:fontawesome

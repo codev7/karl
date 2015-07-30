@@ -240,7 +240,6 @@ component.state.activeWage = function() {
     Session.set("reportHash", "shifts");
   }
 
-  console.log(totalWage);
   if((parseFloat(totalWage)>0)||(hash == "shiftsall")||(hash == "hoursall")) {
     return true;
   } else {
