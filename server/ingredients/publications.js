@@ -16,7 +16,7 @@ Meteor.publish("ingredients", function(ids) {
   var cursors = [];
   var ings = null;
   if(ids.length > 0) {
-    ings = Ingredients.find({"_id": {$in: ids}}, {sort: {'code': 1}});
+    ings = Ingredients.find({"_id": {$in: ids}}, {sort: {'code': 1}, limit: 10});
   } else {
     ings = Ingredients.find({}, {sort: {'code': 1}, limit: 10});
   }

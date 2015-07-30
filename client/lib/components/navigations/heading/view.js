@@ -228,23 +228,22 @@ Template.pageHeading.events({
     if(shifts.length > 0) {
       shifts.forEach(function(shift) {
         tobePublished.push(shift._id);
-        users.push(shift.assignedTo);
+        if(users.indexOf(shift.assignedTo) < 0) {
+          users.push(shift.assignedTo);
+        }
       });
     }
-
     if(tobePublished.length > 0) {
       Meteor.call("publishRoster", weekNo, tobePublished, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);
         } 
-        var weekItem = "publishedOn-"+ Session.get("thisWeek");
-        localStorage.setItem(weekItem, new Date().getTime());
       });
       users.forEach(function(user) {
         var to = Meteor.users.findOne(user);
         if(to) {
-          var weekStart = moment(dates[0]).format("YYYY-MM-DD");
+          var weekStart = moment(dates[0]).format("dddd, Do MMMM YYYY");
           var title = "Weekly roster for the week starting from " + weekStart + " published";
           var text = "<br>";
           var open = "<br>";
@@ -265,12 +264,19 @@ Template.pageHeading.events({
               });
             }
 
+            var info = {
+              "title": title, 
+              "text": text, 
+              "startDate": weekStart,
+              "week": weekNo
+            }
             if(openShifts.length > 0) {
               openShifts.forEach(function(shift) {
                 var start =  moment(shift.startTime).format("hh:mm A");
                 var end = moment(shift.endTime).format("hh:mm A");
                 open += "<a href='" + Meteor.absoluteUrl() + "roster/shift/" + shift._id + "'>" + moment(shift.shiftDate).format("ddd, Do MMMM") + " shift from " + start + " - " + end + "</a>.<br>";
               });
+              info.openShifts = open;
             }
 
             var to = {
@@ -279,13 +285,6 @@ Template.pageHeading.events({
               "name": to.username
             }
 
-            var info = {
-              "title": title, 
-              "text": text, 
-              "startDate": weekStart,
-              "openShifts": open,
-              "week": weekNo
-            }
             Meteor.call("notifyRoster", to, info, function(err) {
               if(err) {
                 console.log(err);
