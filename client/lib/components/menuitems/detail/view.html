@@ -51,6 +51,7 @@
         <a class="btn btn-primary" href="#showListOfIngs" data-toggle="modal">Add prep or stock</a>
         {{/if}}
       </div>
+      {{> render component='menuDetailWidgets' item=state$menu}}
       {{> render component='commentsPanel'}}
     </div>
   </div>
