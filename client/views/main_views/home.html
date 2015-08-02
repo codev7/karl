@@ -2,14 +2,14 @@
   <div class="wrapper wrapper-content">
     {{#if currentUser}}
       <div class="row">
+          <div class="col-md-8"><div class="ibox float-e-margins">
+            {{> render component="newsFeed" user=currentUser}}
+          </div></div>
         <div class="col-md-4">
           <div class="ibox float-e-margins">
-            {{> render component="clock"}}
             {{> render component="shiftsSummary"}}
           </div>
         </div>
-        {{> render component="notificationsList"}}
-        {{> render component="tasks"}}
       </div>
       <div class="row">
         <div class="col-lg-8">

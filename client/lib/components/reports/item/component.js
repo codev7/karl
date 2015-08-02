@@ -246,3 +246,7 @@ component.state.activeWage = function() {
     return false;
   }
 }
+
+
+
+

@@ -1,0 +1,23 @@
+<template name="onePost">
+    <div class="feed-element">
+        <div class="social-avatar">
+            <div class="media-body">
+                <a href="#">{{state$name}}</a>
+                <small class="text-muted">{{timeFormattedWithDate state$createdOn}}</small>
+            </div>
+        </div>
+        <a class="pull-left" href="#">
+            <img src="{{state$profilePicture}}" class="img-circle" alt="image">
+        </a>
+        <div class="media-body">
+            <span class="message-content">{{{state$text}}}</span>
+            <div class="btn-group pull-right">
+                <button class="btn btn-white btn-xs like-post pull-right"><i class="fa fa-thumbs-up"></i> Like this!</button>
+                <button class="btn btn-white btn-xs comment-post pull-right"><i class="fa fa-comments"></i> Comment</button>
+                <button class="btn btn-white btn-xs share-post pull-right"><i class="fa fa-share"></i> Share</button>
+                <input type="hidden" name="post_id_buf" class="post_id_buf" value="{{state$id}}" />
+            </div>
+            <div class="comment_field comment_field_{{state$id}}">{{> render component="submitComment"}}</div>
+        </div>
+    </div>
+</template>
