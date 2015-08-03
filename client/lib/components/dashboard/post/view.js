@@ -14,18 +14,26 @@ Template.onePost.events({
             $('.comment_field_' + idbuf).css("display", "none");
         }
     },'click .like-post': function(event) {
-    },'click .share-post': function(event) {
+        event.preventDefault();
+        var idbuf = $(event.target).closest("div").attr("data-id");
+        Session.set({"post_like_id":idbuf});
+        var countlike=Posts.findOne({_id:idbuf}).like;
+        FlowComponents.callAction('submitlikepost', countlike+1);
     },
     'keypress .message-input-comment': function(event) {
         if(event.keyCode == 10 || event.keyCode == 13) {
             event.preventDefault();
-            var text = $(".message-input-comment").val();
+            var text = $(event.target).val();
             FlowComponents.callAction('submitcommenttopost', text);
-
+            $('.comment_field').css("display", "none");
         }
     }
 });
-
+//Posts.allow({
+//    update: function(userId, doc, fieldNames, modifier) {
+//        return true;
+//    }
+//});
 Template.onePost.helpers({
     settings: function() {
         return {

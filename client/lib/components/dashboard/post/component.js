@@ -4,6 +4,15 @@ var autolinker = new Autolinker({
 var component = FlowComponents.define("onePost", function(props) {
     this.post = props.post;
 });
+component.state.checkifnotcomment = function(){
+
+    var ref=this.post.reference;
+    var createdby=this.post.createdBy;
+    if( ref == createdby )
+        return true;
+    else
+        return false;
+};
 
 component.state.name = function() {
     var user = Meteor.users.findOne({"_id":this.post.createdBy});
@@ -32,18 +41,13 @@ component.state.text = function() {
     var text = this.post.text;
     return text;
 };
-component.state.checkifnotcomment = function(){
-
-    var ref=this.post.reference;
-    var createdby=this.post.createdBy;
-    if( ref == createdby )
-        return true;
-    else
-        return false;
+component.state.like = function() {
+    var like = this.post.like;
+    return like;
 };
 
 component.action.submitcommenttopost = function(text) {
-    var ref = this.post._id;
+    var ref = Session.get("comment_post_id");
     //find tagged users
     var matched = /(?:^|\W)@(\w+)(?!\w)/g, match, matches = [];
     while (match = matched.exec(text)) {
@@ -91,8 +95,36 @@ component.action.submitcommenttopost = function(text) {
         $('.message-input-comment').val("");
     });
 };
+component.action.submitlikepost = function(countlike) {
+    var ref = Session.get("post_like_id");
+    Meteor.call("updatePost", countlike, ref, function(err, id) {
+        if(err) {
+            console.log(err);
+            return alert(err.reason);
+        } else {
+            var options = {
+                "title": "update Posts on by " + Meteor.user().username,
+                "postId": id,
+                "type": "post update"
+            }
+            Meteor.call("sendNotifications", ref, "post", options, function(err) {
+                if(err) {
+                    console.log(err);
+                    return alert(err.reason);
+                }
+            });
+        }
+    });
+};
+
 
 component.state.commentsof=function(){
-    console.log(Posts.find({"reference":this.post._id},{"createdBy":{$not:this.post._id}},{sort:{"createdOn":-1}}));
     return Posts.find({"reference":this.post._id},{"createdBy":{$not:this.post._id}},{sort:{"createdOn":-1}});
+}
+
+component.state.activecomment=function(){
+    var count = Posts.find({"reference":this.post._id},{"createdBy":{$not:this.post._id}},{sort:{"createdOn":-1}}).count();
+    if(count) {
+        return true;
+    }else return false;
 }

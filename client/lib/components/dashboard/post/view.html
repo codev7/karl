@@ -1,45 +1,37 @@
 <template name="onePost">
 {{#if state$checkifnotcomment }}
-    <div class="feed-element">
+    <div class="social-feed-box">
         <div class="social-avatar">
-            <div class="media-body">
+            <a class="pull-left" href="#">
+                <img src="{{state$profilePicture}}" alt="image">
+            </a>
+            <div class="media-body" data-id="{{state$id}}">
                 <a href="#">{{state$name}}</a>
-                <small class="text-muted">{{timeFormattedWithDate state$createdOn}}</small>
+                <small class="text-muted">{{timeFormattedWithDate state$createdOn}}<a href="#" class="small thumbsup-like pull-right like-post"><i class="fa fa-thumbs-up"></i> {{state$like}} Like this!</a></small>
             </div>
         </div>
-        <a class="pull-left" href="#">
-            <img src="{{state$profilePicture}}" class="img-circle" alt="image">
-        </a>
-        <div class="media-body">
+        <div class="social-body">
             <span class="message-content">{{{state$text}}}</span>
             <div class="btn-group pull-right" data-id="{{state$id}}">
-                <button class="btn btn-white btn-xs like-post pull-right"><i class="fa fa-thumbs-up"></i> Like this!</button>
                 <button class="btn btn-white btn-xs comment-post pull-right"><i class="fa fa-comments"></i> Comment</button>
-                <button class="btn btn-white btn-xs share-post pull-right"><i class="fa fa-share"></i> Share</button>
-                <input type="hidden" name="post_id_buf" class="post_id_buf" value="{{state$id}}" data-id="{{state$id}}" />
+                <button class="btn btn-white btn-xs like-post pull-right"><i class="fa fa-thumbs-up"></i> Like this!</button>
             </div>
             <br />
-            <div class="well">
-                {{#each state$commentsof}}
-
-                    <a class="pull-left" href="#">
-                        <img src="{{state$profilePicture}}" class="img-circle" alt="image">
-                    </a>
-                    <div class="media-body ">
-                        <small class="pull-right">by {{this.name}},  {{timeFormattedWithDate this.createdOn}}</small>{{{state$text}}}
-                        <!--<a class="btn btn-default btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like </a>-->
-                        <br/>
-                    </div>
-
-                {{/each}}
-            </div>
             <div class="comment_field comment_field_{{state$id}}">
                 <div class="form-group">
-                    {{#textareaAutocomplete settings=settings id="msg" name="message" class="form-control message-input-comment" placeholder="Enter Comment."}}
+                    {{#textareaAutocomplete settings=settings id="msg" name="message" class="form-control message-input-comment" placeholder="Write comment..."}}
                     {{/textareaAutocomplete}}
                 </div>
             </div>
         </div>
+
+        {{#if state$activecomment}}
+            <div class="social-footer">
+                {{#each state$commentsof}}
+                    {{> render component='onecommentofPost' commentp=this}}
+                {{/each}}
+            </div>
+        {{/if}}
     </div>
 {{/if}}
 </template>

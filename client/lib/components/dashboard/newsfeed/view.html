@@ -1,14 +1,10 @@
 <template name="newsFeed">
-    <div class="ibox-title">
-        <h5>News Feed</h5>
+    <div class="ibox">
+        <div class="ibox-content text-center">
+            <h3 class="m-b-xxs">Social News Feed</h3>
+            <small>News full block with incorporate avatar picture</small>
+        </div>
     </div>
-    <!--<div class="ibox">-->
-        <!--<div class="ibox-content text-center">-->
-            <!--<h3 class="m-b-xxs">Social feed style 1</h3>-->
-            <!--<small>News full block with incorporate avatar picture</small>-->
-        <!--</div>-->
-    <!--</div>-->
-    <div class="ibox-content">
         <div class="feed-activity-list">
             <div class="feed-element">
                 <div class="chat-message-form">
@@ -19,13 +15,12 @@
                     <!--<p><button class="btn btn-sm btn-success pull-right" id="share" type="submit">Share</button></p>-->
                 </div>
             </div>
-            <!--<div class="well">-->
             {{#if state$postsExist}}
                 {{#each state$postsList}}
                     {{> render component="onePost" post=this}}
                 {{/each}}
+            {{else}}
+                No NewsFeed
             {{/if}}
-            <!--</div>-->
         </div>
-    </div>
 </template>

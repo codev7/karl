@@ -6,7 +6,7 @@ var component = FlowComponents.define("newsFeed", function(props) {
 });
 
 component.state.postsExist = function() {
-    var count = Posts.find({},{sort: {createdAt: -1}}).count();
+    var count = Posts.find({},{sort: {"createdOn": -1}}).count();
     if(count > 0) {
         return true;
     } else {
@@ -15,7 +15,7 @@ component.state.postsExist = function() {
 };
 
 component.state.postsList = function() {
-    var posts = Posts.find({}).fetch();
+    var posts = Posts.find({},{sort: {"createdOn": -1}});
     return posts;
 };
 
