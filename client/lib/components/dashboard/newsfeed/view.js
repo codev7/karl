@@ -1,5 +1,5 @@
 Template.newsFeed.rendered = function(){
-    $(".message-input").val("");
+    $(".message-input-post").val("");
 };
 
 Template.newsFeed.helpers({
@@ -21,10 +21,10 @@ Template.newsFeed.helpers({
 });
 
 Template.newsFeed.events({
-    'keypress .message-input': function(event) {
+    'keypress .message-input-post': function(event) {
         if(event.keyCode == 10 || event.keyCode == 13) {
             event.preventDefault();
-            var text = $(".message-input").val();
+            var text = $(".message-input-post").val();
             FlowComponents.callAction('submit', text);
         }
     }

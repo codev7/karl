@@ -6,18 +6,18 @@ var component = FlowComponents.define("newsFeed", function(props) {
 });
 
 component.state.postsExist = function() {
-    var count = Posts.find({}, {sort: {createdAt: -1}}).count();
+    var count = Posts.find({},{sort: {createdAt: -1}}).count();
     if(count > 0) {
         return true;
     } else {
         return false;
     }
-}
+};
 
 component.state.postsList = function() {
     var posts = Posts.find({}).fetch();
     return posts;
-}
+};
 
 component.action.submit = function(text) {
     var ref = this.referenceId;
@@ -65,6 +65,6 @@ component.action.submit = function(text) {
                 }
             });
         }
-        $('.message-input').val("");
+        $('.message-input-post').val("");
     });
-}
+};
