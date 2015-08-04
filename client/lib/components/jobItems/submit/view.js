@@ -11,8 +11,9 @@ Template.submitJobItem.helpers({
   },
 
   isPrep: function() {
-    var type = Session.get("jobType");
-    if(type == "Prep") {
+    var id = Session.get("jobType");
+    var type = JobTypes.findOne(id);
+    if(type && type.name == "Prep") {
       return true;
     } else {
       return false;
@@ -20,8 +21,9 @@ Template.submitJobItem.helpers({
   },
 
   isRecurring: function() {
-    var type = Session.get("jobType");
-    if(type == "Recurring") {
+    var id = Session.get("jobType");
+    var type = JobTypes.findOne(id);
+    if(type && type.name == "Recurring") {
       return true;
     } else {
       return false;
@@ -52,7 +54,12 @@ Template.submitJobItem.events({
   'submit form': function(event) {
     event.preventDefault();
     var name = $(event.target).find('[name=name]').val().trim();
-    var type = $(event.target).find('[name=type]').val();
+    var typeId = $(event.target).find('[name=type]').val();
+    var typeDoc = JobTypes.findOne(typeId);
+    var type = null;
+    if(typeDoc) {
+      type = typeDoc.name;
+    }
     var activeTime = $(event.target).find('[name=activeTime]').val().trim();
     var avgWagePerHour = $(event.target).find('[name=avgWagePerHour]').val().trim();
 
@@ -68,7 +75,7 @@ Template.submitJobItem.events({
 
     var info = {
       "name": name,
-      "type": type,
+      "type": typeId,
       "activeTime": 0,
       "avgWagePerHour": 0
     }

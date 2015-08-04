@@ -1,0 +1,33 @@
+<template name="supplierFilter">
+  {{#each state$suppliers}}
+    <a class="btn {{#if state$thisSupplierActive this}} btn-primary {{else}} btn-default {{/if}} activateSupplier" data-id="{{this}}">{{this}}
+      {{#if state$thisSupplierActive this}}
+        <i class="fa fa-fw fa-check"></i>
+      {{/if}}
+    </a>
+  {{/each}}
+  <hr>
+  <h2>{{state$activeSupplier}}
+    <small class="text-info pull-right">
+    <!-- Set this date with x editable -->
+    {{#if state$deliveryDate}}
+      {{formatDate state$deliveryDate}}
+    {{/if}}
+    <!--DEV: Mail button - opens modal with draft email to send to supplier. -->
+    {{#if state$orderViaEmail}}
+      <a class="btn btn-primary orderByEmail">
+        <i class="fa fa-envelope-o fa-fw fa-lg"></i>Send email
+      </a>
+    {{/if}}
+    <!--DEV: Phone button - Marks the order as have been phones through and what time it has been marked. -->
+    {{#if state$orderViaPhone}}
+      <a class="btn btn-primary orderByPhone">
+        <i class="fa fa-fw fa-lg fa-phone"></i>Mark as phoned through
+      </a>
+    {{/if}}
+    <!--DEV: This shows the success state when the order is marked as sent or called through, buttons should disappear, this status message should be displayed -->
+      <!-- <i class="fa fa-fw fa-check"></i>Status: email sent 15th of June 10:51am -->
+    </small>
+  </h2>
+  <hr>
+</template>

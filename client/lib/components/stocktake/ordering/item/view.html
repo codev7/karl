@@ -1,0 +1,12 @@
+<template name="ordersListItem">
+  {{#if state$order}}
+    <tr>
+      <td>{{state$order.stockName}}</td>
+      <td>{{state$order.countOnHand}} [{{state$order.measure}}]</td>
+      <td>{{state$order.countNeeded}} [{{state$order.measure}}]</td>
+      <!--DEV: The 'to order' number needs to be editable with x editable.
+      This allows the user to adjust the order before they send it. -->
+      <td>{{state$order.orderedCount}} [{{state$order.measure}}]</td>
+    </tr>
+  {{/if}}
+</template>

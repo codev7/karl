@@ -1,0 +1,22 @@
+<template name="stockAreas">
+  <div class="ibox-content col-lg-12">
+    <form class="form-horizontal">
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <input class="form-control" name="gareaName" placeholder="Add General Area name here..."/>
+        </div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-primary" id="addGArea" style="width: 100%">Add</button>
+        </div>
+      </div>  
+    </form>
+
+    <div class="dd" id="nestable">
+      <ol class="dd-list">
+        {{#each state$areas}}
+          {{> render component="areaItem" item=this}}
+        {{/each}}
+      </ol>
+    </div>
+  </div>
+</template>

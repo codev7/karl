@@ -1,6 +1,6 @@
 <template name="adminMainView">
    <!-- Page heading -->
-  {{> render component="pageHeading" title="Admin" }}
+  {{> render component="pageHeading" title="Admin"}}
 
   <div class="wrapper wrapper-content">
     <div class="row">
@@ -12,6 +12,9 @@
             </li>
             <li class="">
               <a href="#sections" data-toggle="tab">Sections</a>
+            </li>
+            <li class="">
+              <a href="#areas" data-toggle="tab">Stock Areas</a>
             </li>
             <li class="">
               <a href="#details" data-toggle="tab">Details</a>
@@ -29,6 +32,10 @@
               <div class="tab-pane" id="sections">
                 <strong>Sections</strong>
                 {{> render component='sections'}}
+              </div>
+              <div class="tab-pane" id="areas">
+                <strong>Stock Areas</strong>
+                {{> render component='stockAreas'}}
               </div>
               <div class="tab-pane" id="details">
                 <strong>Details</strong>

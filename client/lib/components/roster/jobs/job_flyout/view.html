@@ -64,8 +64,11 @@
           </div>
           {{/if}}
         {{/if}}
+
+        {{> render component='commentsPanel' id=state$job._id type='workerJob'}}
+        <button class="btn btn-xs pull-right removeAssignedJob" data-id="{{state$job._id}}">Remove From Roster</button>
+        
       </div>
-      <button class="btn btn-xs pull-right removeAssignedJob" data-id="{{state$id}}">Remove From Roster</button>
     </div>
   </div>
 </template>

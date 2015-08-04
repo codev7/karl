@@ -1,0 +1,14 @@
+<template name="areaFilters">
+  <div class="col-md-2 no-margin">
+    {{#each state$generalAreas}}
+      {{> render component="areaBox" item=this class="garea-filter" name="garea"}}
+    {{/each}}
+    <a class="btn btn-block btn-default btn-outline addNewGArea">Add</a>
+  </div>
+  <div class="col-md-2">
+    {{#each state$specialAreas}}
+      {{> render component="areaBox" item=this class="sarea-filter" name="sarea"}}
+    {{/each}}
+    <a class="btn btn-block btn-default btn-outline addNewSArea">Add</a>
+  </div>
+</template>

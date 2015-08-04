@@ -1,0 +1,11 @@
+<template name="stocktakeItem">
+  <tr>
+    <td>{{dateFormat state$item._id}}</td>
+    <td>${{roundCount state$item.totalStockValue}}</td>
+    <td>${{roundCount state$item.totalStockValue}}</td>
+    <td>
+      <a href="/stocktake/{{dateFormat state$item._id}}" class="btn btn-primary"><i class="fa -o fa-fw fa-lg fa-eye"></i>View stocktake</a>
+      <a href="/stocktake/orders/{{dateFormat state$item._id}}" class="btn btn-primary"><i class="fa -o fa-fw fa-lg fa-eye"></i>View orders placed</a>
+    </td>
+  </tr>
+</template>

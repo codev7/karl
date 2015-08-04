@@ -1,3 +1,8 @@
+Meteor.publish("allJobTypes", function() {
+  logger.info("Job types published");
+  return JobTypes.find();
+});
+
 Meteor.publish("allSections", function() {
   logger.info("Sections published");
   return Sections.find();

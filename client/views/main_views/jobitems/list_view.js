@@ -33,5 +33,18 @@ Template.jobItemsListMainView.helpers({
     } else {
       return false;
     }
+  },
+
+  jobTypes: function() {
+    return JobTypes.find();
   }
 });
+
+Template.jobItemsListMainView.rendered = function() {
+  $(".jobtypesPanel").find("li").first().addClass("active");
+  if($(".jobtypepanes") && $(".jobtypepanes").length > 0) {
+    var elem = $(".jobtypepanes")[0];
+    $(elem).addClass("active");
+
+  }
+}

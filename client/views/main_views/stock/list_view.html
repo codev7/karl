@@ -1,0 +1,16 @@
+<template name="listOfStocksMasterMainView">
+  <!-- Page heading -->
+  {{> render component="pageHeading" title='Stock List' category="Stocks" name="ingredientslist"}}
+
+  <div class="wrapper wrapper-content animated">
+    <div class="row">
+      {{> render component='ingredientsList'}}
+    </div>
+  </div>
+
+  <!-- ADD INGREDIENT-->
+  <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'submitIngredient'}}
+  </div>
+  <!-- /ADD INGREDIENT -->
+</template>

@@ -31,6 +31,16 @@ component.state.profilePicture = function() {
         return image;
     }else return;
 };
+
+component.state.currentprofilePicture = function() {
+    var user = Meteor.user();
+    var image = "/images/user-image.jpeg";
+    if(user.services && user.services.google) {
+        image = user.services.google.picture;
+    }
+    return image;
+};
+
 component.state.createdOn = function() {
     return this.post.createdOn;
 };

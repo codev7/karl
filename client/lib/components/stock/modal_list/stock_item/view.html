@@ -1,0 +1,15 @@
+<template name="stockModalItem">
+  <tr>
+    <td><a href="" data-toggle="modal" class="editIngredient">{{{state$item.code}}}</a></td>
+    <td>{{{state$item.description}}}</td>
+    <td>{{state$item.portionUsed}}</td>
+    <td>$ {{state$costPerPortionUsed}}</td>
+    <td>
+      <div class="i-checks">
+        <label>
+          <input type="checkbox" value="" data-id="{{state$item._id}}" data-type="{{state$item.type}}" class="selectedIng" name="selectedIng">
+        </label>
+      </div>
+    </td>
+  </tr>
+</template>

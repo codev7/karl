@@ -2,7 +2,9 @@ var subs = new SubsManager();
 
 var component = FlowComponents.define('jobItemDetailed', function(props) {
   this.jobitem = props.jobitem;
+  this.type = props.type;
   var ids = [];
+
   if(this.jobitem.ingredients && this.jobitem.ingredients.length > 0) {
     this.jobitem.ingredients.forEach(function(ing) {
       ids.push(ing._id);
@@ -12,6 +14,17 @@ var component = FlowComponents.define('jobItemDetailed', function(props) {
     }
   }
 });
+
+component.state.showSection = function() {
+  var id = this.type;
+  var type = JobTypes.findOne(id);
+  if(type && type.name == "Recurring") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 
 component.state.job = function() {
   return this.jobitem;

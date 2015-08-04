@@ -7,21 +7,14 @@
             </a>
             <div class="media-body" data-id="{{state$id}}">
                 <a href="#">{{state$name}}</a>
-                <small class="text-muted">{{timeFormattedWithDate state$createdOn}}<a href="#" class="small thumbsup-like pull-right like-post"><i class="fa fa-thumbs-up"></i> {{state$like}} Like this!</a></small>
+                <a href="#" class="small thumbsup-like pull-left like-post"><i class="fa fa-thumbs-up"></i> {{state$like}} Like this!</a><small class="text-muted pull-left">&nbsp;  - &nbsp;{{timeFormattedWithDate state$createdOn}}</small>
             </div>
         </div>
         <div class="social-body">
-            {{{state$text}}}
-            <div class="btn-group pull-right" data-id="{{state$id}}">
+            {{{state$text}}}<br />
+            <div class="btn-group" data-id="{{state$id}}">
                 <button class="btn btn-white btn-xs comment-post pull-right"><i class="fa fa-comments"></i> Comment</button>
                 <button class="btn btn-white btn-xs like-post pull-right"><i class="fa fa-thumbs-up"></i> Like this!</button>
-            </div>
-            <br />
-            <div class="comment_field comment_field_{{state$id}}">
-                <div class="form-group">
-                    {{#textareaAutocomplete settings=settings id="msg" name="message" class="form-control message-input-comment" placeholder="Write comment..."}}
-                    {{/textareaAutocomplete}}
-                </div>
             </div>
         </div>
 
@@ -30,6 +23,17 @@
                 {{#each state$commentsof}}
                     {{> render component='onecommentofPost' commentp=this}}
                 {{/each}}
+                <div class="comment_field comment_field_{{state$id}} social-comment">
+                    <div class="form-group">
+                        <a class="pull-left" href="#">
+                            <img src="{{state$currentprofilePicture}}" alt="image">
+                        </a>
+                        <div class="media-body">
+                        {{#textareaAutocomplete settings=settings id="msg" name="message" class="form-control message-input-comment" placeholder="Write comment..."}}
+                        {{/textareaAutocomplete}}
+                        </div>
+                    </div>
+                </div>
             </div>
         {{/if}}
     </div>

@@ -70,9 +70,32 @@ UI.registerHelper("dayFormat", function(date) {
   return dateFormatted;
 });
 
+UI.registerHelper("dateFormat", function(date) {
+  var dateFormatted = moment(date).format('YYYY-MM-DD');
+  return dateFormatted;
+});
+
 UI.registerHelper("username", function(id) {
   var user = Meteor.users.findOne(id);
   if(user) {
     return user.username;
   }
+});
+
+UI.registerHelper("jobTypeById", function(id) {
+  var type = JobTypes.findOne(id);
+  if(type) {
+    return type.name;
+  }
+});
+
+UI.registerHelper("sectionById", function(id) {
+  var section = Sections.findOne(id);
+  if(section) {
+    return section.name;
+  }
+});
+
+UI.registerHelper("roundCount", function(count) {
+  return Math.round(count * 100)/100;
 });

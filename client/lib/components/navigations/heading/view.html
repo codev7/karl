@@ -1,7 +1,7 @@
 <template name="pageHeading">
   <div class="row wrapper border-bottom white-bg page-heading">
     <!-- BREADCRUMBS -->
-    <div class="col-xs-6">
+    <div class="col-sm-7">
       <h2>
         {{state$title}} {{#if state$isActualSales}} on {{state$routeDate}}{{/if}}
       </h2>
@@ -26,7 +26,7 @@
     </div>
     <!-- /BREADCRUMBS -->
 
-    <div class="col-xs-6">
+    <div class="col-sm-5">
       {{#if state$isMenuList}}
       <div class="title-action">
         {{#if state$isManagerOrAdmin}}
@@ -141,6 +141,14 @@
       <div class="title-action">
         <a href="#calendarModal" class="btn btn-primary" data-toggle="modal">
           Copy template shifts to week
+        </a>
+      </div>
+      {{/if}}
+
+      {{#if state$isStockTakeList}}
+      <div class="title-action">
+        <a href="/stocktake/{{state$date}}" class="btn btn-primary">
+          Start New Stocktake
         </a>
       </div>
       {{/if}}

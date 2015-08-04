@@ -1,0 +1,17 @@
+<template name="areaItem">
+  <li class="dd-item" data-id="{{state$area._id}}">
+    <div class="dd-handle">{{state$area.name}}</div>
+    <ol class="dd-list">
+      <li class="dd-item" data-id="{{state$area._id}}">
+        <div class="dd-handle">
+          <input name="sarea" class="form-control sarea" placeholder="Type special section name here and press enter..."/>
+        </div>
+      </li>
+      {{#each state$specialAreas}}
+      <li class="dd-item" data-id="{{_id}}">
+        <div class="dd-handle">{{name}}</div>
+      </li>
+      {{/each}}
+    </ol>
+  </li>
+</template>

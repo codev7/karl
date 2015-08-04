@@ -1,0 +1,2 @@
+Template.stockModalItem.rendered = function() {
+}

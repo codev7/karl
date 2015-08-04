@@ -1,0 +1,35 @@
+<template name="stockCounting">
+  <div class="row">
+    <div class="col-lg-12">
+      <a class="btn btn-primary btn-sm pull-right generateOrders">Save stocktake &amp; generate orders<br></a>
+      <a class="btn btn-link btn-sm pull-right"><i class="fa fa-fw fa-edit"></i>Edit</a>
+      <a class="btn btn-link btn-sm pull-right reOrder"><i class="fa fa-fw fa-reorder"></i>Reorder</a>
+      <a href="" id="newStocktakeDate">{{dateFormat state$date}}</a>
+      <hr>
+    </div>
+  </div>
+  
+  <div class="row">
+    {{> render component="areaFilters"}}
+    {{#if state$filtered}}
+      <div class="col-md-8">
+        <ul class="list-group">
+          {{#each state$list.stocks}}
+            {{> render component="stockCountingListItem" id=this date=state$date garea=state$list.generalArea sarea=state$list._id}}
+          {{else}}
+            No items on this list
+          {{/each}}
+        </ul>
+        <a class="btn btn-block btn-default btn-outline addStock">Add stock items to this area<br></a>
+      </div>
+    {{else}}
+      Select areas to show list of stock items
+    {{/if}}
+  </div>
+
+  <!-- STOCKS MODAL LIST-->
+  <div class="modal fade" id="stocksListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{> render component = 'stocksModalList' name="stockModal"}}
+  </div>
+  <!-- /STOCKS MODAL LIST -->
+</template>

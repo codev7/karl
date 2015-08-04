@@ -216,3 +216,15 @@ component.state.isWeeklyRosterPublished = function() {
     }
   }
 }
+
+component.state.isStockTakeList = function() {
+  if(this.type == "stocktakeList") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+component.state.date = function() {
+  return moment().format("YYYY-MM-DD");
+}

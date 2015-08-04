@@ -1,4 +1,7 @@
+var subs = new SubsManager();
+
 var component = FlowComponents.define("jobFlyout", function(props) {
+  subs.subscribe("comments", Session.get("thisJob"));
 });
 
 component.state.job = function() {

@@ -60,6 +60,10 @@ component.state.ingredients = function() {
   return this.item.ingredients;
 }
 
+component.state.jobTypes = function() {
+  return JobTypes.find({"_id": {$nin: [this.item.type]}});
+}
+
 component.state.typesWithSelected = function() {
   var types = [
     {"index": "Prep", "selected": false},

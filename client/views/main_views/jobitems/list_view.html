@@ -2,9 +2,28 @@
   <!-- Page heading -->
   {{> render component="pageHeading" title='Jobs List' category='Jobs' name="jobslist"}}
 
-  <div class="wrapper wrapper-content animated">
+  <div class="wrapper wrapper-content">
     <div class="row">
-      {{> render component='jobItemsList'}}
+      <div class="col-md-12">
+        <div class="panel-options">
+          <ul class="nav nav-tabs jobtypesPanel">
+            {{#each jobTypes}}
+              <li class="">
+                <a href="#{{_id}}" data-toggle="tab">{{name}}</a>
+              </li>
+            {{/each}}
+          </ul>
+          <div class="panel-body">
+            <div class="tab-content">
+              {{#each jobTypes}}
+                <div class="tab-pane jobtypepanes" id="{{_id}}">
+                  {{> render component='jobItemsList' id=_id}}
+               </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

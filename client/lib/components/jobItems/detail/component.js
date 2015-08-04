@@ -12,7 +12,7 @@ component.state.job = function() {
 
 component.state.section = function() {
   var item = this.get("job");
-  if(item) {
+  if(item && item.section) {
     return Sections.findOne(item.section).name;
   }
 }
@@ -20,10 +20,13 @@ component.state.section = function() {
 component.state.isPrep = function() {
   var item = this.get("job");
   if(item) {
-    if(item.type == "Prep") {
-      return true; 
-    } else {
-      return false;
+    if(item.type) {
+      var type = JobTypes.findOne(item.type);
+      if(type && type.name == "Prep") {
+        return true; 
+      } else {
+        return false;
+      }
     }
   }
 }
@@ -31,17 +34,20 @@ component.state.isPrep = function() {
 component.state.isRecurring = function() {
   var item = this.get("job");
   if(item) {
-    if(item.type == "Recurring") {
-      return true;
-    } else {
-      return false;
+    if(item.type) {
+      var type = JobTypes.findOne(item.type);
+      if(type && type.name == "Recurring") {
+        return true; 
+      } else {
+        return false;
+      }
     }
   }
 }
 
 component.state.ingExists = function() {
   var item = this.get("job");
-  if(item.ingredients.length > 0) {
+  if(item.ingredients && item.ingredients.length > 0) {
     return true;
   } else {
     return false;
@@ -58,7 +64,7 @@ component.state.isChecklist = function() {
 
 component.state.checklist = function() {
   var item = this.get("job");
-  if(item) {
+  if(item && item.checklist) {
     return item.checklist;
   }
 }

@@ -52,7 +52,7 @@
         {{/if}}
       </div>
       {{> render component='menuDetailWidgets' item=state$menu}}
-      {{> render component='commentsPanel'}}
+      {{> render component='commentsPanel' id=state$menu._id type='menu'}}
     </div>
   </div>
 </template>

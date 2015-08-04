@@ -15,17 +15,17 @@ Template.jobFlyout.events({
   },
 
   'click .checklist-check input': function(event) {
-   var checked = $(event.target).is(":checked");
-   checked ? $(event.target).closest('.checklist-check').addClass('checked') : $(event.target).closest('.checklist-check').removeClass('checked')
+    var checked = $(event.target).is(":checked");
+    checked ? $(event.target).closest('.checklist-check').addClass('checked') : $(event.target).closest('.checklist-check').removeClass('checked')
   }
 });
 
 Template.jobFlyout.rendered = function() {
 
   $('html').click(function (event) {
-      var flyout = $(".flyout-container");
-      if (!flyout.is(event.target) && flyout.has(event.target).length === 0){
-          flyout.removeClass('show');
-      }
+    var flyout = $(".flyout-container");
+    if (!flyout.is(event.target) && flyout.has(event.target).length === 0){
+      flyout.removeClass('show');
+    }
   });
 }

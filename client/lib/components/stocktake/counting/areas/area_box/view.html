@@ -1,0 +1,7 @@
+<template name="areaBox">
+  <a class="btn btn-block {{#if activeG state$item._id}} btn-info {{/if}} {{#if activeS state$item._id}} btn-info {{/if}} {{#if inActive state$item._id}} btn-default {{/if}} btn-sm {{state$item.class}}" data-id="{{state$item._id}}"><a href="#" class="{{state$item.type}}">{{state$item.name}}</a>
+    <div class="progress progress-mini">
+      <div class="progress-bar" style="width: {{state$widthofBar}}"></div>
+    </div>
+  </a>
+</template>

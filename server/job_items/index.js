@@ -32,12 +32,18 @@ Meteor.methods({
     var activeTime = parseInt(info.activeTime) * 60; //seconds
     doc.activeTime = activeTime;
     doc.status = "active";
+    var type = JobTypes.findOne(info.type);
+    if(!type) {
+      logger.error("Type not found");
+      throw new Meteor.Error(404, "Type not found");
+    }
     doc.type = info.type;
+
     if(info.wagePerHour) {
       doc.wagePerHour = info.wagePerHour;
     }
 
-    if(info.type == "Prep") {
+    if(type.name == "Prep") {
       if(info.shelfLife == info.shelfLife) {
         var shelfLife = parseFloat(info.shelfLife); //days
         doc.shelfLife = shelfLife;
@@ -58,7 +64,7 @@ Meteor.methods({
           });
         }
       }
-    } else if(info.type == "Recurring") {
+    } else if(type.name == "Recurring") {
       doc.repeatAt = info.repeatAt;
       doc.description = info.description;
       doc.frequency = info.frequency;
@@ -74,7 +80,7 @@ Meteor.methods({
     doc.createdOn = Date.now();
     doc.createdBy = user._id;
     var id = JobItems.insert(doc);
-    logger.info("Job Item inserted", {"jobId": id, 'type': info.type});
+    logger.info("Job Item inserted", {"jobId": id, 'type': type.name});
     return id;
   },
   

@@ -1,0 +1,10 @@
+<template name="stockListMainView">
+  <!-- Page heading -->
+  {{> render component="pageHeading" title='Stocktake List' category="Stocktake" name="stocktakeList"}}
+
+  <div class="wrapper wrapper-content animated">
+    <div class="row">
+      {{> render component='stockTakeMasterList'}}
+    </div>
+  </div>
+</template>

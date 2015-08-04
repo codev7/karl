@@ -3,11 +3,13 @@ var autolinker = new Autolinker({
 });
 
 var component = FlowComponents.define("submitComment", function(props) {
-  this.referenceId = Router.current().params._id;
+  this.referenceId = props.id;
+  this.refType = props.type;
 });
 
 component.action.submit = function(text) {
   var ref = this.referenceId;
+  var refType = this.refType;
   //find tagged users
   var matched = /(?:^|\W)@(\w+)(?!\w)/g, match, matches = [];
   while (match = matched.exec(text)) {
@@ -41,25 +43,27 @@ component.action.submit = function(text) {
       return alert(err.reason);
     } else {
       var reference = null;
-      reference = MenuItems.findOne(ref);
       var ref_name = null;
-      var ref_type = null;
-      if(reference) {
-        ref_name = reference.name;
-        ref_type = "menu";
-      } else {
+      var ref_type = refType;
+      
+      if(refType == "menu") {
+        reference = MenuItems.findOne(ref);
+      } else if(refType == "job") {
         reference = JobItems.findOne(ref);
-        ref_name = reference.name;
-        ref_type = "job";
+      } else if(refType == "workerJob") {
+        reference = Jobs.findOne(ref) ;
       }
 
+      if(reference) {
+        ref_name = reference.name;
+      }
       var options = {
         "title": "New comment on " + ref_name + " by " + Meteor.user().username,
         "users": matches,
         "commentId": id,
         "type": ref_type
       }
-      Meteor.call("sendNotifications", this.referenceId, "comment", options, function(err) {
+      Meteor.call("sendNotifications", ref, "comment", options, function(err) {
         if(err) {
           console.log(err);
           return alert(err.reason);

@@ -72,7 +72,22 @@
           </li>
 
           <li class="{{isActiveRoute regex='ingredientsList'}}">
-            <a href="/ingredients"><i class="fa fa-list"></i> <span class="nav-label">Ingredients</span></a>
+            <a href="/stocks"><i class="fa fa-list"></i> <span class="nav-label">Stocks</span></a>
+          </li>
+
+          <li class="{{isActiveRoute name='stocktake|stocktakeCounting|stocktakeOrdering'}}">
+            <a href="#">
+              <i class="fa fa-list"></i>
+              <span class="nav-label">Stocktaking</span>
+            </a>
+            <ul class="nav nav-second-level {{isActiveRoute name='stocktake|stocktakeCounting|stocktakeOrdering' className='in'}}">
+              <li class="{{isActiveRoute name='stocktake'}}">
+                <a href="/stocktake">History</a>
+              </li>
+              <li class="{{isActiveRoute name='suppleirOrdering'}}">
+                <a href="/stocktake/order/receipts">Order Receipts</a>
+              </li> 
+            </ul>
           </li>
 
           {{#if state$isManagerOrAdmin}}

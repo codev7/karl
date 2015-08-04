@@ -16,11 +16,11 @@ Meteor.publish("ingredients", function(ids) {
   var cursors = [];
   var ings = null;
   if(ids.length > 0) {
-    ings = Ingredients.find({"_id": {$in: ids}}, {sort: {'code': 1}, limit: 10});
+    ings = Ingredients.find({"_id": {$in: ids}}, {sort: {'code': 1}});
   } else {
     ings = Ingredients.find({}, {sort: {'code': 1}, limit: 10});
   }
   cursors.push(ings);
-  logger.info("Ingredients published", ids);
+  logger.info("Ingredients published", {"ids": ids});
   return cursors;
 });
