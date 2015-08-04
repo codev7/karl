@@ -29,11 +29,7 @@ Template.onePost.events({
         }
     }
 });
-//Posts.allow({
-//    update: function(userId, doc, fieldNames, modifier) {
-//        return true;
-//    }
-//});
+
 Template.onePost.helpers({
     settings: function() {
         return {

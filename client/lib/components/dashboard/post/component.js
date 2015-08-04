@@ -68,7 +68,7 @@ component.action.submitcommenttopost = function(text) {
     });
 
     var classes = ['info', 'success', 'danger', 'primary', 'warning'];
-    var textHtml = "<div class='non'>" + text + "</div>"
+    var textHtml = "<div class='non'>" + text + "</div>";
     taggedUsers.forEach(function(user) {
         textHtml = textHtml.replace(user.user, "<span class='label " + user.class + "'>" + user.user + "</span>");
     });
